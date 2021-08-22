@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Services
 {
-    
+
     public class BaseCRUDService<T, TDb, TSearch, TInsert, TUpdate> : BaseReadService<T, TDb, TSearch>, ICRUDService<T, TSearch, TInsert, TUpdate> where T : class where TSearch : class where TInsert : class where TUpdate : class where TDb : class
     {
         public BaseCRUDService(eFrizerContext context, IMapper mapper) : base(context, mapper)
@@ -40,5 +40,7 @@ namespace eFrizer.Services
 
             return _mapper.Map<T>(entity);
         }
-    
+
+    }
+
 }
