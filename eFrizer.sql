@@ -184,4 +184,3 @@ CREATE TABLE [ApplicationUser_Role]
  CONSTRAINT [FK_97] FOREIGN KEY ([RoleId])  REFERENCES [Role]([RoleId])
 );
 GO
-a
