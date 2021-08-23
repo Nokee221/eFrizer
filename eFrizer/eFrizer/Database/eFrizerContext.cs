@@ -49,8 +49,6 @@ namespace eFrizer.Database
             modelBuilder.Entity<ApplicationUser>(entity =>
             {
                 entity.ToTable("ApplicationUser");
-
-                entity.Property(e => e.ApplicationUserId).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<ApplicationUserRole>(entity =>
@@ -77,8 +75,6 @@ namespace eFrizer.Database
             {
                 entity.ToTable("City");
 
-                entity.Property(e => e.CityId).ValueGeneratedNever();
-
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -87,8 +83,6 @@ namespace eFrizer.Database
             modelBuilder.Entity<HairDresser>(entity =>
             {
                 entity.ToTable("HairDresser");
-
-                entity.Property(e => e.HairDresserId).ValueGeneratedNever();
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -104,8 +98,6 @@ namespace eFrizer.Database
             modelBuilder.Entity<HairSalon>(entity =>
             {
                 entity.ToTable("HairSalon");
-
-                entity.Property(e => e.HairSalonId).ValueGeneratedNever();
 
                 entity.Property(e => e.Address)
                     .IsRequired()
@@ -206,9 +198,7 @@ namespace eFrizer.Database
             {
                 entity.ToTable("HairSalonType");
 
-                entity.Property(e => e.HairSalonTypeId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("HairSalonTypeID");
+                entity.Property(e => e.HairSalonTypeId).HasColumnName("HairSalonTypeID");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -218,15 +208,11 @@ namespace eFrizer.Database
             modelBuilder.Entity<Picture>(entity =>
             {
                 entity.ToTable("Picture");
-
-                entity.Property(e => e.PictureId).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<Reservation>(entity =>
             {
                 entity.ToTable("Reservation");
-
-                entity.Property(e => e.ReservationId).ValueGeneratedNever();
 
                 entity.Property(e => e.Time).HasColumnType("datetime");
 
@@ -247,8 +233,6 @@ namespace eFrizer.Database
             {
                 entity.ToTable("Review");
 
-                entity.Property(e => e.ReviewId).ValueGeneratedNever();
-
                 entity.HasOne(d => d.ApplicationUser)
                     .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.ApplicationUserId)
@@ -266,8 +250,6 @@ namespace eFrizer.Database
             {
                 entity.ToTable("Role");
 
-                entity.Property(e => e.RoleId).ValueGeneratedNever();
-
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -277,8 +259,6 @@ namespace eFrizer.Database
             {
                 entity.HasKey(e => e.ServicesId)
                     .HasName("PK_services");
-
-                entity.Property(e => e.ServicesId).ValueGeneratedNever();
 
                 entity.Property(e => e.Description)
                     .IsRequired()

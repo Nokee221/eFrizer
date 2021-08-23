@@ -7,34 +7,34 @@ use eFrizer
 
 CREATE TABLE [HairSalon]
 (
- [HairSalonId] int NOT NULL ,
+ [HairSalonId] int NOT NULL IDENTITY(1,1) ,
  [Name]        nvarchar(50) NOT NULL ,
  [Description] nvarchar(150) NOT NULL ,
  [Address]     nvarchar(50) NOT NULL ,
 
 
- CONSTRAINT [PK_hairsalon] PRIMARY KEY CLUSTERED ([HairSalonId] ASC)
+ CONSTRAINT [PK_hairsalon] PRIMARY KEY [HairSalonId]
 );
 GO
 
 CREATE TABLE [City]
 (
- [CityId] int NOT NULL ,
+ [CityId] int NOT NULL IDENTITY(1,1),
  [Name]   nvarchar(50) NOT NULL ,
 
 
- CONSTRAINT [PK_city] PRIMARY KEY CLUSTERED ([CityId] ASC)
+ CONSTRAINT [PK_city] PRIMARY KEY [CityId]
 );
 GO
 
 CREATE TABLE [HairDresser]
 (
- [HairDresserId] int NOT NULL ,
+ [HairDresserId] int NOT NULL IDENTITY(1,1),
  [Name]          nvarchar(50) NOT NULL ,
  [HairSalonId]   int NOT NULL ,
 
 
- CONSTRAINT [PK_hairdresser] PRIMARY KEY CLUSTERED ([HairDresserId] ASC),
+ CONSTRAINT [PK_hairdresser] PRIMARY KEY [HairDresserId],
  CONSTRAINT [FK_73] FOREIGN KEY ([HairSalonId])  REFERENCES [HairSalon]([HairSalonId])
 );
 GO
@@ -46,7 +46,7 @@ CREATE TABLE [HairSalon_City]
  [CityId]      int NOT NULL ,
 
 
- CONSTRAINT [PK_table_13] PRIMARY KEY CLUSTERED ([HairSalonId] ASC, [CityId] ASC),
+ CONSTRAINT [PK_table_13] PRIMARY KEY [HairSalonId], [CityId],
  CONSTRAINT [FK_22] FOREIGN KEY ([HairSalonId])  REFERENCES [HairSalon]([HairSalonId]),
  CONSTRAINT [FK_32] FOREIGN KEY ([CityId])  REFERENCES [City]([CityId])
 );
@@ -55,17 +55,17 @@ GO
 
 CREATE TABLE [ApplicationUser]
 (
- [ApplicationUserId] int NOT NULL ,
+ [ApplicationUserId] int NOT NULL IDENTITY(1,1),
 
 
- CONSTRAINT [PK_applicationuser] PRIMARY KEY CLUSTERED ([ApplicationUserId] ASC)
+ CONSTRAINT [PK_applicationuser] PRIMARY KEY [ApplicationUserId]
 );
 GO
 
 
 CREATE TABLE [Review]
 (
- [ReviewId]          int NOT NULL ,
+ [ReviewId]          int NOT NULL IDENTITY(1,1),
  [HairSalonId]       int NOT NULL ,
  [ApplicationUserId] int NOT NULL ,
 
@@ -79,7 +79,7 @@ GO
 
 CREATE TABLE [Role]
 (
- [RoleId] int NOT NULL ,
+ [RoleId] int NOT NULL IDENTITY(1,1),
  [Name]   nvarchar(50) NOT NULL ,
 
 
@@ -89,7 +89,7 @@ GO
 
 CREATE TABLE [Services]
 (
- [ServicesId]  int NOT NULL ,
+ [ServicesId]  int NOT NULL IDENTITY(1,1),
  [Name]        nvarchar(50) NOT NULL ,
  [Description] nvarchar(150) NOT NULL ,
 
@@ -100,7 +100,7 @@ GO
 
 CREATE TABLE [Reservation]
 (
- [ReservationId]     int NOT NULL ,
+ [ReservationId]     int NOT NULL IDENTITY(1,1),
  [HairDresserId]     int NOT NULL ,
  [ApplicationUserId] int NOT NULL ,
  [Time]              datetime NOT NULL ,
@@ -115,7 +115,7 @@ GO
 
 CREATE TABLE [Picture]
 (
- [PictureId] int NOT NULL ,
+ [PictureId] int NOT NULL IDENTITY(1,1),
 
 
  CONSTRAINT [PK_picture] PRIMARY KEY CLUSTERED ([PictureId] ASC)
@@ -125,7 +125,7 @@ GO
 
 CREATE TABLE [HairSalonType]
 (
- [HairSalonTypeID] int NOT NULL ,
+ [HairSalonTypeID] int NOT NULL IDENTITY(1,1),
  [Name]            nvarchar(50) NOT NULL ,
 
 
