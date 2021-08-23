@@ -8,6 +8,8 @@ namespace eFrizer.Mapping
         public eFrizerProfile()
         {
             CreateMap<Database.HairSalon, Model.HairSalon>().ReverseMap();
+            CreateMap<Database.ApplicationUser, Model.ApplicationUser>().ReverseMap();
+            CreateMap<Model.Requests.ApplicationUserInsertRequest, Database.ApplicationUser>();
         }
     }
 }
