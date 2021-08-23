@@ -1,3 +1,6 @@
+use master
+drop database eFrizer
+
 create database eFrizer
 go
 
@@ -13,7 +16,7 @@ CREATE TABLE [HairSalon]
  [Address]     nvarchar(50) NOT NULL ,
 
 
- CONSTRAINT [PK_hairsalon] PRIMARY KEY [HairSalonId]
+ CONSTRAINT [PK_hairsalon] PRIMARY KEY ([HairSalonId])
 );
 GO
 
@@ -23,7 +26,7 @@ CREATE TABLE [City]
  [Name]   nvarchar(50) NOT NULL ,
 
 
- CONSTRAINT [PK_city] PRIMARY KEY [CityId]
+ CONSTRAINT [PK_city] PRIMARY KEY ([CityId])
 );
 GO
 
@@ -34,7 +37,7 @@ CREATE TABLE [HairDresser]
  [HairSalonId]   int NOT NULL ,
 
 
- CONSTRAINT [PK_hairdresser] PRIMARY KEY [HairDresserId],
+ CONSTRAINT [PK_hairdresser] PRIMARY KEY ([HairDresserId]),
  CONSTRAINT [FK_73] FOREIGN KEY ([HairSalonId])  REFERENCES [HairSalon]([HairSalonId])
 );
 GO
@@ -46,7 +49,7 @@ CREATE TABLE [HairSalon_City]
  [CityId]      int NOT NULL ,
 
 
- CONSTRAINT [PK_table_13] PRIMARY KEY [HairSalonId], [CityId],
+ CONSTRAINT [PK_table_13] PRIMARY KEY ([HairSalonId], [CityId]),
  CONSTRAINT [FK_22] FOREIGN KEY ([HairSalonId])  REFERENCES [HairSalon]([HairSalonId]),
  CONSTRAINT [FK_32] FOREIGN KEY ([CityId])  REFERENCES [City]([CityId])
 );
@@ -58,7 +61,7 @@ CREATE TABLE [ApplicationUser]
  [ApplicationUserId] int NOT NULL IDENTITY(1,1),
 
 
- CONSTRAINT [PK_applicationuser] PRIMARY KEY [ApplicationUserId]
+ CONSTRAINT [PK_applicationuser] PRIMARY KEY ([ApplicationUserId])
 );
 GO
 
