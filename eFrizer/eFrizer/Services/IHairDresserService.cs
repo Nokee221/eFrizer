@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Services
 {
-    public interface IHairDresserService : ICRUDService<HairDresser, HairDresserSearchRequest, HairDresserInsertRequest, HairDresserUpdateRequest>
+    public interface IHairDresserService : ICRUDService<Model.HairDresser.HairDresser, HairDresserSearchRequest, HairDresserInsertRequest, HairDresserUpdateRequest>
     {
     }
 }

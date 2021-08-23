@@ -48,7 +48,7 @@ namespace eFrizer
             services.AddScoped<ICityService, Services.CityService>();
 
             services.AddScoped<ICRUDService<Model.ApplicationUser, object, ApplicationUserInsertRequest, object>, Services.ApplicationUserService>();
-
+            services.AddScoped<IHairDresserService, Services.HairDresserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
