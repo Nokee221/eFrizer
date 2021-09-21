@@ -4,9 +4,10 @@ using System.Text;
 
 namespace eFrizer.Model
 {
-    public class HairDresserInsertRequest
+    public class ApplicationUserInsertRequest
     {
         public string Name { get; set; }
-        public int HairSalonId { get; set; }
+        public string Surname { get; set; }
+        public string Username { get; set; }
     }
 }

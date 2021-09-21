@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eFrizer.Model.Requests.Role
+namespace eFrizer.Model
 {
     public class RoleInsertRequest
     {

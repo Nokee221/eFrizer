@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eFrizer.Model.Requests.Role
+namespace eFrizer.Model
 {
-    public class RoleUpdateRequest
+    public class RoleSearchRequest
     {
         public string Name { get; set; }
     }

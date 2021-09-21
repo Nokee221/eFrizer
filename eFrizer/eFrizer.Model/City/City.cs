@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eFrizer.Model.City
+namespace eFrizer.Model
 {
     public class City
     {
