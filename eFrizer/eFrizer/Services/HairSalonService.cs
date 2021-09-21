@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using eFrizer.Database;
-using eFrizer.Model.Requests;
+using eFrizer.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using eFrizer.Database;
-using eFrizer.Model.HairDresser;
+using eFrizer.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Services
 {
-    public class HairDresserService : BaseCRUDService<Model.HairDresser.HairDresser, Database.HairDresser, HairDresserSearchRequest, HairDresserInsertRequest, HairDresserUpdateRequest>, IHairDresserService
+    public class HairDresserService : BaseCRUDService<Model.HairDresser, Database.HairDresser, HairDresserSearchRequest, HairDresserInsertRequest, HairDresserUpdateRequest>, IHairDresserService
     {
         public HairDresserService(eFrizerContext context, IMapper mapper)
            : base(context, mapper)
@@ -16,7 +16,7 @@ namespace eFrizer.Services
         }
 
 
-        public override IEnumerable<Model.HairDresser.HairDresser> Get(HairDresserSearchRequest search = null)
+        public override IEnumerable<Model.HairDresser> Get(HairDresserSearchRequest search = null)
         {
             var entity = Context.Set<Database.HairDresser>().AsQueryable();
 
@@ -27,7 +27,7 @@ namespace eFrizer.Services
 
             var list = entity.ToList();
 
-            return _mapper.Map<List<Model.HairDresser.HairDresser>>(list);
+            return _mapper.Map<List<Model.HairDresser>>(list);
         }
     }
 }

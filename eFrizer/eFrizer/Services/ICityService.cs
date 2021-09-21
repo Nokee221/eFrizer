@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Services
 {
-    public interface ICityService : ICRUDService<Model.City.City , Model.City.CitySearchRequest, Model.City.CityInsertRequest, Model.City.CityUpdateRequest>
+    public interface ICityService : ICRUDService<Model.City , Model.CitySearchRequest, Model.CityInsertRequest, Model.CityUpdateRequest>
     {
     }
 }

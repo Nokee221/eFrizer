@@ -1,4 +1,4 @@
-﻿using eFrizer.Model.Requests.Role;
+﻿using eFrizer.Model;
 using eFrizer.Services;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿using eFrizer.Model.HairDresser;
+﻿using eFrizer.Model;
 using eFrizer.Services;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Controllers
 {
-    public class HairDresserController : BaseCRUDController<Model.HairDresser.HairDresser, HairDresserSearchRequest, HairDresserInsertRequest, HairDresserUpdateRequest>
+    public class HairDresserController : BaseCRUDController<Model.HairDresser, HairDresserSearchRequest, HairDresserInsertRequest, HairDresserUpdateRequest>
     {
         public HairDresserController(IHairDresserService service) : base(service)
         {

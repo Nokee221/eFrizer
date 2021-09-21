@@ -1,6 +1,5 @@
 using eFrizer.Database;
-using eFrizer.Model.Requests;
-using eFrizer.Model.Requests.Role;
+using eFrizer.Model;
 using eFrizer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
