@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using eFrizer.Database;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace eFrizer.Services
             _mapper = mapper;
         }
 
-        public virtual IEnumerable<T> Get(TSearch search = null)
+        public virtual IEnumerable<T> Get([FromBody]TSearch search = null)
         {
             var entity = Context.Set<TDb>();
 

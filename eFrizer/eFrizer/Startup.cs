@@ -50,7 +50,7 @@ namespace eFrizer
 
             services.AddScoped<ICRUDService<Model.ApplicationUser, object, ApplicationUserInsertRequest, object>, Services.ApplicationUserService>();
             services.AddScoped<IHairDresserService, Services.HairDresserService>();
-            services.AddScoped<ICRUDService<Model.Role, object, RoleInsertRequest, RoleUpdateRequest>, Services.RoleService>();
+            services.AddScoped<ICRUDService<Model.Role, RoleSearchRequest, RoleInsertRequest, RoleUpdateRequest>, Services.RoleService>();
             services.AddScoped<ICRUDService<Model.ApplicationUserRole, object, object, object>, Services.ApplicationUserRoleService>();
         }
 

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Controllers
 {
-    public class RoleController : BaseCRUDController<Model.Role, object, RoleInsertRequest, RoleUpdateRequest>
+    public class RoleController : BaseCRUDController<Model.Role, RoleSearchRequest, RoleInsertRequest, RoleUpdateRequest>
     {
         //TODO: 1)the service interface passed below should be made into a separate one 2)service interfaces should have a special namespace
-        public RoleController(ICRUDService<Model.Role, object, RoleInsertRequest, RoleUpdateRequest> service) : base(service)
+        public RoleController(ICRUDService<Model.Role, RoleSearchRequest, RoleInsertRequest, RoleUpdateRequest> service) : base(service)
         {
 
         }
