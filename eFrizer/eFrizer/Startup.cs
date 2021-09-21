@@ -1,5 +1,6 @@
 using eFrizer.Database;
 using eFrizer.Model.Requests;
+using eFrizer.Model.Requests.Role;
 using eFrizer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,7 +50,7 @@ namespace eFrizer
 
             services.AddScoped<ICRUDService<Model.ApplicationUser, object, ApplicationUserInsertRequest, object>, Services.ApplicationUserService>();
             services.AddScoped<IHairDresserService, Services.HairDresserService>();
-            services.AddScoped<ICRUDService<Model.Role, object, object, object>, Services.RoleService>();
+            services.AddScoped<ICRUDService<Model.Role, object, RoleInsertRequest, object>, Services.RoleService>();
             services.AddScoped<ICRUDService<Model.ApplicationUserRole, object, object, object>, Services.ApplicationUserRoleService>();
         }
 
