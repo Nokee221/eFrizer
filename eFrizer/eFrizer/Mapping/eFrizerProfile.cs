@@ -19,8 +19,10 @@ namespace eFrizer.Mapping
             CreateMap<Database.HairDresser, Model.HairDresser.HairDresser>().ReverseMap();
             CreateMap<Model.HairDresser.HairDresserInsertRequest, Database.HairDresser>().ReverseMap();
 
+            //TODO: is reverse map always necessary and is there anything bad in over-using it?
             CreateMap<Database.Role, Model.Role>().ReverseMap();
             CreateMap<Model.Requests.Role.RoleInsertRequest, Database.Role>().ReverseMap();
+            CreateMap<Model.Requests.Role.RoleUpdateRequest, Database.Role>().ReverseMap();
 
         }
     }

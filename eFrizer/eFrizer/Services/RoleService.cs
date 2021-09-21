@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Services
 {
-    public class RoleService : BaseCRUDService<Model.Role, Database.Role, object, RoleInsertRequest, object>, ICRUDService<Model.Role, object, RoleInsertRequest, object>
+    public class RoleService : BaseCRUDService<Model.Role, Database.Role, object, RoleInsertRequest, RoleUpdateRequest>, ICRUDService<Model.Role, object, RoleInsertRequest, RoleUpdateRequest>
     {
         public RoleService(eFrizerContext context, IMapper mapper) 
             : base(context, mapper)
