@@ -49,6 +49,8 @@ namespace eFrizer
 
             services.AddScoped<ICRUDService<Model.ApplicationUser, object, ApplicationUserInsertRequest, object>, Services.ApplicationUserService>();
             services.AddScoped<IHairDresserService, Services.HairDresserService>();
+            services.AddScoped<ICRUDService<Model.Role, object, object, object>, Services.RoleService>();
+            services.AddScoped<ICRUDService<Model.ApplicationUserRole, object, object, object>, Services.ApplicationUserRoleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
