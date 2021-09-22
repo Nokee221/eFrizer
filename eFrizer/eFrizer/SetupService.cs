@@ -17,8 +17,19 @@ namespace eFrizer
             {
                 context.HairSalons.Add(new HairSalon() { Name = "Studio RAS" , Address = "Mejdandžik 8", Description = "Pravo dobar frizerski."});
             }
+
+            if(!context.HairSalonTypes.Any(x => x.Name == "Ženski"))
+            {
+                context.HairSalonTypes.Add(new HairSalonType() { Name = "Ženski" });
+            }
+
+            if (!context.HairSalonTypes.Any(x => x.Name == "Muški"))
+            {
+                context.HairSalonTypes.Add(new HairSalonType() { Name = "Muški" });
+            }
+
             //TODO: Separate each data type seed into a function
-            if(!context.Cities.Any(x => x.Name == "Zenica"))
+            if (!context.Cities.Any(x => x.Name == "Zenica"))
             {
                 context.Cities.Add(new City() { Name = "Zenica" });
             }
@@ -43,6 +54,7 @@ namespace eFrizer
                     CityId = context.Cities.Where(x => x.Name == "Zenica").First().CityId
                 });
             }
+
 
             if (!context.Roles.Any(x => x.Name == "Administrator"))
             {
