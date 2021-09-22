@@ -13,12 +13,38 @@ namespace eFrizer
         {
             context.Database.Migrate();
 
-            if (!context.HairSalons.Any(x => x.Name == "Amar"))
+            if (!context.HairSalons.Any(x => x.Name == "Studio RAS"))
             {
-                context.HairSalons.Add(new HairSalon() { Name = "Amar" , Address = "mejdan", Description = "Pravo dobars"});
+                context.HairSalons.Add(new HairSalon() { Name = "Studio RAS" , Address = "Mejdandžik 8", Description = "Pravo dobar frizerski."});
+            }
+            //TODO: Separate each data type seed into a function
+            if(!context.Cities.Any(x => x.Name == "Zenica"))
+            {
+                context.Cities.Add(new City() { Name = "Zenica" });
             }
 
-            if(!context.Roles.Any(x => x.Name == "Administrator"))
+            if (!context.Cities.Any(x => x.Name == "Sarajevo"))
+            {
+                context.Cities.Add(new City() { Name = "Sarajevo" });
+            }
+
+            if (!context.Cities.Any(x => x.Name == "Banja Luka"))
+            {
+                context.Cities.Add(new City() { Name = "Banja Luka" });
+            }
+
+            context.SaveChanges();
+
+            if(!context.HairSalonCities.Any(x => x.HairSalon.Name == "Studio RAS" && x.City.Name == "Zenica"))
+            {
+                context.Add(new HairSalonCity()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Studio RAS").First().HairSalonId,
+                    CityId = context.Cities.Where(x => x.Name == "Zenica").First().CityId
+                });
+            }
+
+            if (!context.Roles.Any(x => x.Name == "Administrator"))
             {
                 context.Roles.Add(new Role() { Name = "Administrator" });
             }

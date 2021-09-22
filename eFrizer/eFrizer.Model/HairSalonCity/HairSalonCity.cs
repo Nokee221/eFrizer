@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eFrizer.Model.HairSalonCity
+namespace eFrizer.Model
 {
     public partial class HairSalonCity
     {

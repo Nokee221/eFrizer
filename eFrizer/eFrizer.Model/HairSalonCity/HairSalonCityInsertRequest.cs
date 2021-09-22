@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eFrizer.Model.HairSalonCity
+namespace eFrizer.Model
 {
-    class HairSalonCityInsertRequest
+    public class HairSalonCityInsertRequest
     {
         public int HairSalonId { get; set; }
         public int CityId { get; set; }
