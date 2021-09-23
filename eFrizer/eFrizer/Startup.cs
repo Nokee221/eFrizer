@@ -40,6 +40,7 @@ namespace eFrizer
 
             services.AddScoped<ICityService, Services.CityService>();
             services.AddScoped<ICRUDService<Model.HairSalonType, object, HairSalonTypeInsertRequest, object>, Services.HairSalonTypeService>();
+            services.AddScoped<ICRUDService<Model.HairSalonHairSalonType, object, HairSalonHairSalonTypeInsertRequest, object>, Services.HairSalonHairSalonTypeService>();
             services.AddScoped<ICRUDService<Model.ApplicationUser, object, ApplicationUserInsertRequest, object>, Services.ApplicationUserService>();
             services.AddScoped<IHairDresserService, Services.HairDresserService>();
             //TODO: create interfaces for each of these scoped ICRUDServices to make Startup clean

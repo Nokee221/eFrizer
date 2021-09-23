@@ -18,7 +18,12 @@ namespace eFrizer
                 context.HairSalons.Add(new HairSalon() { Name = "Studio RAS" , Address = "Mejdandžik 8", Description = "Pravo dobar frizerski."});
             }
 
-            if(!context.HairSalonTypes.Any(x => x.Name == "Ženski"))
+            if (!context.HairSalons.Any(x => x.Name == "Partner"))
+            {
+                context.HairSalons.Add(new HairSalon() { Name = "Partner", Address = "Maršala Tita 21", Description = "Pravo dobar frizerski salon za muškarce i žene." });
+            }
+
+            if (!context.HairSalonTypes.Any(x => x.Name == "Ženski"))
             {
                 context.HairSalonTypes.Add(new HairSalonType() { Name = "Ženski" });
             }
@@ -55,6 +60,32 @@ namespace eFrizer
                 });
             }
 
+            if(!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Studio RAS" && x.HairSalonType.Name == "Ženski"))
+            {
+                context.Add(new HairSalonHairSalonType()
+                {
+                    HairSalonId = context.HairSalonHairSalonTypes.Where(x => x.HairSalon.Name == "Studio RAS").First().HairSalonId,
+                    HairSalonTypeId = context.HairSalonTypes.Where(x => x.Name == "Ženski").First().HairSalonTypeId
+                });
+            }
+
+            if (!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Partner" && x.HairSalonType.Name == "Muški"))
+            {
+                context.Add(new HairSalonHairSalonType()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId,
+                    HairSalonTypeId = context.HairSalonTypes.Where(x => x.Name == "Muški").First().HairSalonTypeId
+                });
+            }
+
+            if (!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Partner" && x.HairSalonType.Name == "Ženski"))
+            {
+                context.Add(new HairSalonHairSalonType()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId,
+                    HairSalonTypeId = context.HairSalonTypes.Where(x => x.Name == "Ženski").First().HairSalonTypeId
+                });
+            }
 
             if (!context.Roles.Any(x => x.Name == "Administrator"))
             {
