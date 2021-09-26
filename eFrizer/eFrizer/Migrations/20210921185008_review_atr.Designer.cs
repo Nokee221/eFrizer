@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eFrizer.Database;
 
 namespace eFrizer.Migrations
 {
     [DbContext(typeof(eFrizerContext))]
-    partial class eFrizerContextModelSnapshot : ModelSnapshot
+    [Migration("20210921185008_review_atr")]
+    partial class review_atr
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,14 +221,11 @@ namespace eFrizer.Migrations
                     b.Property<int>("ApplicationUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("From")
-                        .HasColumnType("datetime");
-
                     b.Property<int>("HairDresserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("To")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime");
 
                     b.HasKey("ReservationId");
 

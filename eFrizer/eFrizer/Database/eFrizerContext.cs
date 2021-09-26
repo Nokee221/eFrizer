@@ -214,7 +214,7 @@ namespace eFrizer.Database
             {
                 entity.ToTable("Reservation");
 
-                entity.Property(e => e.Time).HasColumnType("datetime");
+                entity.Property(e => e.From).HasColumnType("datetime");
 
                 entity.HasOne(d => d.ApplicationUser)
                     .WithMany(p => p.Reservations)

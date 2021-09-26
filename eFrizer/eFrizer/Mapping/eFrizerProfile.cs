@@ -19,6 +19,18 @@ namespace eFrizer.Mapping
             CreateMap<Database.HairDresser, Model.HairDresser.HairDresser>().ReverseMap();
             CreateMap<Model.HairDresser.HairDresserInsertRequest, Database.HairDresser>().ReverseMap();
 
+            CreateMap<Database.Review, Model.Review.Review>().ReverseMap();
+            CreateMap<Model.Review.ReviewInsertRequest, Database.Review>().ReverseMap();
+
+            CreateMap<Database.Service, Model.Service.Service>().ReverseMap();
+            CreateMap<Model.Service.ServiceInsertRequest, Database.Service>().ReverseMap();
+
+            CreateMap<Database.Reservation, Model.Reservation.Reservation>().ReverseMap();
+            CreateMap<Model.Reservation.ReservationInsertRequest, Database.Reservation>().ReverseMap();
+
+            CreateMap<Database.HairSalonService, Model.HairSalonService.HairSalonService>().ReverseMap();
+            CreateMap<Model.HairSalonService.HairSalonService, Database.HairSalonService>().ReverseMap();
+
         }
     }
 }

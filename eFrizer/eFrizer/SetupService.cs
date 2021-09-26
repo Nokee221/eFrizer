@@ -19,6 +19,27 @@ namespace eFrizer
             }
 
             context.SaveChanges();
+
+            if (!context.Services.Any(x => x.Name == "Šišanje"))
+            {
+                context.Services.Add(new Service() { Name = "Šišanje", Description = "Muško šišanje" });
+            }
+
+            if (!context.Services.Any(x => x.Name == "Farbanje"))
+            {
+                context.Services.Add(new Service() { Name = "Farbanje", Description = "Muško farbanje" });
+            }
+
+            if (!context.Services.Any(x => x.Name == "Brijanje"))
+            {
+                context.Services.Add(new Service() { Name = "Brijanje", Description = "Muško brijanje" });
+            }
+
+            context.SaveChanges();
+
+
+            
+
         }
     }
 }

@@ -1,4 +1,5 @@
 using eFrizer.Database;
+using eFrizer.Model.HairSalonService;
 using eFrizer.Model.Requests;
 using eFrizer.Services;
 using Microsoft.AspNetCore.Builder;
@@ -49,6 +50,10 @@ namespace eFrizer
 
             services.AddScoped<ICRUDService<Model.ApplicationUser, object, ApplicationUserInsertRequest, object>, Services.ApplicationUserService>();
             services.AddScoped<IHairDresserService, Services.HairDresserService>();
+            services.AddScoped<IReviewService, Services.ReviewService>();
+            services.AddScoped<IServiceService, Services.ServiceService>();
+            services.AddScoped<IReservationService, Services.ReservationService>();
+            services.AddScoped<ICRUDService<Model.HairSalonService.HairSalonService, object, HairSalonServiceInsertRequest, object>, Services.HairSalonServiceService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
