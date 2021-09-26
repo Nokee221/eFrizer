@@ -1,4 +1,4 @@
-﻿using eFrizer.Model.HairSalonService;
+﻿using eFrizer.Model;
 using eFrizer.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Controllers
 {
-    public class HairSalonServiceController : BaseCRUDController<Model.HairSalonService.HairSalonService, object, HairSalonServiceInsertRequest, object>
+    public class HairSalonServiceController : BaseCRUDController<Model.HairSalonService , object, HairSalonServiceInsertRequest, object>
     {
-        public HairSalonServiceController(ICRUDService<Model.HairSalonService.HairSalonService, object, HairSalonServiceInsertRequest, object> service)
+        public HairSalonServiceController(ICRUDService<Model.HairSalonService, object, HairSalonServiceInsertRequest, object> service)
             : base(service)
         {
 

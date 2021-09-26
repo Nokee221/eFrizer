@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eFrizer.Model.Reservation
+namespace eFrizer.Model
 {
     public class Reservation
     {
@@ -14,6 +14,6 @@ namespace eFrizer.Model.Reservation
 
         public virtual ApplicationUser ApplicationUser { get; set; }
         
-        public virtual HairDresser.HairDresser HairDresser { get; set; }
+        public virtual HairDresser HairDresser { get; set; }
     }
 }

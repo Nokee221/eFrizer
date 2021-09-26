@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eFrizer.Model.HairSalonService
+namespace eFrizer.Model
 {
     public class HairSalonService
     {
@@ -11,6 +11,6 @@ namespace eFrizer.Model.HairSalonService
 
         public virtual HairSalon HairSalon { get; set; }
         
-        public virtual Service.Service Services { get; set; }
+        public virtual Service Services { get; set; }
     }
 }

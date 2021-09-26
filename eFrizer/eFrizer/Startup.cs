@@ -46,6 +46,12 @@ namespace eFrizer
             //TODO: create interfaces for each of these scoped ICRUDServices to make Startup clean
             services.AddScoped<ICRUDService<Model.Role, RoleSearchRequest, RoleInsertRequest, RoleUpdateRequest>, Services.RoleService>();
             services.AddScoped<ICRUDService<Model.ApplicationUserRole, object, ApplicationUserRoleInsertRequest, object>, Services.ApplicationUserRoleService>();
+
+            services.AddScoped<IReviewService, Services.ReviewService>();
+            services.AddScoped<IServiceService, Services.ServiceService>();
+            services.AddScoped<IReservationService, Services.ReservationService>();
+            services.AddScoped<ICRUDService<Model.HairSalonService, object, HairSalonServiceInsertRequest, object>, Services.HairSalonServiceService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

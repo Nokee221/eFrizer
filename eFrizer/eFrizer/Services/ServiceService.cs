@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using eFrizer.Database;
-using eFrizer.Model.Service;
+using eFrizer.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Services
 {
-    public class ServiceService : BaseCRUDService<Model.Service.Service, Database.Service, ServiceSearchRequest, ServiceInsertRequest, ServiceUpdateRequest>, IServiceService
+    public class ServiceService : BaseCRUDService<Model.Service, Database.Service, ServiceSearchRequest, ServiceInsertRequest, ServiceUpdateRequest>, IServiceService
     {
         public ServiceService(eFrizerContext context, IMapper mapper)
            : base(context, mapper)
@@ -16,7 +16,7 @@ namespace eFrizer.Services
         }
 
 
-        public override IEnumerable<Model.Service.Service> Get(ServiceSearchRequest search = null)
+        public override IEnumerable<Model.Service> Get(ServiceSearchRequest search = null)
         {
             var entity = Context.Set<Database.Service>().AsQueryable();
 
@@ -27,7 +27,7 @@ namespace eFrizer.Services
 
             var list = entity.ToList();
 
-            return _mapper.Map<List<Model.Service.Service>>(list);
+            return _mapper.Map<List<Model.Service>>(list);
         }
     }
 }

@@ -64,7 +64,7 @@ namespace eFrizer
             {
                 context.Add(new HairSalonHairSalonType()
                 {
-                    HairSalonId = context.HairSalonHairSalonTypes.Where(x => x.HairSalon.Name == "Studio RAS").First().HairSalonId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Studio RAS").First().HairSalonId,
                     HairSalonTypeId = context.HairSalonTypes.Where(x => x.Name == "Ženski").First().HairSalonTypeId
                 });
             }
@@ -184,8 +184,19 @@ namespace eFrizer
 
             context.SaveChanges();
 
+            if (!context.Reviews.Any(x => x.ApplicationUser.Name == "User A" && x.HairSalon.Name == "Studio RAS" && x.Text == "Najbolji salon u gradu!!"))
+            {
+                context.Reviews.Add(new Review()
+                {
+                    ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User A").First().ApplicationUserId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Studio RAS").First().HairSalonId,
+                    Text = "Najbolji salon u gradu!!"
 
-            
+                });
+            }
+
+            context.SaveChanges();
+
 
         }
     }

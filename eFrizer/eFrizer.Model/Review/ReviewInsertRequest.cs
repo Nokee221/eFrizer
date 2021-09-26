@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eFrizer.Model.Review
+namespace eFrizer.Model
 {
     public class ReviewInsertRequest
     {
