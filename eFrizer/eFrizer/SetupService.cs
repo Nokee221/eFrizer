@@ -32,7 +32,7 @@ namespace eFrizer
             {
                 context.HairSalonTypes.Add(new HairSalonType() { Name = "Muški" });
             }
-
+            
             //TODO: Separate each data type seed into a function
             if (!context.Cities.Any(x => x.Name == "Zenica"))
             {
@@ -51,7 +51,27 @@ namespace eFrizer
 
             context.SaveChanges();
 
-            if(!context.HairSalonCities.Any(x => x.HairSalon.Name == "Studio RAS" && x.City.Name == "Zenica"))
+            if (!context.HairDressers.Any(x => x.Name == "Kenan" && x.HairSalon.Name == "Partner"))
+            {
+                context.HairDressers.Add(new HairDresser()
+                {
+                    Name = "Kenan",
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId
+                });
+            }
+
+            if (!context.HairDressers.Any(x => x.Name == "Amar" && x.HairSalon.Name == "Partner"))
+            {
+                context.HairDressers.Add(new HairDresser()
+                {
+                    Name = "Amar",
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId
+                });
+            }
+
+            context.SaveChanges();
+
+            if (!context.HairSalonCities.Any(x => x.HairSalon.Name == "Studio RAS" && x.City.Name == "Zenica"))
             {
                 context.Add(new HairSalonCity()
                 {
@@ -197,6 +217,43 @@ namespace eFrizer
 
             context.SaveChanges();
 
+            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Studio RAS" && x.Services.Name == "Šišanje"))
+            {
+                context.HairSalonServices.Add(new HairSalonService()
+                {
+                    ServicesId = context.Services.Where(x => x.Name == "Šišanje").First().ServicesId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Studio RAS").First().HairSalonId,
+                    
+
+                });
+            }
+
+
+            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Partner" && x.Services.Name == "Farbanje"))
+            {
+                context.HairSalonServices.Add(new HairSalonService()
+                {
+                    ServicesId = context.Services.Where(x => x.Name == "Farbanje").First().ServicesId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId,
+
+
+                });
+            }
+
+             context.SaveChanges();
+
+            if (!context.Reservations.Any(x => x.ApplicationUser.Name == "User A" && x.HairDresser.Name == "Kenan" && x.From == new DateTime(2021 , 4, 26 , 12 , 30, 0) && x.To == new DateTime(2021,4,26,13,0,0)))
+            {
+                context.Reservations.Add(new Reservation()
+                {
+                    ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User A").First().ApplicationUserId,
+                    HairDresserId = context.HairDressers.Where(x => x.Name == "Kenan").First().HairDresserId,
+                    From = new DateTime(2021, 4, 26, 12, 30, 0),
+                    To = new DateTime(2021, 4, 26, 13, 0, 0)
+                });
+            }
+
+            context.SaveChanges();
 
         }
     }
