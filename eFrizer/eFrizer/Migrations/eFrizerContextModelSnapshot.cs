@@ -213,6 +213,9 @@ namespace eFrizer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("PictureId");
 
                     b.ToTable("Picture");

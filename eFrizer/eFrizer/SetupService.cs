@@ -60,11 +60,12 @@ namespace eFrizer
                 });
             }
 
+
             if(!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Studio RAS" && x.HairSalonType.Name == "Ženski"))
             {
                 context.Add(new HairSalonHairSalonType()
                 {
-                    HairSalonId = context.HairSalonHairSalonTypes.Where(x => x.HairSalon.Name == "Studio RAS").First().HairSalonId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Studio RAS").First().HairSalonId,
                     HairSalonTypeId = context.HairSalonTypes.Where(x => x.Name == "Ženski").First().HairSalonTypeId
                 });
             }

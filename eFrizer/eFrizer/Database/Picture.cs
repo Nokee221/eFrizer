@@ -14,6 +14,8 @@ namespace eFrizer.Database
 
         public int PictureId { get; set; }
 
+        public string Path { get; set; }
+
         public virtual ICollection<HairSalonPicture> HairSalonPictures { get; set; }
     }
 }
