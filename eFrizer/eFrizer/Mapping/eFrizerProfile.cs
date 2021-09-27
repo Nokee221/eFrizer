@@ -38,6 +38,10 @@ namespace eFrizer.Mapping
             CreateMap<Model.PictureInsertRequest, Database.Picture>().ReverseMap();
             CreateMap<Model.PictureUpdateRequest, Database.Picture>().ReverseMap();
 
+            CreateMap<Database.HairSalonPicture, Model.HairSalonPicture>().ReverseMap();
+            CreateMap<Model.HairSalonPictureInsertRequest, Database.HairSalonPicture>().ReverseMap();
+            CreateMap<Model.HairSalonPictureUpdateRequest, Database.HairSalonPicture>().ReverseMap();
+
         }
     }
 }
