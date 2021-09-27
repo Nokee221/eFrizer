@@ -8,7 +8,7 @@ namespace eFrizer.Model
     {
         public int PictureId { get; set; }
 
-        public string Path { get; set; }7
+        public string Path { get; set; }
 
     }
 }

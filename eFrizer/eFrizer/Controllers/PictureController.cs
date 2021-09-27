@@ -1,34 +1,31 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+﻿using eFrizer.Model;
+using eFrizer.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace eFrizer.Controllers
 {
-    public class PictureController : ControllerBase
+    public class PictureController : BaseCRUDController<Model.Picture, object, PictureInsertRequest, PictureUpdateRequest>
     {
-        private IWebHostEnvironment hostingEnvironment;
-
-        public PictureController(IWebHostEnvironment environment)
+        public PictureController(ICRUDService<Model.Picture, object, PictureInsertRequest, PictureUpdateRequest> service)
+            : base(service)
         {
-            hostingEnvironment = environment;
+            
         }
 
-        [HttpPost("UploadFile")]
-        public async Task<string> UploadFile(IFormFile file)
+        [HttpPost]
+        public override async Task<Model.Picture> Insert([FromForm] PictureInsertRequest request)
         {
-            string imageName = new String(Path.GetFileNameWithoutExtension(file.FileName).Take(10).ToArray()).Replace(' ', '-');
-            imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(file.FileName);
-            string path = Path.Combine(hostingEnvironment.ContentRootPath, "Images/" + imageName);
-            using (var stream = new FileStream(path, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-            return imageName;
+            return await _crudService.Insert(request);
         }
+
+        [HttpPut("{id}")]
+        public override async Task<Model.Picture> Update(int id,[FromForm] PictureUpdateRequest request)
+        {
+            return await _crudService.Update(id, request);
+        }
+
+
+        //TODO: the controller returns only the model on get requests, maybe it should return the bytes for the image?
     }
 }

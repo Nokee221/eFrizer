@@ -15,7 +15,7 @@ namespace eFrizer.Services
         {
         }
 
-        public virtual T Insert(TInsert request)
+        public async virtual Task<T> Insert(TInsert request)
         {
             var set = Context.Set<TDb>();
 
@@ -23,12 +23,12 @@ namespace eFrizer.Services
 
             set.Add(entity);
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             return _mapper.Map<T>(entity);
         }
-
-        public virtual T Update(int id, TUpdate request)
+        //TODO: is there any price paid by declaring all of these endpoints async?
+        public async virtual Task<T> Update(int id, TUpdate request)
         {
             var set = Context.Set<TDb>();
 
@@ -36,7 +36,7 @@ namespace eFrizer.Services
 
             _mapper.Map(request, entity);
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             return _mapper.Map<T>(entity);
         }
