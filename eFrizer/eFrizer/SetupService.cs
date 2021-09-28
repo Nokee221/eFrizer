@@ -1,7 +1,11 @@
 ﻿using eFrizer.Database;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,7 +13,17 @@ namespace eFrizer
 {
     public class SetupService
     {
-        public void Init(eFrizerContext context)
+        private IWebHostEnvironment _hostEnvironment;
+        private eFrizerContext context;
+
+        public SetupService(IWebHostEnvironment environment, eFrizerContext _context)
+        {
+            //TODO: make the naming consistent
+            _hostEnvironment = environment;
+            context = _context;
+        }
+
+        public void Init()
         {
             context.Database.Migrate();
 
@@ -47,6 +61,21 @@ namespace eFrizer
             if (!context.Cities.Any(x => x.Name == "Banja Luka"))
             {
                 context.Cities.Add(new City() { Name = "Banja Luka" });
+            }
+
+            if(!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaA")))
+            {
+                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaA") });
+            }
+
+            if (!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaB")))
+            {
+                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaB") });
+            }
+
+            if (!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaC")))
+            {
+                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaC") });
             }
 
             context.SaveChanges();

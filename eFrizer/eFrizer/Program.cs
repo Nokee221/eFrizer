@@ -15,11 +15,14 @@ namespace eFrizer
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
+            var host = CreateHostBuilder(args).Build(); 
+            
+            
             using (var scope = host.Services.CreateScope())
             {
-                var database = scope.ServiceProvider.GetService<eFrizerContext>();
-                new SetupService().Init(database);
+                scope.ServiceProvider.GetRequiredService<SetupService>();
+                SetupService seeder = scope.ServiceProvider.GetRequiredService<SetupService>();
+                seeder.Init();
             }
             host.Run();
         }
