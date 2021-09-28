@@ -195,6 +195,38 @@ namespace eFrizer
                 });
             }
 
+            
+
+
+            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Studio RAS" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaA"))
+            {
+                context.HairSalonPictures.Add(new HairSalonPicture()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Studio RAS").First().HairSalonId,
+                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaA")).First().PictureId,
+                });
+            }
+
+            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Partner" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaB"))
+            {
+                context.HairSalonPictures.Add(new HairSalonPicture()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId,
+                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaB")).First().PictureId,
+                });
+            }
+
+            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Partner" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaC"))
+            {
+                context.HairSalonPictures.Add(new HairSalonPicture()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId,
+                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaC")).First().PictureId,
+                });
+            }
+
+
+
             context.SaveChanges();
         }
     }
