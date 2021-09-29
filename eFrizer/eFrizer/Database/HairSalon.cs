@@ -30,3 +30,5 @@ namespace eFrizer.Database
         public virtual ICollection<Review> Reviews { get; set; }
     }
 }
+
+
