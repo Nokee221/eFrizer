@@ -18,6 +18,9 @@ namespace eFrizer.Database
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Username { get; set; }
+        public string PasswordHash { get; set; }
+        public string PasswordSalt { get; set; }
+        public bool? Status { get; set; }
 
         public virtual ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; }
         public virtual ICollection<Reservation> Reservations { get; set; }
