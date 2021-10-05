@@ -1,6 +1,9 @@
 using eFrizer.Database;
+using eFrizer.Filters;
 using eFrizer.Model;
+using eFrizer.Security;
 using eFrizer.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -27,10 +30,30 @@ namespace eFrizer
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllers();
+            services.AddControllers(x =>
+            {
+                x.Filters.Add<ErrorFilter>();
+            });
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "eFrizer", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "eFrizer API", Version = "v1" });
+
+                c.AddSecurityDefinition("basicAuth", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "basic"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "basicAuth"}
+                        },
+                        new string[]{ }
+                    }
+                });
             });
 
             services.AddDbContext<eFrizerContext>(options =>
@@ -41,7 +64,7 @@ namespace eFrizer
             services.AddScoped<ICityService, Services.CityService>();
             services.AddScoped<ICRUDService<Model.HairSalonType, object, HairSalonTypeInsertRequest, object>, Services.HairSalonTypeService>();
             services.AddScoped<ICRUDService<Model.HairSalonHairSalonType, object, HairSalonHairSalonTypeInsertRequest, object>, Services.HairSalonHairSalonTypeService>();
-            services.AddScoped<ICRUDService<Model.ApplicationUser, object, ApplicationUserInsertRequest, object>, Services.ApplicationUserService>();
+            services.AddScoped<IApplicationUserService, Services.ApplicationUserService>();
             services.AddScoped<IHairDresserService, Services.HairDresserService>();
             //TODO: create interfaces for each of these scoped ICRUDServices to make Startup clean
             services.AddScoped<ICRUDService<Model.Role, RoleSearchRequest, RoleInsertRequest, RoleUpdateRequest>, Services.RoleService>();
@@ -56,6 +79,9 @@ namespace eFrizer
             services.AddScoped<IHairSalonPictureService, Services.HairSalonPictureService>();
 
             services.AddScoped<SetupService>();
+
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,6 +97,10 @@ namespace eFrizer
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseAuthorization();
 
