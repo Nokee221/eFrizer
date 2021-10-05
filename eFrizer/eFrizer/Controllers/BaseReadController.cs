@@ -1,4 +1,5 @@
 ﻿using eFrizer.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace eFrizer.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class BaseReadController<T, TSearch> : ControllerBase where T : class where TSearch : class
     {
         protected readonly IReadService<T, TSearch> _service;
@@ -20,15 +22,15 @@ namespace eFrizer.Controllers
 
 
         [HttpGet]
-        public virtual IEnumerable<T> Get([FromQuery] TSearch search)
+        public async virtual Task<List<T>> Get([FromQuery] TSearch search)
         {
-            return _service.Get(search);
+            return await _service.Get(search);
         }
 
         [HttpGet("{id}")]
-        public virtual T GetById(int id)
+        public async virtual Task<T> GetById(int id)
         {
-            return _service.GetById(id);
+            return await _service.GetById(id);
         }
     }
 }
