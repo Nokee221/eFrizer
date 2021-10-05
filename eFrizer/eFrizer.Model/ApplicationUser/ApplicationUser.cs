@@ -1,5 +1,7 @@
 ﻿
 
+using System.Collections.Generic;
+
 namespace eFrizer.Model
 {
     public partial class ApplicationUser
@@ -9,5 +11,6 @@ namespace eFrizer.Model
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Username { get; set; }
+        public virtual ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; }
     }
 }

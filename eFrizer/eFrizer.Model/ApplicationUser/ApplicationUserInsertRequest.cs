@@ -9,5 +9,9 @@ namespace eFrizer.Model
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Username { get; set; }
+        public string Password { get; set; }
+        public string PasswordConfirmation { get; set; }
+        public bool? Status { get; set; }
+        public List<int> Roles { get; set; } = new List<int>();
     }
 }
