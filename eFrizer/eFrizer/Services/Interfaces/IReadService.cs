@@ -7,8 +7,8 @@ namespace eFrizer.Services
 {
     public interface IReadService<T, TSearch> where T : class where TSearch : class
     {
-        IEnumerable<T> Get(TSearch search = null);
-        public T GetById(int id);
+        public Task<List<T>> Get(TSearch search = null);
+        public Task<T> GetById(int id);
     }
     
 }

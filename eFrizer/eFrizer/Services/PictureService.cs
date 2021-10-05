@@ -60,7 +60,7 @@ namespace eFrizer.Services
         {
             string imageName = new String(Path.GetFileNameWithoutExtension(file.FileName).Take(10).ToArray()).Replace(' ', '-');
             imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(file.FileName);
-            string path = Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + imageName);
+            string path = Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + imageName);
             using (var stream = new FileStream(path, FileMode.Create))
             {
                 await file.CopyToAsync(stream);

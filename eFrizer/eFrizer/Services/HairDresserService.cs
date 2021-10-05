@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using eFrizer.Database;
 using eFrizer.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace eFrizer.Services
         }
 
 
-        public override IEnumerable<Model.HairDresser> Get(HairDresserSearchRequest search = null)
+        public async override Task<List<Model.HairDresser>> Get(HairDresserSearchRequest search = null)
         {
             var entity = Context.Set<Database.HairDresser>().AsQueryable();
 
@@ -25,7 +26,7 @@ namespace eFrizer.Services
                 entity = entity.Where(x => x.Name.Contains(search.Name));
             }
 
-            var list = entity.ToList();
+            var list = await entity.ToListAsync();
 
             return _mapper.Map<List<Model.HairDresser>>(list);
         }

@@ -15,7 +15,7 @@ namespace eFrizer.Services
         {
         }
 
-        public override IEnumerable<Model.HairSalon> Get(HairSalonSearchRequest search = null)
+        public async override Task<List<Model.HairSalon>> Get(HairSalonSearchRequest search = null)
         {
             var entity = Context.Set<Database.HairSalon>().AsQueryable();
 

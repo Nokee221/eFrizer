@@ -33,7 +33,7 @@ namespace eFrizer.Services
             return _mapper.Map<Model.HairSalonPicture>(newEntity);
         }
 
-        public async Task<Model.HairSalonPicture> Insert(HairSalonPictureInsertRequest request)
+        public override async Task<Model.HairSalonPicture> Insert(HairSalonPictureInsertRequest request)
         {
             var entity = new Database.HairSalonPicture()
             {

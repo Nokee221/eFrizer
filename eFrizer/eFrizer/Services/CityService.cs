@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using eFrizer.Database;
 using eFrizer.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace eFrizer.Services
         {
         }
 
-        public override IEnumerable<Model.City> Get(CitySearchRequest search = null)
+        public async override Task<List<Model.City>> Get(CitySearchRequest search = null)
         {
             var entity = Context.Set<Database.City>().AsQueryable();
 
@@ -24,7 +25,7 @@ namespace eFrizer.Services
                 entity = entity.Where(x => x.Name.Contains(search.Name));
             }
 
-            var list = entity.ToList();
+            var list = await entity.ToListAsync();
 
             return _mapper.Map<List<Model.City>>(list);
         }
