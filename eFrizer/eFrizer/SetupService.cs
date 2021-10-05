@@ -1,4 +1,5 @@
 ﻿using eFrizer.Database;
+using eFrizer.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -59,19 +60,19 @@ namespace eFrizer
                 context.Cities.Add(new City() { Name = "Banja Luka" });
             }
 
-            if(!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaA")))
+            if(!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaA")))
             {
-                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaA") });
+                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaA") });
             }
 
-            if (!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaB")))
+            if (!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaB")))
             {
-                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaB") });
+                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaB") });
             }
 
-            if (!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaC")))
+            if (!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaC")))
             {
-                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaC") });
+                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaC") });
             }
 
             context.SaveChanges();
@@ -155,7 +156,20 @@ namespace eFrizer
 
             if(!context.ApplicationUsers.Any(x => x.Name == "User A"))
             {
-                context.ApplicationUsers.Add(new ApplicationUser() { Name = "User A", Surname = "A User", Username = "auser" });
+                var password = "1234";
+                var salt = AuthHelper.GenerateSalt();
+                var hash = AuthHelper.GenerateHash(salt, password);
+
+                var user = new ApplicationUser()
+                {
+                    Name = "User A",
+                    Surname = "A User",
+                    Username = "auser",
+                    PasswordSalt = salt,
+                    PasswordHash = hash
+                };
+
+                context.ApplicationUsers.Add(user);
             }
 
             if (!context.ApplicationUsers.Any(x => x.Name == "User M"))
@@ -219,7 +233,7 @@ namespace eFrizer
                 context.HairSalonPictures.Add(new HairSalonPicture()
                 {
                     HairSalonId = context.HairSalons.Where(x => x.Name == "Studio RAS").First().HairSalonId,
-                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaA")).First().PictureId,
+                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaA")).First().PictureId,
                 });
             }
 
@@ -228,7 +242,7 @@ namespace eFrizer
                 context.HairSalonPictures.Add(new HairSalonPicture()
                 {
                     HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId,
-                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaB")).First().PictureId,
+                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaB")).First().PictureId,
                 });
             }
 
@@ -237,7 +251,7 @@ namespace eFrizer
                 context.HairSalonPictures.Add(new HairSalonPicture()
                 {
                     HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId,
-                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath, "Images/" + "SlikaC")).First().PictureId,
+                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaC")).First().PictureId,
                 });
             }
 
