@@ -6,4 +6,8 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\eFrizer.Model\eFrizer.Model.csproj" />
+  </ItemGroup>
+
 </Project>
