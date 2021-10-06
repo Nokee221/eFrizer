@@ -58,6 +58,13 @@ namespace eFrizer.Win
             return result;
         }
 
+        public async Task<T> Login<T>(string username , string pass)
+        {
+            var url = $"{Properties.Settings.Default.ApiURL}/{_route}?Username={username}&Password={pass}";
+            var result = await url.WithBasicAuth(username, pass).GetJsonAsync<T>();
+            return result;
+        }
+
     }
 }
 

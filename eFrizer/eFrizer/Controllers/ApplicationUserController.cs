@@ -9,19 +9,28 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Controllers
 {
+
     public class ApplicationUserController : BaseCRUDController<Model.ApplicationUser, ApplicationUserSearchRequest, ApplicationUserInsertRequest, object>
     {
+        private readonly IApplicationUserService service;
         public ApplicationUserController(IApplicationUserService service)
             : base(service)
         {
-
+            this.service = service;
         }
 
         [Authorize(Roles = "Administrator")]
         [HttpGet]
         public override Task<List<ApplicationUser>> Get([FromQuery] ApplicationUserSearchRequest search)
         {
-            return base.Get(search);
+           return base.Get(search);
+        }
+
+        [AllowAnonymous]     
+        [HttpGet("/Login")]
+        public async Task<ApplicationUser> Login([FromQuery]ApplicationUserLoginRequest request)
+        {
+            return await service.Login(request.Username, request.Password);
         }
     }
 }
