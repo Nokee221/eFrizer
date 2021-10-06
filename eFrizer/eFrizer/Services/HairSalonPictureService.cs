@@ -35,17 +35,8 @@ namespace eFrizer.Services
 
         public override async Task<Model.HairSalonPicture> Insert(HairSalonPictureInsertRequest request)
         {
-            var entity = new Database.HairSalonPicture()
-            {
-                HairSalonId = request.HairSalonId,
-                PictureId = request.PictureId
-            };
 
-            Context.Add(entity);
-
-            await Context.SaveChangesAsync();
-
-            return _mapper.Map<Model.HairSalonPicture>(entity);
+            return await base.Insert(request);
         }
     }
 }
