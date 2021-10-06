@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eFrizer", "eFrizer\eFrizer.csproj", "{098543B2-B7CC-415F-AC0E-42A71B1424A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFrizer.Model", "eFrizer.Model\eFrizer.Model.csproj", "{ECB31B0F-AA97-45C5-AAB5-82CEE5570CDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eFrizer.Model", "eFrizer.Model\eFrizer.Model.csproj", "{ECB31B0F-AA97-45C5-AAB5-82CEE5570CDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFrizer.Win", "eFrizer.Win\eFrizer.Win.csproj", "{2C0211FF-B805-4FAE-86AC-94EA228507E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{ECB31B0F-AA97-45C5-AAB5-82CEE5570CDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECB31B0F-AA97-45C5-AAB5-82CEE5570CDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECB31B0F-AA97-45C5-AAB5-82CEE5570CDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C0211FF-B805-4FAE-86AC-94EA228507E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C0211FF-B805-4FAE-86AC-94EA228507E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C0211FF-B805-4FAE-86AC-94EA228507E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C0211FF-B805-4FAE-86AC-94EA228507E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
