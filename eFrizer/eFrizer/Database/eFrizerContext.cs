@@ -80,21 +80,7 @@ namespace eFrizer.Database
                     .HasMaxLength(50);
             });
 
-            modelBuilder.Entity<HairDresser>(entity =>
-            {
-                entity.ToTable("HairDresser");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.HasOne(d => d.HairSalon)
-                    .WithMany(p => p.HairDressers)
-                    .HasForeignKey(d => d.HairSalonId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_73");
-            });
-
+            
             modelBuilder.Entity<HairSalon>(entity =>
             {
                 entity.ToTable("HairSalon");
