@@ -29,7 +29,7 @@ namespace eFrizer.Mapping
             CreateMap<Database.Role, Model.Role>().ReverseMap();
             CreateMap<Model.RoleInsertRequest, Database.Role>().ReverseMap();
             CreateMap<Model.RoleUpdateRequest, Database.Role>().ReverseMap();
-            CreateMap<Model.RoleSearchRequest, Database.Role>().ReverseMap();
+            
 
             CreateMap<Database.ApplicationUserRole, Model.ApplicationUserRole>().ReverseMap();
             CreateMap<Model.ApplicationUserRoleInsertRequest, Database.ApplicationUserRole>().ReverseMap();
