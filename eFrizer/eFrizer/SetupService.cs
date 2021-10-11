@@ -77,21 +77,19 @@ namespace eFrizer
 
             context.SaveChanges();
 
-            if (!context.HairDressers.Any(x => x.Name == "Kenan" && x.HairSalon.Name == "Partner"))
+            if (!context.HairDressers.Any(x => x.Name == "Kenan"))
             {
                 context.HairDressers.Add(new HairDresser()
                 {
-                    Name = "Kenan",
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId
+                    Name = "Kenan"
                 });
             }
 
-            if (!context.HairDressers.Any(x => x.Name == "Amar" && x.HairSalon.Name == "Partner"))
+            if (!context.HairDressers.Any(x => x.Name == "Amar"))
             {
                 context.HairDressers.Add(new HairDresser()
                 {
-                    Name = "Amar",
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId
+                    Name = "Amar"
                 });
             }
 
