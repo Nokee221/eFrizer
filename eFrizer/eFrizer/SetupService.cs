@@ -172,6 +172,24 @@ namespace eFrizer
                 context.ApplicationUsers.Add(user);
             }
 
+            if (!context.ApplicationUsers.Any(x => x.Name == "User A2"))
+            {
+                var password = "1234";
+                var salt = AuthHelper.GenerateSalt();
+                var hash = AuthHelper.GenerateHash(salt, password);
+
+                var user = new ApplicationUser()
+                {
+                    Name = "User A2",
+                    Surname = "A2 User",
+                    Username = "a2user",
+                    PasswordSalt = salt,
+                    PasswordHash = hash
+                };
+
+                context.ApplicationUsers.Add(user);
+            }
+
             if (!context.ApplicationUsers.Any(x => x.Name == "User M"))
             {
                 context.ApplicationUsers.Add(new ApplicationUser() { Name = "User M", Surname = "M User", Username = "muser" });
@@ -194,6 +212,15 @@ namespace eFrizer
                 context.ApplicationUserRoles.Add(new ApplicationUserRole()
                 {
                     ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User A").First().ApplicationUserId,
+                    RoleId = context.Roles.Where(x => x.Name == "Administrator").First().RoleId
+                });
+            }
+
+            if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "User A2" && x.Role.Name == "Administrator"))
+            {
+                context.ApplicationUserRoles.Add(new ApplicationUserRole()
+                {
+                    ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User A2").First().ApplicationUserId,
                     RoleId = context.Roles.Where(x => x.Name == "Administrator").First().RoleId
                 });
             }
