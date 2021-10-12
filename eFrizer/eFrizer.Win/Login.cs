@@ -28,7 +28,15 @@ namespace eFrizer.Win
             try
             {
                 var result = await _user.Login<ApplicationUser>(txtUsername.Text , txtPassword.Text);
-                MessageBox.Show("fala kurcu");
+                if(result.ApplicationUserRoles.Any(x => x.Role.Name == "Manager"))
+                {
+                    ManagerHome frmmanagerHome = new ManagerHome(result);
+                    frmmanagerHome.ShowDialog();
+                }
+                else if(result.ApplicationUserRoles.Any(x => x.Role.Name == "Administrator"))
+                {
+
+                }
             }
             catch(Exception ex)
             {

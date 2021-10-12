@@ -65,6 +65,14 @@ namespace eFrizer.Win
             return result;
         }
 
+        public async Task<T> Register<T>(object request)
+        {
+            var url = $"{Properties.Settings.Default.ApiURL}/{_route}";
+            var result = await url.WithHeader("Authorization" , "Basic")
+                .PostJsonAsync(request).ReceiveJson<T>();
+            return result;
+        }
+
     }
 }
 

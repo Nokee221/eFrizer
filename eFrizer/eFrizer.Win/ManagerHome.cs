@@ -14,10 +14,12 @@ namespace eFrizer.Win
     public partial class ManagerHome : Form
     {
         private readonly APIService _hairSalons = new APIService("HairSalon");
+        private readonly ApplicationUser _user;
 
-        public ManagerHome()
+        public ManagerHome(ApplicationUser user)
         {
             InitializeComponent();
+            _user = user;
         }
 
         private async Task LoadData()

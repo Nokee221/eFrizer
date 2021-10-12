@@ -1,4 +1,5 @@
 ﻿using eFrizer.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace eFrizer.Controllers
             _crudService = service;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async virtual Task<T> Insert([FromBody] TInsert request)
         {

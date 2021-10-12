@@ -32,5 +32,19 @@ namespace eFrizer.Controllers
         {
             return await service.Login(request.Username, request.Password);
         }
+
+
+        [AllowAnonymous]
+        [HttpPost("/Register")]
+        public async Task<ApplicationUser> Register([FromBody] ApplicationUserInsertRequest request)
+        {
+
+            request.Roles.Add(service.GetRole("Manager").Id);
+
+            return await service.Insert(request);
+        }
+
+
+
     }
 }

@@ -21,7 +21,7 @@ namespace eFrizer.Services
         {
             var entity = Context.Set<Database.Role>().AsQueryable();
 
-            if(!string.IsNullOrWhiteSpace(search?.Name))
+            if (!string.IsNullOrWhiteSpace(search?.Name))
             {
                 entity = entity.Where(x => x.Name.Contains(search.Name));
             }
@@ -29,5 +29,16 @@ namespace eFrizer.Services
             var list = await entity.ToListAsync();
             return _mapper.Map<List<Model.Role>>(list);
         }
+
+
+        public Model.Role GetById(int id)
+        {
+            var entity = Context.Roles.Find(id);
+
+            return _mapper.Map<Model.Role>(entity);
+        }
+
+
+
     }
 }
