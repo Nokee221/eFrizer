@@ -70,6 +70,12 @@ namespace eFrizer.Database
                     .HasName("PK_hairsalon_service");
             });
 
+            modelBuilder.Entity<HairSalonHairDresser>(entity =>
+            {
+                entity.HasKey(k => new { k.HairSalonId, k.HairDresserId })
+                    .HasName("PK_hairsalon_hairdresser");
+            });
+
             OnModelCreatingPartial(modelBuilder);
         }
 
