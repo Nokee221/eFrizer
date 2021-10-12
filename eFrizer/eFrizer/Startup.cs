@@ -66,6 +66,7 @@ namespace eFrizer
             services.AddScoped<ICRUDService<Model.HairSalonHairSalonType, object, HairSalonHairSalonTypeInsertRequest, object>, Services.HairSalonHairSalonTypeService>();
             services.AddScoped<IApplicationUserService, Services.ApplicationUserService>();
             services.AddScoped<IHairDresserService, Services.HairDresserService>();
+            services.AddScoped<IManagerService, Services.ManagerService>();
             //TODO: create interfaces for each of these scoped ICRUDServices to make Startup clean
             services.AddScoped<ICRUDService<Model.Role, RoleSearchRequest, RoleInsertRequest, RoleUpdateRequest>, Services.RoleService>();
             services.AddScoped<ICRUDService<Model.ApplicationUserRole, object, ApplicationUserRoleInsertRequest, object>, Services.ApplicationUserRoleService>();
@@ -74,6 +75,7 @@ namespace eFrizer
             services.AddScoped<IServiceService, Services.ServiceService>();
             services.AddScoped<IReservationService, Services.ReservationService>();
             services.AddScoped<ICRUDService<Model.HairSalonService, object, HairSalonServiceInsertRequest, object>, Services.HairSalonServiceService>();
+            services.AddScoped<ICRUDService<Model.HairSalonManager, HairSalonManagerSearchRequest, HairSalonManagerInsertRequest, object>, Services.HairSalonManagerService>();
 
             services.AddScoped<ICRUDService<Model.Picture, object, PictureInsertRequest, PictureUpdateRequest>, Services.PictureService>();
             services.AddScoped<IHairSalonPictureService, Services.HairSalonPictureService>();

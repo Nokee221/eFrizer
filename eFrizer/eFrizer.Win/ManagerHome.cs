@@ -13,32 +13,38 @@ namespace eFrizer.Win
 {
     public partial class ManagerHome : Form
     {
-        private readonly APIService _hairSalons = new APIService("HairSalon");
-        private readonly ApplicationUser _user;
+        private readonly APIService _hairSalons = new APIService("HairSalonManager");
+        private readonly Manager _user;
 
-        public ManagerHome(ApplicationUser user)
+        public ManagerHome(Manager user)
         {
             InitializeComponent();
+            dgvManagerHome.AutoGenerateColumns = false;
             _user = user;
         }
 
         private async Task LoadData()
         {
             //await LoadManager();
-            APIService.Username = "auser";
-            APIService.Password = "1234";
+            
             await LoadHairSalons();
         }
 
         private async Task LoadHairSalons()
         {
-            var result = await _hairSalons.Get<List<HairSalon>>(null);
+            var result = await _hairSalons.Get<List<HairSalonManager>>(new HairSalonManagerSearchRequest() { ManagerId = _user.ApplicationUserId});
+            
             dgvManagerHome.DataSource = result;
         }
 
         private async void ManagerHome_Load(object sender, EventArgs e)
         {
             await LoadData();
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
 
         //private Task LoadManager()

@@ -210,23 +210,27 @@ namespace eFrizer
                 context.ApplicationUsers.Add(user);
             }
 
-            if (!context.ApplicationUsers.Any(x => x.Name == "User M"))
+            if (!context.Managers.Any(x => x.Name == "User M"))
             {
                 var password = "1234";
                 var salt = AuthHelper.GenerateSalt();
                 var hash = AuthHelper.GenerateHash(salt, password);
 
-                var user = new ApplicationUser()
+                var user = new Manager()
                 {
                     Name = "User M",
                     Surname = "M User",
                     Username = "muser",
                     PasswordSalt = salt,
-                    PasswordHash = hash
+                    PasswordHash = hash,
+                    Description = "First manager"
                 };
 
-                context.ApplicationUsers.Add(user);
+                context.Managers.Add(user);
             }
+
+        
+
 
             if (!context.ApplicationUsers.Any(x => x.Name == "User H"))
             {
@@ -240,7 +244,19 @@ namespace eFrizer
 
             context.SaveChanges();
 
-            if(!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "User A" && x.Role.Name == "Administrator"))
+
+            if (!context.HairSalonManagers.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Manager.Name == "User M"))
+            {
+                context.Add(new HairSalonManager()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
+                    ManagerId = context.Managers.Where(x => x.Name == "User M").First().ApplicationUserId
+                });
+            }
+
+
+
+            if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "User A" && x.Role.Name == "Administrator"))
             {
                 context.ApplicationUserRoles.Add(new ApplicationUserRole()
                 {

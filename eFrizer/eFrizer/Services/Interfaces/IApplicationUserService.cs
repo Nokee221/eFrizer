@@ -11,5 +11,6 @@ namespace eFrizer.Services
     {
         Task<Model.ApplicationUser> Login(string username, string password);
         Task<Model.Role> GetRole(string roleName);
+        Task<Model.Manager> RegisterManager(ManagerInsertRequest request);
     }
 }

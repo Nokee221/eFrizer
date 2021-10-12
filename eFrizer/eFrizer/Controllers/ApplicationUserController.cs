@@ -36,12 +36,12 @@ namespace eFrizer.Controllers
 
         [AllowAnonymous]
         [HttpPost("/Register")]
-        public async Task<ApplicationUser> Register([FromBody] ApplicationUserInsertRequest request)
+        public async Task<Manager> Register([FromBody] ManagerInsertRequest request)
         {
 
             request.Roles.Add(service.GetRole("Manager").Id);
 
-            return await service.Insert(request);
+            return await service.RegisterManager(request);
         }
 
 

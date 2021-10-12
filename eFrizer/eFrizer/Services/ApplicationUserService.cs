@@ -106,5 +106,37 @@ namespace eFrizer.Services
 
             
         }
+
+        public async Task<Model.Manager> RegisterManager(ManagerInsertRequest request)
+        {
+            //TODO: Check if username already exists!
+            var entity = _mapper.Map<Database.Manager>(request);
+            Context.Add(entity);
+
+            if (request.Password != request.PasswordConfirmation)
+            {
+                throw new UserException("Passwordi se ne podudaraju!");
+            }
+
+            entity.PasswordSalt = AuthHelper.GenerateSalt();
+            entity.PasswordHash = AuthHelper.GenerateHash(entity.PasswordSalt, request.Password);
+
+            await Context.SaveChangesAsync();
+
+            foreach (var uloga in request.Roles)
+            {
+                Database.ApplicationUserRole appUserRole = new Database.ApplicationUserRole();
+                appUserRole.ApplicationUserId = entity.ApplicationUserId;
+                appUserRole.RoleId = uloga;
+                //TODO: add ChangeDate prop to model
+                //appUserRole.ChangeDate = DateTime.Now;
+
+                Context.ApplicationUserRoles.Add(appUserRole);
+            }
+
+            Context.SaveChanges();
+
+            return _mapper.Map<Model.Manager>(entity);
+        }
     }
 }

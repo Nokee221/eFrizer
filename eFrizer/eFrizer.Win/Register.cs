@@ -15,7 +15,7 @@ namespace eFrizer.Win
     {
 
         APIService korisniciServis = new APIService("Register");
-        APIService rolesService = new APIService("Role");
+        
         public Register()
         {
             InitializeComponent();
@@ -29,7 +29,7 @@ namespace eFrizer.Win
         private async void button1_Click(object sender, EventArgs e)
         {
             
-            ApplicationUserInsertRequest request = new ApplicationUserInsertRequest()
+            ManagerInsertRequest request = new ManagerInsertRequest()
             {
                 Name = txtName.Text,
                 Surname = txtSurname.Text,
@@ -37,10 +37,10 @@ namespace eFrizer.Win
                 Password = txtPassword.Text,
                 PasswordConfirmation = txtConfirmitivePass.Text,
                 Status = true,
-
+                
             };
 
-            var user = await korisniciServis.Register<ApplicationUser>(request);
+            var user = await korisniciServis.Register<Manager>(request);
 
 
             ManagerHome managerHome = new ManagerHome(user);

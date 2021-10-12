@@ -40,6 +40,7 @@ namespace eFrizer.Win
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvManagerHome)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -55,12 +56,15 @@ namespace eFrizer.Win
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Hair salons";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // dgvManagerHome
             // 
             this.dgvManagerHome.AllowUserToAddRows = false;
             this.dgvManagerHome.AllowUserToDeleteRows = false;
             this.dgvManagerHome.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvManagerHome.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Name});
             this.dgvManagerHome.Location = new System.Drawing.Point(6, 22);
             this.dgvManagerHome.Name = "dgvManagerHome";
             this.dgvManagerHome.ReadOnly = true;
@@ -151,6 +155,13 @@ namespace eFrizer.Win
             this.textBox1.Size = new System.Drawing.Size(100, 23);
             this.textBox1.TabIndex = 0;
             // 
+            // Name
+            // 
+            this.Name.DataPropertyName = "HairSalonName";
+            this.Name.HeaderText = "Name";
+            this.Name.Name = "Name";
+            this.Name.ReadOnly = true;
+            // 
             // ManagerHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -158,7 +169,6 @@ namespace eFrizer.Win
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Name = "ManagerHome";
             this.Text = "ManagerHome";
             this.Load += new System.EventHandler(this.ManagerHome_Load);
             this.groupBox1.ResumeLayout(false);
@@ -182,5 +192,6 @@ namespace eFrizer.Win
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Name;
     }
 }
