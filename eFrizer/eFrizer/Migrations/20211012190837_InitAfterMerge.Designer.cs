@@ -10,8 +10,8 @@ using eFrizer.Database;
 namespace eFrizer.Migrations
 {
     [DbContext(typeof(eFrizerContext))]
-    [Migration("20211012182944_AddedHSHDasDBset")]
-    partial class AddedHSHDasDBset
+    [Migration("20211012190837_InitAfterMerge")]
+    partial class InitAfterMerge
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

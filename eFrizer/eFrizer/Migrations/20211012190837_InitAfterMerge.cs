@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eFrizer.Migrations
 {
-    public partial class Init : Migration
+    public partial class InitAfterMerge : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -236,23 +236,25 @@ namespace eFrizer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HairSalonHairDresser",
+                name: "HairSalonHairDressers",
                 columns: table => new
                 {
                     HairSalonId = table.Column<int>(type: "int", nullable: false),
-                    HairDresserId = table.Column<int>(type: "int", nullable: false)
+                    HairDresserId = table.Column<int>(type: "int", nullable: false),
+                    WorkingFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    WorkingTo = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_hairsalon_hairdresser", x => new { x.HairSalonId, x.HairDresserId });
                     table.ForeignKey(
-                        name: "FK_HairSalonHairDresser_ApplicationUsers_HairDresserId",
+                        name: "FK_HairSalonHairDressers_ApplicationUsers_HairDresserId",
                         column: x => x.HairDresserId,
                         principalTable: "ApplicationUsers",
                         principalColumn: "ApplicationUserId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_HairSalonHairDresser_HairSalons_HairSalonId",
+                        name: "FK_HairSalonHairDressers_HairSalons_HairSalonId",
                         column: x => x.HairSalonId,
                         principalTable: "HairSalons",
                         principalColumn: "HairSalonId",
@@ -329,8 +331,8 @@ namespace eFrizer.Migrations
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HairSalonHairDresser_HairDresserId",
-                table: "HairSalonHairDresser",
+                name: "IX_HairSalonHairDressers_HairDresserId",
+                table: "HairSalonHairDressers",
                 column: "HairDresserId");
 
             migrationBuilder.CreateIndex(
@@ -373,7 +375,7 @@ namespace eFrizer.Migrations
                 name: "HairSalonCities");
 
             migrationBuilder.DropTable(
-                name: "HairSalonHairDresser");
+                name: "HairSalonHairDressers");
 
             migrationBuilder.DropTable(
                 name: "HairSalonHairSalonTypes");
