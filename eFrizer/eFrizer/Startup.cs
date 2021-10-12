@@ -78,6 +78,8 @@ namespace eFrizer
             services.AddScoped<ICRUDService<Model.Picture, object, PictureInsertRequest, PictureUpdateRequest>, Services.PictureService>();
             services.AddScoped<IHairSalonPictureService, Services.HairSalonPictureService>();
 
+            services.AddScoped<IHairSalonHairDresserService, Services.HairSalonHairDresserService>();
+
             services.AddScoped<SetupService>();
 
             services.AddAuthentication("BasicAuthentication")
