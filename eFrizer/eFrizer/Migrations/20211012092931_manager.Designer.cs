@@ -10,8 +10,8 @@ using eFrizer.Database;
 namespace eFrizer.Migrations
 {
     [DbContext(typeof(eFrizerContext))]
-    [Migration("20210930111351_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20211012092931_manager")]
+    partial class manager
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -13,6 +13,7 @@ namespace eFrizer.Database
         }
 
         public int HairDresserId { get; set; }
+
         public string Name { get; set; }
         public int HairSalonId { get; set; }
 
