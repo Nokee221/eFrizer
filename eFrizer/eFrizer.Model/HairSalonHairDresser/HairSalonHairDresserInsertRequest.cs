@@ -8,5 +8,7 @@ namespace eFrizer.Model
     {
         public int HairSalonId { get; set; }
         public int HairDresserId { get; set; }
+        public string WorkingFrom { get; set; }
+        public string WorkingTo { get; set; }
     }
 }
