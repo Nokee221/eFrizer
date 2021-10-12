@@ -287,11 +287,11 @@ namespace eFrizer
 
             context.SaveChanges();
 
-            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Studio RAS" && x.Services.Name == "Šišanje"))
+            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Studio RAS" && x.Service.Name == "Šišanje"))
             {
                 context.HairSalonServices.Add(new HairSalonService()
                 {
-                    ServicesId = context.Services.Where(x => x.Name == "Šišanje").First().ServicesId,
+                    ServiceId = context.Services.Where(x => x.Name == "Šišanje").First().ServiceId,
                     HairSalonId = context.HairSalons.Where(x => x.Name == "Studio RAS").First().HairSalonId,
                     
 
@@ -299,11 +299,11 @@ namespace eFrizer
             }
 
 
-            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Partner" && x.Services.Name == "Farbanje"))
+            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Partner" && x.Service.Name == "Farbanje"))
             {
                 context.HairSalonServices.Add(new HairSalonService()
                 {
-                    ServicesId = context.Services.Where(x => x.Name == "Farbanje").First().ServicesId,
+                    ServiceId = context.Services.Where(x => x.Name == "Farbanje").First().ServiceId,
                     HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId,
 
 
