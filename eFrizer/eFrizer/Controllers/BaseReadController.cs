@@ -27,6 +27,7 @@ namespace eFrizer.Controllers
             return await _service.Get(search);
         }
 
+        
         [HttpGet("{id}")]
         public async virtual Task<T> GetById(int id)
         {

@@ -16,7 +16,7 @@ namespace eFrizer.Filters
             }
             else
             {
-                context.ModelState.AddModelError("ERROR", "Greška na serveru");
+                context.ModelState.AddModelError("ERROR", context.Exception.Message);
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
 

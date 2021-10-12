@@ -10,5 +10,6 @@ namespace eFrizer.Services
     public interface IApplicationUserService : ICRUDService<ApplicationUser, ApplicationUserSearchRequest, ApplicationUserInsertRequest, object>
     {
         Task<Model.ApplicationUser> Login(string username, string password);
+        Task<Model.Role> GetRole(string roleName);
     }
 }

@@ -174,7 +174,20 @@ namespace eFrizer
 
             if (!context.ApplicationUsers.Any(x => x.Name == "User M"))
             {
-                context.ApplicationUsers.Add(new ApplicationUser() { Name = "User M", Surname = "M User", Username = "muser" });
+                var password = "1234";
+                var salt = AuthHelper.GenerateSalt();
+                var hash = AuthHelper.GenerateHash(salt, password);
+
+                var user = new ApplicationUser()
+                {
+                    Name = "User M",
+                    Surname = "M User",
+                    Username = "muser",
+                    PasswordSalt = salt,
+                    PasswordHash = hash
+                };
+
+                context.ApplicationUsers.Add(user);
             }
 
             if (!context.ApplicationUsers.Any(x => x.Name == "User H"))

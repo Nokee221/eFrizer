@@ -72,7 +72,7 @@ namespace eFrizer.Services
                 Context.ApplicationUserRoles.Add(appUserRole);
             }
 
-            //Context.SaveChanges();
+            Context.SaveChanges();
 
             return _mapper.Map<Model.ApplicationUser>(entity);
         }
@@ -96,6 +96,15 @@ namespace eFrizer.Services
             }
 
             return _mapper.Map<Model.ApplicationUser>(entity);
+        }
+
+        public async Task<Model.Role> GetRole(string roleName)
+        {
+            var role = await Context.Roles.Where(x => x.Name == roleName).FirstOrDefaultAsync();
+
+            return _mapper.Map<Model.Role>(role);
+
+            
         }
     }
 }
