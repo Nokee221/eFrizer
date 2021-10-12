@@ -11,5 +11,7 @@ namespace eFrizer.Database
         public int HairDresserId { get; set; }
         public HairSalon HairSalon { get; set; }
         public HairDresser HairDresser { get; set; }
+        public DateTime WorkingFrom { get; set; }
+        public DateTime WorkingTo { get; set; }
     }
 }
