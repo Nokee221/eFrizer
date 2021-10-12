@@ -24,14 +24,14 @@ namespace eFrizer
         {
             context.Database.Migrate();
 
-            if (!context.HairSalons.Any(x => x.Name == "Studio RAS"))
+            if (!context.HairSalons.Any(x => x.Name == "Hair Salon 1"))
             {
-                context.HairSalons.Add(new HairSalon() { Name = "Studio RAS" , Address = "Mejdandžik 8", Description = "Pravo dobar frizerski."});
+                context.HairSalons.Add(new HairSalon() { Name = "Hair Salon 1" , Address = "Mejdandžik 8", Description = "Pravo dobar frizerski."});
             }
 
-            if (!context.HairSalons.Any(x => x.Name == "Partner"))
+            if (!context.HairSalons.Any(x => x.Name == "Hair Salon 2"))
             {
-                context.HairSalons.Add(new HairSalon() { Name = "Partner", Address = "Maršala Tita 21", Description = "Pravo dobar frizerski salon za muškarce i žene." });
+                context.HairSalons.Add(new HairSalon() { Name = "Hair Salon 2", Address = "Maršala Tita 21", Description = "Pravo dobar frizerski salon za muškarce i žene." });
             }
 
             if (!context.HairSalonTypes.Any(x => x.Name == "Ženski"))
@@ -77,59 +77,79 @@ namespace eFrizer
 
             context.SaveChanges();
 
-            if (!context.HairDressers.Any(x => x.Name == "Kenan" && x.HairSalon.Name == "Partner"))
+            if (!context.HairDressers.Any(x => x.Name == "Hair Dresser 1"))
             {
                 context.HairDressers.Add(new HairDresser()
                 {
-                    Name = "Kenan",
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId
+                    Name = "Hair Dresser 1"
                 });
             }
 
-            if (!context.HairDressers.Any(x => x.Name == "Amar" && x.HairSalon.Name == "Partner"))
+            if (!context.HairDressers.Any(x => x.Name == "Hair Dresser 2"))
             {
                 context.HairDressers.Add(new HairDresser()
                 {
-                    Name = "Amar",
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId
+                    Name = "Hair Dresser 2"
                 });
             }
-
+            
             context.SaveChanges();
 
-            if (!context.HairSalonCities.Any(x => x.HairSalon.Name == "Studio RAS" && x.City.Name == "Zenica"))
+            if (!context.HairSalonHairDressers.Any(x => x.HairDresser.Name == "Hair Dresser 1" && x.HairSalon.Name == "Hair Salon 1"))
+            {
+                context.HairSalonHairDressers.Add(new HairSalonHairDresser()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").FirstOrDefault().HairSalonId,
+                    HairDresserId = context.HairDressers.Where(x => x.Name == "Hair Dresser 1").FirstOrDefault().ApplicationUserId
+                });
+            }
+
+            if (!context.HairSalonHairDressers.Any(x => x.HairDresser.Name == "Hair Dresser 2" && x.HairSalon.Name == "Hair Salon 2"))
+            {
+                context.HairSalonHairDressers.Add(new HairSalonHairDresser()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").FirstOrDefault().HairSalonId,
+                    HairDresserId = context.HairDressers.Where(x => x.Name == "Hair Dresser 2").FirstOrDefault().ApplicationUserId
+                });
+            }
+
+
+
+
+
+            if (!context.HairSalonCities.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.City.Name == "Zenica"))
             {
                 context.Add(new HairSalonCity()
                 {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Studio RAS").First().HairSalonId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
                     CityId = context.Cities.Where(x => x.Name == "Zenica").First().CityId
                 });
             }
 
 
-            if(!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Studio RAS" && x.HairSalonType.Name == "Ženski"))
+            if(!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.HairSalonType.Name == "Ženski"))
             {
                 context.Add(new HairSalonHairSalonType()
                 {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Studio RAS").First().HairSalonId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
                     HairSalonTypeId = context.HairSalonTypes.Where(x => x.Name == "Ženski").First().HairSalonTypeId
                 });
             }
 
-            if (!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Partner" && x.HairSalonType.Name == "Muški"))
+            if (!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.HairSalonType.Name == "Muški"))
             {
                 context.Add(new HairSalonHairSalonType()
                 {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
                     HairSalonTypeId = context.HairSalonTypes.Where(x => x.Name == "Muški").First().HairSalonTypeId
                 });
             }
 
-            if (!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Partner" && x.HairSalonType.Name == "Ženski"))
+            if (!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.HairSalonType.Name == "Ženski"))
             {
                 context.Add(new HairSalonHairSalonType()
                 {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
                     HairSalonTypeId = context.HairSalonTypes.Where(x => x.Name == "Ženski").First().HairSalonTypeId
                 });
             }
@@ -268,29 +288,29 @@ namespace eFrizer
             
 
 
-            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Studio RAS" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaA"))
+            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaA"))
             {
                 context.HairSalonPictures.Add(new HairSalonPicture()
                 {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Studio RAS").First().HairSalonId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
                     PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaA")).First().PictureId,
                 });
             }
 
-            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Partner" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaB"))
+            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaB"))
             {
                 context.HairSalonPictures.Add(new HairSalonPicture()
                 {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
                     PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaB")).First().PictureId,
                 });
             }
 
-            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Partner" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaC"))
+            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaC"))
             {
                 context.HairSalonPictures.Add(new HairSalonPicture()
                 {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
                     PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaC")).First().PictureId,
                 });
             }
@@ -316,12 +336,12 @@ namespace eFrizer
 
             context.SaveChanges();
 
-            if (!context.Reviews.Any(x => x.ApplicationUser.Name == "User A" && x.HairSalon.Name == "Studio RAS" && x.Text == "Najbolji salon u gradu!!"))
+            if (!context.Reviews.Any(x => x.ApplicationUser.Name == "User A" && x.HairSalon.Name == "Hair Salon 1" && x.Text == "Najbolji salon u gradu!!"))
             {
                 context.Reviews.Add(new Review()
                 {
                     ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User A").First().ApplicationUserId,
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Studio RAS").First().HairSalonId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
                     Text = "Najbolji salon u gradu!!"
 
                 });
@@ -329,24 +349,24 @@ namespace eFrizer
 
             context.SaveChanges();
 
-            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Studio RAS" && x.Services.Name == "Šišanje"))
+            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.Service.Name == "Šišanje"))
             {
                 context.HairSalonServices.Add(new HairSalonService()
                 {
-                    ServicesId = context.Services.Where(x => x.Name == "Šišanje").First().ServicesId,
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Studio RAS").First().HairSalonId,
+                    ServiceId = context.Services.Where(x => x.Name == "Šišanje").First().ServiceId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
                     
 
                 });
             }
 
 
-            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Partner" && x.Services.Name == "Farbanje"))
+            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Service.Name == "Farbanje"))
             {
                 context.HairSalonServices.Add(new HairSalonService()
                 {
-                    ServicesId = context.Services.Where(x => x.Name == "Farbanje").First().ServicesId,
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Partner").First().HairSalonId,
+                    ServiceId = context.Services.Where(x => x.Name == "Farbanje").First().ServiceId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
 
 
                 });
@@ -354,16 +374,16 @@ namespace eFrizer
 
              context.SaveChanges();
 
-            if (!context.Reservations.Any(x => x.ApplicationUser.Name == "User A" && x.HairDresser.Name == "Kenan" && x.From == new DateTime(2021 , 4, 26 , 12 , 30, 0) && x.To == new DateTime(2021,4,26,13,0,0)))
-            {
-                context.Reservations.Add(new Reservation()
-                {
-                    ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User A").First().ApplicationUserId,
-                    HairDresserId = context.HairDressers.Where(x => x.Name == "Kenan").First().HairDresserId,
-                    From = new DateTime(2021, 4, 26, 12, 30, 0),
-                    To = new DateTime(2021, 4, 26, 13, 0, 0)
-                });
-            }
+            //if (!context.Reservations.Any(x => x.ApplicationUser.Name == "User A" && x.HairDresser.Name == "Kenan" && x.From == new DateTime(2021 , 4, 26 , 12 , 30, 0) && x.To == new DateTime(2021,4,26,13,0,0)))
+            //{
+            //    context.Reservations.Add(new Reservation()
+            //    {
+            //        ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User A").First().ApplicationUserId,
+            //        HairDresserId = context.HairDressers.Where(x => x.Name == "Kenan").First().HairDresserId,
+            //        From = new DateTime(2021, 4, 26, 12, 30, 0),
+            //        To = new DateTime(2021, 4, 26, 13, 0, 0)
+            //    });
+            //}
 
             context.SaveChanges();
 

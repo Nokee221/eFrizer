@@ -5,19 +5,8 @@ using System.Collections.Generic;
 
 namespace eFrizer.Database
 {
-    public partial class HairDresser
+    public class HairDresser : ApplicationUser
     {
-        public HairDresser()
-        {
-            Reservations = new HashSet<Reservation>();
-        }
-
-        public int HairDresserId { get; set; }
-
-        public string Name { get; set; }
-        public int HairSalonId { get; set; }
-
-        public virtual HairSalon HairSalon { get; set; }
-        public virtual ICollection<Reservation> Reservations { get; set; }
+        public string Description { get; set; }
     }
 }
