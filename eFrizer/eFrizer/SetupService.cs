@@ -136,14 +136,7 @@ namespace eFrizer
 
 
 
-            if (!context.HairSalonCities.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.City.Name == "Zenica"))
-            {
-                context.Add(new HairSalonCity()
-                {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
-                    CityId = context.Cities.Where(x => x.Name == "Zenica").First().CityId
-                });
-            }
+            
 
 
             if(!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.HairSalonType.Name == "Ženski"))

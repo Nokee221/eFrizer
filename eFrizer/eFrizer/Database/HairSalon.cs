@@ -10,7 +10,6 @@ namespace eFrizer.Database
         public HairSalon()
         {
             HairDressers = new HashSet<HairDresser>();
-            HairSalonCities = new HashSet<HairSalonCity>();
             HairSalonHairSalonTypes = new HashSet<HairSalonHairSalonType>();
             HairSalonPictures = new HashSet<HairSalonPicture>();
             HairSalonServices = new HashSet<HairSalonService>();
@@ -23,7 +22,6 @@ namespace eFrizer.Database
         public string Address { get; set; }
 
         public virtual ICollection<HairDresser> HairDressers { get; set; }
-        public virtual ICollection<HairSalonCity> HairSalonCities { get; set; }
         public virtual ICollection<HairSalonHairSalonType> HairSalonHairSalonTypes { get; set; }
         public virtual ICollection<HairSalonPicture> HairSalonPictures { get; set; }
         public virtual ICollection<HairSalonService> HairSalonServices { get; set; }
