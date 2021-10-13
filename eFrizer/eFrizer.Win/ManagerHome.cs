@@ -42,8 +42,11 @@ namespace eFrizer.Win
             await LoadData();
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
+        private void dgvManagerHome_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            var item = dgvManagerHome.SelectedRows[0].DataBoundItem as HairSalonManager;
+            
+            var form = new frmHairSalon(item.HairSalon).ShowDialog();
 
         }
 

@@ -30,23 +30,23 @@ namespace eFrizer.Win
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtName = new System.Windows.Forms.TextBox();
-            this.txtDescription = new System.Windows.Forms.RichTextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtDescription = new System.Windows.Forms.RichTextBox();
+            this.txtName = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnEmployees = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnCategories = new System.Windows.Forms.Button();
-            this.btnPictures = new System.Windows.Forms.Button();
-            this.btnReviews = new System.Windows.Forms.Button();
-            this.btnServices = new System.Windows.Forms.Button();
-            this.btnLoyalty = new System.Windows.Forms.Button();
-            this.btnReports = new System.Windows.Forms.Button();
             this.btnReservations = new System.Windows.Forms.Button();
+            this.btnReports = new System.Windows.Forms.Button();
+            this.btnLoyalty = new System.Windows.Forms.Button();
+            this.btnServices = new System.Windows.Forms.Button();
+            this.btnReviews = new System.Windows.Forms.Button();
+            this.btnPictures = new System.Windows.Forms.Button();
+            this.btnCategories = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -68,38 +68,22 @@ namespace eFrizer.Win
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Basic information";
             // 
-            // label1
+            // label4
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(39, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Name";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(509, 19);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(28, 15);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "City";
             // 
-            // txtName
+            // comboBox1
             // 
-            this.txtName.Location = new System.Drawing.Point(6, 40);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(145, 23);
-            this.txtName.TabIndex = 1;
-            // 
-            // txtDescription
-            // 
-            this.txtDescription.Location = new System.Drawing.Point(6, 94);
-            this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(752, 116);
-            this.txtDescription.TabIndex = 2;
-            this.txtDescription.Text = "";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 76);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 15);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Description";
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(509, 39);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(249, 23);
+            this.comboBox1.TabIndex = 6;
             // 
             // txtAddress
             // 
@@ -117,22 +101,38 @@ namespace eFrizer.Win
             this.label3.TabIndex = 4;
             this.label3.Text = "Address";
             // 
-            // comboBox1
+            // label2
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(509, 39);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(249, 23);
-            this.comboBox1.TabIndex = 6;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 76);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(67, 15);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Description";
             // 
-            // label4
+            // txtDescription
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(509, 19);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(28, 15);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "City";
+            this.txtDescription.Location = new System.Drawing.Point(6, 94);
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.Size = new System.Drawing.Size(752, 116);
+            this.txtDescription.TabIndex = 2;
+            this.txtDescription.Text = "";
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(6, 40);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(145, 23);
+            this.txtName.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(39, 15);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Name";
             // 
             // btnEmployees
             // 
@@ -160,50 +160,14 @@ namespace eFrizer.Win
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Management";
             // 
-            // btnCategories
+            // btnReservations
             // 
-            this.btnCategories.Location = new System.Drawing.Point(19, 120);
-            this.btnCategories.Name = "btnCategories";
-            this.btnCategories.Size = new System.Drawing.Size(157, 48);
-            this.btnCategories.TabIndex = 2;
-            this.btnCategories.Text = "Categories";
-            this.btnCategories.UseVisualStyleBackColor = true;
-            // 
-            // btnPictures
-            // 
-            this.btnPictures.Location = new System.Drawing.Point(203, 50);
-            this.btnPictures.Name = "btnPictures";
-            this.btnPictures.Size = new System.Drawing.Size(157, 49);
-            this.btnPictures.TabIndex = 3;
-            this.btnPictures.Text = "Pictures";
-            this.btnPictures.UseVisualStyleBackColor = true;
-            // 
-            // btnReviews
-            // 
-            this.btnReviews.Location = new System.Drawing.Point(203, 120);
-            this.btnReviews.Name = "btnReviews";
-            this.btnReviews.Size = new System.Drawing.Size(157, 48);
-            this.btnReviews.TabIndex = 4;
-            this.btnReviews.Text = "Reviews";
-            this.btnReviews.UseVisualStyleBackColor = true;
-            // 
-            // btnServices
-            // 
-            this.btnServices.Location = new System.Drawing.Point(393, 50);
-            this.btnServices.Name = "btnServices";
-            this.btnServices.Size = new System.Drawing.Size(165, 49);
-            this.btnServices.TabIndex = 5;
-            this.btnServices.Text = "Services";
-            this.btnServices.UseVisualStyleBackColor = true;
-            // 
-            // btnLoyalty
-            // 
-            this.btnLoyalty.Location = new System.Drawing.Point(393, 120);
-            this.btnLoyalty.Name = "btnLoyalty";
-            this.btnLoyalty.Size = new System.Drawing.Size(165, 48);
-            this.btnLoyalty.TabIndex = 6;
-            this.btnLoyalty.Text = "Loyalty system";
-            this.btnLoyalty.UseVisualStyleBackColor = true;
+            this.btnReservations.Location = new System.Drawing.Point(589, 50);
+            this.btnReservations.Name = "btnReservations";
+            this.btnReservations.Size = new System.Drawing.Size(157, 49);
+            this.btnReservations.TabIndex = 8;
+            this.btnReservations.Text = "Reservations";
+            this.btnReservations.UseVisualStyleBackColor = true;
             // 
             // btnReports
             // 
@@ -214,14 +178,50 @@ namespace eFrizer.Win
             this.btnReports.Text = "Reports";
             this.btnReports.UseVisualStyleBackColor = true;
             // 
-            // btnReservations
+            // btnLoyalty
             // 
-            this.btnReservations.Location = new System.Drawing.Point(589, 50);
-            this.btnReservations.Name = "btnReservations";
-            this.btnReservations.Size = new System.Drawing.Size(157, 49);
-            this.btnReservations.TabIndex = 8;
-            this.btnReservations.Text = "Reservations";
-            this.btnReservations.UseVisualStyleBackColor = true;
+            this.btnLoyalty.Location = new System.Drawing.Point(393, 120);
+            this.btnLoyalty.Name = "btnLoyalty";
+            this.btnLoyalty.Size = new System.Drawing.Size(165, 48);
+            this.btnLoyalty.TabIndex = 6;
+            this.btnLoyalty.Text = "Loyalty system";
+            this.btnLoyalty.UseVisualStyleBackColor = true;
+            // 
+            // btnServices
+            // 
+            this.btnServices.Location = new System.Drawing.Point(393, 50);
+            this.btnServices.Name = "btnServices";
+            this.btnServices.Size = new System.Drawing.Size(165, 49);
+            this.btnServices.TabIndex = 5;
+            this.btnServices.Text = "Services";
+            this.btnServices.UseVisualStyleBackColor = true;
+            // 
+            // btnReviews
+            // 
+            this.btnReviews.Location = new System.Drawing.Point(203, 120);
+            this.btnReviews.Name = "btnReviews";
+            this.btnReviews.Size = new System.Drawing.Size(157, 48);
+            this.btnReviews.TabIndex = 4;
+            this.btnReviews.Text = "Reviews";
+            this.btnReviews.UseVisualStyleBackColor = true;
+            // 
+            // btnPictures
+            // 
+            this.btnPictures.Location = new System.Drawing.Point(203, 50);
+            this.btnPictures.Name = "btnPictures";
+            this.btnPictures.Size = new System.Drawing.Size(157, 49);
+            this.btnPictures.TabIndex = 3;
+            this.btnPictures.Text = "Pictures";
+            this.btnPictures.UseVisualStyleBackColor = true;
+            // 
+            // btnCategories
+            // 
+            this.btnCategories.Location = new System.Drawing.Point(19, 120);
+            this.btnCategories.Name = "btnCategories";
+            this.btnCategories.Size = new System.Drawing.Size(157, 48);
+            this.btnCategories.TabIndex = 2;
+            this.btnCategories.Text = "Categories";
+            this.btnCategories.UseVisualStyleBackColor = true;
             // 
             // frmHairSalon
             // 
@@ -232,6 +232,7 @@ namespace eFrizer.Win
             this.Controls.Add(this.groupBox1);
             this.Name = "frmHairSalon";
             this.Text = "Hair Salon Management";
+            this.Load += new System.EventHandler(this.frmHairSalon_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
