@@ -9,6 +9,7 @@ namespace eFrizer.Mapping
         {
             CreateMap<Database.HairSalon, Model.HairSalon>().ReverseMap();
             CreateMap<Model.HairSalonInsertRequest, Database.HairSalon>().ReverseMap();
+            CreateMap<Model.HairSalonUpdateRequest, Database.HairSalon>().ReverseMap();
 
             CreateMap<Database.City, Model.City>().ReverseMap().ReverseMap();
             CreateMap<Model.CityInsertRequest, Database.City>().ReverseMap();

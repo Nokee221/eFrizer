@@ -15,6 +15,7 @@ namespace eFrizer.Win
     {
         private HairSalon _hairSalon { get; set; }
         private APIService _cityService = new APIService("City"); 
+        private APIService _hairSalonService = new APIService("HairSalon");
 
         public frmHairSalon(HairSalon hairSalon)
         {
@@ -49,6 +50,15 @@ namespace eFrizer.Win
             txtDescription.Text = _hairSalon.Description;
         }
 
-
+        private async void btnSave_Click(object sender, EventArgs e)
+        {
+            var req = new HairSalonUpdateRequest();
+            req.Name = txtName.Text;
+            req.Address = txtAddress.Text;
+            req.Description = txtDescription.Text;
+            req.CityId = Convert.ToInt32(cbCities.SelectedValue);
+            await _hairSalonService.Update<HairSalon>(_hairSalon.HairSalonId, req);
+            MessageBox.Show("Changes saved!");
+        }
     }
 }

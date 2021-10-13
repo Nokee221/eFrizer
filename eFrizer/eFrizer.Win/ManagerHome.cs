@@ -42,12 +42,13 @@ namespace eFrizer.Win
             await LoadData();
         }
 
-        private void dgvManagerHome_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvManagerHome_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             var item = dgvManagerHome.SelectedRows[0].DataBoundItem as HairSalonManager;
             
             var form = new frmHairSalon(item.HairSalon).ShowDialog();
 
+            await LoadData();
         }
 
         //private Task LoadManager()

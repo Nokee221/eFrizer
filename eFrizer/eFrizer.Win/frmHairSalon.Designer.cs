@@ -47,12 +47,14 @@ namespace eFrizer.Win
             this.btnReviews = new System.Windows.Forms.Button();
             this.btnPictures = new System.Windows.Forms.Button();
             this.btnCategories = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnSave);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.cbCities);
             this.groupBox1.Controls.Add(this.txtAddress);
@@ -63,7 +65,7 @@ namespace eFrizer.Win
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(776, 220);
+            this.groupBox1.Size = new System.Drawing.Size(776, 240);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Basic information";
@@ -153,7 +155,7 @@ namespace eFrizer.Win
             this.groupBox2.Controls.Add(this.btnPictures);
             this.groupBox2.Controls.Add(this.btnCategories);
             this.groupBox2.Controls.Add(this.btnEmployees);
-            this.groupBox2.Location = new System.Drawing.Point(12, 238);
+            this.groupBox2.Location = new System.Drawing.Point(12, 258);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(776, 200);
             this.groupBox2.TabIndex = 2;
@@ -223,11 +225,21 @@ namespace eFrizer.Win
             this.btnCategories.Text = "Categories";
             this.btnCategories.UseVisualStyleBackColor = true;
             // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(658, 216);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(100, 23);
+            this.btnSave.TabIndex = 8;
+            this.btnSave.Text = "Save changes";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
             // frmHairSalon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 470);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "frmHairSalon";
@@ -260,5 +272,6 @@ namespace eFrizer.Win
         private System.Windows.Forms.Button btnReviews;
         private System.Windows.Forms.Button btnReports;
         private System.Windows.Forms.Button btnReservations;
+        private System.Windows.Forms.Button btnSave;
     }
 }
