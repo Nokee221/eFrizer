@@ -84,7 +84,7 @@ namespace eFrizer.Win
                 Address = txtHairsalonAddress.Text,
                 Description = txtHairsalonDesc.Text,
                 ManagerId = _user.ApplicationUserId
-                
+
             };
 
             var hairsalonmanager = await _hairSalons.Insert<HairSalonManager>(request);
@@ -95,6 +95,8 @@ namespace eFrizer.Win
             txtHairsalonAddress.Clear();
             txtHairsalonDesc.Clear();
             LoadData();
+        }
+
         private async void dgvManagerHome_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             var item = dgvManagerHome.SelectedRows[0].DataBoundItem as HairSalonManager;
