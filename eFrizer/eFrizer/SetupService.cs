@@ -321,11 +321,11 @@ namespace eFrizer
                 });
             }
 
-            if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "User H" && x.Role.Name == "HairDresser"))
+            if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "Hair Dresser 1" && x.Role.Name == "HairDresser"))
             {
                 context.ApplicationUserRoles.Add(new ApplicationUserRole()
                 {
-                    ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User H").First().ApplicationUserId,
+                    ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "Hair Dresser 1").First().ApplicationUserId,
                     RoleId = context.Roles.Where(x => x.Name == "HairDresser").First().RoleId
                 });
             }
