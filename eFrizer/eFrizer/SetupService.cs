@@ -24,14 +24,44 @@ namespace eFrizer
         {
             context.Database.Migrate();
 
-            if (!context.HairSalons.Any(x => x.Name == "Hair Salon 1"))
+            //TODO: Separate each data type seed into a function
+            if (!context.Cities.Any(x => x.Name == "City 1"))
             {
-                context.HairSalons.Add(new HairSalon() { Name = "Hair Salon 1" , Address = "Mejdandžik 8", Description = "Pravo dobar frizerski."});
+                context.Cities.Add(new City() { Name = "City 1" });
             }
 
-            if (!context.HairSalons.Any(x => x.Name == "Hair Salon 2"))
+            if (!context.Cities.Any(x => x.Name == "City 2"))
             {
-                context.HairSalons.Add(new HairSalon() { Name = "Hair Salon 2", Address = "Maršala Tita 21", Description = "Pravo dobar frizerski salon za muškarce i žene." });
+                context.Cities.Add(new City() { Name = "City 2" });
+            }
+
+            if (!context.Cities.Any(x => x.Name == "City 3"))
+            {
+                context.Cities.Add(new City() { Name = "City 3" });
+            }
+
+            context.SaveChanges();
+
+            if (!context.HairSalons.Any(x => x.Name == "Hair Salon 1" && x.City.Name == "City 1"))
+            {
+                context.HairSalons.Add(new HairSalon()
+                {
+                    Name = "Hair Salon 1" ,
+                    Address = "Mejdandžik 8",
+                    Description = "Pravo dobar frizerski.",
+                    CityId = context.Cities.Where(x => x.Name == "City 1").FirstOrDefault().CityId
+                });
+            }
+
+            if (!context.HairSalons.Any(x => x.Name == "Hair Salon 2" && x.City.Name == "City 2"))
+            {
+                context.HairSalons.Add(new HairSalon() 
+                { 
+                    Name = "Hair Salon 2",
+                    Address = "Maršala Tita 21",
+                    Description = "Pravo dobar frizerski salon za muškarce i žene.",
+                    CityId = context.Cities.Where(x => x.Name == "City 2").FirstOrDefault().CityId
+                });
             }
 
             if (!context.HairSalonTypes.Any(x => x.Name == "Ženski"))
@@ -42,22 +72,6 @@ namespace eFrizer
             if (!context.HairSalonTypes.Any(x => x.Name == "Muški"))
             {
                 context.HairSalonTypes.Add(new HairSalonType() { Name = "Muški" });
-            }
-            
-            //TODO: Separate each data type seed into a function
-            if (!context.Cities.Any(x => x.Name == "Zenica"))
-            {
-                context.Cities.Add(new City() { Name = "Zenica" });
-            }
-
-            if (!context.Cities.Any(x => x.Name == "Sarajevo"))
-            {
-                context.Cities.Add(new City() { Name = "Sarajevo" });
-            }
-
-            if (!context.Cities.Any(x => x.Name == "Banja Luka"))
-            {
-                context.Cities.Add(new City() { Name = "Banja Luka" });
             }
 
             if(!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaA")))
@@ -131,13 +145,6 @@ namespace eFrizer
                     HairDresserId = context.HairDressers.Where(x => x.Name == "Hair Dresser 2").FirstOrDefault().ApplicationUserId
                 });
             }
-
-
-
-
-
-            
-
 
             if(!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.HairSalonType.Name == "Ženski"))
             {
