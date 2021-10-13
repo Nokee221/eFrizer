@@ -92,6 +92,8 @@ namespace eFrizer
                     Name = "Hair Dresser 2"
                 });
             }
+
+
             
             context.SaveChanges();
 
@@ -229,17 +231,38 @@ namespace eFrizer
                 context.Managers.Add(user);
             }
 
-        
-
-
-            if (!context.ApplicationUsers.Any(x => x.Name == "User H"))
-            {
-                context.ApplicationUsers.Add(new ApplicationUser() { Name = "User H", Surname = "H User", Username = "huser" });
-            }
-
             if (!context.ApplicationUsers.Any(x => x.Name == "User C"))
             {
-                context.ApplicationUsers.Add(new ApplicationUser() { Name = "User C", Surname = "C User", Username = "cuser" });
+                var password = "1234";
+                var salt = AuthHelper.GenerateSalt();
+                var hash = AuthHelper.GenerateHash(salt, password);
+
+                context.ApplicationUsers.Add(new Client() 
+                { 
+                    Name = "User C",
+                    Surname = "C User",
+                    Username = "cuser" ,
+                    PasswordSalt = salt,
+                    PasswordHash = hash,
+                    Description = "The best client in the world!"
+                });
+            }
+
+            if (!context.ApplicationUsers.Any(x => x.Name == "User C2"))
+            {
+                var password = "1234";
+                var salt = AuthHelper.GenerateSalt();
+                var hash = AuthHelper.GenerateHash(salt, password);
+
+                context.ApplicationUsers.Add(new Client()
+                {
+                    Name = "User C2",
+                    Surname = "C2 User",
+                    Username = "c2user",
+                    PasswordSalt = salt,
+                    PasswordHash = hash,
+                    Description = "The second best client in the world!"
+                });
             }
 
             context.SaveChanges();
@@ -253,8 +276,6 @@ namespace eFrizer
                     ManagerId = context.Managers.Where(x => x.Name == "User M").First().ApplicationUserId
                 });
             }
-
-
 
             if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "User A" && x.Role.Name == "Administrator"))
             {
