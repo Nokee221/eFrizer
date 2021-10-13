@@ -15,6 +15,7 @@ namespace eFrizer.Win
     {
         private readonly APIService _hairSalons = new APIService("HairSalonManager");
         private readonly APIService _managerService = new APIService("Manager");
+        private APIService _cityService = new APIService("City");
         private readonly Manager _user;
 
         public ManagerHome(Manager user)
@@ -28,10 +29,19 @@ namespace eFrizer.Win
         {
             //await LoadManager();
             await LoadHairSalons();
+            await LoadCities();
             txtName.Enabled = false;
             txtUserName.Enabled = false;
             txtSurname.Enabled = false;
-            await LoadInfo();
+            LoadInfo();
+        }
+
+        private async Task LoadCities()
+        {
+            var cities = await _cityService.Get<List<City>>();
+            cbCity.DataSource = cities;
+            cbCity.DisplayMember = "Name";
+            cbCity.ValueMember = "CityId";
         }
 
         private async Task LoadHairSalons()
@@ -47,7 +57,7 @@ namespace eFrizer.Win
 
         }
 
-        private async Task LoadInfo()
+        private void LoadInfo()
         {
             txtName.Text = _user.Name;
             txtSurname.Text = _user.Surname;
@@ -83,8 +93,8 @@ namespace eFrizer.Win
                 Name = txtHairSalonName.Text,
                 Address = txtHairsalonAddress.Text,
                 Description = txtHairsalonDesc.Text,
-                ManagerId = _user.ApplicationUserId
-
+                ManagerId = _user.ApplicationUserId,
+                CityId = Convert.ToInt32(cbCity.SelectedValue)
             };
 
             var hairsalonmanager = await _hairSalons.Insert<HairSalonManager>(request);
@@ -94,7 +104,7 @@ namespace eFrizer.Win
             txtHairSalonName.Clear();
             txtHairsalonAddress.Clear();
             txtHairsalonDesc.Clear();
-            LoadData();
+            await LoadData();
         }
 
         private async void dgvManagerHome_CellContentClick(object sender, DataGridViewCellEventArgs e)

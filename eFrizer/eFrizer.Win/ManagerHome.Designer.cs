@@ -32,6 +32,8 @@ namespace eFrizer.Win
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvManagerHome = new System.Windows.Forms.DataGridView();
             this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAdd = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnEdit = new System.Windows.Forms.Button();
@@ -50,9 +52,8 @@ namespace eFrizer.Win
             this.txtHairsalonAddress = new System.Windows.Forms.TextBox();
             this.txtHairSalonName = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cbCity = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvManagerHome)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -90,10 +91,27 @@ namespace eFrizer.Win
             // 
             // Name
             // 
+            this.Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Name.DataPropertyName = "HairSalonName";
-            this.Name.HeaderText = "Name";
+            this.Name.HeaderText = "Namee";
             this.Name.Name = "Name";
             this.Name.ReadOnly = true;
+            // 
+            // Address
+            // 
+            this.Address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Address.DataPropertyName = "HairSalonAddress";
+            this.Address.HeaderText = "Address";
+            this.Address.Name = "Address";
+            this.Address.ReadOnly = true;
+            // 
+            // Description
+            // 
+            this.Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Description.DataPropertyName = "HairSalonDescription";
+            this.Description.HeaderText = "Description";
+            this.Description.Name = "Description";
+            this.Description.ReadOnly = true;
             // 
             // btnAdd
             // 
@@ -192,6 +210,8 @@ namespace eFrizer.Win
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.cbCity);
             this.groupBox3.Controls.Add(this.btn);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.label5);
@@ -264,29 +284,22 @@ namespace eFrizer.Win
             this.label4.TabIndex = 7;
             this.label4.Text = "Name";
             // 
-            // Name
+            // cbCity
             // 
-            this.Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Name.DataPropertyName = "HairSalonName";
-            this.Name.HeaderText = "Namee";
-            this.Name.Name = "Name";
-            this.Name.ReadOnly = true;
+            this.cbCity.FormattingEnabled = true;
+            this.cbCity.Location = new System.Drawing.Point(122, 203);
+            this.cbCity.Name = "cbCity";
+            this.cbCity.Size = new System.Drawing.Size(142, 23);
+            this.cbCity.TabIndex = 14;
             // 
-            // Address
+            // label7
             // 
-            this.Address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Address.DataPropertyName = "HairSalonAddress";
-            this.Address.HeaderText = "Address";
-            this.Address.Name = "Address";
-            this.Address.ReadOnly = true;
-            // 
-            // Description
-            // 
-            this.Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Description.DataPropertyName = "HairSalonDescription";
-            this.Description.HeaderText = "Description";
-            this.Description.Name = "Description";
-            this.Description.ReadOnly = true;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(122, 185);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(28, 15);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "City";
             // 
             // ManagerHome
             // 
@@ -333,5 +346,7 @@ namespace eFrizer.Win
         private System.Windows.Forms.DataGridViewTextBoxColumn Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn Address;
         private System.Windows.Forms.DataGridViewTextBoxColumn Description;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cbCity;
     }
 }
