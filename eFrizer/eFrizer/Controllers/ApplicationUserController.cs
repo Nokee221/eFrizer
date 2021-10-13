@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace eFrizer.Controllers
 {
 
-    public class ApplicationUserController : BaseCRUDController<Model.ApplicationUser, ApplicationUserSearchRequest, ApplicationUserInsertRequest, object>
+    public class ApplicationUserController : BaseCRUDController<Model.ApplicationUser, ApplicationUserSearchRequest, ApplicationUserInsertRequest, ApplicationUserUpdateRequest>
     {
         private readonly IApplicationUserService service;
         public ApplicationUserController(IApplicationUserService service)

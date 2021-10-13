@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Services
 {
-    public class ApplicationUserService : BaseCRUDService<Model.ApplicationUser, Database.ApplicationUser, ApplicationUserSearchRequest, ApplicationUserInsertRequest, object>, IApplicationUserService
+    public class ApplicationUserService : BaseCRUDService<Model.ApplicationUser, Database.ApplicationUser, ApplicationUserSearchRequest, ApplicationUserInsertRequest, ApplicationUserUpdateRequest>, IApplicationUserService
     {
         public ApplicationUserService(eFrizerContext context, IMapper mapper)
             : base(context, mapper)
@@ -137,6 +137,15 @@ namespace eFrizer.Services
             Context.SaveChanges();
 
             return _mapper.Map<Model.Manager>(entity);
+        }
+
+        public async Task<Model.ApplicationUser> Update(int id, ApplicationUserUpdateRequest request)
+        {
+            var entity = Context.ApplicationUsers.Find(id);
+            _mapper.Map(request, entity);
+
+            Context.SaveChanges();
+            return _mapper.Map<Model.ApplicationUser>(entity);
         }
     }
 }

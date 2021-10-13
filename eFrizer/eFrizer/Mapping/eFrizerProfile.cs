@@ -21,6 +21,7 @@ namespace eFrizer.Mapping
 
             CreateMap<Database.ApplicationUser, Model.ApplicationUser>().ReverseMap();
             CreateMap<ApplicationUserInsertRequest, Database.ApplicationUser>();
+            CreateMap<ApplicationUserUpdateRequest, Database.ApplicationUser>();
 
             CreateMap<Database.HairDresser, Model.HairDresser>().ReverseMap();
             CreateMap<Model.HairDresserInsertRequest, Database.HairDresser>().ReverseMap();
@@ -59,6 +60,7 @@ namespace eFrizer.Mapping
 
             CreateMap<Database.Manager, Model.Manager>().ReverseMap();
             CreateMap<Model.ManagerInsertRequest, Database.Manager>().ReverseMap();
+            CreateMap<Model.ManagerUpadateRequest, Database.Manager>().ReverseMap();
 
             CreateMap<Database.HairSalonManager, Model.HairSalonManager>().ReverseMap();
             CreateMap<Model.HairSalonManagerInsertRequest, Database.HairSalonManager>().ReverseMap();

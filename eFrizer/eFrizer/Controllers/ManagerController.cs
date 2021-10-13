@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Controllers
 {
-    public class ManagerController : BaseCRUDController<Model.Manager, object, ManagerInsertRequest, object>
+    public class ManagerController : BaseCRUDController<Model.Manager, object, ManagerInsertRequest, ManagerUpadateRequest>
     {
         public ManagerController(IManagerService service) : base(service)
         {
