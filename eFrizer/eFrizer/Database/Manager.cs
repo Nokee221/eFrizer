@@ -7,6 +7,6 @@ namespace eFrizer.Database
 {
     public class Manager : ApplicationUser
     {
-        public string Description { get; set; }
+        
     }
 }
