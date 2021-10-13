@@ -31,6 +31,7 @@ namespace eFrizer.Win
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvManagerHome = new System.Windows.Forms.DataGridView();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAdd = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnEdit = new System.Windows.Forms.Button();
@@ -82,8 +83,17 @@ namespace eFrizer.Win
             this.dgvManagerHome.Name = "dgvManagerHome";
             this.dgvManagerHome.ReadOnly = true;
             this.dgvManagerHome.RowTemplate.Height = 25;
+            this.dgvManagerHome.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvManagerHome.Size = new System.Drawing.Size(764, 211);
             this.dgvManagerHome.TabIndex = 0;
+            this.dgvManagerHome.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvManagerHome_CellContentClick);
+            // 
+            // Name
+            // 
+            this.Name.DataPropertyName = "HairSalonName";
+            this.Name.HeaderText = "Name";
+            this.Name.Name = "Name";
+            this.Name.ReadOnly = true;
             // 
             // btnAdd
             // 

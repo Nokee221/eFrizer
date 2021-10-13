@@ -72,7 +72,7 @@ namespace eFrizer.Win
 
             var manager = _managerService.Update<Manager>(_user.ApplicationUserId, request);
 
-            MessageBox.Show("SUCCESSFULLY UPDATE", "UPDATE");
+            MessageBox.Show("SUCCESSFULLY UPDATED", "UPDATE");
             
         }
 
@@ -95,6 +95,13 @@ namespace eFrizer.Win
             txtHairsalonAddress.Clear();
             txtHairsalonDesc.Clear();
             LoadData();
+        private async void dgvManagerHome_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var item = dgvManagerHome.SelectedRows[0].DataBoundItem as HairSalonManager;
+            
+            var form = new frmHairSalon(item.HairSalon).ShowDialog();
+
+            await LoadData();
         }
 
 

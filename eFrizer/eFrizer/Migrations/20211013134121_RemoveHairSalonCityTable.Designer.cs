@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eFrizer.Database;
 
 namespace eFrizer.Migrations
 {
     [DbContext(typeof(eFrizerContext))]
-    partial class eFrizerContextModelSnapshot : ModelSnapshot
+    [Migration("20211013134121_RemoveHairSalonCityTable")]
+    partial class RemoveHairSalonCityTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,9 +101,6 @@ namespace eFrizer.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -109,8 +108,6 @@ namespace eFrizer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("HairSalonId");
-
-                    b.HasIndex("CityId");
 
                     b.ToTable("HairSalons");
                 });
@@ -362,17 +359,6 @@ namespace eFrizer.Migrations
                     b.Navigation("ApplicationUser");
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("eFrizer.Database.HairSalon", b =>
-                {
-                    b.HasOne("eFrizer.Database.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("eFrizer.Database.HairSalonHairDresser", b =>
