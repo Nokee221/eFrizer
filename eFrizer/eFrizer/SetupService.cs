@@ -79,17 +79,34 @@ namespace eFrizer
 
             if (!context.HairDressers.Any(x => x.Name == "Hair Dresser 1"))
             {
+
+                var password = "1234";
+                var salt = AuthHelper.GenerateSalt();
+                var hash = AuthHelper.GenerateHash(salt, password);
+
                 context.HairDressers.Add(new HairDresser()
                 {
-                    Name = "Hair Dresser 1"
+                    Name = "Hair Dresser 1",
+                    Surname = "The First",
+                    Description = "The best in town!",
+                    PasswordSalt = salt,
+                    PasswordHash = hash
                 });
             }
 
             if (!context.HairDressers.Any(x => x.Name == "Hair Dresser 2"))
             {
+                var password = "1234";
+                var salt = AuthHelper.GenerateSalt();
+                var hash = AuthHelper.GenerateHash(salt, password);
+
                 context.HairDressers.Add(new HairDresser()
                 {
-                    Name = "Hair Dresser 2"
+                    Name = "Hair Dresser 2",
+                    Surname = "The Second",
+                    Description = "The second best in town!",
+                    PasswordSalt = salt,
+                    PasswordHash = hash
                 });
             }
 
