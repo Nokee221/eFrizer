@@ -44,8 +44,7 @@ namespace eFrizer.Win
         private async void ManagerHome_Load(object sender, EventArgs e)
         {
             await LoadData();
-           
-            
+
         }
 
         private async Task LoadInfo()
@@ -53,11 +52,6 @@ namespace eFrizer.Win
             txtName.Text = _user.Name;
             txtSurname.Text = _user.Surname;
             txtUserName.Text = _user.Username;
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -81,6 +75,31 @@ namespace eFrizer.Win
             MessageBox.Show("SUCCESSFULLY UPDATE", "UPDATE");
             
         }
+
+        private async void btn_Click(object sender, EventArgs e)
+        {
+            HairSalonManagerInsertRequest request = new HairSalonManagerInsertRequest()
+            {
+                Name = txtHairSalonName.Text,
+                Address = txtHairsalonAddress.Text,
+                Description = txtHairsalonDesc.Text,
+                ManagerId = _user.ApplicationUserId
+                
+            };
+
+            var hairsalonmanager = await _hairSalons.Insert<HairSalonManager>(request);
+
+
+            MessageBox.Show("Successfully added new hair salon!");
+            txtHairSalonName.Clear();
+            txtHairsalonAddress.Clear();
+            txtHairsalonDesc.Clear();
+            LoadData();
+        }
+
+
+
+
 
 
 

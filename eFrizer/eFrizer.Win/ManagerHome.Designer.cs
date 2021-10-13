@@ -31,7 +31,6 @@ namespace eFrizer.Win
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvManagerHome = new System.Windows.Forms.DataGridView();
-            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAdd = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnEdit = new System.Windows.Forms.Button();
@@ -43,9 +42,20 @@ namespace eFrizer.Win
             this.label1 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btn = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtHairsalonDesc = new System.Windows.Forms.TextBox();
+            this.txtHairsalonAddress = new System.Windows.Forms.TextBox();
+            this.txtHairSalonName = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvManagerHome)).BeginInit();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -58,7 +68,6 @@ namespace eFrizer.Win
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Hair salons";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // dgvManagerHome
             // 
@@ -66,20 +75,15 @@ namespace eFrizer.Win
             this.dgvManagerHome.AllowUserToDeleteRows = false;
             this.dgvManagerHome.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvManagerHome.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Name});
+            this.Name,
+            this.Address,
+            this.Description});
             this.dgvManagerHome.Location = new System.Drawing.Point(6, 22);
             this.dgvManagerHome.Name = "dgvManagerHome";
             this.dgvManagerHome.ReadOnly = true;
             this.dgvManagerHome.RowTemplate.Height = 25;
             this.dgvManagerHome.Size = new System.Drawing.Size(764, 211);
             this.dgvManagerHome.TabIndex = 0;
-            // 
-            // Name
-            // 
-            this.Name.DataPropertyName = "HairSalonName";
-            this.Name.HeaderText = "Name";
-            this.Name.Name = "Name";
-            this.Name.ReadOnly = true;
             // 
             // btnAdd
             // 
@@ -109,7 +113,7 @@ namespace eFrizer.Win
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(15, 222);
+            this.btnEdit.Location = new System.Drawing.Point(114, 222);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(94, 23);
             this.btnEdit.TabIndex = 6;
@@ -120,7 +124,7 @@ namespace eFrizer.Win
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 131);
+            this.label3.Location = new System.Drawing.Point(92, 146);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(60, 15);
             this.label3.TabIndex = 5;
@@ -129,14 +133,14 @@ namespace eFrizer.Win
             // txtUserName
             // 
             this.txtUserName.Enabled = false;
-            this.txtUserName.Location = new System.Drawing.Point(15, 149);
+            this.txtUserName.Location = new System.Drawing.Point(95, 164);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(131, 23);
             this.txtUserName.TabIndex = 4;
             // 
             // btnSaveChanges
             // 
-            this.btnSaveChanges.Location = new System.Drawing.Point(15, 251);
+            this.btnSaveChanges.Location = new System.Drawing.Point(75, 251);
             this.btnSaveChanges.Name = "btnSaveChanges";
             this.btnSaveChanges.Size = new System.Drawing.Size(180, 23);
             this.btnSaveChanges.TabIndex = 2;
@@ -147,7 +151,7 @@ namespace eFrizer.Win
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 72);
+            this.label2.Location = new System.Drawing.Point(92, 92);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(54, 15);
             this.label2.TabIndex = 3;
@@ -155,7 +159,7 @@ namespace eFrizer.Win
             // 
             // txtSurname
             // 
-            this.txtSurname.Location = new System.Drawing.Point(15, 90);
+            this.txtSurname.Location = new System.Drawing.Point(95, 110);
             this.txtSurname.Name = "txtSurname";
             this.txtSurname.Size = new System.Drawing.Size(131, 23);
             this.txtSurname.TabIndex = 2;
@@ -163,7 +167,7 @@ namespace eFrizer.Win
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 19);
+            this.label1.Location = new System.Drawing.Point(95, 37);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(39, 15);
             this.label1.TabIndex = 1;
@@ -171,20 +175,108 @@ namespace eFrizer.Win
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(15, 37);
+            this.txtName.Location = new System.Drawing.Point(95, 55);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(131, 23);
             this.txtName.TabIndex = 0;
             // 
             // groupBox3
             // 
-            this.groupBox3.Location = new System.Drawing.Point(394, 287);
+            this.groupBox3.Controls.Add(this.btn);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.txtHairsalonDesc);
+            this.groupBox3.Controls.Add(this.txtHairsalonAddress);
+            this.groupBox3.Controls.Add(this.txtHairSalonName);
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Location = new System.Drawing.Point(393, 286);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(388, 305);
+            this.groupBox3.Size = new System.Drawing.Size(389, 306);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "groupBox3";
-            
+            this.groupBox3.Text = "New HairSalon";
+            // 
+            // btn
+            // 
+            this.btn.Location = new System.Drawing.Point(153, 242);
+            this.btn.Name = "btn";
+            this.btn.Size = new System.Drawing.Size(83, 24);
+            this.btn.TabIndex = 13;
+            this.btn.Text = "Create";
+            this.btn.UseVisualStyleBackColor = true;
+            this.btn.Click += new System.EventHandler(this.btn_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(122, 137);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(67, 15);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Description";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(122, 83);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(49, 15);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Address";
+            // 
+            // txtHairsalonDesc
+            // 
+            this.txtHairsalonDesc.Location = new System.Drawing.Point(122, 155);
+            this.txtHairsalonDesc.Name = "txtHairsalonDesc";
+            this.txtHairsalonDesc.Size = new System.Drawing.Size(142, 23);
+            this.txtHairsalonDesc.TabIndex = 10;
+            // 
+            // txtHairsalonAddress
+            // 
+            this.txtHairsalonAddress.Location = new System.Drawing.Point(122, 101);
+            this.txtHairsalonAddress.Name = "txtHairsalonAddress";
+            this.txtHairsalonAddress.Size = new System.Drawing.Size(142, 23);
+            this.txtHairsalonAddress.TabIndex = 9;
+            // 
+            // txtHairSalonName
+            // 
+            this.txtHairSalonName.Location = new System.Drawing.Point(122, 46);
+            this.txtHairSalonName.Name = "txtHairSalonName";
+            this.txtHairSalonName.Size = new System.Drawing.Size(142, 23);
+            this.txtHairSalonName.TabIndex = 8;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(122, 28);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(39, 15);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Name";
+            // 
+            // Name
+            // 
+            this.Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Name.DataPropertyName = "HairSalonName";
+            this.Name.HeaderText = "Namee";
+            this.Name.Name = "Name";
+            this.Name.ReadOnly = true;
+            // 
+            // Address
+            // 
+            this.Address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Address.DataPropertyName = "HairSalonAddress";
+            this.Address.HeaderText = "Address";
+            this.Address.Name = "Address";
+            this.Address.ReadOnly = true;
+            // 
+            // Description
+            // 
+            this.Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Description.DataPropertyName = "HairSalonDescription";
+            this.Description.HeaderText = "Description";
+            this.Description.Name = "Description";
+            this.Description.ReadOnly = true;
             // 
             // ManagerHome
             // 
@@ -194,13 +286,14 @@ namespace eFrizer.Win
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Name = "ManagerHome";
             this.Text = "ManagerHome";
             this.Load += new System.EventHandler(this.ManagerHome_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvManagerHome)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -218,8 +311,17 @@ namespace eFrizer.Win
         private System.Windows.Forms.TextBox txtSurname;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Name;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtHairsalonDesc;
+        private System.Windows.Forms.TextBox txtHairsalonAddress;
+        private System.Windows.Forms.TextBox txtHairSalonName;
+        private System.Windows.Forms.Button btn;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Address;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Description;
     }
 }
