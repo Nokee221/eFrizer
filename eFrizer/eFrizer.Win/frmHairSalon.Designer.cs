@@ -31,7 +31,7 @@ namespace eFrizer.Win
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbCities = new System.Windows.Forms.ComboBox();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -54,7 +54,7 @@ namespace eFrizer.Win
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.cbCities);
             this.groupBox1.Controls.Add(this.txtAddress);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
@@ -77,13 +77,13 @@ namespace eFrizer.Win
             this.label4.TabIndex = 7;
             this.label4.Text = "City";
             // 
-            // comboBox1
+            // cbCities
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(509, 39);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(249, 23);
-            this.comboBox1.TabIndex = 6;
+            this.cbCities.FormattingEnabled = true;
+            this.cbCities.Location = new System.Drawing.Point(509, 39);
+            this.cbCities.Name = "cbCities";
+            this.cbCities.Size = new System.Drawing.Size(249, 23);
+            this.cbCities.TabIndex = 6;
             // 
             // txtAddress
             // 
@@ -250,7 +250,7 @@ namespace eFrizer.Win
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RichTextBox txtDescription;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbCities;
         private System.Windows.Forms.Button btnEmployees;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnCategories;

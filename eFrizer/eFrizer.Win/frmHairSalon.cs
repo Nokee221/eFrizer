@@ -14,6 +14,7 @@ namespace eFrizer.Win
     public partial class frmHairSalon : Form
     {
         private HairSalon _hairSalon { get; set; }
+        private APIService _cityService = new APIService("City"); 
 
         public frmHairSalon(HairSalon hairSalon)
         {
@@ -28,14 +29,26 @@ namespace eFrizer.Win
 
         private async Task LoadData()
         {
-            await LoadBasicInfo();
+            LoadBasicInfo();
+            await LoadCities();
         }
 
-        private async Task LoadBasicInfo()
+        private async Task LoadCities()
+        {
+            var cities = await _cityService.Get<List<City>>();
+            cbCities.DataSource = cities;
+            cbCities.DisplayMember = "Name";
+            cbCities.ValueMember = "CityId";
+            
+        }
+
+        private void LoadBasicInfo()
         {
             txtName.Text = _hairSalon.Name;
             txtAddress.Text = _hairSalon.Address;
             txtDescription.Text = _hairSalon.Description;
         }
+
+
     }
 }
