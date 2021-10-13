@@ -248,6 +248,25 @@ namespace eFrizer
                 context.Managers.Add(user);
             }
 
+            if (!context.Managers.Any(x => x.Name == "User M2"))
+            {
+                var password = "1234";
+                var salt = AuthHelper.GenerateSalt();
+                var hash = AuthHelper.GenerateHash(salt, password);
+
+                var user = new Manager()
+                {
+                    Name = "User M2",
+                    Surname = "M2 User",
+                    Username = "m2user",
+                    PasswordSalt = salt,
+                    PasswordHash = hash,
+                    Description = "Second manager"
+                };
+
+                context.Managers.Add(user);
+            }
+
             if (!context.ApplicationUsers.Any(x => x.Name == "User C"))
             {
                 var password = "1234";
@@ -294,6 +313,15 @@ namespace eFrizer
                 });
             }
 
+            if (!context.HairSalonManagers.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.Manager.Name == "User M2"))
+            {
+                context.Add(new HairSalonManager()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
+                    ManagerId = context.Managers.Where(x => x.Name == "User M2").First().ApplicationUserId
+                });
+            }
+
             if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "User A" && x.Role.Name == "Administrator"))
             {
                 context.ApplicationUserRoles.Add(new ApplicationUserRole()
@@ -317,6 +345,15 @@ namespace eFrizer
                 context.ApplicationUserRoles.Add(new ApplicationUserRole()
                 {
                     ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User M").First().ApplicationUserId,
+                    RoleId = context.Roles.Where(x => x.Name == "Manager").First().RoleId
+                });
+            }
+
+            if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "User M2" && x.Role.Name == "Manager"))
+            {
+                context.ApplicationUserRoles.Add(new ApplicationUserRole()
+                {
+                    ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User M2").First().ApplicationUserId,
                     RoleId = context.Roles.Where(x => x.Name == "Manager").First().RoleId
                 });
             }
