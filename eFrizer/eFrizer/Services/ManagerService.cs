@@ -14,13 +14,13 @@ namespace eFrizer.Services
            : base(context, mapper)
         {
         }
-
-        public async Task<Model.Manager> Update(int id, ManagerUpadateRequest request)
+        
+        public override async Task<Model.Manager> Update(int id, ManagerUpadateRequest request)
         {
             var entity = Context.Managers.Find(id);
             _mapper.Map(request, entity);
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
             return _mapper.Map<Model.Manager>(entity);
         }
 
