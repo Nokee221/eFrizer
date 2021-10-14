@@ -30,6 +30,7 @@ namespace eFrizer.Win
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnSave = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.cbCities = new System.Windows.Forms.ComboBox();
             this.txtAddress = new System.Windows.Forms.TextBox();
@@ -47,7 +48,6 @@ namespace eFrizer.Win
             this.btnReviews = new System.Windows.Forms.Button();
             this.btnPictures = new System.Windows.Forms.Button();
             this.btnCategories = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -69,6 +69,16 @@ namespace eFrizer.Win
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Basic information";
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(658, 216);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(100, 23);
+            this.btnSave.TabIndex = 8;
+            this.btnSave.Text = "Save changes";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // label4
             // 
@@ -144,6 +154,7 @@ namespace eFrizer.Win
             this.btnEmployees.TabIndex = 1;
             this.btnEmployees.Text = "Employees";
             this.btnEmployees.UseVisualStyleBackColor = true;
+            this.btnEmployees.Click += new System.EventHandler(this.btnEmployees_Click);
             // 
             // groupBox2
             // 
@@ -224,16 +235,6 @@ namespace eFrizer.Win
             this.btnCategories.TabIndex = 2;
             this.btnCategories.Text = "Categories";
             this.btnCategories.UseVisualStyleBackColor = true;
-            // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(658, 216);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(100, 23);
-            this.btnSave.TabIndex = 8;
-            this.btnSave.Text = "Save changes";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // frmHairSalon
             // 

@@ -60,5 +60,10 @@ namespace eFrizer.Win
             await _hairSalonService.Update<HairSalon>(_hairSalon.HairSalonId, req);
             MessageBox.Show("Changes saved!");
         }
+
+        private void btnEmployees_Click(object sender, EventArgs e)
+        {
+            new frmEmployeeManager(_hairSalon).ShowDialog();
+        }
     }
 }
