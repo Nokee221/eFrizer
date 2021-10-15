@@ -33,13 +33,14 @@ namespace eFrizer.Win
             this.dgvEmployees = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.txtName = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cbType = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.cbStatus = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbType = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtName = new System.Windows.Forms.TextBox();
             this.btnAddManager = new System.Windows.Forms.Button();
             this.btnAddHairDresser = new System.Windows.Forms.Button();
+            this.HairDresserId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployees)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -58,11 +59,15 @@ namespace eFrizer.Win
             // dgvEmployees
             // 
             this.dgvEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvEmployees.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.HairDresserId});
             this.dgvEmployees.Location = new System.Drawing.Point(6, 22);
             this.dgvEmployees.Name = "dgvEmployees";
             this.dgvEmployees.RowTemplate.Height = 25;
+            this.dgvEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvEmployees.Size = new System.Drawing.Size(597, 184);
             this.dgvEmployees.TabIndex = 0;
+            this.dgvEmployees.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmployees_CellContentDoubleClick);
             // 
             // label1
             // 
@@ -88,29 +93,13 @@ namespace eFrizer.Win
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Filter by";
             // 
-            // txtName
+            // cbStatus
             // 
-            this.txtName.Location = new System.Drawing.Point(60, 19);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(167, 23);
-            this.txtName.TabIndex = 3;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(233, 22);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(31, 15);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Type";
-            // 
-            // cbType
-            // 
-            this.cbType.FormattingEnabled = true;
-            this.cbType.Location = new System.Drawing.Point(270, 19);
-            this.cbType.Name = "cbType";
-            this.cbType.Size = new System.Drawing.Size(128, 23);
-            this.cbType.TabIndex = 5;
+            this.cbStatus.FormattingEnabled = true;
+            this.cbStatus.Location = new System.Drawing.Point(459, 19);
+            this.cbStatus.Name = "cbStatus";
+            this.cbStatus.Size = new System.Drawing.Size(144, 23);
+            this.cbStatus.TabIndex = 6;
             // 
             // label3
             // 
@@ -121,13 +110,29 @@ namespace eFrizer.Win
             this.label3.TabIndex = 4;
             this.label3.Text = "Status";
             // 
-            // cbStatus
+            // cbType
             // 
-            this.cbStatus.FormattingEnabled = true;
-            this.cbStatus.Location = new System.Drawing.Point(459, 19);
-            this.cbStatus.Name = "cbStatus";
-            this.cbStatus.Size = new System.Drawing.Size(144, 23);
-            this.cbStatus.TabIndex = 6;
+            this.cbType.FormattingEnabled = true;
+            this.cbType.Location = new System.Drawing.Point(270, 19);
+            this.cbType.Name = "cbType";
+            this.cbType.Size = new System.Drawing.Size(128, 23);
+            this.cbType.TabIndex = 5;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(233, 22);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(31, 15);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Type";
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(60, 19);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(167, 23);
+            this.txtName.TabIndex = 3;
             // 
             // btnAddManager
             // 
@@ -146,6 +151,14 @@ namespace eFrizer.Win
             this.btnAddHairDresser.TabIndex = 4;
             this.btnAddHairDresser.Text = "Add new hair dresser";
             this.btnAddHairDresser.UseVisualStyleBackColor = true;
+            // 
+            // HairDresserId
+            // 
+            this.HairDresserId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.HairDresserId.DataPropertyName = "HairDresserId";
+            this.HairDresserId.HeaderText = "HairDresserId";
+            this.HairDresserId.Name = "HairDresserId";
+            this.HairDresserId.Visible = false;
             // 
             // frmEmployeeManager
             // 
@@ -180,5 +193,6 @@ namespace eFrizer.Win
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Button btnAddManager;
         private System.Windows.Forms.Button btnAddHairDresser;
+        private System.Windows.Forms.DataGridViewTextBoxColumn HairDresserId;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eFrizer.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +13,7 @@ namespace eFrizer.Win
 {
     public partial class frmManagerEmployeeManager : Form
     {
-        public frmManagerEmployeeManager()
+        public frmManagerEmployeeManager(Manager manager)
         {
             InitializeComponent();
         }
