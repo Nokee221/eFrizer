@@ -109,6 +109,11 @@ namespace eFrizer.Win
 
         private async void dgvManagerHome_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+
             var item = dgvManagerHome.SelectedRows[0].DataBoundItem as HairSalonManager;
             
             var form = new frmHairSalon(item.HairSalon).ShowDialog();

@@ -1,4 +1,5 @@
 ﻿using eFrizer.Model;
+using eFrizer.Win.Service;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -59,6 +60,12 @@ namespace eFrizer.Win
             req.CityId = Convert.ToInt32(cbCities.SelectedValue);
             await _hairSalonService.Update<HairSalon>(_hairSalon.HairSalonId, req);
             MessageBox.Show("Changes saved!");
+        }
+
+        private void btnServices_Click(object sender, EventArgs e)
+        {
+            var forma = new frmService(_hairSalon);
+            forma.ShowDialog();
         }
     }
 }

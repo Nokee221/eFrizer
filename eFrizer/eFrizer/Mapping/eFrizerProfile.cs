@@ -52,12 +52,16 @@ namespace eFrizer.Mapping
 
             CreateMap<Database.Service, Model.Service>().ReverseMap();
             CreateMap<Model.ServiceInsertRequest, Database.Service>().ReverseMap();
+            CreateMap<Model.ServiceUpdateRequest, Database.Service>().ReverseMap();
 
             CreateMap<Database.Reservation, Model.Reservation>().ReverseMap();
             CreateMap<Model.ReservationInsertRequest, Database.Reservation>().ReverseMap();
 
             CreateMap<Database.HairSalonService, Model.HairSalonService>().ReverseMap();
             CreateMap<Model.HairSalonService, Database.HairSalonService>().ReverseMap();
+            CreateMap<Model.HairSalonServiceInsertRequest, Database.HairSalonService>().ReverseMap();
+
+
 
             CreateMap<Database.HairSalonHairDresser, Model.HairSalonHairDresser>().ReverseMap();
             CreateMap<Model.HairSalonHairDresserInsertRequest, Database.HairSalonHairDresser>().ReverseMap();

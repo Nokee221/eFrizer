@@ -16,6 +16,8 @@ namespace eFrizer.Database
         public string Name { get; set; }
         public string Description { get; set; }
 
+        public float Price { get; set; }
+
         public virtual ICollection<HairSalonService> HairSalonServices { get; set; }
     }
 }

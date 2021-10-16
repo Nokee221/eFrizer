@@ -28,7 +28,7 @@ namespace eFrizer.Services
             else
             {
 
-                var list = await Context.HairSalonManagers.ToListAsync();
+                var list = await Context.HairSalonServices.ToListAsync();
                 return _mapper.Map<List<Model.HairSalonManager>>(list);
             }
         }

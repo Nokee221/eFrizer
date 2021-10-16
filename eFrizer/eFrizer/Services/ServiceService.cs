@@ -30,5 +30,16 @@ namespace eFrizer.Services
 
             return _mapper.Map<List<Model.Service>>(list);
         }
+
+        public async override Task<Model.Service> Update(int id, ServiceUpdateRequest request = null)
+        {
+            var entity = Context.Services.Find(id);
+            _mapper.Map(request, entity);
+
+            await Context.SaveChangesAsync();
+            return _mapper.Map<Model.Service>(entity);
+
+
+        }
     }
 }
