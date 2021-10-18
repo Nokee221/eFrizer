@@ -267,6 +267,25 @@ namespace eFrizer
                 context.Managers.Add(user);
             }
 
+            if (!context.Clients.Any(x => x.Name == "Client A"))
+            {
+                var password = "1234";
+                var salt = AuthHelper.GenerateSalt();
+                var hash = AuthHelper.GenerateHash(salt, password);
+
+                var user = new Client()
+                {
+                    Name = "Client A",
+                    Surname = "A Client",
+                    Username = "aclient",
+                    PasswordSalt = salt,
+                    PasswordHash = hash,
+                    Description = "test client"
+                };
+
+                context.Clients.Add(user);
+            }
+
             if (!context.ApplicationUsers.Any(x => x.Name == "User C"))
             {
                 var password = "1234";
@@ -427,11 +446,11 @@ namespace eFrizer
 
             context.SaveChanges();
 
-            if (!context.Reviews.Any(x => x.ApplicationUser.Name == "User A" && x.HairSalon.Name == "Hair Salon 1" && x.Text == "Najbolji salon u gradu!!"))
+            if (!context.Reviews.Any(x => x.Client.Name == "User A" && x.HairSalon.Name == "Hair Salon 1" && x.Text == "Najbolji salon u gradu!!"))
             {
                 context.Reviews.Add(new Review()
                 {
-                    ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User A").First().ApplicationUserId,
+                    ClientId = context.ApplicationUsers.Where(x => x.Name == "User A").First().ApplicationUserId,
                     HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
                     Text = "Najbolji salon u gradu!!"
 

@@ -70,6 +70,11 @@ namespace eFrizer.Mapping
             CreateMap<Model.ManagerInsertRequest, Database.Manager>().ReverseMap();
             CreateMap<Model.ManagerUpadateRequest, Database.Manager>().ReverseMap();
 
+            CreateMap<Database.Client, Model.Client>().ReverseMap();
+            CreateMap<Model.ClientInsertRequest, Database.Client>().ReverseMap();
+            CreateMap<Model.ClientUpdateRequest, Database.Client>().ReverseMap();
+
+
             CreateMap<Database.HairSalonManager, Model.HairSalonManager>().ReverseMap();
             CreateMap<Model.HairSalonManagerInsertRequest, Database.HairSalonManager>().ReverseMap();
 

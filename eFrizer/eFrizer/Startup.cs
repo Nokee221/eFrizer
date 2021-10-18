@@ -3,6 +3,7 @@ using eFrizer.Filters;
 using eFrizer.Model;
 using eFrizer.Security;
 using eFrizer.Services;
+using eFrizer.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -67,6 +68,7 @@ namespace eFrizer
             services.AddScoped<IApplicationUserService, Services.ApplicationUserService>();
             services.AddScoped<IHairDresserService, Services.HairDresserService>();
             services.AddScoped<IManagerService, Services.ManagerService>();
+            services.AddScoped<IClientService, Services.ClientService>();
             //TODO: create interfaces for each of these scoped ICRUDServices to make Startup clean
             services.AddScoped<ICRUDService<Model.Role, RoleSearchRequest, RoleInsertRequest, RoleUpdateRequest>, Services.RoleService>();
             services.AddScoped<ICRUDService<Model.ApplicationUserRole, object, ApplicationUserRoleInsertRequest, object>, Services.ApplicationUserRoleService>();

@@ -217,6 +217,7 @@ namespace eFrizer.Win
             this.btnReviews.TabIndex = 4;
             this.btnReviews.Text = "Reviews";
             this.btnReviews.UseVisualStyleBackColor = true;
+            this.btnReviews.Click += new System.EventHandler(this.btnReviews_Click);
             // 
             // btnPictures
             // 

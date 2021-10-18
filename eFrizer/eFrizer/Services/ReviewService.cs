@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using eFrizer.Database;
 using eFrizer.Model;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,18 +18,19 @@ namespace eFrizer.Services
         }
 
 
-        public async override Task<List<Model.Review>> Get(ReviewSearchRequest search = null)
+        public async Task<List<Model.Review>> Get([FromBody] ReviewSearchRequest search = null)
         {
-            var entity = Context.Set<Database.Review>().AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(search?.Text))
+            if (search.HairSalonId != 0)
             {
-                entity = entity.Where(x => x.Text.Contains(search.Text));
+                var list = await Context.Reviews.Where(x => x.HairSalonId == search.HairSalonId).Include(x => x.HairSalon).Include(y => y.Client).ToListAsync();
+                return _mapper.Map<List<Model.Review>>(list);
             }
+            else
+            {
 
-            var list = await entity.ToListAsync();
-
-            return _mapper.Map<List<Model.Review>>(list);
+                var list = await Context.Reviews.ToListAsync();
+                return _mapper.Map<List<Model.Review>>(list);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using eFrizer.Model;
+using eFrizer.Win.Review;
 using eFrizer.Win.Service;
 using System;
 using System.Collections.Generic;
@@ -65,6 +66,12 @@ namespace eFrizer.Win
         private void btnServices_Click(object sender, EventArgs e)
         {
             var forma = new frmService(_hairSalon);
+            forma.ShowDialog();
+        }
+
+        private void btnReviews_Click(object sender, EventArgs e)
+        {
+            var forma = new frmReview(_hairSalon);
             forma.ShowDialog();
         }
     }

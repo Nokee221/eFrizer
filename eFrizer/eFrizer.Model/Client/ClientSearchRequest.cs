@@ -4,8 +4,7 @@ using System.Text;
 
 namespace eFrizer.Model
 {
-    public class HairDresserUpdateRequest : ApplicationUserUpdateRequest
+    public class ClientSearchRequest
     {
-        
     }
 }

@@ -33,6 +33,7 @@ namespace eFrizer.Database
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<Manager> Managers { get; set; }
+        public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<HairSalonManager> HairSalonManagers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

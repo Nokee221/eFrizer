@@ -9,12 +9,12 @@ namespace eFrizer.Database
     {
         public int ReviewId { get; set; }
         public int HairSalonId { get; set; }
-        public int ApplicationUserId { get; set; }
+        public int ClientId { get; set; }
 
         public string Text { get; set; }
         public int StarRating { get; set; }
 
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public virtual Client Client { get; set; }
         public virtual HairSalon HairSalon { get; set; }
     }
 }
