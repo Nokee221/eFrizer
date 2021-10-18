@@ -105,6 +105,7 @@ namespace eFrizer.Win.Service
             // 
             this.txtServiceId.Location = new System.Drawing.Point(395, 29);
             this.txtServiceId.Name = "txtServiceId";
+            this.txtServiceId.ReadOnly = true;
             this.txtServiceId.Size = new System.Drawing.Size(10, 23);
             this.txtServiceId.TabIndex = 8;
             // 
@@ -140,7 +141,7 @@ namespace eFrizer.Win.Service
             // 
             this.txtPrice.Location = new System.Drawing.Point(296, 29);
             this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(93, 23);
+            this.txtPrice.Size = new System.Drawing.Size(109, 23);
             this.txtPrice.TabIndex = 4;
             // 
             // txtName
@@ -214,7 +215,7 @@ namespace eFrizer.Win.Service
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dgvServices);
-            
+            this.Name = "frmService";
             this.Text = "frmService";
             this.Load += new System.EventHandler(this.frmService_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvServices)).EndInit();
