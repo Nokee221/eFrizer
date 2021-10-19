@@ -8,7 +8,7 @@ WORKDIR /src
 COPY . .
 
 FROM build AS publish
-RUN dotnet publish "eFrizer" -c Release -o /app/
+RUN dotnet publish "eFrizer" -c Release -o /app
 
 FROM base AS final
 WORKDIR /app

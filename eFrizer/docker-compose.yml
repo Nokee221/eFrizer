@@ -18,6 +18,7 @@ services:
       context: .
     environment: 
       - ConnectionStrings:DefaultConnection=Server=efrizer-sql, 1433; Database=eFrizerDB; User=sa; Password=QWElkj132!; ConnectRetryCount=0
+      - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - 5010:5010
     networks: 
