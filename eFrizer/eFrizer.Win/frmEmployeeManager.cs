@@ -15,15 +15,18 @@ namespace eFrizer.Win
     {
         //TODO: Should these services be actually querying an Employees table?
         //Or maybe should I make a controller that returns the Employees with a given Hair Salon Id?
+        private Manager _managerOwner;
         private HairSalon _hairSalon;
         private APIService _hairDressers = new APIService("HairSalonHairDresser");
         private APIService _managers = new APIService("HairSalonManager");
         private List<HairSalonHairDresser> hairSalonHairDressers;
         private List<HairSalonManager> hairSalonManagers;
 
-        public frmEmployeeManager(HairSalon hairSalon)
+        public frmEmployeeManager(HairSalon hairSalon, Manager user)
         {
             _hairSalon = hairSalon;
+            _managerOwner = user;
+            //TODO: Fix extra row on dgv
             InitializeComponent();
         }
 
@@ -43,8 +46,10 @@ namespace eFrizer.Win
             var reqM = new HairSalonManagerSearchRequest() { HairSalonId = _hairSalon.HairSalonId};
 
             hairSalonHairDressers = await _hairDressers.Get<List<HairSalonHairDresser>>(reqHD);
+            //TODO: Will excluding the user on the db side improve query performance?
             hairSalonManagers = await _managers.Get<List<HairSalonManager>>(reqM);
 
+            dgvEmployees.AutoGenerateColumns = false;
             populate_dgvEmployees();
         }
 
@@ -53,7 +58,7 @@ namespace eFrizer.Win
             var dataTable = new DataTable();
             dataTable.Columns.AddRange(new DataColumn[]
             {
-                new DataColumn("HairDresserId"),
+                new DataColumn("ApplicationUserId"),
                 new DataColumn("Name"),
                 new DataColumn("Surname"),
                 new DataColumn("Description"),
@@ -64,33 +69,39 @@ namespace eFrizer.Win
             foreach (var item in hairSalonHairDressers)
             {
                 var row = dataTable.NewRow();
-                row["HairDresserId"] = item.HairDresserId; 
+                row["ApplicationUserId"] = item.HairDresserId; 
                 row["Name"] = item.HairDresser.Name;
                 row["Surname"] = item.HairDresser.Surname;
                 row["Description"] = item.HairDresser.Description;
-                row["Type"] = item.GetType();
+                row["Type"] = item.HairDresser.Type;
                 //row["Status"] = item.Status,
                 dataTable.Rows.Add(row);
             }
 
-            //foreach (var item in managers)
-            //{
-            //    var row = dataTable.NewRow();
-            //    row["Name"] = item.Manager.Name;
-            //    row["Surname"] = item.Manager.Surname;
-            //    row["Description"] = item.Manager.Description;
-            //    row["Type"] = item.GetType();
-            //    //row["Status"] = item.Status,
-            //    dataTable.Rows.Add(row);
-            //}
+            foreach (var item in hairSalonManagers)
+            {
+                if (item.Manager.ApplicationUserId == _managerOwner.ApplicationUserId)
+                    continue;
+                var row = dataTable.NewRow();
+                row["ApplicationUserId"] = item.Manager.ApplicationUserId;
+                row["Name"] = item.Manager.Name;
+                row["Surname"] = item.Manager.Surname;
+                row["Description"] = item.Manager.Description;
+                //TODO: is there a better way than hardcoding this? how to use the type defined in model?
+                row["Type"] = "Manager Employee";
+                //row["Status"] = item.Status,
+                dataTable.Rows.Add(row);
+            }
 
             dgvEmployees.DataSource = dataTable;
+            dgvEmployees.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvEmployees.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         private async void dgvEmployees_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             var dresser = hairSalonHairDressers.Where(x => x.HairDresserId == Convert.ToInt32(dgvEmployees.SelectedRows[0].Cells[0].Value)).FirstOrDefault();
-            var manager = dgvEmployees.SelectedRows[0].DataBoundItem as HairSalonManager;
+            var manager = hairSalonManagers.Where(x => x.ManagerId == Convert.ToInt32(dgvEmployees.SelectedRows[0].Cells[0].Value)).FirstOrDefault();
 
             if (manager == null)
             {

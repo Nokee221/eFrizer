@@ -40,7 +40,11 @@ namespace eFrizer.Win
             this.txtName = new System.Windows.Forms.TextBox();
             this.btnAddManager = new System.Windows.Forms.Button();
             this.btnAddHairDresser = new System.Windows.Forms.Button();
-            this.HairDresserId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ApplicationUserId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Surname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployees)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -60,7 +64,11 @@ namespace eFrizer.Win
             // 
             this.dgvEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEmployees.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.HairDresserId});
+            this.ApplicationUserId,
+            this.Name,
+            this.Surname,
+            this.Description,
+            this.Type});
             this.dgvEmployees.Location = new System.Drawing.Point(6, 22);
             this.dgvEmployees.Name = "dgvEmployees";
             this.dgvEmployees.RowTemplate.Height = 25;
@@ -152,13 +160,36 @@ namespace eFrizer.Win
             this.btnAddHairDresser.Text = "Add new hair dresser";
             this.btnAddHairDresser.UseVisualStyleBackColor = true;
             // 
-            // HairDresserId
+            // ApplicationUserId
             // 
-            this.HairDresserId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.HairDresserId.DataPropertyName = "HairDresserId";
-            this.HairDresserId.HeaderText = "HairDresserId";
-            this.HairDresserId.Name = "HairDresserId";
-            this.HairDresserId.Visible = false;
+            this.ApplicationUserId.DataPropertyName = "ApplicationUserId";
+            this.ApplicationUserId.HeaderText = "ApplicationUserId";
+            this.ApplicationUserId.Name = "ApplicationUserId";
+            this.ApplicationUserId.Visible = false;
+            // 
+            // Name
+            // 
+            this.Name.DataPropertyName = "Name";
+            this.Name.HeaderText = "Name";
+            this.Name.Name = "Name";
+            // 
+            // Surname
+            // 
+            this.Surname.DataPropertyName = "Surname";
+            this.Surname.HeaderText = "Surname";
+            this.Surname.Name = "Surname";
+            // 
+            // Description
+            // 
+            this.Description.DataPropertyName = "Description";
+            this.Description.HeaderText = "Description";
+            this.Description.Name = "Description";
+            // 
+            // Type
+            // 
+            this.Type.DataPropertyName = "Type";
+            this.Type.HeaderText = "Type";
+            this.Type.Name = "Type";
             // 
             // frmEmployeeManager
             // 
@@ -169,7 +200,6 @@ namespace eFrizer.Win
             this.Controls.Add(this.btnAddManager);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Name = "frmEmployeeManager";
             this.Text = "frmEmployeeManager";
             this.Load += new System.EventHandler(this.frmEmployeeManager_Load);
             this.groupBox1.ResumeLayout(false);
@@ -193,6 +223,10 @@ namespace eFrizer.Win
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Button btnAddManager;
         private System.Windows.Forms.Button btnAddHairDresser;
-        private System.Windows.Forms.DataGridViewTextBoxColumn HairDresserId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ApplicationUserId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Surname;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Description;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
     }
 }

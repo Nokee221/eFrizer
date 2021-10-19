@@ -7,5 +7,6 @@ namespace eFrizer.Model
     public class HairDresser : ApplicationUser
     {
         public string Description { get; set; }
+        public string Type => "Hair Dresser";
     }
 }

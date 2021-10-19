@@ -14,12 +14,14 @@ namespace eFrizer.Win
     public partial class frmHairSalon : Form
     {
         private HairSalon _hairSalon { get; set; }
+        private Manager _user;
         private APIService _cityService = new APIService("City"); 
         private APIService _hairSalonService = new APIService("HairSalon");
 
-        public frmHairSalon(HairSalon hairSalon)
+        public frmHairSalon(HairSalon hairSalon, Manager user)
         {
             _hairSalon = hairSalon;
+            _user = user;
             InitializeComponent();
         }
 
@@ -63,7 +65,7 @@ namespace eFrizer.Win
 
         private void btnEmployees_Click(object sender, EventArgs e)
         {
-            new frmEmployeeManager(_hairSalon).ShowDialog();
+            new frmEmployeeManager(_hairSalon, _user).ShowDialog();
         }
     }
 }

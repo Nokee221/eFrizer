@@ -18,11 +18,16 @@ namespace eFrizer.Services
 
         }
 
-        public async override Task<List<Model.HairSalonManager>> Get([FromBody] HairSalonManagerSearchRequest search = null)
+        public async override Task<List<Model.HairSalonManager>> Get([FromQuery] HairSalonManagerSearchRequest search = null)
         {
-            if(search.ManagerId != 0)
+            if(search?.ManagerId != 0 && search?.ManagerId != null)
             {
-                var list = await Context.HairSalonManagers.Where(x => x.ManagerId == search.ManagerId).Include(x => x.HairSalon).ToListAsync();
+                var list = await Context.HairSalonManagers.Where(x => x.ManagerId == search.ManagerId).Include(x => x.HairSalon).Include(x => x.Manager).ToListAsync();
+                return _mapper.Map<List<Model.HairSalonManager>>(list);
+            }
+            else if(search?.HairSalonId != 0 && search?.HairSalonId != null)
+            {
+                var list = await Context.HairSalonManagers.Where(x => x.HairSalonId == search.HairSalonId).Include(x => x.HairSalon).Include(x => x.Manager).ToListAsync();
                 return _mapper.Map<List<Model.HairSalonManager>>(list);
             }
             else
@@ -34,7 +39,7 @@ namespace eFrizer.Services
         }
 
 
-        public async Task<Model.HairSalonManager> Insert(HairSalonManagerInsertRequest request)
+        public override async Task<Model.HairSalonManager> Insert(HairSalonManagerInsertRequest request)
         {
             var entity = _mapper.Map<Database.HairSalon>(request);
             Context.HairSalons.Add(entity);
