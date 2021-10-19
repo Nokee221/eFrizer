@@ -26,7 +26,6 @@ namespace eFrizer.Win
         {
             _hairSalon = hairSalon;
             _managerOwner = user;
-            //TODO: Fix extra row on dgv
             InitializeComponent();
         }
 
@@ -105,7 +104,7 @@ namespace eFrizer.Win
 
             if (manager == null)
             {
-                var form = new frmHairDresserManager(dresser.HairDresser).ShowDialog();
+                var form = new frmHairDresserManager(_hairSalon, dresser.HairDresser).ShowDialog();
             }
             else if (dresser == null)
             {
@@ -113,6 +112,11 @@ namespace eFrizer.Win
             }
 
             await LoadData();
+        }
+
+        private void btnAddHairDresser_Click(object sender, EventArgs e)
+        {
+            new frmHairDresserManager(_hairSalon).ShowDialog();
         }
     }
 }

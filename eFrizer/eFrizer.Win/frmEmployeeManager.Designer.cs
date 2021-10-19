@@ -31,6 +31,11 @@ namespace eFrizer.Win
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvEmployees = new System.Windows.Forms.DataGridView();
+            this.ApplicationUserId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Surname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cbStatus = new System.Windows.Forms.ComboBox();
@@ -40,11 +45,6 @@ namespace eFrizer.Win
             this.txtName = new System.Windows.Forms.TextBox();
             this.btnAddManager = new System.Windows.Forms.Button();
             this.btnAddHairDresser = new System.Windows.Forms.Button();
-            this.ApplicationUserId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Surname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployees)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -62,6 +62,8 @@ namespace eFrizer.Win
             // 
             // dgvEmployees
             // 
+            this.dgvEmployees.AllowUserToAddRows = false;
+            this.dgvEmployees.AllowUserToDeleteRows = false;
             this.dgvEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEmployees.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ApplicationUserId,
@@ -71,11 +73,48 @@ namespace eFrizer.Win
             this.Type});
             this.dgvEmployees.Location = new System.Drawing.Point(6, 22);
             this.dgvEmployees.Name = "dgvEmployees";
+            this.dgvEmployees.ReadOnly = true;
             this.dgvEmployees.RowTemplate.Height = 25;
             this.dgvEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvEmployees.Size = new System.Drawing.Size(597, 184);
             this.dgvEmployees.TabIndex = 0;
             this.dgvEmployees.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmployees_CellContentDoubleClick);
+            // 
+            // ApplicationUserId
+            // 
+            this.ApplicationUserId.DataPropertyName = "ApplicationUserId";
+            this.ApplicationUserId.HeaderText = "ApplicationUserId";
+            this.ApplicationUserId.Name = "ApplicationUserId";
+            this.ApplicationUserId.ReadOnly = true;
+            this.ApplicationUserId.Visible = false;
+            // 
+            // Name
+            // 
+            this.Name.DataPropertyName = "Name";
+            this.Name.HeaderText = "Name";
+            this.Name.Name = "Name";
+            this.Name.ReadOnly = true;
+            // 
+            // Surname
+            // 
+            this.Surname.DataPropertyName = "Surname";
+            this.Surname.HeaderText = "Surname";
+            this.Surname.Name = "Surname";
+            this.Surname.ReadOnly = true;
+            // 
+            // Description
+            // 
+            this.Description.DataPropertyName = "Description";
+            this.Description.HeaderText = "Description";
+            this.Description.Name = "Description";
+            this.Description.ReadOnly = true;
+            // 
+            // Type
+            // 
+            this.Type.DataPropertyName = "Type";
+            this.Type.HeaderText = "Type";
+            this.Type.Name = "Type";
+            this.Type.ReadOnly = true;
             // 
             // label1
             // 
@@ -159,37 +198,7 @@ namespace eFrizer.Win
             this.btnAddHairDresser.TabIndex = 4;
             this.btnAddHairDresser.Text = "Add new hair dresser";
             this.btnAddHairDresser.UseVisualStyleBackColor = true;
-            // 
-            // ApplicationUserId
-            // 
-            this.ApplicationUserId.DataPropertyName = "ApplicationUserId";
-            this.ApplicationUserId.HeaderText = "ApplicationUserId";
-            this.ApplicationUserId.Name = "ApplicationUserId";
-            this.ApplicationUserId.Visible = false;
-            // 
-            // Name
-            // 
-            this.Name.DataPropertyName = "Name";
-            this.Name.HeaderText = "Name";
-            this.Name.Name = "Name";
-            // 
-            // Surname
-            // 
-            this.Surname.DataPropertyName = "Surname";
-            this.Surname.HeaderText = "Surname";
-            this.Surname.Name = "Surname";
-            // 
-            // Description
-            // 
-            this.Description.DataPropertyName = "Description";
-            this.Description.HeaderText = "Description";
-            this.Description.Name = "Description";
-            // 
-            // Type
-            // 
-            this.Type.DataPropertyName = "Type";
-            this.Type.HeaderText = "Type";
-            this.Type.Name = "Type";
+            this.btnAddHairDresser.Click += new System.EventHandler(this.btnAddHairDresser_Click);
             // 
             // frmEmployeeManager
             // 

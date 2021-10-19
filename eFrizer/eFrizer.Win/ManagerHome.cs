@@ -77,7 +77,7 @@ namespace eFrizer.Win
             {
                 Name = txtName.Text,
                 Surname = txtSurname.Text,
-                UserName = txtUserName.Text
+                Username = txtUserName.Text
             };
 
             var manager = _managerService.Update<Manager>(_user.ApplicationUserId, request);

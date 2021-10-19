@@ -30,14 +30,14 @@ namespace eFrizer.Win
         private void InitializeComponent()
         {
             this.gbHDM = new System.Windows.Forms.GroupBox();
-            this.txtName = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.txtDescription = new System.Windows.Forms.RichTextBox();
+            this.cbStatus = new System.Windows.Forms.CheckBox();
+            this.pbHairDresser = new System.Windows.Forms.PictureBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtSurname = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.pbHairDresser = new System.Windows.Forms.PictureBox();
-            this.cbStatus = new System.Windows.Forms.CheckBox();
-            this.txtDescription = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtName = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.gbHDM.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbHairDresser)).BeginInit();
@@ -60,21 +60,40 @@ namespace eFrizer.Win
             this.gbHDM.TabStop = false;
             this.gbHDM.Text = "Basic information";
             // 
-            // txtName
+            // txtDescription
             // 
-            this.txtName.Location = new System.Drawing.Point(28, 48);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(192, 23);
-            this.txtName.TabIndex = 0;
+            this.txtDescription.Location = new System.Drawing.Point(28, 165);
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.Size = new System.Drawing.Size(192, 63);
+            this.txtDescription.TabIndex = 8;
+            this.txtDescription.Text = "";
             // 
-            // label1
+            // cbStatus
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(28, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(39, 15);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Name";
+            this.cbStatus.AutoSize = true;
+            this.cbStatus.Location = new System.Drawing.Point(28, 243);
+            this.cbStatus.Name = "cbStatus";
+            this.cbStatus.Size = new System.Drawing.Size(59, 19);
+            this.cbStatus.TabIndex = 7;
+            this.cbStatus.Text = "Active";
+            this.cbStatus.UseVisualStyleBackColor = true;
+            // 
+            // pbHairDresser
+            // 
+            this.pbHairDresser.Location = new System.Drawing.Point(273, 30);
+            this.pbHairDresser.Name = "pbHairDresser";
+            this.pbHairDresser.Size = new System.Drawing.Size(183, 242);
+            this.pbHairDresser.TabIndex = 6;
+            this.pbHairDresser.TabStop = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(28, 147);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(67, 15);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Description";
             // 
             // label2
             // 
@@ -92,40 +111,21 @@ namespace eFrizer.Win
             this.txtSurname.Size = new System.Drawing.Size(192, 23);
             this.txtSurname.TabIndex = 2;
             // 
-            // label3
+            // label1
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(28, 147);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 15);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Description";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(28, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(39, 15);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Name";
             // 
-            // pbHairDresser
+            // txtName
             // 
-            this.pbHairDresser.Location = new System.Drawing.Point(273, 30);
-            this.pbHairDresser.Name = "pbHairDresser";
-            this.pbHairDresser.Size = new System.Drawing.Size(183, 242);
-            this.pbHairDresser.TabIndex = 6;
-            this.pbHairDresser.TabStop = false;
-            // 
-            // cbStatus
-            // 
-            this.cbStatus.AutoSize = true;
-            this.cbStatus.Location = new System.Drawing.Point(28, 243);
-            this.cbStatus.Name = "cbStatus";
-            this.cbStatus.Size = new System.Drawing.Size(59, 19);
-            this.cbStatus.TabIndex = 7;
-            this.cbStatus.Text = "Active";
-            this.cbStatus.UseVisualStyleBackColor = true;
-            // 
-            // txtDescription
-            // 
-            this.txtDescription.Location = new System.Drawing.Point(28, 165);
-            this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(192, 63);
-            this.txtDescription.TabIndex = 8;
-            this.txtDescription.Text = "";
+            this.txtName.Location = new System.Drawing.Point(28, 48);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(192, 23);
+            this.txtName.TabIndex = 0;
             // 
             // btnSave
             // 
@@ -135,6 +135,7 @@ namespace eFrizer.Win
             this.btnSave.TabIndex = 9;
             this.btnSave.Text = "Save changes";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // frmHairDresserManager
             // 
