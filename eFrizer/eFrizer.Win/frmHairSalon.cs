@@ -1,4 +1,5 @@
 ﻿using eFrizer.Model;
+using eFrizer.Win.Categories;
 using eFrizer.Win.Review;
 using eFrizer.Win.Service;
 using System;
@@ -72,6 +73,12 @@ namespace eFrizer.Win
         private void btnReviews_Click(object sender, EventArgs e)
         {
             var forma = new frmReview(_hairSalon);
+            forma.ShowDialog();
+        }
+
+        private void btnCategories_Click(object sender, EventArgs e)
+        {
+            var forma = new frmCategories(_hairSalon);
             forma.ShowDialog();
         }
     }

@@ -215,7 +215,7 @@ namespace eFrizer.Win.Service
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dgvServices);
-            this.Name = "frmService";
+            
             this.Text = "frmService";
             this.Load += new System.EventHandler(this.frmService_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvServices)).EndInit();

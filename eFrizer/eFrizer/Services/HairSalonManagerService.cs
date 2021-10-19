@@ -37,6 +37,10 @@ namespace eFrizer.Services
         public async Task<Model.HairSalonManager> Insert(HairSalonManagerInsertRequest request)
         {
             var entity = _mapper.Map<Database.HairSalon>(request);
+
+
+
+
             Context.HairSalons.Add(entity);
 
             await Context.SaveChangesAsync();

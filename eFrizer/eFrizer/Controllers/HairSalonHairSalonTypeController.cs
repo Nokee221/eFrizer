@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Controllers
 {
-    public class HairSalonHairSalonTypeController : BaseCRUDController<HairSalonHairSalonType, object, HairSalonHairSalonTypeInsertRequest, object>
+    public class HairSalonHairSalonTypeController : BaseCRUDController<HairSalonHairSalonType, HairSalonHairSalonTypeSearchRequest, HairSalonHairSalonTypeInsertRequest, object>
     {
-        public HairSalonHairSalonTypeController(ICRUDService<HairSalonHairSalonType, object, HairSalonHairSalonTypeInsertRequest, object> service)
+        public HairSalonHairSalonTypeController(ICRUDService<HairSalonHairSalonType, HairSalonHairSalonTypeSearchRequest, HairSalonHairSalonTypeInsertRequest, object> service)
             : base(service)
         {
 

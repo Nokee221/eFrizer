@@ -11,5 +11,7 @@ namespace eFrizer.Model
 
         public virtual HairSalon HairSalon { get; set; }
         public virtual HairSalonType HairSalonType { get; set; }
+
+        public string HairSalonTypeName => HairSalonType?.Name;
     }
 }
