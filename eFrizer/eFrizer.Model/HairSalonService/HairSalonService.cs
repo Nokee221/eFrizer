@@ -19,5 +19,6 @@ namespace eFrizer.Model
         public string ServiceDescription => Service?.Description;
         
         public float ?ServicePrice => Service?.Price;
+        public float ?ServiceTime => Service?.TimeMin;
     }
 }

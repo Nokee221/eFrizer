@@ -15,7 +15,5 @@ namespace eFrizer.Database
 
         public virtual HairDresser ApplicationUser { get; set; }
         public virtual Client Client { get; set; }
-
-
     }
 }

@@ -42,22 +42,25 @@ namespace eFrizer.Win
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label6 = new System.Windows.Forms.Label();
             this.txtUserName = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(156, 25);
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.ForeColor = System.Drawing.SystemColors.Control;
+            this.label1.Location = new System.Drawing.Point(157, 44);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(162, 46);
+            this.label1.Size = new System.Drawing.Size(156, 46);
             this.label1.TabIndex = 0;
-            this.label1.Text = "REGISTER";
+            this.label1.Text = "SING UP";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(104, 137);
+            this.label2.Location = new System.Drawing.Point(83, 193);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 15);
             this.label2.TabIndex = 1;
@@ -66,7 +69,7 @@ namespace eFrizer.Win
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(89, 176);
+            this.label3.Location = new System.Drawing.Point(78, 243);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(54, 15);
             this.label3.TabIndex = 2;
@@ -75,7 +78,7 @@ namespace eFrizer.Win
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(86, 255);
+            this.label4.Location = new System.Drawing.Point(72, 333);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(57, 15);
             this.label4.TabIndex = 3;
@@ -84,7 +87,7 @@ namespace eFrizer.Win
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(22, 294);
+            this.label5.Location = new System.Drawing.Point(4, 380);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(128, 15);
             this.label5.TabIndex = 4;
@@ -92,46 +95,49 @@ namespace eFrizer.Win
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(156, 134);
+            this.txtName.Location = new System.Drawing.Point(138, 190);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(209, 23);
+            this.txtName.Size = new System.Drawing.Size(217, 23);
             this.txtName.TabIndex = 5;
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(156, 252);
+            this.txtPassword.Location = new System.Drawing.Point(138, 333);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(209, 23);
+            this.txtPassword.Size = new System.Drawing.Size(217, 23);
             this.txtPassword.TabIndex = 6;
             // 
             // txtConfirmitivePass
             // 
-            this.txtConfirmitivePass.Location = new System.Drawing.Point(156, 291);
+            this.txtConfirmitivePass.Location = new System.Drawing.Point(138, 380);
             this.txtConfirmitivePass.Name = "txtConfirmitivePass";
-            this.txtConfirmitivePass.Size = new System.Drawing.Size(209, 23);
+            this.txtConfirmitivePass.Size = new System.Drawing.Size(217, 23);
             this.txtConfirmitivePass.TabIndex = 7;
             // 
             // txtSurname
             // 
-            this.txtSurname.Location = new System.Drawing.Point(156, 173);
+            this.txtSurname.Location = new System.Drawing.Point(138, 240);
             this.txtSurname.Name = "txtSurname";
-            this.txtSurname.Size = new System.Drawing.Size(209, 23);
+            this.txtSurname.Size = new System.Drawing.Size(217, 23);
             this.txtSurname.TabIndex = 8;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(172, 343);
+            this.button1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button1.ForeColor = System.Drawing.SystemColors.Control;
+            this.button1.Location = new System.Drawing.Point(156, 440);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(117, 33);
+            this.button1.Size = new System.Drawing.Size(156, 40);
             this.button1.TabIndex = 9;
             this.button1.Text = "Sign up";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(168, 391);
+            this.linkLabel1.Location = new System.Drawing.Point(170, 492);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(121, 15);
             this.linkLabel1.TabIndex = 10;
@@ -142,7 +148,7 @@ namespace eFrizer.Win
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(83, 216);
+            this.label6.Location = new System.Drawing.Point(72, 288);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(60, 15);
             this.label6.TabIndex = 11;
@@ -150,16 +156,26 @@ namespace eFrizer.Win
             // 
             // txtUserName
             // 
-            this.txtUserName.Location = new System.Drawing.Point(156, 213);
+            this.txtUserName.Location = new System.Drawing.Point(138, 285);
             this.txtUserName.Name = "txtUserName";
-            this.txtUserName.Size = new System.Drawing.Size(209, 23);
+            this.txtUserName.Size = new System.Drawing.Size(217, 23);
             this.txtUserName.TabIndex = 12;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Location = new System.Drawing.Point(-1, -1);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(467, 129);
+            this.panel1.TabIndex = 13;
             // 
             // Register
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(467, 415);
+            this.ClientSize = new System.Drawing.Size(467, 516);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.linkLabel1);
@@ -172,10 +188,12 @@ namespace eFrizer.Win
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Name = "Register";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PasswordConfirmation";
             this.Load += new System.EventHandler(this.Register_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -196,5 +214,6 @@ namespace eFrizer.Win
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtUserName;
+        private System.Windows.Forms.Panel panel1;
     }
 }
