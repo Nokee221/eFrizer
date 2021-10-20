@@ -73,11 +73,11 @@ namespace eFrizer.Win
 
         private void btnSaveChanges_Click(object sender, EventArgs e)
         {
-            ManagerUpadateRequest request = new ManagerUpadateRequest()
+            ManagerUpdateRequest request = new ManagerUpdateRequest()
             {
                 Name = txtName.Text,
                 Surname = txtSurname.Text,
-                UserName = txtUserName.Text
+                Username = txtUserName.Text
             };
 
             var manager = _managerService.Update<Manager>(_user.ApplicationUserId, request);
@@ -86,15 +86,22 @@ namespace eFrizer.Win
             
         }
 
-        private async void btn_Click(object sender, EventArgs e)
+        private async void btnAddHairSalon_Click(object sender, EventArgs e)
         {
-            HairSalonManagerInsertRequest request = new HairSalonManagerInsertRequest()
+            var req = new HairSalonInsertRequest()
             {
                 Name = txtHairSalonName.Text,
                 Address = txtHairsalonAddress.Text,
                 Description = txtHairsalonDesc.Text,
-                ManagerId = _user.ApplicationUserId,
                 CityId = Convert.ToInt32(cbCity.SelectedValue)
+            };
+
+            var newHairSalon = await _hairSalons.Insert<HairSalon>(req);
+
+            HairSalonManagerInsertRequest request = new HairSalonManagerInsertRequest()
+            {
+                HairSalonId = newHairSalon.HairSalonId,                
+                ManagerId = _user.ApplicationUserId,
             };
 
             var hairsalonmanager = await _hairSalons.Insert<HairSalonManager>(request);
@@ -116,7 +123,7 @@ namespace eFrizer.Win
 
             var item = dgvManagerHome.SelectedRows[0].DataBoundItem as HairSalonManager;
             
-            var form = new frmHairSalon(item.HairSalon).ShowDialog();
+            var form = new frmHairSalon(item.HairSalon, _user).ShowDialog();
 
             await LoadData();
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Services
 {
-    public interface IManagerService : ICRUDService<Model.Manager, object, ManagerInsertRequest, ManagerUpadateRequest>
+    public interface IManagerService : ICRUDService<Model.Manager, object, ManagerInsertRequest, ManagerUpdateRequest>
     {
     }
 }

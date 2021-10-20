@@ -320,6 +320,23 @@ namespace eFrizer
                 });
             }
 
+            if(!context.Managers.Any(x => x.Name == "Manager Employee 1"))
+            {
+                var password = "1234";
+                var salt = AuthHelper.GenerateSalt();
+                var hash = AuthHelper.GenerateHash(salt, password);
+
+                context.Managers.Add(new ManagerEmployee()
+                {
+                    Name = "Manager Employee 1",
+                    Surname = "Manager Employee 1",
+                    Username = "me1user",
+                    PasswordSalt = salt,
+                    PasswordHash = hash,
+                    Description = "The best manager employee there is!"
+                });
+            }
+
             context.SaveChanges();
 
 
@@ -340,6 +357,17 @@ namespace eFrizer
                     ManagerId = context.Managers.Where(x => x.Name == "User M2").First().ApplicationUserId
                 });
             }
+
+            if(!context.HairSalonManagers.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Manager.Name == "Manager Employee 1"))
+            {
+                context.Add(new HairSalonManager()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
+                    ManagerId = context.Managers.Where(x => x.Name == "Manager Employee 1").First().ApplicationUserId
+                });
+            }
+
+
 
             if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "User A" && x.Role.Name == "Administrator"))
             {

@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Services
 {
-    public class ManagerService : BaseCRUDService<Model.Manager, Database.Manager, object, ManagerInsertRequest, ManagerUpadateRequest>, IManagerService
+    public class ManagerService : BaseCRUDService<Model.Manager, Database.Manager, object, ManagerInsertRequest, ManagerUpdateRequest>, IManagerService
     {
         public ManagerService(eFrizerContext context, IMapper mapper)
            : base(context, mapper)
         {
         }
-
-        public async Task<Model.Manager> Update(int id, ManagerUpadateRequest request)
+        
+        public override async Task<Model.Manager> Update(int id, ManagerUpdateRequest request)
         {
             var entity = Context.Managers.Find(id);
             _mapper.Map(request, entity);
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
             return _mapper.Map<Model.Manager>(entity);
         }
 

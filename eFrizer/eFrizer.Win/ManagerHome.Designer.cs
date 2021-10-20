@@ -47,7 +47,7 @@ namespace eFrizer.Win
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cbCity = new System.Windows.Forms.ComboBox();
-            this.btn = new System.Windows.Forms.Button();
+            this.btnAddHairSalon = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtHairsalonDesc = new System.Windows.Forms.TextBox();
@@ -212,7 +212,7 @@ namespace eFrizer.Win
             // 
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.cbCity);
-            this.groupBox3.Controls.Add(this.btn);
+            this.groupBox3.Controls.Add(this.btnAddHairSalon);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.txtHairsalonDesc);
@@ -245,13 +245,30 @@ namespace eFrizer.Win
             // 
             // btn
             // 
-            this.btn.Location = new System.Drawing.Point(153, 242);
-            this.btn.Name = "btn";
-            this.btn.Size = new System.Drawing.Size(83, 24);
-            this.btn.TabIndex = 13;
-            this.btn.Text = "Create";
-            this.btn.UseVisualStyleBackColor = true;
-            this.btn.Click += new System.EventHandler(this.btn_Click);
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(122, 185);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(28, 15);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "City";
+            // 
+            // cbCity
+            // 
+            this.cbCity.FormattingEnabled = true;
+            this.cbCity.Location = new System.Drawing.Point(122, 203);
+            this.cbCity.Name = "cbCity";
+            this.cbCity.Size = new System.Drawing.Size(142, 23);
+            this.cbCity.TabIndex = 14;
+            // 
+            // btnAddHairSalon
+            // 
+            this.btnAddHairSalon.Location = new System.Drawing.Point(153, 242);
+            this.btnAddHairSalon.Name = "btnAddHairSalon";
+            this.btnAddHairSalon.Size = new System.Drawing.Size(83, 24);
+            this.btnAddHairSalon.TabIndex = 13;
+            this.btnAddHairSalon.Text = "Create";
+            this.btnAddHairSalon.UseVisualStyleBackColor = true;
+            this.btnAddHairSalon.Click += new System.EventHandler(this.btnAddHairSalon_Click);
             // 
             // label6
             // 
@@ -342,7 +359,7 @@ namespace eFrizer.Win
         private System.Windows.Forms.TextBox txtHairsalonDesc;
         private System.Windows.Forms.TextBox txtHairsalonAddress;
         private System.Windows.Forms.TextBox txtHairSalonName;
-        private System.Windows.Forms.Button btn;
+        private System.Windows.Forms.Button btnAddHairSalon;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;
