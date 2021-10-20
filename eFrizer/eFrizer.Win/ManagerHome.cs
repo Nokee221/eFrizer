@@ -13,9 +13,10 @@ namespace eFrizer.Win
 {
     public partial class ManagerHome : Form
     {
-        private readonly APIService _hairSalons = new APIService("HairSalonManager");
+        private readonly APIService _hairSalons = new APIService("HairSalon");
         private readonly APIService _managerService = new APIService("Manager");
         private APIService _cityService = new APIService("City");
+        private APIService _hairSalonManagerService = new APIService("HairSalonManager");
         private readonly Manager _user;
 
         public ManagerHome(Manager user)
@@ -46,7 +47,7 @@ namespace eFrizer.Win
 
         private async Task LoadHairSalons()
         {
-            var result = await _hairSalons.Get<List<HairSalonManager>>(new HairSalonManagerSearchRequest() { ManagerId = _user.ApplicationUserId});
+            var result = await _hairSalonManagerService.Get<List<HairSalonManager>>(new HairSalonManagerSearchRequest() { ManagerId = _user.ApplicationUserId});
             
             dgvManagerHome.DataSource = result;
         }
@@ -104,7 +105,7 @@ namespace eFrizer.Win
                 ManagerId = _user.ApplicationUserId,
             };
 
-            var hairsalonmanager = await _hairSalons.Insert<HairSalonManager>(request);
+            var hairsalonmanager = await _hairSalonManagerService.Insert<HairSalonManager>(request);
 
 
             MessageBox.Show("Successfully added new hair salon!");
