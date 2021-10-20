@@ -309,7 +309,8 @@ namespace eFrizer.Win
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-           
+            
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ManagerHome";
             this.Load += new System.EventHandler(this.ManagerHome_Load);
             this.groupBox1.ResumeLayout(false);
