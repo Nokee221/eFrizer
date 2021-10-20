@@ -147,6 +147,7 @@ namespace eFrizer.Win
             this.cbStatus.Name = "cbStatus";
             this.cbStatus.Size = new System.Drawing.Size(144, 23);
             this.cbStatus.TabIndex = 6;
+            this.cbStatus.SelectedIndexChanged += new System.EventHandler(this.cbStatus_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -164,6 +165,7 @@ namespace eFrizer.Win
             this.cbType.Name = "cbType";
             this.cbType.Size = new System.Drawing.Size(128, 23);
             this.cbType.TabIndex = 5;
+            this.cbType.SelectedIndexChanged += new System.EventHandler(this.cbType_SelectedIndexChanged);
             // 
             // label2
             // 

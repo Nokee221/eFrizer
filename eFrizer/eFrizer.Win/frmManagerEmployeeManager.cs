@@ -40,9 +40,9 @@ namespace eFrizer.Win
             txtName.Text = _managerEmployee?.Name;
             txtSurname.Text = _managerEmployee?.Surname;
             txtDescription.Text = _managerEmployee?.Description;
+            cbStatus.Checked = _managerEmployee == null ? false : _managerEmployee.Status;
             //TODO: get image&status
             //pbHairDresser.Image = _hairDresser.Image;
-            //cbStatus.Checked = _hairDresser.Status;
         }
 
         private async void btnSave_Click(object sender, EventArgs e)
@@ -56,7 +56,8 @@ namespace eFrizer.Win
                     Description = txtSurname.Text,
                     Username = "Hair Manager " + DateTime.Now,
                     Password = "1234",
-                    PasswordConfirmation = "1234"
+                    PasswordConfirmation = "1234",
+                    Status = cbStatus.Checked
 
                 };
 
@@ -75,7 +76,8 @@ namespace eFrizer.Win
                 {
                     Name = txtName.Text,
                     Surname = txtSurname.Text,
-                    Description = txtDescription.Text
+                    Description = txtDescription.Text,
+                    Status = cbStatus.Checked
                 };
                 _managerEmployee = await _managerService.Update<Manager>(_managerEmployee.ApplicationUserId, req);
                 MessageBox.Show("Successfully updated the manager employee!");

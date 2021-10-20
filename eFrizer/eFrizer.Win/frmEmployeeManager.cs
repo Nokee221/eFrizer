@@ -37,6 +37,24 @@ namespace eFrizer.Win
         private async Task LoadData()
         {
             await LoadEmployeeList();
+            LoadComboBoxes();
+        }
+
+        private void LoadComboBoxes()
+        {
+            cbType.DataSource = new List<string>()
+            {
+                "Any",
+                "Hair Dressers",
+                "Managers"
+            };
+
+            cbStatus.DataSource = new List<string>()
+            {
+                "Any",
+                "Active",
+                "Inactive"
+            };
         }
 
         private async Task LoadEmployeeList()
@@ -52,7 +70,7 @@ namespace eFrizer.Win
             populate_dgvEmployees(_hairSalonHairDressers, _hairSalonManagers);
         }
 
-        private void populate_dgvEmployees(List<HairSalonHairDresser> hairDressers, List<HairSalonManager> managers)
+        private void populate_dgvEmployees(List<HairSalonHairDresser> hairDressers = null, List<HairSalonManager> managers = null)
         {
             var dataTable = new DataTable();
             dataTable.Columns.AddRange(new DataColumn[]
@@ -65,31 +83,37 @@ namespace eFrizer.Win
                 new DataColumn("Status"),
             });
 
-            foreach (var item in hairDressers)
+            if (hairDressers != null)
             {
-                var row = dataTable.NewRow();
-                row["ApplicationUserId"] = item.HairDresserId; 
-                row["Name"] = item.HairDresser.Name;
-                row["Surname"] = item.HairDresser.Surname;
-                row["Description"] = item.HairDresser.Description;
-                row["Type"] = item.HairDresser.Type;
-                //row["Status"] = item.Status,
-                dataTable.Rows.Add(row);
+                foreach (var item in hairDressers)
+                {
+                    var row = dataTable.NewRow();
+                    row["ApplicationUserId"] = item.HairDresserId;
+                    row["Name"] = item.HairDresser.Name;
+                    row["Surname"] = item.HairDresser.Surname;
+                    row["Description"] = item.HairDresser.Description;
+                    row["Type"] = item.HairDresser.Type;
+                    //row["Status"] = item.Status,
+                    dataTable.Rows.Add(row);
+                } 
             }
 
-            foreach (var item in managers)
+            if (managers != null)
             {
-                if (item.Manager.ApplicationUserId == _managerOwner.ApplicationUserId)
-                    continue;
-                var row = dataTable.NewRow();
-                row["ApplicationUserId"] = item.Manager.ApplicationUserId;
-                row["Name"] = item.Manager.Name;
-                row["Surname"] = item.Manager.Surname;
-                row["Description"] = item.Manager.Description;
-                //TODO: is there a better way than hardcoding this? how to use the type defined in model?
-                row["Type"] = "Manager Employee";
-                //row["Status"] = item.Status,
-                dataTable.Rows.Add(row);
+                foreach (var item in managers)
+                {
+                    if (item.Manager.ApplicationUserId == _managerOwner.ApplicationUserId)
+                        continue;
+                    var row = dataTable.NewRow();
+                    row["ApplicationUserId"] = item.Manager.ApplicationUserId;
+                    row["Name"] = item.Manager.Name;
+                    row["Surname"] = item.Manager.Surname;
+                    row["Description"] = item.Manager.Description;
+                    //TODO: is there a better way than hardcoding this? how to use the type defined in model?
+                    row["Type"] = "Manager Employee";
+                    //row["Status"] = item.Status,
+                    dataTable.Rows.Add(row);
+                } 
             }
 
             dgvEmployees.DataSource = dataTable;
@@ -133,6 +157,42 @@ namespace eFrizer.Win
                 var hairSalonHairDressers = _hairSalonHairDressers.Where(x => x.HairDresser.Name.Contains(txtName.Text) || x.HairDresser.Surname.Contains(txtName.Text)).ToList();
                 var hairSalonManagers = _hairSalonManagers.Where(x => x.Manager.Name.Contains(txtName.Text) || x.Manager.Surname.Contains(txtName.Text)).ToList();
                 populate_dgvEmployees(hairSalonHairDressers, hairSalonManagers);
+            }
+            else
+            {
+                populate_dgvEmployees(_hairSalonHairDressers, _hairSalonManagers);
+            }
+        }
+
+        private void cbType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if((string)cbType.SelectedValue == "Hair Dressers")
+            {
+                populate_dgvEmployees(_hairSalonHairDressers, null);
+            }
+            else if((string)cbType.SelectedValue == "Managers")
+            {
+                populate_dgvEmployees(null, _hairSalonManagers);
+            }
+            else
+            {
+                populate_dgvEmployees(_hairSalonHairDressers, _hairSalonManagers);
+            }
+        }
+
+        private void cbStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((string)cbStatus.SelectedValue == "Active")
+            {
+                var managers = _hairSalonManagers.Where(x => x.Manager.Status == true).ToList();
+                var hairDressers = _hairSalonHairDressers.Where(x => x.HairDresser.Status == true).ToList();
+                populate_dgvEmployees(hairDressers, managers);
+            }
+            else if ((string)cbStatus.SelectedValue == "Inactive")
+            {
+                var managers = _hairSalonManagers.Where(x => x.Manager.Status == false).ToList();
+                var hairDressers = _hairSalonHairDressers.Where(x => x.HairDresser.Status == false).ToList();
+                populate_dgvEmployees(hairDressers, managers);
             }
             else
             {

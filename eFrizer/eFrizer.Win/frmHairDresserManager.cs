@@ -40,9 +40,9 @@ namespace eFrizer.Win
             txtName.Text = _hairDresser?.Name;
             txtSurname.Text = _hairDresser?.Surname;
             txtDescription.Text = _hairDresser?.Description;
+            cbStatus.Checked = (_hairDresser == null) ? false : _hairDresser.Status;
             //TODO: get image&status
             //pbHairDresser.Image = _hairDresser.Image;
-            //cbStatus.Checked = _hairDresser.Status;
         }
 
         private async void btnSave_Click(object sender, EventArgs e)
@@ -56,7 +56,8 @@ namespace eFrizer.Win
                     Description = txtSurname.Text,
                     Username = "Hair Dresser " + DateTime.Now,
                     Password = "1234",
-                    PasswordConfirmation = "1234"
+                    PasswordConfirmation = "1234",
+                    Status = cbStatus.Checked
 
                 };
 
@@ -75,7 +76,9 @@ namespace eFrizer.Win
                 {
                     Name = txtName.Text,
                     Surname = txtSurname.Text,
-                    Description = txtDescription.Text
+                    Description = txtDescription.Text,
+                    Status = cbStatus.Checked
+                    
                 };
                 _hairDresser = await _hairDresserService.Update<HairDresser>(_hairDresser.ApplicationUserId, req);
                 MessageBox.Show("Successfully updated the hair dresser!");
