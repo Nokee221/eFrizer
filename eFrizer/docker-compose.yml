@@ -19,8 +19,14 @@ services:
     environment: 
       - ConnectionStrings:DefaultConnection=Server=efrizer-sql, 1433; Database=eFrizerDB; User=sa; Password=QWElkj132!; ConnectRetryCount=0
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=1234
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro
     ports:
-      - 5010:5010
+      - 80:80
+      - 443:443
     networks: 
       - efrizernet
     links:
