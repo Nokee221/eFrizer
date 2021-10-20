@@ -51,6 +51,7 @@ namespace eFrizer.Win
             this.btnSave.TabIndex = 11;
             this.btnSave.Text = "Save changes";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // gbHDM
             // 
@@ -145,6 +146,7 @@ namespace eFrizer.Win
             this.Controls.Add(this.btnSave);
             this.Name = "frmManagerEmployeeManager";
             this.Text = "Manager Employee Manager";
+            this.Load += new System.EventHandler(this.frmManagerEmployeeManager_Load);
             this.gbHDM.ResumeLayout(false);
             this.gbHDM.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbHairDresser)).EndInit();

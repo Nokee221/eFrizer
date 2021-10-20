@@ -31,6 +31,9 @@ namespace eFrizer.Win
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvManagerHome = new System.Windows.Forms.DataGridView();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAdd = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnEdit = new System.Windows.Forms.Button();
@@ -44,16 +47,13 @@ namespace eFrizer.Win
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cbCity = new System.Windows.Forms.ComboBox();
-            this.btn = new System.Windows.Forms.Button();
+            this.btnAddHairSalon = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtHairsalonDesc = new System.Windows.Forms.TextBox();
             this.txtHairsalonAddress = new System.Windows.Forms.TextBox();
             this.txtHairSalonName = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvManagerHome)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -88,6 +88,30 @@ namespace eFrizer.Win
             this.dgvManagerHome.Size = new System.Drawing.Size(764, 211);
             this.dgvManagerHome.TabIndex = 0;
             this.dgvManagerHome.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvManagerHome_CellContentClick);
+            // 
+            // Name
+            // 
+            this.Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Name.DataPropertyName = "HairSalonName";
+            this.Name.HeaderText = "Name";
+            this.Name.Name = "Name";
+            this.Name.ReadOnly = true;
+            // 
+            // Address
+            // 
+            this.Address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Address.DataPropertyName = "HairSalonAddress";
+            this.Address.HeaderText = "Address";
+            this.Address.Name = "Address";
+            this.Address.ReadOnly = true;
+            // 
+            // Description
+            // 
+            this.Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Description.DataPropertyName = "HairSalonDescription";
+            this.Description.HeaderText = "Description";
+            this.Description.Name = "Description";
+            this.Description.ReadOnly = true;
             // 
             // btnAdd
             // 
@@ -188,7 +212,7 @@ namespace eFrizer.Win
             // 
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.cbCity);
-            this.groupBox3.Controls.Add(this.btn);
+            this.groupBox3.Controls.Add(this.btnAddHairSalon);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.txtHairsalonDesc);
@@ -219,15 +243,15 @@ namespace eFrizer.Win
             this.cbCity.Size = new System.Drawing.Size(142, 23);
             this.cbCity.TabIndex = 14;
             // 
-            // btn
+            // btnAddHairSalon
             // 
-            this.btn.Location = new System.Drawing.Point(153, 242);
-            this.btn.Name = "btn";
-            this.btn.Size = new System.Drawing.Size(83, 24);
-            this.btn.TabIndex = 13;
-            this.btn.Text = "Create";
-            this.btn.UseVisualStyleBackColor = true;
-            this.btn.Click += new System.EventHandler(this.btn_Click);
+            this.btnAddHairSalon.Location = new System.Drawing.Point(153, 242);
+            this.btnAddHairSalon.Name = "btnAddHairSalon";
+            this.btnAddHairSalon.Size = new System.Drawing.Size(83, 24);
+            this.btnAddHairSalon.TabIndex = 13;
+            this.btnAddHairSalon.Text = "Create";
+            this.btnAddHairSalon.UseVisualStyleBackColor = true;
+            this.btnAddHairSalon.Click += new System.EventHandler(this.btnAddHairSalon_Click);
             // 
             // label6
             // 
@@ -277,30 +301,6 @@ namespace eFrizer.Win
             this.label4.TabIndex = 7;
             this.label4.Text = "Name";
             // 
-            // Name
-            // 
-            this.Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Name.DataPropertyName = "HairSalonName";
-            this.Name.HeaderText = "Name";
-            this.Name.Name = "Name";
-            this.Name.ReadOnly = true;
-            // 
-            // Address
-            // 
-            this.Address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Address.DataPropertyName = "HairSalonAddress";
-            this.Address.HeaderText = "Address";
-            this.Address.Name = "Address";
-            this.Address.ReadOnly = true;
-            // 
-            // Description
-            // 
-            this.Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Description.DataPropertyName = "HairSalonDescription";
-            this.Description.HeaderText = "Description";
-            this.Description.Name = "Description";
-            this.Description.ReadOnly = true;
-            // 
             // ManagerHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -340,7 +340,7 @@ namespace eFrizer.Win
         private System.Windows.Forms.TextBox txtHairsalonDesc;
         private System.Windows.Forms.TextBox txtHairsalonAddress;
         private System.Windows.Forms.TextBox txtHairSalonName;
-        private System.Windows.Forms.Button btn;
+        private System.Windows.Forms.Button btnAddHairSalon;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;

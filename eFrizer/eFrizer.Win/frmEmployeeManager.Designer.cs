@@ -180,6 +180,7 @@ namespace eFrizer.Win
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(167, 23);
             this.txtName.TabIndex = 3;
+            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // btnAddManager
             // 
@@ -189,6 +190,7 @@ namespace eFrizer.Win
             this.btnAddManager.TabIndex = 1;
             this.btnAddManager.Text = "Add new manager";
             this.btnAddManager.UseVisualStyleBackColor = true;
+            this.btnAddManager.Click += new System.EventHandler(this.btnAddManager_Click);
             // 
             // btnAddHairDresser
             // 

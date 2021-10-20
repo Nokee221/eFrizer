@@ -37,26 +37,5 @@ namespace eFrizer.Services
                 return _mapper.Map<List<Model.HairSalonManager>>(list);
             }
         }
-
-
-        public override async Task<Model.HairSalonManager> Insert(HairSalonManagerInsertRequest request)
-        {
-            var entity = _mapper.Map<Database.HairSalon>(request);
-            Context.HairSalons.Add(entity);
-
-            await Context.SaveChangesAsync();
-
-            Database.HairSalonManager hairSalonManager = new Database.HairSalonManager()
-            {
-                ManagerId = request.ManagerId,
-                HairSalonId = entity.HairSalonId
-            };
-
-            Context.HairSalonManagers.Add(hairSalonManager);
-            await Context.SaveChangesAsync();
-
-
-            return _mapper.Map<Model.HairSalonManager>(hairSalonManager);
-        }
     }
 }

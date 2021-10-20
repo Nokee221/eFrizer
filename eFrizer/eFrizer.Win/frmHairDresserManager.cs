@@ -14,7 +14,7 @@ namespace eFrizer.Win
     public partial class frmHairDresserManager : Form
     {
         private HairDresser _hairDresser;
-        private HairSalon _hairSalon;
+        private readonly HairSalon _hairSalon;
         private APIService _hairDresserService = new APIService("HairDresser");
         private APIService _hairSalonHairDresserService = new APIService("HairSalonHairDresser");
 
