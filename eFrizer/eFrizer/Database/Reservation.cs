@@ -9,7 +9,9 @@ namespace eFrizer.Database
     {
         public int HairDresserId{ get; set; }
         public int ClientId { get; set; }
-        
+
+        public Service Service { get; set; }
+
         public DateTime To { get; set; }
         public DateTime From { get; set; }
 

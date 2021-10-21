@@ -6,6 +6,8 @@ namespace eFrizer.Model
 {
     public class HairSalonHairDresserSearchRequest
     {
-        public int? HairSalonId { get; set; }
+        public int HairSalonId { get; set; }
+
+       
     }
 }

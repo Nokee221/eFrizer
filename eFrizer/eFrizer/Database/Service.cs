@@ -19,5 +19,6 @@ namespace eFrizer.Database
         public int TimeMin { get; set; }
 
         public virtual ICollection<HairSalonService> HairSalonServices { get; set; }
+        public ICollection<Reservation> Reservations { get; set; }
     }
 }

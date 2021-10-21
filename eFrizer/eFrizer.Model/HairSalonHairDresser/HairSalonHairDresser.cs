@@ -10,5 +10,6 @@ namespace eFrizer.Model
         public int HairDresserId { get; set; }
         public virtual HairSalon HairSalon { get; set; }
         public virtual HairDresser HairDresser { get; set; }
+
     }
 }

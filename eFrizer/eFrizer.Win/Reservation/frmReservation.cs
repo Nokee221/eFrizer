@@ -38,7 +38,14 @@ namespace eFrizer.Win.Reservation
             request.HairSalonId = _hairSalon.HairSalonId;
 
             var result = await _hairsalonhairdresser.Get<List<HairSalonHairDresser>>(request);
-            dgvReservation.DataSource = result;
+            var hairDressers = new List<HairDresser>();
+            foreach (var item in result)
+            {
+                hairDressers.Add(item.HairDresser);
+            }
+            cbHDName.DataSource = hairDressers;
+            cbHDName.DisplayMember = "Name";
+            cbHDName.ValueMember = "ApplicationUserId";
 
            
         }
