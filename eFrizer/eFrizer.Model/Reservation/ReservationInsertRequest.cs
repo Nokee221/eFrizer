@@ -7,7 +7,9 @@ namespace eFrizer.Model
     public class ReservationInsertRequest
     {
         public int HairDresserId { get; set; }
-        public int ApplicationUserId { get; set; }
+        public int ClientId { get; set; }
+
+        public int ServiceId { get; set; }
 
         public DateTime To { get; set; }
         public DateTime From { get; set; }

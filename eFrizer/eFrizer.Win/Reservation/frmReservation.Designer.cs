@@ -33,6 +33,11 @@ namespace eFrizer.Win.Reservation
             this.btnSearch = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvReservation = new System.Windows.Forms.DataGridView();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Service = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FROM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label2 = new System.Windows.Forms.Label();
             this.dtpDate = new System.Windows.Forms.DateTimePicker();
             this.cbHDName = new System.Windows.Forms.ComboBox();
@@ -51,9 +56,9 @@ namespace eFrizer.Win.Reservation
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(405, 68);
+            this.btnSearch.Location = new System.Drawing.Point(513, 74);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(113, 26);
+            this.btnSearch.Size = new System.Drawing.Size(167, 37);
             this.btnSearch.TabIndex = 2;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -63,7 +68,7 @@ namespace eFrizer.Win.Reservation
             this.groupBox1.Controls.Add(this.dgvReservation);
             this.groupBox1.Location = new System.Drawing.Point(16, 113);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(520, 295);
+            this.groupBox1.Size = new System.Drawing.Size(670, 295);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Reservation";
@@ -73,13 +78,56 @@ namespace eFrizer.Win.Reservation
             this.dgvReservation.AllowUserToAddRows = false;
             this.dgvReservation.AllowUserToDeleteRows = false;
             this.dgvReservation.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvReservation.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Name,
+            this.Username,
+            this.Service,
+            this.TO,
+            this.FROM});
             this.dgvReservation.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvReservation.Location = new System.Drawing.Point(3, 19);
             this.dgvReservation.Name = "dgvReservation";
             this.dgvReservation.ReadOnly = true;
             this.dgvReservation.RowTemplate.Height = 25;
-            this.dgvReservation.Size = new System.Drawing.Size(514, 273);
+            this.dgvReservation.Size = new System.Drawing.Size(664, 273);
             this.dgvReservation.TabIndex = 0;
+            // 
+            // Name
+            // 
+            this.Name.DataPropertyName = "HairDresserName";
+            this.Name.HeaderText = "HairDresser";
+            this.Name.Name = "Name";
+            this.Name.ReadOnly = true;
+            // 
+            // Username
+            // 
+            this.Username.DataPropertyName = "ClientUsername";
+            this.Username.HeaderText = "ClientName";
+            this.Username.Name = "Username";
+            this.Username.ReadOnly = true;
+            // 
+            // Service
+            // 
+            this.Service.DataPropertyName = "ServiceName";
+            this.Service.HeaderText = "Service";
+            this.Service.Name = "Service";
+            this.Service.ReadOnly = true;
+            // 
+            // TO
+            // 
+            this.TO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.TO.DataPropertyName = "To";
+            this.TO.HeaderText = "TO";
+            this.TO.Name = "TO";
+            this.TO.ReadOnly = true;
+            // 
+            // FROM
+            // 
+            this.FROM.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.FROM.DataPropertyName = "From";
+            this.FROM.HeaderText = "FROM";
+            this.FROM.Name = "FROM";
+            this.FROM.ReadOnly = true;
             // 
             // label2
             // 
@@ -109,14 +157,14 @@ namespace eFrizer.Win.Reservation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(545, 414);
+            this.ClientSize = new System.Drawing.Size(698, 414);
             this.Controls.Add(this.cbHDName);
             this.Controls.Add(this.dtpDate);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.label1);
-            this.Name = "frmReservation";
+            
             this.Text = "frmReservation";
             this.Load += new System.EventHandler(this.frmReservation_Load);
             this.groupBox1.ResumeLayout(false);
@@ -135,5 +183,10 @@ namespace eFrizer.Win.Reservation
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dtpDate;
         private System.Windows.Forms.ComboBox cbHDName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Username;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Service;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TO;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FROM;
     }
 }
