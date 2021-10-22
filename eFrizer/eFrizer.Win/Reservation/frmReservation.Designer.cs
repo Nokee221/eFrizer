@@ -48,20 +48,26 @@ namespace eFrizer.Win.Reservation
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 22);
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label1.Location = new System.Drawing.Point(9, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 15);
+            this.label1.Size = new System.Drawing.Size(60, 21);
             this.label1.TabIndex = 0;
             this.label1.Text = "Name:";
             // 
             // btnSearch
             // 
+            this.btnSearch.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnSearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnSearch.ForeColor = System.Drawing.SystemColors.Control;
             this.btnSearch.Location = new System.Drawing.Point(513, 74);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(167, 37);
             this.btnSearch.TabIndex = 2;
             this.btnSearch.Text = "Search";
-            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // groupBox1
             // 
@@ -77,6 +83,7 @@ namespace eFrizer.Win.Reservation
             // 
             this.dgvReservation.AllowUserToAddRows = false;
             this.dgvReservation.AllowUserToDeleteRows = false;
+            this.dgvReservation.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dgvReservation.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvReservation.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Name,
@@ -132,23 +139,26 @@ namespace eFrizer.Win.Reservation
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 74);
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label2.Location = new System.Drawing.Point(19, 74);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(34, 15);
+            this.label2.Size = new System.Drawing.Size(50, 21);
             this.label2.TabIndex = 4;
             this.label2.Text = "Date:";
             // 
             // dtpDate
             // 
-            this.dtpDate.Location = new System.Drawing.Point(61, 71);
+            this.dtpDate.Location = new System.Drawing.Point(73, 74);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(230, 23);
             this.dtpDate.TabIndex = 5;
+            this.dtpDate.Value = new System.DateTime(2021, 10, 22, 20, 21, 26, 0);
             // 
             // cbHDName
             // 
             this.cbHDName.FormattingEnabled = true;
-            this.cbHDName.Location = new System.Drawing.Point(61, 19);
+            this.cbHDName.Location = new System.Drawing.Point(73, 22);
             this.cbHDName.Name = "cbHDName";
             this.cbHDName.Size = new System.Drawing.Size(230, 23);
             this.cbHDName.TabIndex = 6;

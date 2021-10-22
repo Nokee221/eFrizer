@@ -37,12 +37,11 @@ namespace eFrizer.Win.Reservation
 
         private async Task LoadReservation()
         {
-            var request = new ReservationSearchRequest();
-            request.HairDresserId = Convert.ToInt32(cbHDName.SelectedValue);
-
-            var result = await _reservation.Get<List<Model.Reservation>>(request);
+            var result = await _reservation.Get<List<Model.Reservation>>();
             dgvReservation.DataSource = result;
         }
+
+
 
         private async Task LoadHairDresser()
         {
@@ -59,6 +58,18 @@ namespace eFrizer.Win.Reservation
             cbHDName.DisplayMember = "Name";
             cbHDName.ValueMember = "ApplicationUserId";
 
+        }
+
+        private async void btnSearch_Click(object sender, EventArgs e)
+        {
+            
+            var request = new ReservationSearchRequest();
+            request.HairDresserId = Convert.ToInt32(cbHDName.SelectedValue);
+            request.Day = dtpDate.Value.Day;
+            request.Month = dtpDate.Value.Month;
+
+            var result = await _reservation.Get<List<Model.Reservation>>(request);
+            dgvReservation.DataSource = result;
         }
     }
 }
