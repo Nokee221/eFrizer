@@ -50,6 +50,7 @@ namespace eFrizer.Win.Service
             request.Name = txtName.Text;
             request.Description = txtDesc.Text;
             request.Price = int.Parse(txtPrice.Text);
+            request.TimeMin = int.Parse(txtTime.Text);
 
 
             var service = await _services.Update<Model.Service>(int.Parse(txtServiceId.Text), request);
@@ -64,6 +65,7 @@ namespace eFrizer.Win.Service
                 Name = txtName.Text,
                 Description = txtDesc.Text,
                 Price = int.Parse(txtPrice.Text),
+                TimeMin = int.Parse(txtTime.Text),
                 HairSalonId = _hairSalon.HairSalonId
             };
 
@@ -84,6 +86,7 @@ namespace eFrizer.Win.Service
             txtName.Text = item.ServiceName;
             txtDesc.Text = item.ServiceDescription;
             txtPrice.Text = item.ServicePrice.ToString();
+            txtTime.Text = item.ServiceTime.ToString();
         }
 
         private async void txtView_Click(object sender, EventArgs e)

@@ -19,16 +19,24 @@ namespace eFrizer.Services
 
         public async override Task<List<Model.Reservation>> Get(ReservationSearchRequest search = null)
         {
-            var entity = Context.Set<Database.Reservation>().AsQueryable();
+            if(search.HairDresserId != null && search.Day != 0 && search.Month != 0)
+            {
+                var list = await Context.Reservations.Where(x => x.HairDresserId == search.HairDresserId && x.To.Day == search.Day && x.To.Month == search.Month).Include(x => x.HairDresser).Include(x => x.Service).Include(x => x.Client).ToListAsync();
+                return _mapper.Map<List<Model.Reservation>>(list);
+            }
+            else if(search.HairDresserId != null)
+            {
+                var list = await Context.Reservations.Where(x => x.HairDresserId == search.HairDresserId).Include(x => x.HairDresser).Include(x => x.Service).Include(x => x.Client).ToListAsync();
+                return _mapper.Map<List<Model.Reservation>>(list);
+            }
+            else
+            {
+                var list = await Context.Reservations.Include(x => x.HairDresser).Include(x => x.Service).Include(x => x.Client).ToListAsync();
+                return _mapper.Map<List<Model.Reservation>>(list);
 
-            //if (!string.IsNullOrWhiteSpace(search?.Name))
-            //{
-            //    entity = entity.Where(x => x.Name.Contains(search.Name));
-            //}
-
-            var list = await entity.ToListAsync();
-
-            return _mapper.Map<List<Model.Reservation>>(list);
+            }
         }
+
+        
     }
 };

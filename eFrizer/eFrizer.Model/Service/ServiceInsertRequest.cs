@@ -11,6 +11,7 @@ namespace eFrizer.Model
 
         public float Price { get; set; }
 
+        public int TimeMin { get; set; }
 
     }
 }

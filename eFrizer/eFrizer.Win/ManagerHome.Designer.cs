@@ -75,6 +75,7 @@ namespace eFrizer.Win
             // 
             this.dgvManagerHome.AllowUserToAddRows = false;
             this.dgvManagerHome.AllowUserToDeleteRows = false;
+            this.dgvManagerHome.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dgvManagerHome.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvManagerHome.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Name,
@@ -141,12 +142,15 @@ namespace eFrizer.Win
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(114, 222);
+            this.btnEdit.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnEdit.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnEdit.Location = new System.Drawing.Point(104, 216);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(94, 23);
+            this.btnEdit.Size = new System.Drawing.Size(112, 29);
             this.btnEdit.TabIndex = 6;
             this.btnEdit.Text = "Edit info";
-            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.UseVisualStyleBackColor = false;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // label3
@@ -160,6 +164,7 @@ namespace eFrizer.Win
             // 
             // txtUserName
             // 
+            this.txtUserName.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtUserName.Enabled = false;
             this.txtUserName.Location = new System.Drawing.Point(95, 164);
             this.txtUserName.Name = "txtUserName";
@@ -168,12 +173,15 @@ namespace eFrizer.Win
             // 
             // btnSaveChanges
             // 
-            this.btnSaveChanges.Location = new System.Drawing.Point(75, 251);
+            this.btnSaveChanges.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnSaveChanges.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnSaveChanges.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnSaveChanges.Location = new System.Drawing.Point(67, 251);
             this.btnSaveChanges.Name = "btnSaveChanges";
-            this.btnSaveChanges.Size = new System.Drawing.Size(180, 23);
+            this.btnSaveChanges.Size = new System.Drawing.Size(189, 35);
             this.btnSaveChanges.TabIndex = 2;
             this.btnSaveChanges.Text = "Save personal info changes";
-            this.btnSaveChanges.UseVisualStyleBackColor = true;
+            this.btnSaveChanges.UseVisualStyleBackColor = false;
             this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
             // 
             // label2
@@ -187,6 +195,7 @@ namespace eFrizer.Win
             // 
             // txtSurname
             // 
+            this.txtSurname.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtSurname.Location = new System.Drawing.Point(95, 110);
             this.txtSurname.Name = "txtSurname";
             this.txtSurname.Size = new System.Drawing.Size(131, 23);
@@ -203,6 +212,7 @@ namespace eFrizer.Win
             // 
             // txtName
             // 
+            this.txtName.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtName.Location = new System.Drawing.Point(95, 55);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(131, 23);
@@ -237,6 +247,7 @@ namespace eFrizer.Win
             // 
             // cbCity
             // 
+            this.cbCity.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.cbCity.FormattingEnabled = true;
             this.cbCity.Location = new System.Drawing.Point(122, 203);
             this.cbCity.Name = "cbCity";
@@ -245,30 +256,16 @@ namespace eFrizer.Win
             // 
             // btn
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(122, 185);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(28, 15);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "City";
-            // 
-            // cbCity
-            // 
-            this.cbCity.FormattingEnabled = true;
-            this.cbCity.Location = new System.Drawing.Point(122, 203);
-            this.cbCity.Name = "cbCity";
-            this.cbCity.Size = new System.Drawing.Size(142, 23);
-            this.cbCity.TabIndex = 14;
-            // 
-            // btnAddHairSalon
-            // 
-            this.btnAddHairSalon.Location = new System.Drawing.Point(153, 242);
-            this.btnAddHairSalon.Name = "btnAddHairSalon";
-            this.btnAddHairSalon.Size = new System.Drawing.Size(83, 24);
-            this.btnAddHairSalon.TabIndex = 13;
-            this.btnAddHairSalon.Text = "Create";
-            this.btnAddHairSalon.UseVisualStyleBackColor = true;
-            this.btnAddHairSalon.Click += new System.EventHandler(this.btnAddHairSalon_Click);
+            this.btn.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btn.Location = new System.Drawing.Point(139, 250);
+            this.btn.Name = "btn";
+            this.btn.Size = new System.Drawing.Size(111, 32);
+            this.btn.TabIndex = 13;
+            this.btn.Text = "Create";
+            this.btn.UseVisualStyleBackColor = false;
+            this.btn.Click += new System.EventHandler(this.btn_Click);
             // 
             // label6
             // 
@@ -290,6 +287,7 @@ namespace eFrizer.Win
             // 
             // txtHairsalonDesc
             // 
+            this.txtHairsalonDesc.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtHairsalonDesc.Location = new System.Drawing.Point(122, 155);
             this.txtHairsalonDesc.Name = "txtHairsalonDesc";
             this.txtHairsalonDesc.Size = new System.Drawing.Size(142, 23);
@@ -297,6 +295,7 @@ namespace eFrizer.Win
             // 
             // txtHairsalonAddress
             // 
+            this.txtHairsalonAddress.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtHairsalonAddress.Location = new System.Drawing.Point(122, 101);
             this.txtHairsalonAddress.Name = "txtHairsalonAddress";
             this.txtHairsalonAddress.Size = new System.Drawing.Size(142, 23);
@@ -304,6 +303,7 @@ namespace eFrizer.Win
             // 
             // txtHairSalonName
             // 
+            this.txtHairSalonName.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtHairSalonName.Location = new System.Drawing.Point(122, 46);
             this.txtHairSalonName.Name = "txtHairSalonName";
             this.txtHairSalonName.Size = new System.Drawing.Size(142, 23);
@@ -322,11 +322,11 @@ namespace eFrizer.Win
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(800, 604);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ManagerHome";
             this.Load += new System.EventHandler(this.ManagerHome_Load);

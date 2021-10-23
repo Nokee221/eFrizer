@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eFrizer.Database;
 
 namespace eFrizer.Migrations
 {
     [DbContext(typeof(eFrizerContext))]
-    partial class eFrizerContextModelSnapshot : ModelSnapshot
+    [Migration("20211019195802_timeInService")]
+    partial class timeInService
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -245,9 +247,6 @@ namespace eFrizer.Migrations
                     b.Property<DateTime>("From")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("To")
                         .HasColumnType("datetime2");
 
@@ -257,8 +256,6 @@ namespace eFrizer.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("ServiceId");
 
                     b.ToTable("Reservations");
                 });
@@ -498,23 +495,15 @@ namespace eFrizer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eFrizer.Database.HairDresser", "HairDresser")
+                    b.HasOne("eFrizer.Database.HairDresser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("HairDresserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eFrizer.Database.Service", "Service")
-                        .WithMany("Reservations")
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Client");
-
-                    b.Navigation("HairDresser");
-
-                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("eFrizer.Database.Review", b =>
@@ -587,8 +576,6 @@ namespace eFrizer.Migrations
             modelBuilder.Entity("eFrizer.Database.Service", b =>
                 {
                     b.Navigation("HairSalonServices");
-
-                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }

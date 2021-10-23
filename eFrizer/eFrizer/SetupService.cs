@@ -146,7 +146,16 @@ namespace eFrizer
                 });
             }
 
-            if(!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.HairSalonType.Name == "Ženski"))
+            if (!context.HairSalonHairDressers.Any(x => x.HairDresser.Name == "Hair Dresser 1" && x.HairSalon.Name == "Hair Salon 2"))
+            {
+                context.HairSalonHairDressers.Add(new HairSalonHairDresser()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").FirstOrDefault().HairSalonId,
+                    HairDresserId = context.HairDressers.Where(x => x.Name == "Hair Dresser 1").FirstOrDefault().ApplicationUserId
+                });
+            }
+
+            if (!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.HairSalonType.Name == "Ženski"))
             {
                 context.Add(new HairSalonHairSalonType()
                 {
