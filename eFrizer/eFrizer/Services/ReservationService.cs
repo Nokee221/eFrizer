@@ -37,9 +37,6 @@ namespace eFrizer.Services
             }
         }
 
-        public override Task<Model.Reservation> Insert(ReservationInsertRequest request)
-        {
-            
-        }
+        
     }
 };
