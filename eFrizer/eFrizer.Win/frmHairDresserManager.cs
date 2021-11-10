@@ -53,7 +53,7 @@ namespace eFrizer.Win
                 {
                     Name = txtName.Text,
                     Surname = txtSurname.Text,
-                    Description = txtSurname.Text,
+                    Description = txtDescription.Text,
                     Username = "Hair Dresser " + DateTime.Now,
                     Password = "1234",
                     PasswordConfirmation = "1234",
