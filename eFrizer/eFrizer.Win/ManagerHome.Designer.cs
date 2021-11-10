@@ -254,19 +254,6 @@ namespace eFrizer.Win
             this.cbCity.Size = new System.Drawing.Size(142, 23);
             this.cbCity.TabIndex = 14;
             // 
-            // btn
-            // 
-            this.btn.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btn.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btn.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btn.Location = new System.Drawing.Point(139, 250);
-            this.btn.Name = "btn";
-            this.btn.Size = new System.Drawing.Size(111, 32);
-            this.btn.TabIndex = 13;
-            this.btn.Text = "Create";
-            this.btn.UseVisualStyleBackColor = false;
-            this.btn.Click += new System.EventHandler(this.btn_Click);
-            // 
             // label6
             // 
             this.label6.AutoSize = true;

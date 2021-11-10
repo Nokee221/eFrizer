@@ -95,5 +95,7 @@ namespace eFrizer.Win
             var forma = new frmReservation(_hairSalon);
             forma.ShowDialog();
         }
+
+        
     }
 }
