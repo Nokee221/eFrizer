@@ -206,6 +206,7 @@ namespace eFrizer.Win
             this.btnLoyalty.TabIndex = 6;
             this.btnLoyalty.Text = "Loyalty system";
             this.btnLoyalty.UseVisualStyleBackColor = true;
+            this.btnLoyalty.Click += new System.EventHandler(this.btnLoyalty_Click);
             // 
             // btnReviews
             // 

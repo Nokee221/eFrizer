@@ -1,7 +1,7 @@
 ﻿
 namespace eFrizer.Win
 {
-    partial class Loyalty
+    partial class frmLoyalty
     {
         /// <summary>
         /// Required designer variable.

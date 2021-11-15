@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace eFrizer.Win
 {
-    public partial class Loyalty : Form
+    public partial class frmLoyalty : Form
     {
-        public Loyalty()
+        public frmLoyalty()
         {
             InitializeComponent();
         }

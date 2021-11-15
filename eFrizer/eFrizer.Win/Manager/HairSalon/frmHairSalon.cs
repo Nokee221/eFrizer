@@ -91,6 +91,11 @@ namespace eFrizer.Win
             forma.ShowDialog();
         }
 
-        
+        private void btnLoyalty_Click(object sender, EventArgs e)
+        {
+            //ToDO: create helper function for all these buttons that open new forms
+            var forma = new frmLoyalty();
+            forma.ShowDialog();
+        }
     }
 }
