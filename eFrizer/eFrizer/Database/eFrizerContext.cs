@@ -35,6 +35,7 @@ namespace eFrizer.Database
         public virtual DbSet<Manager> Managers { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<HairSalonManager> HairSalonManagers { get; set; }
+        public virtual DbSet<HairSalonServiceLoyaltyBonus> HairSalonServiceLoyaltyBonuses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -59,12 +60,6 @@ namespace eFrizer.Database
             {
                 entity.HasKey(k => new { k.HairSalonId, k.PictureId })
                     .HasName("PK_hairsalon_picture");
-            });
-
-            modelBuilder.Entity<HairSalonService>(entity =>
-            {
-                entity.HasKey(k => new { k.HairSalonId, k.ServiceId })
-                    .HasName("PK_hairsalon_service");
             });
 
             modelBuilder.Entity<HairSalonHairDresser>(entity =>

@@ -76,6 +76,9 @@ namespace eFrizer.Mapping
             CreateMap<Database.HairSalonManager, Model.HairSalonManager>().ReverseMap();
             CreateMap<Model.HairSalonManagerInsertRequest, Database.HairSalonManager>().ReverseMap();
 
+            CreateMap<Database.HairSalonServiceLoyaltyBonus, Model.HairSalonServiceLoyaltyBonus>().ReverseMap();
+            CreateMap<Model.HairSalonServiceLoyaltyBonusInsertRequest, Database.HairSalonServiceLoyaltyBonus>();
+
         }
     }
 }
