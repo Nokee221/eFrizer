@@ -7,6 +7,7 @@ namespace eFrizer.Database
 {
     public partial class HairSalonService
     {
+        public int Id { get; set; }
         public int ServiceId { get; set; }
         public int HairSalonId { get; set; }
 
