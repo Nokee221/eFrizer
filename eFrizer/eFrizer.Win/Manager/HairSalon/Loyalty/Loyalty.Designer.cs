@@ -252,7 +252,6 @@ namespace eFrizer.Win
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Name = "Loyalty";
             this.Text = "Loyalty";
             this.Load += new System.EventHandler(this.Loyalty_Load);
             this.groupBox1.ResumeLayout(false);
