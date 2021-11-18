@@ -54,6 +54,7 @@ namespace eFrizer.Win.Review
             // 
             this.dgvReview.AllowUserToAddRows = false;
             this.dgvReview.AllowUserToDeleteRows = false;
+            this.dgvReview.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dgvReview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvReview.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.User,
@@ -113,6 +114,7 @@ namespace eFrizer.Win.Review
             this.ClientSize = new System.Drawing.Size(798, 243);
             this.Controls.Add(this.groupBox1);
             this.Name = "frmReview";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.frmReview_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvReview)).EndInit();

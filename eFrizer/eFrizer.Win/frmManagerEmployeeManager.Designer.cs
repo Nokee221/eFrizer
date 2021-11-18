@@ -45,12 +45,15 @@ namespace eFrizer.Win
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(389, 323);
+            this.btnSave.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnSave.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnSave.Location = new System.Drawing.Point(369, 314);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(108, 23);
+            this.btnSave.Size = new System.Drawing.Size(128, 32);
             this.btnSave.TabIndex = 11;
             this.btnSave.Text = "Save changes";
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // gbHDM
@@ -72,6 +75,7 @@ namespace eFrizer.Win
             // 
             // txtDescription
             // 
+            this.txtDescription.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtDescription.Location = new System.Drawing.Point(28, 165);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(192, 63);
@@ -116,6 +120,7 @@ namespace eFrizer.Win
             // 
             // txtSurname
             // 
+            this.txtSurname.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtSurname.Location = new System.Drawing.Point(28, 104);
             this.txtSurname.Name = "txtSurname";
             this.txtSurname.Size = new System.Drawing.Size(192, 23);
@@ -132,6 +137,7 @@ namespace eFrizer.Win
             // 
             // txtName
             // 
+            this.txtName.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtName.Location = new System.Drawing.Point(28, 48);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(192, 23);
@@ -145,6 +151,7 @@ namespace eFrizer.Win
             this.Controls.Add(this.gbHDM);
             this.Controls.Add(this.btnSave);
             this.Name = "frmManagerEmployeeManager";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Manager Employee Manager";
             this.Load += new System.EventHandler(this.frmManagerEmployeeManager_Load);
             this.gbHDM.ResumeLayout(false);

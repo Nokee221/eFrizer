@@ -174,7 +174,8 @@ namespace eFrizer.Win.Reservation
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.label1);
-            
+           
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmReservation";
             this.Load += new System.EventHandler(this.frmReservation_Load);
             this.groupBox1.ResumeLayout(false);

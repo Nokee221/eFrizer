@@ -64,6 +64,7 @@ namespace eFrizer.Win
             // 
             this.dgvEmployees.AllowUserToAddRows = false;
             this.dgvEmployees.AllowUserToDeleteRows = false;
+            this.dgvEmployees.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dgvEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEmployees.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ApplicationUserId,
@@ -142,6 +143,7 @@ namespace eFrizer.Win
             // 
             // cbStatus
             // 
+            this.cbStatus.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.cbStatus.FormattingEnabled = true;
             this.cbStatus.Location = new System.Drawing.Point(459, 19);
             this.cbStatus.Name = "cbStatus";
@@ -160,6 +162,7 @@ namespace eFrizer.Win
             // 
             // cbType
             // 
+            this.cbType.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.cbType.FormattingEnabled = true;
             this.cbType.Location = new System.Drawing.Point(270, 19);
             this.cbType.Name = "cbType";
@@ -178,6 +181,7 @@ namespace eFrizer.Win
             // 
             // txtName
             // 
+            this.txtName.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtName.Location = new System.Drawing.Point(60, 19);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(167, 23);
@@ -186,22 +190,28 @@ namespace eFrizer.Win
             // 
             // btnAddManager
             // 
+            this.btnAddManager.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnAddManager.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAddManager.ForeColor = System.Drawing.SystemColors.Control;
             this.btnAddManager.Location = new System.Drawing.Point(18, 298);
             this.btnAddManager.Name = "btnAddManager";
             this.btnAddManager.Size = new System.Drawing.Size(138, 23);
             this.btnAddManager.TabIndex = 1;
             this.btnAddManager.Text = "Add new manager";
-            this.btnAddManager.UseVisualStyleBackColor = true;
+            this.btnAddManager.UseVisualStyleBackColor = false;
             this.btnAddManager.Click += new System.EventHandler(this.btnAddManager_Click);
             // 
             // btnAddHairDresser
             // 
+            this.btnAddHairDresser.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnAddHairDresser.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAddHairDresser.ForeColor = System.Drawing.SystemColors.Control;
             this.btnAddHairDresser.Location = new System.Drawing.Point(181, 298);
             this.btnAddHairDresser.Name = "btnAddHairDresser";
             this.btnAddHairDresser.Size = new System.Drawing.Size(138, 23);
             this.btnAddHairDresser.TabIndex = 4;
             this.btnAddHairDresser.Text = "Add new hair dresser";
-            this.btnAddHairDresser.UseVisualStyleBackColor = true;
+            this.btnAddHairDresser.UseVisualStyleBackColor = false;
             this.btnAddHairDresser.Click += new System.EventHandler(this.btnAddHairDresser_Click);
             // 
             // frmEmployeeManager
@@ -213,6 +223,8 @@ namespace eFrizer.Win
             this.Controls.Add(this.btnAddManager);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+           
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmEmployeeManager";
             this.Load += new System.EventHandler(this.frmEmployeeManager_Load);
             this.groupBox1.ResumeLayout(false);

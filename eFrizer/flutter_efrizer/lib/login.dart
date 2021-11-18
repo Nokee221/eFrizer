@@ -1,6 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login/models/ApplicationUser.dart';
+import 'pages/HomePage.dart';
+import 'services/APIService.dart';
+import 'models/ApplicationUser.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController usernameController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+
+  var result = null;
+  Future<void>GetData() async{
+
+    result = await APIService.Login('Login', usernameController.text , passwordController.text);
+  }
+
 
  @override
   Widget build(BuildContext context) {
@@ -51,8 +71,68 @@ class LoginPage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal:40),
                   child: Column(
                     children: <Widget>[
-                      inputFile(label: "Email"),
-                      inputFile(label: "Password", obscureText: true)
+                      Text(
+                        "Username",
+                        style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black87
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      TextField(
+                        controller: usernameController,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 0,
+                          horizontal: 10),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey
+                            )
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Password",
+                        style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black87
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      TextField(
+                        controller: passwordController,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 0,
+                          horizontal: 10),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey
+                            )
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      )
                     ],
                   ),
                 ),
@@ -74,10 +154,42 @@ class LoginPage extends StatelessWidget {
                     child: MaterialButton(
                       minWidth: double.infinity,
                       height: 60,
-                      onPressed: (){},
+                      onPressed: () async{
+                       
+                        APIService.username = usernameController.text;
+                        APIService.password = passwordController.text;
+                        await GetData();
+                        if(result != null){
+
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                        }
+                        else{
+                          
+
+                            Widget okButton = TextButton(
+                              child: Text("OK"),
+                              onPressed: (){},
+                            );
+                            AlertDialog alert = AlertDialog(
+                              title: Text("Error"),
+                              content: Text("Incorrect username or password"),
+                              actions: [
+                                okButton,
+                              ],
+                            );
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context){
+                                return alert;
+                              }
+                            );
+                          
+                        }
+
+                      },
                       color: Color(0xff0095FF),
                       elevation: 0,
-                      shape: RoundedRectangleBorder(
+                      shape: RoundedRectangleBorder( 
                         borderRadius: BorderRadius.circular(50),
                       ),
                       child: Text(
@@ -121,46 +233,4 @@ class LoginPage extends StatelessWidget {
 
     );
   }
-
-}
-
-
-Widget inputFile({label, obscureText = false})
-{
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        label,
-        style: TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w400,
-          color: Colors.black87
-        ),
-      ),
-      SizedBox(
-        height: 5,
-      ),
-      TextField(
-        obscureText: obscureText,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 0,
-          horizontal: 10),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey,
-            ),
-          ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey,
-            ),
-          ),
-        ),
-      ),
-      SizedBox(
-        height: 20,
-      ),
-    ],
-  );
 }

@@ -31,12 +31,12 @@ namespace eFrizer.Win.Categories
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvCategories = new System.Windows.Forms.DataGridView();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cbCategories = new System.Windows.Forms.ComboBox();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategories)).BeginInit();
             this.SuspendLayout();
@@ -55,6 +55,7 @@ namespace eFrizer.Win.Categories
             // 
             this.dgvCategories.AllowUserToAddRows = false;
             this.dgvCategories.AllowUserToDeleteRows = false;
+            this.dgvCategories.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dgvCategories.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCategories.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Name});
@@ -66,8 +67,17 @@ namespace eFrizer.Win.Categories
             this.dgvCategories.Size = new System.Drawing.Size(337, 203);
             this.dgvCategories.TabIndex = 0;
             // 
+            // Name
+            // 
+            this.Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Name.DataPropertyName = "HairSalonTypeName";
+            this.Name.HeaderText = "Name";
+            this.Name.Name = "Name";
+            this.Name.ReadOnly = true;
+            // 
             // txtName
             // 
+            this.txtName.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtName.Location = new System.Drawing.Point(94, 263);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(244, 23);
@@ -93,6 +103,7 @@ namespace eFrizer.Win.Categories
             // 
             // cbCategories
             // 
+            this.cbCategories.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.cbCategories.FormattingEnabled = true;
             this.cbCategories.Location = new System.Drawing.Point(94, 319);
             this.cbCategories.Name = "cbCategories";
@@ -101,21 +112,16 @@ namespace eFrizer.Win.Categories
             // 
             // btnAdd
             // 
+            this.btnAdd.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAdd.ForeColor = System.Drawing.SystemColors.Control;
             this.btnAdd.Location = new System.Drawing.Point(235, 367);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(103, 32);
             this.btnAdd.TabIndex = 6;
             this.btnAdd.Text = "Add";
-            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // Name
-            // 
-            this.Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Name.DataPropertyName = "HairSalonTypeName";
-            this.Name.HeaderText = "Name";
-            this.Name.Name = "Name";
-            this.Name.ReadOnly = true;
             // 
             // frmCategories
             // 
@@ -128,7 +134,8 @@ namespace eFrizer.Win.Categories
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.groupBox1);
-            
+           
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmCategories";
             this.Load += new System.EventHandler(this.frmCategories_Load);
             this.groupBox1.ResumeLayout(false);
