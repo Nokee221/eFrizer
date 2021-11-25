@@ -1,11 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'HomePage2.dart';
-import 'SearchPage.dart';
-import 'FavoritePage.dart';
-import 'ProfilePage.dart';
-import 'SettingPage.dart';
-
+import 'home_page_2.dart';
+import 'search_page.dart';
+import 'favorite_page.dart';
+import 'profile_page.dart';
+import 'setting_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -22,8 +21,7 @@ class _HomePageState extends State<HomePage> {
     SettingPage(),
     //ProfilePage(),
   ];
-  
-  
+
   @override
   Widget build(BuildContext context) {
     final items = <Widget>[
@@ -33,7 +31,6 @@ class _HomePageState extends State<HomePage> {
       Icon(Icons.settings, size: 30),
       Icon(Icons.person, size: 30),
     ];
-    
 
     return Scaffold(
       backgroundColor: Colors.blue,
