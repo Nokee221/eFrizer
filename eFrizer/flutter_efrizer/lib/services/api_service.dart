@@ -19,7 +19,7 @@ class APIService {
 
   static Future<List<dynamic>?> Get(String route, dynamic object) async {
     String queryString = Uri(queryParameters: object).query;
-    String baseUrl = "http://192.168.0.12:80/" + route;
+    String baseUrl = "http://172.17.32.1:80/" + route;
     if (object != null) {
       baseUrl = baseUrl + '?' + queryString;
     }
@@ -35,10 +35,25 @@ class APIService {
     }
     return null;
   }
+  
+  static Future<List<dynamic>?> GetHairSalon(String route) async {
+    String baseUrl = "http://172.17.32.1:80/" + route;
+    final String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    final response = await http.get(
+      Uri.parse(baseUrl),
+      headers: {HttpHeaders.authorizationHeader: basicAuth},
+    );
 
-  static Future<List<dynamic>?> Login(
+    if (response.statusCode == 200) {
+      return json.decode(response.body) as List;
+    }
+    return null;
+  }
+
+  static Future<ApplicationUser?> Login(
       String route, String username, String password) async {
-    final String baseUrl = "http://192.168.0.12:80/" +
+    final String baseUrl = "http://172.17.32.1:80/" +
         route +
         "?Username=" +
         username +
@@ -52,10 +67,16 @@ class APIService {
     );
 
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      var res = json.decode(response.body);
+      var data = ApplicationUser.fromJson(res);
 
-      return List.empty();
+      return data;
     }
+
+
     return null;
   }
+
+  
+
 }

@@ -140,10 +140,11 @@ class _LoginPageState extends State<LoginPage> {
                           APIService.password = passwordController.text;
                           await GetData();
                           if (result != null) {
+                            
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) => HomePage(result)));
                           } else {
                             Widget okButton = TextButton(
                               child: Text("OK"),
