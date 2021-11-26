@@ -1,6 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login/models/ApplicationUser.dart';
+import 'package:flutter_login/models/application_user.dart';
 import 'home_page_2.dart';
 import 'search_page.dart';
 import 'favorite_page.dart';
@@ -20,20 +20,18 @@ class _HomePageState extends State<HomePage> {
   final ApplicationUser user;
   var screens = [];
 
-  _HomePageState(this.user){
+  _HomePageState(this.user) {
     screens = [
-    HomePage2(),
-    SearchPage(),
-    FavoritePage(),
-    SettingPage(),
-
-
-    ProfilePage(this.user),
+      HomePage2(),
+      SearchPage(),
+      FavoritePage(),
+      SettingPage(),
+      ProfilePage(this.user),
     ];
   }
 
   int index = 0;
-  
+
   @override
   Widget build(BuildContext context) {
     final items = <Widget>[
@@ -45,23 +43,20 @@ class _HomePageState extends State<HomePage> {
     ];
 
     return Scaffold(
-      extendBody: true,
-      backgroundColor: Colors.blue,
-      body: screens[index],
-      bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(
-          iconTheme: IconThemeData(color: Colors.white)
-        ),
-        child: CurvedNavigationBar(
-        color: Colors.blue,
-        backgroundColor: Colors.transparent,
-        height: 50,
-        index: index,
-        items: items,
-        onTap: (index) => setState(() => this.index = index),
-      ),
-      )
-      
-    );
+        extendBody: true,
+        backgroundColor: Colors.blue,
+        body: screens[index],
+        bottomNavigationBar: Theme(
+          data: Theme.of(context)
+              .copyWith(iconTheme: IconThemeData(color: Colors.white)),
+          child: CurvedNavigationBar(
+            color: Colors.blue,
+            backgroundColor: Colors.transparent,
+            height: 50,
+            index: index,
+            items: items,
+            onTap: (index) => setState(() => this.index = index),
+          ),
+        ));
   }
 }

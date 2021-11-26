@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login/models/ApplicationUser.dart';
+import 'package:flutter_login/models/application_user.dart';
 import 'package:flutter_login/widget/appbar_widget.dart';
 import 'package:flutter_login/widget/profile_widget.dart';
 
-
-
 class ProfilePage extends StatefulWidget {
   final ApplicationUser user;
-  const ProfilePage(this.user , { Key? key }) : super(key: key);
+  const ProfilePage(this.user, {Key? key}) : super(key: key);
 
   @override
   _ProfilePageState createState() => _ProfilePageState(user);

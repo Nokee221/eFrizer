@@ -3,7 +3,7 @@ class ApplicationUser {
   final String? name;
   final String? surname;
   final String? description;
-  final String? username;
+  final String username;
   final String? password;
   final List<String>? roles;
 
@@ -12,7 +12,7 @@ class ApplicationUser {
       this.name,
       this.surname,
       this.description,
-      this.username,
+      required this.username,
       this.password,
       this.roles});
 
