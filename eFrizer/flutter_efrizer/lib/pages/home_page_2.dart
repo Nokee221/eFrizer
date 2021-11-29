@@ -75,7 +75,7 @@ class _HomePage2State extends State<HomePage2> {
               children: [
                   Ink.image(
                   image: NetworkImage(
-                    'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1327&q=80',
+                    'https://i.pinimg.com/originals/c5/5a/de/c55ade0f3c23b62ff5b7eb6af21ecdc6.jpg',
                   ),
                   height: 240,
                   fit: BoxFit.cover,

@@ -11,7 +11,7 @@ class ApplicationUser {
       {this.applicationUserId,
       this.name,
       this.surname,
-      this.description,
+      required this.description,
       required this.username,
       this.password,
       this.roles});
@@ -23,7 +23,7 @@ class ApplicationUser {
       applicationUserId: json["applicationUserId"],
       name: json["name"],
       surname: json["surname"],
-      description: json["decription"],
+      description: json["description"],
       username: json["username"],
       password: json["password"],
     );
@@ -32,21 +32,9 @@ class ApplicationUser {
   Map<String, dynamic> toJson() => {
         "username": username,
         "password": password,
+        "name": name,
+        "surname": surname,
+        "description": description,
       };
 }
 
-class ApplicationUserSearchRequest {
-  String? username;
-  String? password;
-
-  ApplicationUserSearchRequest({this.username, this.password});
-
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> map = {
-      'username': username?.trim(),
-      'password': password?.trim(),
-    };
-
-    return map;
-  }
-}

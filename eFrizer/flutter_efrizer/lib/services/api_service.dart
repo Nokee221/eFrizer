@@ -19,7 +19,7 @@ class APIService {
 
   static Future<List<dynamic>?> Get(String route, dynamic object) async {
     String queryString = Uri(queryParameters: object).query;
-    String baseUrl = "http://172.17.32.1:80/" + route;
+    String baseUrl = "http://172.21.160.1:80/" + route;
     if (object != null) {
       baseUrl = baseUrl + '?' + queryString;
     }
@@ -37,7 +37,7 @@ class APIService {
   }
   
   static Future<List<dynamic>?> GetHairSalon(String route) async {
-    String baseUrl = "http://172.17.32.1:80/" + route;
+    String baseUrl = "http://172.21.160.1:80/" + route;
     final String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
     final response = await http.get(
@@ -53,7 +53,7 @@ class APIService {
 
   static Future<ApplicationUser?> Login(
       String route, String username, String password) async {
-    final String baseUrl = "http://172.17.32.1:80/" +
+    final String baseUrl = "http://172.21.160.1:80/" +
         route +
         "?Username=" +
         username +
@@ -69,6 +69,31 @@ class APIService {
     if (response.statusCode == 200) {
       var res = json.decode(response.body);
       var data = ApplicationUser.fromJson(res);
+
+      return data;
+    }
+
+
+    return null;
+  }
+
+  static Future<ApplicationUser?> updateUser(String route ,  String username , String name , String surname , String description) async{
+    final String baseUrl = "http://172.21.160.1:80/" + route;
+    final String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    final response = await http.put(
+      Uri.parse(baseUrl),
+      headers: {HttpHeaders.authorizationHeader: basicAuth},
+      body: jsonEncode(<String,String>{
+        'username': username,
+        'nema': name,
+        'surname': surname,
+        'descripiton': description,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      var data = ApplicationUser.fromJson(jsonDecode(response.body));
 
       return data;
     }

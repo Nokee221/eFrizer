@@ -3,10 +3,12 @@ import 'dart:io';
 
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
+  final bool isEdit;
   final VoidCallback onClicked;
 
   const ProfileWidget({
     Key? key,
+    this.isEdit = false,
     required this.imagePath,
     required this.onClicked,
   }) : super(key: key);
@@ -18,7 +20,11 @@ class ProfileWidget extends StatelessWidget {
     return Center(
       child: Stack(
         children: [
+          
           buildImage(),
+          Padding(
+            padding: EdgeInsets.only(bottom: 7),
+          ),
           Positioned(
             bottom: 0,
             right: 4,
