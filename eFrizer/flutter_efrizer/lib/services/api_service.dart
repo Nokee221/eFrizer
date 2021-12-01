@@ -7,6 +7,7 @@ import 'dart:io';
 class APIService {
   static String? username;
   static String? password;
+  static String apiUrl = 'http://192.168.50.109:5000/';
 
   String? route;
 
@@ -19,7 +20,7 @@ class APIService {
 
   static Future<List<dynamic>?> Get(String route, dynamic object) async {
     String queryString = Uri(queryParameters: object).query;
-    String baseUrl = "http://172.21.160.1:80/" + route;
+    String baseUrl = apiUrl + route;
     if (object != null) {
       baseUrl = baseUrl + '?' + queryString;
     }
@@ -35,9 +36,9 @@ class APIService {
     }
     return null;
   }
-  
+
   static Future<List<dynamic>?> GetHairSalon(String route) async {
-    String baseUrl = "http://172.21.160.1:80/" + route;
+    String baseUrl = apiUrl + route;
     final String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
     final response = await http.get(
@@ -53,12 +54,8 @@ class APIService {
 
   static Future<ApplicationUser?> Login(
       String route, String username, String password) async {
-    final String baseUrl = "http://172.21.160.1:80/" +
-        route +
-        "?Username=" +
-        username +
-        "&Password=" +
-        password;
+    final String baseUrl =
+        apiUrl + route + "?Username=" + username + "&Password=" + password;
     final String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
     final response = await http.get(
@@ -73,18 +70,18 @@ class APIService {
       return data;
     }
 
-
     return null;
   }
 
-  static Future<ApplicationUser?> updateUser(String route ,  String username , String name , String surname , String description) async{
-    final String baseUrl = "http://172.21.160.1:80/" + route;
+  static Future<ApplicationUser?> updateUser(String route, String username,
+      String name, String surname, String description) async {
+    final String baseUrl = apiUrl + route;
     final String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
     final response = await http.put(
       Uri.parse(baseUrl),
       headers: {HttpHeaders.authorizationHeader: basicAuth},
-      body: jsonEncode(<String,String>{
+      body: jsonEncode(<String, String>{
         'username': username,
         'nema': name,
         'surname': surname,
@@ -98,10 +95,6 @@ class APIService {
       return data;
     }
 
-
     return null;
   }
-
-  
-
 }
