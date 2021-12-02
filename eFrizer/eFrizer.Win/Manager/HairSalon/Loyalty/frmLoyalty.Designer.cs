@@ -142,6 +142,7 @@ namespace eFrizer.Win
             this.btnSaveBonus.TabIndex = 10;
             this.btnSaveBonus.Text = "Save bonus";
             this.btnSaveBonus.UseVisualStyleBackColor = true;
+            this.btnSaveBonus.Click += new System.EventHandler(this.btnSaveBonus_Click);
             // 
             // cbActivatesOn
             // 

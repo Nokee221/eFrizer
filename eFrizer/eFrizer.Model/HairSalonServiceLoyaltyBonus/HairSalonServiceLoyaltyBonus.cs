@@ -10,5 +10,7 @@ namespace eFrizer.Model
         public int ActivatesOn { get; set; }
         public int ExpiresIn { get; set; }
         public virtual HairSalonService Service { get; set; }
+
+        public string ServiceName => Service?.ServiceName;
     }
 }
