@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eFrizer.Database;
 
 namespace eFrizer.Migrations
 {
     [DbContext(typeof(eFrizerContext))]
-    partial class eFrizerContextModelSnapshot : ModelSnapshot
+    [Migration("20211111101108_AddedLoyaltyBonuses")]
+    partial class AddedLoyaltyBonuses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,20 +189,14 @@ namespace eFrizer.Migrations
 
             modelBuilder.Entity("eFrizer.Database.HairSalonService", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("HairSalonId")
                         .HasColumnType("int");
 
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("HairSalonId");
+                    b.HasKey("HairSalonId", "ServiceId")
+                        .HasName("PK_hairsalon_service");
 
                     b.HasIndex("ServiceId");
 
@@ -223,12 +219,12 @@ namespace eFrizer.Migrations
                     b.Property<int>("ExpiresIn")
                         .HasColumnType("int");
 
-                    b.Property<int>("HairSalonServiceId")
+                    b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HairSalonServiceId");
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("HairSalonServiceLoyaltyBonuses");
                 });
@@ -520,9 +516,9 @@ namespace eFrizer.Migrations
 
             modelBuilder.Entity("eFrizer.Database.HairSalonServiceLoyaltyBonus", b =>
                 {
-                    b.HasOne("eFrizer.Database.HairSalonService", "Service")
+                    b.HasOne("eFrizer.Database.Service", "Service")
                         .WithMany()
-                        .HasForeignKey("HairSalonServiceId")
+                        .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

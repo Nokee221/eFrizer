@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using eFrizer.Database;
 using eFrizer.Model;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,7 +24,7 @@ namespace eFrizer.Services
                 entity = entity.Where(x => x.Name.Contains(search.Name));
             }
 
-            var list = entity.ToList();
+            var list = await entity.ToListAsync();
 
             return _mapper.Map<List<Model.HairSalon>>(list);
         }

@@ -57,6 +57,16 @@ namespace eFrizer
                 });
             });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AnyOrigin", builder =>
+                {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod();
+                });
+            });
+
             services.AddDbContext<eFrizerContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -78,7 +88,7 @@ namespace eFrizer
             services.AddScoped<IReservationService, Services.ReservationService>();
             services.AddScoped<ICRUDService<Model.HairSalonService, HairSalonServiceSearchRequest, HairSalonServiceInsertRequest, object>, Services.HairSalonServiceService>();
             services.AddScoped<ICRUDService<Model.HairSalonManager, HairSalonManagerSearchRequest, HairSalonManagerInsertRequest, object>, Services.HairSalonManagerService>();
-
+            services.AddScoped<IHairSalonServiceLoyaltyBonusService, Services.HairSalonServiceLoyaltyBonusService>();
             services.AddScoped<ICRUDService<Model.Picture, object, PictureInsertRequest, PictureUpdateRequest>, Services.PictureService>();
             services.AddScoped<IHairSalonPictureService, Services.HairSalonPictureService>();
 
@@ -93,6 +103,7 @@ namespace eFrizer
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("AnyOrigin");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -100,9 +111,10 @@ namespace eFrizer
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "eFrizer v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
+
 
             app.UseAuthentication();
 

@@ -5,11 +5,6 @@ using eFrizer.Win.Review;
 using eFrizer.Win.Service;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -96,6 +91,11 @@ namespace eFrizer.Win
             forma.ShowDialog();
         }
 
-        
+        private void btnLoyalty_Click(object sender, EventArgs e)
+        {
+            //ToDO: create helper function for all these buttons that open new forms
+            var forma = new frmLoyalty();
+            forma.ShowDialog();
+        }
     }
 }
