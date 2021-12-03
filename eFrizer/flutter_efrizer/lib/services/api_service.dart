@@ -10,7 +10,7 @@ import '../config.dart';
 class APIService {
   static String? username;
   static String? password;
-  static String apiUrl = "http://"+devIp+":5000";
+  static String apiUrl = devIp;
 
   String? route;
 
