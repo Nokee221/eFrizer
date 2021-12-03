@@ -1,5 +1,5 @@
-class ApplicationUser {
-  final int? applicationUserId;
+ class ApplicationUser {
+  final int applicationUserId;
   final String? name;
   final String? surname;
   final String? description;
@@ -8,7 +8,7 @@ class ApplicationUser {
   final List<String>? roles;
 
   ApplicationUser(
-      {this.applicationUserId,
+      {required this.applicationUserId,
       this.name,
       this.surname,
       required this.description,
@@ -20,7 +20,7 @@ class ApplicationUser {
 
   factory ApplicationUser.fromJson(Map<String, dynamic> json) {
     return ApplicationUser(
-      applicationUserId: json["applicationUserId"],
+      applicationUserId: int.parse(json["applicationUserId"].toString()),
       name: json["name"],
       surname: json["surname"],
       description: json["description"],
