@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/models/application_user.dart';
+import 'package:flutter_login/models/application_user_update_request.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
@@ -19,7 +20,7 @@ class APIService {
 
   static Future<List<dynamic>?> Get(String route, dynamic object) async {
     String queryString = Uri(queryParameters: object).query;
-    String baseUrl = "http://172.21.160.1:80/" + route;
+    String baseUrl = "https://172.23.16.1:5010/" + route;
     if (object != null) {
       baseUrl = baseUrl + '?' + queryString;
     }
@@ -37,7 +38,7 @@ class APIService {
   }
   
   static Future<List<dynamic>?> GetHairSalon(String route) async {
-    String baseUrl = "http://172.21.160.1:80/" + route;
+    String baseUrl = "http://172.23.16.1:80/" + route;
     final String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
     final response = await http.get(
@@ -53,7 +54,7 @@ class APIService {
 
   static Future<ApplicationUser?> Login(
       String route, String username, String password) async {
-    final String baseUrl = "http://172.21.160.1:80/" +
+    final String baseUrl = "https://172.23.16.1:5010/" +
         route +
         "?Username=" +
         username +
@@ -77,22 +78,22 @@ class APIService {
     return null;
   }
 
-  static Future<ApplicationUser?> updateUser(String route ,  String username , String name , String surname , String description) async{
-    final String baseUrl = "http://172.21.160.1:80/" + route;
+  static Future<ApplicationUser?> updateUser(String route , int id, ApplicationUserUpdateRequest object) async{
+    final String baseUrl = "http://172.21.160.1:80/" + route +"/id";
     final String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
     final response = await http.put(
       Uri.parse(baseUrl),
       headers: {HttpHeaders.authorizationHeader: basicAuth},
-      body: jsonEncode(<String,String>{
-        'username': username,
-        'nema': name,
-        'surname': surname,
-        'descripiton': description,
+      body: jsonEncode(<String,dynamic>{
+        'username': object.username,
+        'name': object.name,
+        'surname': object.surname,
+        'description': object.description,
       }),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 204) {
       var data = ApplicationUser.fromJson(jsonDecode(response.body));
 
       return data;

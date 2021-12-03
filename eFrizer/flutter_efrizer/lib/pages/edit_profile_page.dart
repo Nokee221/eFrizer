@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/models/application_user.dart';
+import 'package:flutter_login/models/application_user_update_request.dart';
 import 'package:flutter_login/pages/profile_page.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_login/widget/button_widget.dart';
@@ -10,7 +12,9 @@ import 'package:flutter_login/widget/profile_widget.dart';
 
 class EditeProfilePage extends StatefulWidget {
   final ApplicationUser user;
-  const EditeProfilePage(this.user, {Key? key}) : super(key: key);
+
+  EditeProfilePage(this.user,  {Key? key}) : super(key: key);
+
 
   @override
   _EditeProfilePageState createState() => _EditeProfilePageState(user);
@@ -19,13 +23,16 @@ class EditeProfilePage extends StatefulWidget {
 class _EditeProfilePageState extends State<EditeProfilePage> {
   final icon = CupertinoIcons.moon_stars;
   final ApplicationUser user;
+  late final ApplicationUserUpdateRequest request;
 
   _EditeProfilePageState(this.user);
+
 
   late final TextEditingController usernameController;
   late final TextEditingController nameController;
   late final TextEditingController surnameController;
   late final TextEditingController descriptionController;
+  
 
   @override
   void initState() {
@@ -35,6 +42,11 @@ class _EditeProfilePageState extends State<EditeProfilePage> {
     nameController = TextEditingController(text: user.name);
     surnameController = TextEditingController(text: user.surname);
     descriptionController = TextEditingController(text: user.description);
+
+    request.username = usernameController.text;
+    request.name = nameController.text;
+    request.surname = surnameController.text;
+    request.description = descriptionController.text;
   }
 
   @override
@@ -47,9 +59,10 @@ class _EditeProfilePageState extends State<EditeProfilePage> {
     super.dispose();
   }
 
+ 
   var result = null;
   Future<void> PutData() async {
-    result = await APIService.updateUser('ApplicationUser', usernameController.text, nameController.text, surnameController.text, descriptionController.text);
+    result = await APIService.updateUser('ApplicationUser', user.applicationUserId , request);
   }
 
   @override
@@ -151,6 +164,7 @@ class _EditeProfilePageState extends State<EditeProfilePage> {
                                 MaterialPageRoute(
                                     builder: (context) => ProfilePage(user)));
                  }
+                
                },
              )
            ],
