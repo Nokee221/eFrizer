@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/models/HairSalon.dart';
 
+import 'calendar_page.dart';
+
 class Details extends StatelessWidget {
   final HairSalon hairsalon;
   final icon = CupertinoIcons.moon_stars;
@@ -134,9 +136,13 @@ class Details extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(
-          Icons.add_shopping_cart,
+          Icons.add,
         ),
-        onPressed: (){},
+        onPressed: (){
+          Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => CalendarPage()),
+              );
+        },
       ),
     );
   }

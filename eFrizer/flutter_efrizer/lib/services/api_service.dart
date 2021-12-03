@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/models/application_user.dart';
+import 'package:flutter_login/models/application_user_update_request.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
@@ -20,6 +21,7 @@ class APIService {
 
   static Future<List<dynamic>?> Get(String route, dynamic object) async {
     String queryString = Uri(queryParameters: object).query;
+
     String baseUrl = apiUrl + route;
     if (object != null) {
       baseUrl = baseUrl + '?' + queryString;
@@ -38,6 +40,7 @@ class APIService {
   }
 
   static Future<List<dynamic>?> GetHairSalon(String route) async {
+
     String baseUrl = apiUrl + route;
     final String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
@@ -54,6 +57,7 @@ class APIService {
 
   static Future<ApplicationUser?> Login(
       String route, String username, String password) async {
+
     final String baseUrl =
         apiUrl + route + "?Username=" + username + "&Password=" + password;
     final String basicAuth =
@@ -73,9 +77,11 @@ class APIService {
     return null;
   }
 
+
   static Future<ApplicationUser?> updateUser(String route, String username,
       String name, String surname, String description) async {
     final String baseUrl = apiUrl + route;
+
     final String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
     final response = await http.put(
@@ -86,10 +92,11 @@ class APIService {
         'nema': name,
         'surname': surname,
         'descripiton': description,
+
       }),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 204) {
       var data = ApplicationUser.fromJson(jsonDecode(response.body));
 
       return data;
