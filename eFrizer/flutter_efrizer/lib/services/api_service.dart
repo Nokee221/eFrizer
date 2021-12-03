@@ -6,10 +6,11 @@ import 'package:http/http.dart' as http;
 import 'dart:io';
 import '../config.dart';
 
+
 class APIService {
   static String? username;
   static String? password;
-  static String apiUrl = devIp;
+  static String apiUrl = "http://"+devIp+":5000";
 
   String? route;
 
@@ -41,6 +42,7 @@ class APIService {
   }
 
   static Future<List<dynamic>?> GetHairSalon(String route) async {
+
     String baseUrl = apiUrl + route;
     final String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
@@ -57,6 +59,7 @@ class APIService {
 
   static Future<ApplicationUser?> Login(
       String route, String username, String password) async {
+
     final String baseUrl =
         apiUrl + route + "?Username=" + username + "&Password=" + password;
     final String basicAuth =
@@ -76,6 +79,7 @@ class APIService {
     return null;
   }
 
+
   static Future<ApplicationUser?> updateUser(String route, String username,
       String name, String surname, String description) async {
     final String baseUrl = apiUrl + route;
@@ -90,6 +94,7 @@ class APIService {
         'nema': name,
         'surname': surname,
         'descripiton': description,
+
       }),
     );
 
