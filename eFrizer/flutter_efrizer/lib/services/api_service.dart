@@ -40,6 +40,21 @@ class APIService {
     return null;
   }
 
+  static Future<dynamic> getById(String route, String id) async {
+    String baseUrl = apiUrl + route + "/" + id;
+    final String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    final response = await http.get(
+      Uri.parse(baseUrl),
+      headers: {HttpHeaders.authorizationHeader: basicAuth},
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    }
+    return null;
+  }
+
   static Future<List<dynamic>?> getHairSalon(String route) async {
     String baseUrl = apiUrl + route;
     final String basicAuth =
@@ -77,16 +92,23 @@ class APIService {
   }
 
   static Future<ApplicationUser?> update(
-      String route, int id, dynamic updateRequest) async {
-    final String baseUrl = apiUrl + route;
+      String route, String id, dynamic updateRequest) async {
+    final String baseUrl = apiUrl + route + "/" + id;
 
     final String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    print(jsonEncode(updateRequest));
     final response = await http.put(Uri.parse(baseUrl),
-        headers: {HttpHeaders.authorizationHeader: basicAuth},
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          HttpHeaders.authorizationHeader: basicAuth
+        },
         body: jsonEncode(updateRequest));
 
-    if (response.statusCode == 204) {
+    print(response.body);
+    print(Uri.parse(baseUrl));
+
+    if (response.statusCode == 200) {
       var data = ApplicationUser.fromJson(jsonDecode(response.body));
 
       return data;
