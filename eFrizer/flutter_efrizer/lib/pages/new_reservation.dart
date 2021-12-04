@@ -7,7 +7,7 @@ import 'package:flutter_login/models/service.dart';
 import 'package:flutter_login/services/api_service.dart';
 
 class NewReservation extends StatefulWidget {
-  const NewReservation({ Key? key }) : super(key: key);
+  const NewReservation({Key? key}) : super(key: key);
 
   @override
   _NewReservationState createState() => _NewReservationState();
@@ -24,16 +24,16 @@ class _NewReservationState extends State<NewReservation> {
 
     return Scaffold(
       appBar: AppBar(
-         leading: BackButton(color: Colors.blue),
+        leading: BackButton(color: Colors.blue),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
-      IconButton(
-        icon: Icon(icon),
-        color: Colors.blue,
-        onPressed: () {},
-      ),
-      ],
+          IconButton(
+            icon: Icon(icon),
+            color: Colors.blue,
+            onPressed: () {},
+          ),
+        ],
       ),
       body: SafeArea(
         child: ListView(
@@ -69,24 +69,20 @@ class _NewReservationState extends State<NewReservation> {
     );
   }
 
-
   Widget dropMenuService() {
     return FutureBuilder<List<Service>>(
         future: GetService(_service),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<Service>> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<Service>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: Text('Loading...'),
             );
-          }
-          else {
+          } else {
             if (snapshot.hasError) {
               return Center(
                 child: Text('${snapshot.error}'),
               );
-            }
-            else {
+            } else {
               return Padding(
                 padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
                 child: DropdownButton(
@@ -95,7 +91,7 @@ class _NewReservationState extends State<NewReservation> {
                   items: items,
                   onChanged: (newVal) {
                     setState(() {
-                        _service = newVal as Service;
+                      _service = newVal as Service;
                     });
                   },
                   value: _service,
@@ -107,7 +103,7 @@ class _NewReservationState extends State<NewReservation> {
   }
 
   Future<List<Service>> GetService(Service selectedItem) async {
-    var Servicelist = await APIService.Get('Service', null);
+    var Servicelist = await APIService.get('Service', null);
     var ServicelistList = Servicelist!.map((i) => Service.fromJson(i)).toList();
 
     items = ServicelistList.map((item) {
@@ -117,8 +113,9 @@ class _NewReservationState extends State<NewReservation> {
       );
     }).toList();
 
-      if (selectedItem != null && selectedItem.ServiceId != 0)
-      _service = ServicelistList.where((element) => element.ServiceId == selectedItem.ServiceId).first;
-        return ServicelistList;
-   }
+    if (selectedItem != null && selectedItem.ServiceId != 0)
+      _service = ServicelistList.where(
+          (element) => element.ServiceId == selectedItem.ServiceId).first;
+    return ServicelistList;
+  }
 }

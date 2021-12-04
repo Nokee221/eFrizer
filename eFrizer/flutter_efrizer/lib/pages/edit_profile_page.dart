@@ -11,8 +11,7 @@ import 'package:flutter_login/widget/profile_widget.dart';
 class EditeProfilePage extends StatefulWidget {
   final ApplicationUser user;
 
-  EditeProfilePage(this.user,  {Key? key}) : super(key: key);
-
+  EditeProfilePage(this.user, {Key? key}) : super(key: key);
 
   @override
   _EditeProfilePageState createState() => _EditeProfilePageState(user);
@@ -21,16 +20,13 @@ class EditeProfilePage extends StatefulWidget {
 class _EditeProfilePageState extends State<EditeProfilePage> {
   final icon = CupertinoIcons.moon_stars;
   final ApplicationUser user;
-  late final ApplicationUserUpdateRequest request;
 
   _EditeProfilePageState(this.user);
-
 
   late final TextEditingController usernameController;
   late final TextEditingController nameController;
   late final TextEditingController surnameController;
   late final TextEditingController descriptionController;
-  
 
   @override
   void initState() {
@@ -40,11 +36,6 @@ class _EditeProfilePageState extends State<EditeProfilePage> {
     nameController = TextEditingController(text: user.name);
     surnameController = TextEditingController(text: user.surname);
     descriptionController = TextEditingController(text: user.description);
-
-    request.username = usernameController.text;
-    request.name = nameController.text;
-    request.surname = surnameController.text;
-    request.description = descriptionController.text;
   }
 
   @override
@@ -57,123 +48,124 @@ class _EditeProfilePageState extends State<EditeProfilePage> {
     super.dispose();
   }
 
- 
   var result = null;
   Future<void> PutData() async {
+    var req = ApplicationUserUpdateRequest(
+        name: nameController.text,
+        description: descriptionController.text,
+        surname: surnameController.text,
+        username: usernameController.text);
+    result =
+        await APIService.update('ApplicationUser', user.applicationUserId, req);
 
-    result = await APIService.updateUser(
-        'ApplicationUser',
-        usernameController.text,
-        nameController.text,
-        surnameController.text,
-        descriptionController.text);
-
-  @override
-  Widget build(BuildContext context) => Builder(
-
-
-        builder: (context) => Scaffold(
-          appBar: AppBar(
-            leading: BackButton(color: Colors.blue),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            actions: [
-              IconButton(
-                icon: Icon(icon),
-                color: Colors.blue,
-                onPressed: () {},
-              ),
-            ],
+    @override
+    Widget build(BuildContext context) => Builder(
+          builder: (context) => Scaffold(
+            appBar: AppBar(
+              leading: BackButton(color: Colors.blue),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              actions: [
+                IconButton(
+                  icon: Icon(icon),
+                  color: Colors.blue,
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            body: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 32),
+              physics: BouncingScrollPhysics(),
+              children: [
+                ProfileWidget(
+                  isEdit: true,
+                  imagePath:
+                      'https://media.istockphoto.com/photos/millennial-male-team-leader-organize-virtual-workshop-with-employees-picture-id1300972574?b=1&k=20&m=1300972574&s=170667a&w=0&h=2nBGC7tr0kWIU8zRQ3dMg-C5JLo9H2sNUuDjQ5mlYfo=',
+                  onClicked: () async {},
+                ),
+                const SizedBox(height: 24),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Username",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: usernameController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      )),
+                      maxLines: 1,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Name",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: nameController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      )),
+                      maxLines: 1,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Surname",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: surnameController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      )),
+                      maxLines: 1,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "About",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: descriptionController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      )),
+                      maxLines: 10,
+                    ),
+                    const SizedBox(height: 8),
+                    ButtonWidget(
+                      text: "Save",
+                      onClicked: () async {
+                        await PutData();
+                        if (result != null) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProfilePage(user)));
+                        }
+                      },
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
-          body: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 32),
-            physics: BouncingScrollPhysics(),
-            children: [
-              ProfileWidget(
-                isEdit: true,
-                imagePath:
-                    'https://media.istockphoto.com/photos/millennial-male-team-leader-organize-virtual-workshop-with-employees-picture-id1300972574?b=1&k=20&m=1300972574&s=170667a&w=0&h=2nBGC7tr0kWIU8zRQ3dMg-C5JLo9H2sNUuDjQ5mlYfo=',
-                onClicked: () async {},
-              ),
-              const SizedBox(height: 24),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Username",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: usernameController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    )),
-                    maxLines: 1,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "Name",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: nameController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    )),
-                    maxLines: 1,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "Surname",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: surnameController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    )),
-                    maxLines: 1,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "About",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: descriptionController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    )),
-                    maxLines: 10,
-                  ),
-                  const SizedBox(height: 8),
-                  ButtonWidget(
-                    text: "Save",
-                    onClicked: () async {
-                      await PutData();
-                      if (result != null) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProfilePage(user)));
-                      }
-                    },
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
-      );
-}
+        );
+  }
 
   @override
   Widget build(BuildContext context) {

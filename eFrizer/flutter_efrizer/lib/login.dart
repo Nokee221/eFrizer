@@ -13,7 +13,7 @@ class _LoginPageState extends State<LoginPage> {
 
   var result = null;
   Future<void> GetData() async {
-    result = await APIService.Login(
+    result = await APIService.login(
         'Login', usernameController.text, passwordController.text);
   }
 
@@ -140,7 +140,6 @@ class _LoginPageState extends State<LoginPage> {
                           APIService.password = passwordController.text;
                           await GetData();
                           if (result != null) {
-                            
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
