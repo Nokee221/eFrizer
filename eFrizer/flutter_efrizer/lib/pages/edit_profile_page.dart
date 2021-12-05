@@ -21,7 +21,6 @@ class EditeProfilePage extends StatefulWidget {
 class _EditeProfilePageState extends State<EditeProfilePage> {
   final icon = CupertinoIcons.moon_stars;
   final ApplicationUser user;
-  late final ApplicationUserUpdateRequest request;
 
   _EditeProfilePageState(this.user);
 
@@ -40,11 +39,6 @@ class _EditeProfilePageState extends State<EditeProfilePage> {
     nameController = TextEditingController(text: user.name);
     surnameController = TextEditingController(text: user.surname);
     descriptionController = TextEditingController(text: user.description);
-
-    request.username = usernameController.text;
-    request.name = nameController.text;
-    request.surname = surnameController.text;
-    request.description = descriptionController.text;
   }
 
   @override
@@ -60,13 +54,11 @@ class _EditeProfilePageState extends State<EditeProfilePage> {
  
   var result = null;
   Future<void> PutData() async {
-
-    result = await APIService.updateUser(
-        'ApplicationUser',
-        usernameController.text,
-        nameController.text,
-        surnameController.text,
-        descriptionController.text);
+    var req = ApplicationUserUpdateRequest(name: nameController.text , username: usernameController.text, surname: surnameController.text, description: descriptionController.text),
+    result = await APIService.Update(
+        'ApplicationUser', user.applicationUserId.toString(),
+        req);
+  }
 
   @override
   Widget build(BuildContext context) => Builder(
@@ -173,11 +165,4 @@ class _EditeProfilePageState extends State<EditeProfilePage> {
           ),
         ),
       );
-}
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
 }

@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_login/models/HairSalon.dart';
+import 'package:flutter_login/models/hairsalon_search_request.dart';
 import 'package:flutter_login/models/hairsalon_type.dart';
+import 'package:flutter_login/pages/category_page.dart';
 import 'package:flutter_login/pages/details.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_login/widget/custom_list_title.dart';
@@ -20,7 +22,15 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final icon = CupertinoIcons.moon_stars;
   final String assetName = 'assets/saloon.svg';
+  
+  TextEditingController searchController = new TextEditingController();
+  HairSalonSearchRequest? req = null;
+
  
+  var request = null;
+  Future<void> FilterData() async {
+    request = HairSalonSearchRequest(name: searchController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +90,7 @@ class _SearchPageState extends State<SearchPage> {
                       color: Colors.white.withOpacity(.9),
                     ),
                     child: TextField(
+                      controller: searchController,
                       cursorColor: Color(0xFF4C4C4C),
                       decoration: InputDecoration(
                         hintText: "Search Saloon, Spa and Barber",
@@ -90,6 +101,12 @@ class _SearchPageState extends State<SearchPage> {
                           color: Color(0xFFACACAC),
                         ),
                       ),
+                      onChanged: (val){
+                        setState(() {
+                          req = HairSalonSearchRequest(name: searchController.text);
+                          GetHairSalon(req);
+                        });
+                      },
                     ),
                   ),
                   ],
@@ -104,10 +121,9 @@ class _SearchPageState extends State<SearchPage> {
                height: 90.0,
                child: listWidget()
              ),
-             SizedBox(height: 5.0),
              Container(
                width: double.infinity,
-               height: 400.0,
+               height: double.maxFinite,
                child: listHairSalon(),
              )
             ],
@@ -144,7 +160,7 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget listHairSalon() {
     return FutureBuilder<List<HairSalon>>(
-        future: GetHairSalon(),
+        future:GetHairSalon(req),
         builder:
             (BuildContext context, AsyncSnapshot<List<HairSalon>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -169,6 +185,7 @@ class _SearchPageState extends State<SearchPage> {
 
   Future<List<HairSalonType>> GetHairSalonType() async {
     
+    
 
     var hairsalontype = await APIService.Get('HairSalonType', null);
     if(hairsalontype != null){
@@ -181,18 +198,14 @@ class _SearchPageState extends State<SearchPage> {
 
   }
 
-  Future<List<HairSalon>> GetHairSalon() async {
+  Future<List<HairSalon>> GetHairSalon(req) async {
+    Map<String, String>? queryParams = null;
+    if (req != null && queryParams != "")
+      queryParams = {'Name': req.name};
+
+    var hairsalon = await APIService.Get('HairSalon', queryParams);
+    return hairsalon!.map((i) => HairSalon.fromJson(i)).toList();
     
-
-    var hairsalon = await APIService.Get('HairSalon', null);
-    if(hairsalon != null){
-
-      return hairsalon.map((i) => HairSalon.fromJson(i)).toList();
-    }
-    else{
-      return List.empty();
-    }
-
   }
 
   Widget HairSalonTypeWidget(hairsalontype) => Container(
@@ -204,8 +217,8 @@ class _SearchPageState extends State<SearchPage> {
           InkWell(
             onTap: (){
               Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => SearchPage()),
-                        );
+              MaterialPageRoute(builder: (context) => CategoryPage(hairsalontype)),
+            );
             },
             child: Column(
               children: [
@@ -216,7 +229,7 @@ class _SearchPageState extends State<SearchPage> {
               child: SvgPicture.asset(
                 assetName,
                 color: Colors.white,
-                width: 15.0,
+                width: 30.0,
                 
               ),
               ),

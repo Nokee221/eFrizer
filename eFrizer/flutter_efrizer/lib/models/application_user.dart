@@ -3,8 +3,7 @@
   final String? name;
   final String? surname;
   final String? description;
-  final String username;
-  final String? password;
+  final String? username;
   final List<String>? roles;
 
   ApplicationUser(
@@ -13,7 +12,6 @@
       this.surname,
       required this.description,
       required this.username,
-      this.password,
       this.roles});
 
   void SetParameter(String Username, String Password) {}
@@ -25,13 +23,11 @@
       surname: json["surname"],
       description: json["description"],
       username: json["username"],
-      password: json["password"],
     );
   }
 
   Map<String, dynamic> toJson() => {
         "username": username,
-        "password": password,
         "name": name,
         "surname": surname,
         "description": description,
