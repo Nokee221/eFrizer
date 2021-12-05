@@ -11,8 +11,9 @@ import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_login/widget/custom_list_title.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  const SearchPage({ Key? key }) : super(key: key);
 
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -47,8 +48,7 @@ class _SearchPageState extends State<SearchPage> {
                   decoration: BoxDecoration(
                     color: Color(0xFFFFAD03),
                     image: DecorationImage(
-                      image: NetworkImage(
-                          'https://i.pinimg.com/originals/c5/5a/de/c55ade0f3c23b62ff5b7eb6af21ecdc6.jpg'),
+                      image: NetworkImage('https://i.pinimg.com/originals/c5/5a/de/c55ade0f3c23b62ff5b7eb6af21ecdc6.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -64,32 +64,32 @@ class _SearchPageState extends State<SearchPage> {
                             icon: Icon(icon),
                             color: Colors.white,
                             onPressed: () {},
-                          ),
-                        ],
                       ),
-                      Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: Text(
-                          "Find a hairsalon for you",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
-                          ),
-                        ),
+                    ],
+                  ),
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18.0),
+                    child: Text(
+                      "Find a hairsalon for you",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
                       ),
-                      SizedBox(height: 15.0),
-                      Container(
-                      width: double.infinity,
-                      height: 50.0,
-                      margin: EdgeInsets.symmetric(horizontal: 18.0),
-                      padding: EdgeInsets.symmetric(horizontal: 15.0),
-                      decoration: BoxDecoration(
+                    ),
+                  ),
+                  SizedBox(height: 15.0),
+                  Container(
+                    width: double.infinity,
+                    height: 50.0,
+                    margin: EdgeInsets.symmetric(horizontal: 18.0),
+                    padding: EdgeInsets.symmetric(horizontal: 15.0),
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.0),
                       color: Colors.white.withOpacity(.9),
-                      ),
-                      child: TextField(
+                    ),
+                    child: TextField(
                       controller: searchController,
                       cursorColor: Color(0xFF4C4C4C),
                       decoration: InputDecoration(
@@ -109,14 +109,18 @@ class _SearchPageState extends State<SearchPage> {
                       },
                     ),
                   ),
-              SizedBox(height: 25.0),
-              CustomListTitle(title: "Top Categories"),
-              SizedBox(height: 15.0),
-              Container(
+                  ],
+                ),
+              ),
+             ),
+             SizedBox(height: 25.0),
+             CustomListTitle(title: "Top Categories"),
+             SizedBox(height: 15.0),
+             Container(
                width: double.infinity,
                height: 90.0,
                child: listWidget()
-              ),
+             ),
              Container(
                width: double.infinity,
                height: double.maxFinite,
@@ -126,19 +130,14 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ),
       ),
-            ],
-            ),
-            ),
-            ),
-            );
-
+    );
   }
 
   Widget listWidget() {
     return FutureBuilder<List<HairSalonType>>(
         future: GetHairSalonType(),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<HairSalonType>> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<List<HairSalonType>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: Text('Loading...'),
@@ -152,8 +151,7 @@ class _SearchPageState extends State<SearchPage> {
               return ListView(
                 scrollDirection: Axis.horizontal,
                 physics: ScrollPhysics(),
-                children:
-                    snapshot.data!.map((e) => HairSalonTypeWidget(e)).toList(),
+                children: snapshot.data!.map((e) => HairSalonTypeWidget(e)).toList(),
               );
             }
           }
@@ -178,8 +176,7 @@ class _SearchPageState extends State<SearchPage> {
               return ListView(
                 scrollDirection: Axis.vertical,
                 physics: ScrollPhysics(),
-                children:
-                    snapshot.data!.map((e) => HairSalonWidget(e)).toList(),
+                children: snapshot.data!.map((e) => HairSalonWidget(e)).toList(),
               );
             }
           }
@@ -194,9 +191,11 @@ class _SearchPageState extends State<SearchPage> {
     if(hairsalontype != null){
 
       return hairsalontype.map((i) => HairSalonType.fromJson(i)).toList();
-    } else {
+    }
+    else{
       return List.empty();
     }
+
   }
 
   Future<List<HairSalon>> GetHairSalon(req) async {
@@ -244,60 +243,60 @@ class _SearchPageState extends State<SearchPage> {
       ),
   );
 
-
   Widget HairSalonWidget(hairsalon) => Padding(
-        padding: const EdgeInsets.all(15),
-        child: InkWell(
-          child: Card(
-            color: Colors.blueGrey,
-            clipBehavior: Clip.antiAlias,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-            child: Column(
+    padding: const EdgeInsets.all(15),
+    child: InkWell(
+      child: Card(
+        color: Colors.blueGrey,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        child: Column(
+          children: [
+            Stack(
               children: [
-                Stack(
-                  children: [
-                    Ink.image(
-                      image: NetworkImage(
-                          'https://i.pinimg.com/originals/c5/5a/de/c55ade0f3c23b62ff5b7eb6af21ecdc6.jpg'),
-                      height: 100,
-                      fit: BoxFit.cover,
-                    ),
-                    Positioned(
-                        bottom: 16,
-                        right: 16,
-                        left: 16,
-                        child: Column(
-                          children: [
-                            Text(
-                              hairsalon.Name,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 20,
-                              ),
-                            ),
-                            Text(
-                              hairsalon.Address,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 10,
-                              ),
-                            ),
-                          ],
-                        ))
-                  ],
+                Ink.image(
+                  image: NetworkImage('https://i.pinimg.com/originals/c5/5a/de/c55ade0f3c23b62ff5b7eb6af21ecdc6.jpg'),
+                  height: 100,
+                  fit: BoxFit.cover,
+                ),
+                Positioned(
+                  bottom: 16,
+                  right: 16,
+                  left: 16,
+                  child: Column(
+                    children: [
+                      Text(
+                      hairsalon.Name,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                      ),
+                      Text(
+                      hairsalon.Address,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 10,
+                      ),
+                      ),
+                    ],
+                  )
                 )
               ],
-            ),
-          ),
-          onTap: () {
-            Navigator.of(context).push(
+            )
+          ],
+        ),
+      ),
+      onTap: (){
+        Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => Details(hairsalon)),
             );
-          },
-        ),
-      );
+      },
+    ),
+  );
+ 
 }

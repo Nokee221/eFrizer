@@ -184,7 +184,7 @@ class _DetailsState extends State<Details> {
   Future<List<HairDresser>> GetHairDressers() async {
     
 
-    var hairdresser = await APIService.Get('HairDresser', null);
+    var hairdresser = await APIService.get('HairDresser', null);
     if(hairdresser != null){
 
       return hairdresser.map((i) => HairDresser.fromJson(i)).toList();
