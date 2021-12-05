@@ -1,15 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/models/HairSalon.dart';
+import 'package:flutter_login/models/hairdress.dart';
+import 'package:flutter_login/services/api_service.dart';
+import 'package:flutter_login/widget/custom_list_title.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'calendar_page.dart';
 
-class Details extends StatelessWidget {
+class Details extends StatefulWidget {
+  final HairSalon hairSalon;
+  const Details(this.hairSalon, { Key? key }) : super(key: key);
+
+  @override
+  _DetailsState createState() => _DetailsState(hairSalon);
+}
+
+class _DetailsState extends State<Details> {
   final HairSalon hairsalon;
   final icon = CupertinoIcons.moon_stars;
+  final String assetName = 'assets/hairdresser.svg';
 
-
-  const Details(this.hairsalon, {Key? key}) : super(key: key);
+  _DetailsState(this.hairsalon);
 
   @override
   Widget build(BuildContext context) {
@@ -129,21 +141,93 @@ class Details extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
               ),
-              SizedBox(height: 10.0),
+              SizedBox(height: 30.0),
+              CustomListTitle(title: "Pick your hairdresser"),
+              SizedBox(height: 15.0),
+              Container(
+                width: double.infinity,
+                height: 90,
+                child: listHairDresser(),
+              )
             ],
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.add,
-        ),
-        onPressed: (){
-          Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => CalendarPage()),
-              );
-        },
-      ),
     );
   }
+
+   Widget listHairDresser() {
+    return FutureBuilder<List<HairDresser>>(
+        future: GetHairDressers(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<HairDresser>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Text('Loading...'),
+            );
+          } else {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('${snapshot.error}'),
+              );
+            } else {
+              return ListView(
+                scrollDirection: Axis.horizontal,
+                physics: ScrollPhysics(),
+                children: snapshot.data!.map((e) => HairDresserWidget(e)).toList(),
+              );
+            }
+          }
+        });
+  }
+
+  Future<List<HairDresser>> GetHairDressers() async {
+    
+
+    var hairdresser = await APIService.Get('HairDresser', null);
+    if(hairdresser != null){
+
+      return hairdresser.map((i) => HairDresser.fromJson(i)).toList();
+    }
+    else{
+      return List.empty();
+    }
+
+  }
+
+  Widget HairDresserWidget(hairdresser) => Container(
+    width: 70.0,
+      margin: EdgeInsets.only(left: 10.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          InkWell(
+            onTap: (){
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => CalendarPage()),
+              );
+            },
+            child: Column(
+              children: [
+
+              CircleAvatar(
+              radius: 25.0,
+              backgroundColor: Colors.blue,
+              child: SvgPicture.asset(
+                assetName,
+                color: Colors.white,
+                width: 30.0,
+                
+              ),
+              ),
+              SizedBox(height: 7),
+              Text(hairdresser.name, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),),
+
+              ],
+            )
+          )
+          
+        ],
+      ),
+  );
 }

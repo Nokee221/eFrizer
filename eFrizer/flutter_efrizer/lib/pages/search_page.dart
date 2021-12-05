@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_login/models/HairSalon.dart';
+import 'package:flutter_login/models/hairsalon_search_request.dart';
 import 'package:flutter_login/models/hairsalon_type.dart';
+import 'package:flutter_login/pages/category_page.dart';
 import 'package:flutter_login/pages/details.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_login/widget/custom_list_title.dart';
@@ -19,6 +21,15 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final icon = CupertinoIcons.moon_stars;
   final String assetName = 'assets/saloon.svg';
+  
+  TextEditingController searchController = new TextEditingController();
+  HairSalonSearchRequest? req = null;
+
+ 
+  var request = null;
+  Future<void> FilterData() async {
+    request = HairSalonSearchRequest(name: searchController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,48 +81,57 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                       SizedBox(height: 15.0),
                       Container(
-                        width: double.infinity,
-                        height: 50.0,
-                        margin: EdgeInsets.symmetric(horizontal: 18.0),
-                        padding: EdgeInsets.symmetric(horizontal: 15.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.0),
-                          color: Colors.white.withOpacity(.9),
-                        ),
-                        child: TextField(
-                          cursorColor: Color(0xFF4C4C4C),
-                          decoration: InputDecoration(
-                            hintText: "Search Saloon, Spa and Barber",
-                            hintStyle: TextStyle(
-                                color: Color(0xFFACACAC), fontSize: 12.0),
-                            border: InputBorder.none,
-                            icon: Icon(
-                              Icons.search,
-                              color: Color(0xFFACACAC),
-                            ),
-                          ),
+                      width: double.infinity,
+                      height: 50.0,
+                      margin: EdgeInsets.symmetric(horizontal: 18.0),
+                      padding: EdgeInsets.symmetric(horizontal: 15.0),
+                      decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
+                      color: Colors.white.withOpacity(.9),
+                      ),
+                      child: TextField(
+                      controller: searchController,
+                      cursorColor: Color(0xFF4C4C4C),
+                      decoration: InputDecoration(
+                        hintText: "Search Saloon, Spa and Barber",
+                        hintStyle: TextStyle(color: Color(0xFFACACAC), fontSize: 12.0),
+                        border: InputBorder.none,
+                        icon: Icon(
+                          Icons.search,
+                          color: Color(0xFFACACAC),
                         ),
                       ),
-                    ],
+                      onChanged: (val){
+                        setState(() {
+                          req = HairSalonSearchRequest(name: searchController.text);
+                          GetHairSalon(req);
+                        });
+                      },
+                    ),
                   ),
-                ),
-              ),
               SizedBox(height: 25.0),
               CustomListTitle(title: "Top Categories"),
               SizedBox(height: 15.0),
               Container(
-                  width: double.infinity, height: 90.0, child: listWidget()),
-              SizedBox(height: 5.0),
-              Container(
-                width: double.infinity,
-                height: 400.0,
-                child: listHairSalon(),
-              )
+               width: double.infinity,
+               height: 90.0,
+               child: listWidget()
+              ),
+             Container(
+               width: double.infinity,
+               height: double.maxFinite,
+               child: listHairSalon(),
+             )
             ],
           ),
         ),
       ),
-    );
+            ],
+            ),
+            ),
+            ),
+            );
+
   }
 
   Widget listWidget() {
@@ -142,7 +162,7 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget listHairSalon() {
     return FutureBuilder<List<HairSalon>>(
-        future: GetHairSalon(),
+        future:GetHairSalon(req),
         builder:
             (BuildContext context, AsyncSnapshot<List<HairSalon>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -167,52 +187,63 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Future<List<HairSalonType>> GetHairSalonType() async {
+    
+    
+
     var hairsalontype = await APIService.get('HairSalonType', null);
-    if (hairsalontype != null) {
+    if(hairsalontype != null){
+
       return hairsalontype.map((i) => HairSalonType.fromJson(i)).toList();
     } else {
       return List.empty();
     }
   }
 
-  Future<List<HairSalon>> GetHairSalon() async {
-    var hairsalon = await APIService.get('HairSalon', null);
-    if (hairsalon != null) {
-      return hairsalon.map((i) => HairSalon.fromJson(i)).toList();
-    } else {
-      return List.empty();
-    }
+  Future<List<HairSalon>> GetHairSalon(req) async {
+    Map<String, String>? queryParams = null;
+    if (req != null && queryParams != "")
+      queryParams = {'Name': req.name};
+
+    var hairsalon = await APIService.get('HairSalon', queryParams);
+    return hairsalon!.map((i) => HairSalon.fromJson(i)).toList();
+    
   }
 
   Widget HairSalonTypeWidget(hairsalontype) => Container(
-        width: 70.0,
-        margin: EdgeInsets.only(left: 10.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => SearchPage()),
-                  );
-                },
-                child: Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 25.0,
-                      backgroundColor: Colors.blue,
-                      child: SvgPicture.asset(
-                        assetName,
-                        color: Colors.white,
-                        width: 15.0,
-                      ),
-                    ),
-                    Text(hairsalontype.name),
-                  ],
-                ))
-          ],
-        ),
-      );
+    width: 70.0,
+      margin: EdgeInsets.only(left: 10.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          InkWell(
+            onTap: (){
+              Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => CategoryPage(hairsalontype)),
+            );
+            },
+            child: Column(
+              children: [
+
+              CircleAvatar(
+              radius: 25.0,
+              backgroundColor: Colors.blue,
+              child: SvgPicture.asset(
+                assetName,
+                color: Colors.white,
+                width: 30.0,
+                
+              ),
+              ),
+              Text(hairsalontype.name),
+          
+              ],
+            )
+          )
+          
+        ],
+      ),
+  );
+
 
   Widget HairSalonWidget(hairsalon) => Padding(
         padding: const EdgeInsets.all(15),
