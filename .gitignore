@@ -6,6 +6,8 @@
 appsettings.json
 appsettings.Development.json
 
+config.dart
+
 # User-specific files
 *.rsuser
 *.suo
