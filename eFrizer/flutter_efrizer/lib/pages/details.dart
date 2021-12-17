@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/models/HairSalon.dart';
 import 'package:flutter_login/models/hairdress.dart';
+import 'package:flutter_login/models/loyalty_bonus.dart';
+import 'package:flutter_login/pages/loyalty_bonus_page.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_login/widget/custom_list_title.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,7 +12,7 @@ import 'calendar_page.dart';
 
 class Details extends StatefulWidget {
   final HairSalon hairSalon;
-  const Details(this.hairSalon, { Key? key }) : super(key: key);
+  const Details(this.hairSalon, {Key? key}) : super(key: key);
 
   @override
   _DetailsState createState() => _DetailsState(hairSalon);
@@ -27,16 +29,16 @@ class _DetailsState extends State<Details> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         leading: BackButton(color: Colors.blue),
+        leading: BackButton(color: Colors.blue),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
-      IconButton(
-        icon: Icon(icon),
-        color: Colors.blue,
-        onPressed: () {},
-      ),
-      ],
+          IconButton(
+            icon: Icon(icon),
+            color: Colors.blue,
+            onPressed: () {},
+          ),
+        ],
       ),
       body: ListView(
         children: <Widget>[
@@ -45,22 +47,22 @@ class _DetailsState extends State<Details> {
             padding: EdgeInsets.only(left: 20),
             height: 250.0,
             child: ListView(
-               padding: EdgeInsets.only(right: 10.0),
-               children: <Widget>[
-                 Padding(
-                   padding: EdgeInsets.only(right: 10.0),
-                   child: ClipRRect(
-                     borderRadius: BorderRadius.circular(10.0),
-                     child: Ink.image(
-                  image: NetworkImage(
-                    'https://i.pinimg.com/originals/c5/5a/de/c55ade0f3c23b62ff5b7eb6af21ecdc6.jpg',
+              padding: EdgeInsets.only(right: 10.0),
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(right: 10.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Ink.image(
+                      image: NetworkImage(
+                        'https://i.pinimg.com/originals/c5/5a/de/c55ade0f3c23b62ff5b7eb6af21ecdc6.jpg',
+                      ),
+                      height: 240,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  height: 240,
-                  fit: BoxFit.cover,
-                ),
-                   ),
-                 )
-               ],
+                )
+              ],
             ),
           ),
           SizedBox(height: 20),
@@ -89,7 +91,7 @@ class _DetailsState extends State<Details> {
                     icon: Icon(
                       Icons.bookmark,
                     ),
-                    onPressed: (){},
+                    onPressed: () {},
                   )
                 ],
               ),
@@ -148,7 +150,12 @@ class _DetailsState extends State<Details> {
                 width: double.infinity,
                 height: 90,
                 child: listHairDresser(),
-              )
+              ),
+              SizedBox(height: 30.0),
+              CustomListTitle(title: "Loyalty services"),
+              SizedBox(height: 15.0),
+              Container(
+                  width: double.infinity, height: 90, child: listLoyaltyBonus())
             ],
           )
         ],
@@ -156,9 +163,9 @@ class _DetailsState extends State<Details> {
     );
   }
 
-   Widget listHairDresser() {
+  Widget listHairDresser() {
     return FutureBuilder<List<HairDresser>>(
-        future: GetHairDressers(),
+        future: getHairDressers(),
         builder:
             (BuildContext context, AsyncSnapshot<List<HairDresser>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -174,60 +181,127 @@ class _DetailsState extends State<Details> {
               return ListView(
                 scrollDirection: Axis.horizontal,
                 physics: ScrollPhysics(),
-                children: snapshot.data!.map((e) => HairDresserWidget(e)).toList(),
+                children:
+                    snapshot.data!.map((e) => hairDresserWidget(e)).toList(),
               );
             }
           }
         });
   }
 
-  Future<List<HairDresser>> GetHairDressers() async {
-    
-
+  Future<List<HairDresser>> getHairDressers() async {
     var hairdresser = await APIService.get('HairDresser', null);
-    if(hairdresser != null){
-
+    if (hairdresser != null) {
       return hairdresser.map((i) => HairDresser.fromJson(i)).toList();
-    }
-    else{
+    } else {
       return List.empty();
     }
-
   }
 
-  Widget HairDresserWidget(hairdresser) => Container(
-    width: 70.0,
-      margin: EdgeInsets.only(left: 10.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          InkWell(
-            onTap: (){
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => CalendarPage()),
+  Widget hairDresserWidget(hairdresser) => Container(
+        width: 70.0,
+        margin: EdgeInsets.only(left: 10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => CalendarPage()),
+                  );
+                },
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 25.0,
+                      backgroundColor: Colors.blue,
+                      child: SvgPicture.asset(
+                        assetName,
+                        color: Colors.white,
+                        width: 30.0,
+                      ),
+                    ),
+                    SizedBox(height: 7),
+                    Text(
+                      hairdresser.name,
+                      style:
+                          TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ))
+          ],
+        ),
+      );
+
+  Widget listLoyaltyBonus() {
+    return FutureBuilder<List<LoyaltyBonus>>(
+        future: getLoyaltyBonuses(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<LoyaltyBonus>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Text('Loading...'),
+            );
+          } else {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('${snapshot.error}'),
               );
-            },
-            child: Column(
-              children: [
+            } else {
+              return ListView(
+                scrollDirection: Axis.horizontal,
+                physics: ScrollPhysics(),
+                children:
+                    snapshot.data!.map((e) => loyaltyBonusWidget(e)).toList(),
+              );
+            }
+          }
+        });
+  }
 
-              CircleAvatar(
-              radius: 25.0,
-              backgroundColor: Colors.blue,
-              child: SvgPicture.asset(
-                assetName,
-                color: Colors.white,
-                width: 30.0,
-                
-              ),
-              ),
-              SizedBox(height: 7),
-              Text(hairdresser.name, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),),
+  Future<List<LoyaltyBonus>> getLoyaltyBonuses() async {
+    var loyaltyBonus =
+        await APIService.get('HairSalonServiceLoyaltyBonus', null);
+    if (loyaltyBonus != null) {
+      return loyaltyBonus.map((i) => LoyaltyBonus.fromJson(i)).toList();
+    } else {
+      return List.empty();
+    }
+  }
 
-              ],
-            )
-          )
-          
-        ],
-      ),
-  );
+  Widget loyaltyBonusWidget(loyaltyBonus) => Container(
+        width: 70.0,
+        margin: EdgeInsets.only(left: 10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) => LoyaltyBonusPage(loyaltyBonus)),
+                  );
+                },
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 25.0,
+                      backgroundColor: Colors.blue,
+                      child: SvgPicture.asset(
+                        assetName,
+                        color: Colors.white,
+                        width: 30.0,
+                      ),
+                    ),
+                    SizedBox(height: 7),
+                    Text(
+                      loyaltyBonus.serviceName,
+                      style:
+                          TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ))
+          ],
+        ),
+      );
 }
