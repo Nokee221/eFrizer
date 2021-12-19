@@ -2,7 +2,9 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:flutter_login/models/reservation.dart';
+import 'package:flutter_login/models/reservation/reservation.dart';
+import 'package:flutter_login/models/reservation/reservation_search_request.dart';
+import 'package:flutter_login/pages/payment.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
@@ -10,20 +12,32 @@ import 'package:intl/intl.dart';
 import 'new_reservation.dart';
 
 class CalendarPage extends StatefulWidget {
-  CalendarPage({Key? key}) : super(key: key);
+  final int hairdresserId;
+  CalendarPage(this.hairdresserId, {Key? key}) : super(key: key);
 
   @override
-  _CalendarPageState createState() => _CalendarPageState();
+  _CalendarPageState createState() => _CalendarPageState(hairdresserId);
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+  final int hairdresserId;
   final icon = CupertinoIcons.moon_stars;
 
   DateTime _dateTime = DateTime.now();
   DateTime focusedDay = DateTime.now();
 
+  var request = null;
+  @override
+  void initState() {
+    super.initState();
+
+    request = ReservationSearchRequest(hairdresserId: hairdresserId, day: _dateTime.day , month: _dateTime.month);
+  }
+
   //CalendarController controller = new CalendarController();
   CalendarFormat format = CalendarFormat.week;
+
+  _CalendarPageState(this.hairdresserId);
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +69,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 children: <Widget>[
                   Text(
                     "${_dateTime.day}.${_dateTime.month}.${_dateTime.year}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 30.0,
                       fontWeight: FontWeight.w700,
                     ),
@@ -65,16 +79,16 @@ class _CalendarPageState extends State<CalendarPage> {
                     width: 160.0,
                     decoration: BoxDecoration(
                       color: Colors.blue,
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     child: FlatButton(
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) => NewReservation()),
+                              builder: (context) => NewReservation(_dateTime)),
                         );
                       },
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           "Add Reservation",
                           style: TextStyle(
@@ -91,7 +105,7 @@ class _CalendarPageState extends State<CalendarPage> {
               SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
+                children: const <Widget>[
                   Text(
                     "Current date",
                     style: TextStyle(
@@ -119,13 +133,14 @@ class _CalendarPageState extends State<CalendarPage> {
                   setState(() {
                     _dateTime = selectDay;
                     focusDay = focusDay;
+                    request = ReservationSearchRequest(hairdresserId: hairdresserId, day: selectDay.day , month: selectDay.month);
                   });
                 },
                 selectedDayPredicate: (DateTime date) {
                   return isSameDay(_dateTime, date);
                 },
                 //Calendar style
-                calendarStyle: CalendarStyle(
+                calendarStyle: const CalendarStyle(
                   isTodayHighlighted: true,
                   selectedDecoration: BoxDecoration(
                     color: Colors.blue,
@@ -137,13 +152,13 @@ class _CalendarPageState extends State<CalendarPage> {
                     shape: BoxShape.circle,
                   ),
                 ),
-                headerStyle: HeaderStyle(
+                headerStyle: const HeaderStyle(
                   formatButtonVisible: false,
                   titleCentered: true,
                   formatButtonShowsNext: false,
                 ),
               ),
-              Text(
+              const Text(
                 "-------------------------------------------------------------------------------------",
                 style: TextStyle(color: Colors.grey),
               ),
@@ -158,11 +173,11 @@ class _CalendarPageState extends State<CalendarPage> {
 
   Widget widgetReservation() {
     return FutureBuilder<List<Reservation>>(
-        future: getReservaion(),
+        future: getReservaion(request),
         builder:
             (BuildContext context, AsyncSnapshot<List<Reservation>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: Text('Loading...'),
             );
           } else {
@@ -180,19 +195,19 @@ class _CalendarPageState extends State<CalendarPage> {
         });
   }
 
-  Future<List<Reservation>> getReservaion() async {
-    var reservation = await APIService.get('Reservation', null);
-    if (reservation != null) {
-      return reservation.map((i) => Reservation.fromJson(i)).toList();
-    } else {
-      return List.empty();
-    }
+  Future<List<Reservation>> getReservaion(req) async {
+    Map<String, String>? queryParams = null;
+    if (req != null && queryParams != "")
+      queryParams = {'HairDresserId': req.hairdresserId.toString(), 'Day': req.day.toString(), 'Month': req.month.toString()};
+
+    var hairdresser = await APIService.get('Reservation', queryParams);
+    return hairdresser!.map((i) => Reservation.fromJson(i)).toList();
   }
 
   Widget ReservationWidget(reservation) => Container(
         height: 80,
         width: 80,
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(color: Colors.blueGrey[100], boxShadow: [
           BoxShadow(
               color: Colors.black.withOpacity(0.03),
@@ -203,30 +218,31 @@ class _CalendarPageState extends State<CalendarPage> {
         child: Row(
           children: [
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               height: 25,
               width: 25,
               decoration: BoxDecoration(
                   color: Colors.white,
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.blue, width: 4)),
+                  border: Border.all(color: Colors.red, width: 4)),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  "Sisanje",
+                const Text(
+                  "Reservated",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 18,
                   ),
                 ),
                 Text(
-                  reservation.To.toString(),
-                  style: TextStyle(
+                  "To: " + reservation.To.toString(),
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 18,
+                    fontWeight: FontWeight.bold
                   ),
                 ),
               ],
@@ -234,7 +250,7 @@ class _CalendarPageState extends State<CalendarPage> {
             Expanded(
               child: Container(),
             ),
-            Container(height: 80, width: 5, color: Colors.blue)
+            Container(height: 80, width: 5, color: Colors.red)
           ],
         ),
       );

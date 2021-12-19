@@ -2,9 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/models/HairSalon.dart';
 import 'package:flutter_login/models/hairdress.dart';
+import 'package:flutter_login/models/hairsalon_hairdresser/hairsalon_hairdresser.dart';
+import 'package:flutter_login/models/hairsalon_hairdresser/hairsalon_hairdresser_search.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_login/widget/custom_list_title.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'calendar_page.dart';
 
@@ -23,11 +26,21 @@ class _DetailsState extends State<Details> {
 
   _DetailsState(this.hairsalon);
 
+  var request = null;
+  @override
+  void initState() {
+    super.initState();
+
+    request = HairSalonHairDresserSearchRequest(hairsalonId: hairsalon.HairSalonId);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
          leading: BackButton(color: Colors.blue),
+         centerTitle: true,
+        title: Text("Details", style: GoogleFonts.pacifico(color: Colors.black),),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
@@ -157,10 +170,10 @@ class _DetailsState extends State<Details> {
   }
 
    Widget listHairDresser() {
-    return FutureBuilder<List<HairDresser>>(
-        future: GetHairDressers(),
+    return FutureBuilder<List<HairSalonHairDresser>>(
+        future: GetHairDressers(request),
         builder:
-            (BuildContext context, AsyncSnapshot<List<HairDresser>> snapshot) {
+            (BuildContext context, AsyncSnapshot<List<HairSalonHairDresser>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: Text('Loading...'),
@@ -181,18 +194,14 @@ class _DetailsState extends State<Details> {
         });
   }
 
-  Future<List<HairDresser>> GetHairDressers() async {
-    
+  Future<List<HairSalonHairDresser>> GetHairDressers(req) async {
 
-    var hairdresser = await APIService.get('HairDresser', null);
-    if(hairdresser != null){
+      Map<String, String>? queryParams = null;
+    if (req != null && queryParams != "")
+      queryParams = {'HairSalonId': req.hairsalonId.toString()};
 
-      return hairdresser.map((i) => HairDresser.fromJson(i)).toList();
-    }
-    else{
-      return List.empty();
-    }
-
+    var hairdresser = await APIService.get('HairSalonHairDresser', queryParams);
+    return hairdresser!.map((i) => HairSalonHairDresser.fromJson(i)).toList();
   }
 
   Widget HairDresserWidget(hairdresser) => Container(
@@ -204,7 +213,7 @@ class _DetailsState extends State<Details> {
           InkWell(
             onTap: (){
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => CalendarPage()),
+                MaterialPageRoute(builder: (context) => CalendarPage(hairdresser.hairdresserId)),
               );
             },
             child: Column(
@@ -221,7 +230,7 @@ class _DetailsState extends State<Details> {
               ),
               ),
               SizedBox(height: 7),
-              Text(hairdresser.name, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),),
+              Text(hairdresser.hairdresserName , style: GoogleFonts.nunito(color: Colors.black , fontSize: 10, fontWeight: FontWeight.bold),),
 
               ],
             )

@@ -13,5 +13,6 @@ namespace eFrizer.Controllers
         public HairSalonController(IHairSalonService service) : base(service)
         {
         }
+
     }
 }

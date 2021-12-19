@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 
 class Reservation{
   final int HairDresserId;
-  final int ClientId;
+  final int? ClientId;
   final int ServiceId;
   final DateTime From;
   final DateTime To;
+
+  final String HairDresserName;
+  final String ServiceName;
 
 
   Reservation({
@@ -16,6 +19,8 @@ class Reservation{
     required this.ServiceId,
     required this.From,
     required this.To,
+    required this.HairDresserName,
+    required this.ServiceName
   });
 
  
@@ -27,6 +32,8 @@ class Reservation{
       ServiceId: int.parse(json['serviceId'].toString()),
       From: DateTime.parse(json['from']),
       To: DateTime.parse(json['to']),
+      HairDresserName: json['hairDresserName'],
+      ServiceName: json['serviceName']
     );
   }
 
