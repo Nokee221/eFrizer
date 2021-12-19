@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/models/application_user.dart';
 import 'package:flutter_login/pages/edit_profile_page.dart';
+import 'package:flutter_login/pages/user_history.dart';
 import 'package:flutter_login/widget/button_widget.dart';
 import 'package:flutter_login/widget/numbers_widget.dart';
 import 'package:flutter_login/widget/profile_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ProfilePage extends StatefulWidget {
   final ApplicationUser user;
@@ -25,6 +27,8 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(color: Colors.blue),
+        centerTitle: true,
+        title: Text("Profile", style: GoogleFonts.pacifico(color: Colors.black),),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
@@ -84,7 +88,11 @@ class _ProfilePageState extends State<ProfilePage> {
     ],
   );
 
-  Widget buildUpgradeButtton() => ButtonWidget(text: 'VIEW HISTORY ', onClicked: (){});
+  Widget buildUpgradeButtton() => ButtonWidget(text: 'VIEW HISTORY ', onClicked: (){
+    Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => History(user)),
+              );
+  });
 
   Widget buildAbout(user) => Container(
     padding: EdgeInsets.symmetric(horizontal: 48),

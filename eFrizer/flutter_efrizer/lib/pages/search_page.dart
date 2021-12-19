@@ -10,6 +10,7 @@ import 'package:flutter_login/pages/details.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_login/widget/custom_list_title.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 class SearchPage extends StatefulWidget {
@@ -45,7 +46,7 @@ class _SearchPageState extends State<SearchPage> {
                   width: double.infinity,
                   height: 250.0,
                   padding: EdgeInsets.only(bottom: 50.0),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xFFFFAD03),
                     image: DecorationImage(
                       image: NetworkImage('https://i.pinimg.com/originals/c5/5a/de/c55ade0f3c23b62ff5b7eb6af21ecdc6.jpg'),
@@ -56,7 +57,7 @@ class _SearchPageState extends State<SearchPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AppBar(
-                        leading: BackButton(color: Colors.blue),
+                        leading: BackButton(color: Colors.white),
                         backgroundColor: Colors.transparent,
                         elevation: 0,
                         actions: [
@@ -67,19 +68,17 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Padding(
                     padding: const EdgeInsets.only(left: 18.0),
                     child: Text(
                       "Find a hairsalon for you",
-                      style: TextStyle(
-                        color: Colors.white,
+                      style: GoogleFonts.nunito(color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                      ),
+                        fontSize: 18.0)
                     ),
                   ),
-                  SizedBox(height: 15.0),
+                  const SizedBox(height: 15.0),
                   Container(
                     width: double.infinity,
                     height: 50.0,
@@ -92,7 +91,7 @@ class _SearchPageState extends State<SearchPage> {
                     child: TextField(
                       controller: searchController,
                       cursorColor: Color(0xFF4C4C4C),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Search Saloon, Spa and Barber",
                         hintStyle: TextStyle(color: Color(0xFFACACAC), fontSize: 12.0),
                         border: InputBorder.none,
@@ -139,7 +138,7 @@ class _SearchPageState extends State<SearchPage> {
         builder:
             (BuildContext context, AsyncSnapshot<List<HairSalonType>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: Text('Loading...'),
             );
           } else {
@@ -164,7 +163,7 @@ class _SearchPageState extends State<SearchPage> {
         builder:
             (BuildContext context, AsyncSnapshot<List<HairSalon>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: Text('Loading...'),
             );
           } else {
@@ -200,8 +199,10 @@ class _SearchPageState extends State<SearchPage> {
 
   Future<List<HairSalon>> GetHairSalon(req) async {
     Map<String, String>? queryParams = null;
-    if (req != null && queryParams != "")
-      queryParams = {'Name': req.name};
+    if (req != null && queryParams != ""){
+
+        queryParams = {'Name': req.name};
+    }
 
     var hairsalon = await APIService.get('HairSalon', queryParams);
     return hairsalon!.map((i) => HairSalon.fromJson(i)).toList();
@@ -233,7 +234,7 @@ class _SearchPageState extends State<SearchPage> {
                 
               ),
               ),
-              Text(hairsalontype.name),
+              Text(hairsalontype.name, style: GoogleFonts.pacifico(color: Colors.black)),
           
               ],
             )
@@ -250,7 +251,7 @@ class _SearchPageState extends State<SearchPage> {
         color: Colors.blueGrey,
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
           children: [
@@ -269,7 +270,7 @@ class _SearchPageState extends State<SearchPage> {
                     children: [
                       Text(
                       hairsalon.Name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontSize: 20,
@@ -277,7 +278,7 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                       Text(
                       hairsalon.Address,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontSize: 10,
