@@ -10,8 +10,8 @@ using eFrizer.Database;
 namespace eFrizer.Migrations
 {
     [DbContext(typeof(eFrizerContext))]
-    [Migration("20211013134121_RemoveHairSalonCityTable")]
-    partial class RemoveHairSalonCityTable
+    [Migration("20211221152217_ReinitFromReviewTableEdit")]
+    partial class ReinitFromReviewTableEdit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -101,6 +101,9 @@ namespace eFrizer.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -108,6 +111,8 @@ namespace eFrizer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("HairSalonId");
+
+                    b.HasIndex("CityId");
 
                     b.ToTable("HairSalons");
                 });
@@ -184,18 +189,50 @@ namespace eFrizer.Migrations
 
             modelBuilder.Entity("eFrizer.Database.HairSalonService", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("HairSalonId")
                         .HasColumnType("int");
 
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
-                    b.HasKey("HairSalonId", "ServiceId")
-                        .HasName("PK_hairsalon_service");
+                    b.HasKey("Id");
+
+                    b.HasIndex("HairSalonId");
 
                     b.HasIndex("ServiceId");
 
                     b.ToTable("HairSalonServices");
+                });
+
+            modelBuilder.Entity("eFrizer.Database.HairSalonServiceLoyaltyBonus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ActivatesOn")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Discount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ExpiresIn")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HairSalonServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HairSalonServiceId");
+
+                    b.ToTable("HairSalonServiceLoyaltyBonuses");
                 });
 
             modelBuilder.Entity("eFrizer.Database.HairSalonType", b =>
@@ -236,10 +273,13 @@ namespace eFrizer.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ApplicationUserId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("From")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ManagerApplicationUserId")
+                    b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("To")
@@ -248,24 +288,24 @@ namespace eFrizer.Migrations
                     b.HasKey("HairDresserId", "ClientId")
                         .HasName("PK_reservation");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("ManagerApplicationUserId");
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("Reservations");
                 });
 
             modelBuilder.Entity("eFrizer.Database.Review", b =>
                 {
-                    b.Property<int>("ReviewId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ApplicationUserId")
+                    b.Property<int>("ClientId")
                         .HasColumnType("int");
 
                     b.Property<int>("HairSalonId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ApplicationUserId")
                         .HasColumnType("int");
 
                     b.Property<int>("StarRating")
@@ -274,7 +314,8 @@ namespace eFrizer.Migrations
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ReviewId");
+                    b.HasKey("ClientId", "HairSalonId")
+                        .HasName("PK_client_hairSalon");
 
                     b.HasIndex("ApplicationUserId");
 
@@ -310,6 +351,12 @@ namespace eFrizer.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.Property<int>("TimeMin")
+                        .HasColumnType("int");
 
                     b.HasKey("ServiceId");
 
@@ -359,6 +406,17 @@ namespace eFrizer.Migrations
                     b.Navigation("ApplicationUser");
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("eFrizer.Database.HairSalon", b =>
+                {
+                    b.HasOne("eFrizer.Database.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("eFrizer.Database.HairSalonHairDresser", b =>
@@ -456,34 +514,57 @@ namespace eFrizer.Migrations
                     b.Navigation("Service");
                 });
 
+            modelBuilder.Entity("eFrizer.Database.HairSalonServiceLoyaltyBonus", b =>
+                {
+                    b.HasOne("eFrizer.Database.HairSalonService", "Service")
+                        .WithMany()
+                        .HasForeignKey("HairSalonServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+                });
+
             modelBuilder.Entity("eFrizer.Database.Reservation", b =>
                 {
-                    b.HasOne("eFrizer.Database.Client", "Client")
+                    b.HasOne("eFrizer.Database.ApplicationUser", null)
                         .WithMany("Reservations")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("eFrizer.Database.Client", "Client")
+                        .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eFrizer.Database.HairDresser", "ApplicationUser")
-                        .WithMany("Reservations")
+                    b.HasOne("eFrizer.Database.HairDresser", "HairDresser")
+                        .WithMany()
                         .HasForeignKey("HairDresserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eFrizer.Database.Manager", null)
+                    b.HasOne("eFrizer.Database.Service", "Service")
                         .WithMany("Reservations")
-                        .HasForeignKey("ManagerApplicationUserId");
-
-                    b.Navigation("ApplicationUser");
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Client");
+
+                    b.Navigation("HairDresser");
+
+                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("eFrizer.Database.Review", b =>
                 {
-                    b.HasOne("eFrizer.Database.ApplicationUser", "ApplicationUser")
+                    b.HasOne("eFrizer.Database.ApplicationUser", null)
                         .WithMany("Reviews")
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("eFrizer.Database.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -493,7 +574,7 @@ namespace eFrizer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("Client");
 
                     b.Navigation("HairSalon");
                 });
@@ -508,6 +589,8 @@ namespace eFrizer.Migrations
             modelBuilder.Entity("eFrizer.Database.ApplicationUser", b =>
                 {
                     b.Navigation("ApplicationUserRoles");
+
+                    b.Navigation("Reservations");
 
                     b.Navigation("Reviews");
                 });
@@ -543,20 +626,7 @@ namespace eFrizer.Migrations
             modelBuilder.Entity("eFrizer.Database.Service", b =>
                 {
                     b.Navigation("HairSalonServices");
-                });
 
-            modelBuilder.Entity("eFrizer.Database.Client", b =>
-                {
-                    b.Navigation("Reservations");
-                });
-
-            modelBuilder.Entity("eFrizer.Database.HairDresser", b =>
-                {
-                    b.Navigation("Reservations");
-                });
-
-            modelBuilder.Entity("eFrizer.Database.Manager", b =>
-                {
                     b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618

@@ -297,18 +297,13 @@ namespace eFrizer.Migrations
 
             modelBuilder.Entity("eFrizer.Database.Review", b =>
                 {
-                    b.Property<int>("ReviewId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ApplicationUserId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
                     b.Property<int>("HairSalonId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ApplicationUserId")
                         .HasColumnType("int");
 
                     b.Property<int>("StarRating")
@@ -317,11 +312,10 @@ namespace eFrizer.Migrations
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ReviewId");
+                    b.HasKey("ClientId", "HairSalonId")
+                        .HasName("PK_client_hairSalon");
 
                     b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("ClientId");
 
                     b.HasIndex("HairSalonId");
 
