@@ -286,10 +286,10 @@ namespace eFrizer
                 context.Clients.Add(user);
             }
 
-            var clients = new List<Client>();
+            var userRoles = new List<ApplicationUserRole>();
             for (int i = 0; i < 9; i++)
             {
-                clients.Add(new Client
+                var newClient = new Client
                 {
                     Name = Faker.Name.First(),
                     Surname = Faker.Name.Last(),
@@ -297,10 +297,25 @@ namespace eFrizer
                     PasswordSalt = salt,
                     PasswordHash = hash,
                     Description = Faker.Lorem.Paragraph()
+                };
+
+                context.Clients.Add(newClient);
+
+                context.SaveChanges();
+
+                userRoles.Add(new ApplicationUserRole
+                {
+                    ApplicationUserId = context.Clients.OrderBy(x => x.ApplicationUserId)
+                        .Last()
+                        .ApplicationUserId,
+                    //TODO: should roles be referenced through an enum so I don't have to look up 
+                    //the roleid when I want to assign it in code?
+                    RoleId = context.Roles.Where(x => x.Name == "Client").Single().RoleId
                 });
+                
             }
 
-            context.Clients.AddRange(clients);
+            context.ApplicationUserRoles.AddRange(userRoles);
 
             context.SaveChanges();
         }
