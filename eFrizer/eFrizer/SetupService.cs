@@ -124,6 +124,8 @@ namespace eFrizer
             }
 
             context.SaveChanges();
+
+            
         }
 
         private void ServiceSeed()
@@ -544,6 +546,22 @@ namespace eFrizer
                     CityId = context.Cities.Where(x => x.Name == "City 2").FirstOrDefault().CityId
                 });
             }
+
+            context.SaveChanges();
+
+            var fakeSalons = new List<HairSalon>();
+            for (int i = 0; i < 9; i++)
+            {
+                fakeSalons.Add(new HairSalon
+                {
+                    Name = Faker.Company.Name(),
+                    Description = Faker.Company.CatchPhrase(),
+                    Address = Faker.Address.StreetAddress(),
+                    CityId = context.Cities.FirstOrDefault().CityId
+                });
+            }
+
+            context.AddRange(fakeSalons);
 
             context.SaveChanges();
         }
