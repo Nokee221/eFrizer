@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/models/HairSalon.dart';
 import 'package:flutter_login/services/api_service.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vertical_card_pager/vertical_card_pager.dart';
 
 import 'details.dart';
@@ -17,6 +18,12 @@ class _HomePage2State extends State<HomePage2> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Pick your hairsalon" , style: GoogleFonts.pacifico(color: Colors.black, fontSize: 25),),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: bodyWidget(),
     );
   }
@@ -58,10 +65,10 @@ class _HomePage2State extends State<HomePage2> {
         padding: const EdgeInsets.all(15),
         child: InkWell(
           child: Card(
-            color: Colors.lightBlue,
+            color: Colors.lightBlue[300],
             clipBehavior: Clip.antiAlias,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
               children: [
@@ -71,43 +78,43 @@ class _HomePage2State extends State<HomePage2> {
                       image: NetworkImage(
                         'https://i.pinimg.com/originals/c5/5a/de/c55ade0f3c23b62ff5b7eb6af21ecdc6.jpg',
                       ),
-                      height: 240,
+                      height: 180,
                       fit: BoxFit.cover,
                     ),
                     Positioned(
                       bottom: 16,
                       right: 16,
                       left: 16,
-                      child: Text(
-                        hairsalon.Name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 24,
-                        ),
+                      child: Column(
+                        children: [
+                          Text(
+                            hairsalon.Name,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 24,
+                            ),
+                          ),
+                          Text(
+                            hairsalon.Address,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.all(16).copyWith(bottom: 0),
+                  padding: EdgeInsets.all(16).copyWith(bottom: 25),
                   child: Text(
                     hairsalon.Description,
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),
-                ButtonBar(
-                  alignment: MainAxisAlignment.start,
-                  children: [
-                    FlatButton(
-                      child: Text(
-                        'Reservation',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {},
-                    ),
-                  ],
-                )
               ],
             ),
           ),

@@ -29,6 +29,11 @@ namespace eFrizer.Services
                 var list = await Context.Reservations.Where(x => x.HairDresserId == search.HairDresserId).Include(x => x.HairDresser).Include(x => x.Service).Include(x => x.Client).ToListAsync();
                 return _mapper.Map<List<Model.Reservation>>(list);
             }
+            else if (search.ApplicationUserId != null)
+            {
+                var list = await Context.Reservations.Where(x => x.ClientId == search.ApplicationUserId).Include(x => x.HairDresser).Include(x => x.Service).Include(x => x.Client).ToListAsync();
+                return _mapper.Map<List<Model.Reservation>>(list);
+            }
             else
             {
                 var list = await Context.Reservations.Include(x => x.HairDresser).Include(x => x.Service).Include(x => x.Client).ToListAsync();

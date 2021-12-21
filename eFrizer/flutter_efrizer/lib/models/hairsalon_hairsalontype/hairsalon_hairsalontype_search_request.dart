@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class HairSalonHairSalonTypeSearchRequest{
-  String? hairsalontypeName;
+  int hairsalontypeId;
 
   HairSalonHairSalonTypeSearchRequest({
-    this.hairsalontypeName
+    required this.hairsalontypeId
   });
 
   factory HairSalonHairSalonTypeSearchRequest.fromJson(Map<String, dynamic> json) {
     return HairSalonHairSalonTypeSearchRequest(
-      hairsalontypeName: json["name"],
+      hairsalontypeId: int.parse(json['hairSalonTypeId'].toString()),
     );
   }
 }

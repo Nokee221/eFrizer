@@ -17,11 +17,16 @@ namespace eFrizer.Services
 
         }
 
-        public async Task<List<Model.HairSalonHairSalonType>> Get([FromBody] HairSalonHairSalonTypeSearchRequest search)
+        public async Task<List<Model.HairSalonHairSalonType>> Get([FromQuery] HairSalonHairSalonTypeSearchRequest search)
         {
             if(search.HairSalonId != 0)
             {
                 var list = await Context.HairSalonHairSalonTypes.Where(x => x.HairSalonId == search.HairSalonId).Include(x => x.HairSalonType).ToListAsync();
+                return _mapper.Map<List<Model.HairSalonHairSalonType>>(list);
+            }
+            else if(search.HairSalonTypeId != 0)
+            {
+                var list = await Context.HairSalonHairSalonTypes.Where(x => x.HairSalonTypeId == search.HairSalonTypeId).Include(x => x.HairSalon).ToListAsync();
                 return _mapper.Map<List<Model.HairSalonHairSalonType>>(list);
             }
             else
