@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/models/HairSalon.dart';
 import 'package:flutter_login/models/hairdress.dart';
 import 'package:flutter_login/models/loyalty_bonus.dart';
+import 'package:flutter_login/models/review/review.dart';
+import 'package:flutter_login/models/review/review_search_request.dart';
 import 'package:flutter_login/pages/loyalty_bonus_page.dart';
 import 'package:flutter_login/models/hairsalon_hairdresser/hairsalon_hairdresser.dart';
 import 'package:flutter_login/models/hairsalon_hairdresser/hairsalon_hairdresser_search.dart';
@@ -29,11 +31,25 @@ class _DetailsState extends State<Details> {
   _DetailsState(this.hairsalon);
 
   var request = null;
+  var reviewRequest = null;
+  var result = null;
 
   @override
   void initState() {
     super.initState();
     request = HairSalonHairDresserSearchRequest(hairsalonId: hairsalon.HairSalonId);
+
+    reviewRequest = ReviewSearchRequest(hairsalonId: hairsalon.HairSalonId);
+
+    
+    Map<String, dynamic>? queryParams = null;
+    if (reviewRequest != null && queryParams != "")
+     queryParams = {'HairSalonId': reviewRequest.hairsalonId.toString()};
+
+    result = APIService.get("Review", reviewRequest);
+    result!.map((i) => Review.fromJson(i)).toList();
+
+    print(result);
   }
 
   @override

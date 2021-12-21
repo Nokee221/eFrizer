@@ -93,6 +93,7 @@ flutter:
     - assets/accept.png
     - assets/strih.png
     - assets/success.gif
+    - assets/pngwing.com.png
     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

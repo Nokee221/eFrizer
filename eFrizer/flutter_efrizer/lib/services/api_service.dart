@@ -135,7 +135,7 @@ class APIService {
 
     print(Uri.parse(baseUrl));
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       var data = JsonDecoder().convert(response.body);
 
       return data;
