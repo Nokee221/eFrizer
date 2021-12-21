@@ -29,6 +29,7 @@ class _DetailsState extends State<Details> {
   _DetailsState(this.hairsalon);
 
   var request = null;
+
   @override
   void initState() {
     super.initState();
@@ -84,8 +85,7 @@ class _DetailsState extends State<Details> {
             primary: false,
             shrinkWrap: true,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
                 children: <Widget>[
                   Container(
                     alignment: Alignment.centerLeft,
@@ -99,48 +99,54 @@ class _DetailsState extends State<Details> {
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  RatingBar.builder(
-                    itemSize: 17,
-                    initialRating: 0,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: false,
-                    itemCount: 5,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                    onRatingUpdate: (rating){
-                      print(rating);
-                    },
-                  )
-                  
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.location_on,
-                    size: 14,
-                    color: Colors.blueGrey[300],
-                  ),
-                  SizedBox(width: 3),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      hairsalon.Address,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
+                  SizedBox(height: 5),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.location_on,
+                        size: 14,
                         color: Colors.blueGrey[300],
                       ),
-                      maxLines: 1,
-                      textAlign: TextAlign.center,
+                      SizedBox(width: 3),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          hairsalon.Address,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                            color: Colors.blueGrey[300],
+                          ),
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: RatingBar.builder(
+                      itemSize: 17,
+                      initialRating: 0,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: false,
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating){
+                        print(rating);
+                      },
                     ),
                   ),
+                  
+                  
                 ],
-              ),
+              ),      
               SizedBox(height: 40),
               Container(
                 alignment: Alignment.centerLeft,
