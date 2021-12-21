@@ -29,26 +29,30 @@ namespace eFrizer
             var salt = AuthHelper.GenerateSalt();
             var hash = AuthHelper.GenerateHash(salt, password);
 
-            //TODO: Separate each data type seed into a function
-            AdminSeed(salt, hash);
+            //independent objects
             CitySeed();
             HairSalonSeed();
             HairSalonTypeSeed();
             PictureSeed();
+            ServiceSeed();
             RoleSeed();
-            HairSalonHairDresserSeed();
-            HairSalonHairTypeSeed();
+            
+            //users
+            AdminSeed(salt, hash);
             ManagerSeed(salt, hash);
-            HairDresserSeed(salt, hash);
             ClientSeed(salt, hash);
+            HairDresserSeed(salt, hash);
+            
+            //many-to-many
+            ApplicationUserRoleSeed();
+            HairSalonHairDresserSeed();
+            HairSalonManagerSeed();
+            HairSalonHairTypeSeed();
+            HairSalonServiceSeed();
+            HairSalonPictureSeed();
+            ReviewSeed();
             
 
-            HairSalonManagerSeed();
-            ApplicationUserRoleSeed();
-            HairSalonPictureSeed();
-            ServiceSeed();
-            ReviewSeed();
-            HairSalonServiceSeed();
 
             //if (!context.Reservations.Any(x => x.ApplicationUser.Name == "User A" && x.HairDresser.Name == "Kenan" && x.From == new DateTime(2021 , 4, 26 , 12 , 30, 0) && x.To == new DateTime(2021,4,26,13,0,0)))
             //{
@@ -73,6 +77,20 @@ namespace eFrizer
                     Name = "User A",
                     Surname = "A User",
                     Username = "auser",
+                    PasswordSalt = salt,
+                    PasswordHash = hash
+                };
+
+                context.ApplicationUsers.Add(user);
+            }
+
+            if (!context.ApplicationUsers.Any(x => x.Name == "User A2"))
+            {
+                var user = new ApplicationUser()
+                {
+                    Name = "User A2",
+                    Surname = "A2 User",
+                    Username = "a2user",
                     PasswordSalt = salt,
                     PasswordHash = hash
                 };
@@ -112,11 +130,11 @@ namespace eFrizer
 
         private void ReviewSeed()
         {
-            if (!context.Reviews.Any(x => x.Client.Name == "User A" && x.HairSalon.Name == "Hair Salon 1" && x.Text == "Najbolji salon u gradu!!"))
+            if (!context.Reviews.Any(x => x.Client.Name == "Client A" && x.HairSalon.Name == "Hair Salon 1" && x.Text == "Najbolji salon u gradu!!"))
             {
                 context.Reviews.Add(new Review()
                 {
-                    ClientId = context.ApplicationUsers.Where(x => x.Name == "User A").First().ApplicationUserId,
+                    ClientId = context.Clients.Where(x => x.Name == "Client A").First().ApplicationUserId,
                     HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
                     Text = "Najbolji salon u gradu!!"
 
@@ -125,7 +143,29 @@ namespace eFrizer
 
             context.SaveChanges();
 
-            
+            var fakeReviews = new List<Review>();
+            var clientsQuery = context.Clients.AsEnumerable();
+            var clients = clientsQuery.OrderBy(x => x.ApplicationUserId).TakeLast(10).ToList();
+            var hairSalonsQuery = context.HairSalons.AsEnumerable();
+            var hairSalons = hairSalonsQuery.OrderBy(x => x.HairSalonId).TakeLast(5).ToList();
+
+            foreach (var client in clients)
+            {
+                foreach (var hairSalon in hairSalons)
+                {
+                    fakeReviews.Add(new Review
+                    {
+                        ClientId = client.ApplicationUserId,
+                        HairSalonId = hairSalon.HairSalonId,
+                        StarRating = Faker.RandomNumber.Next(1, 5),
+                        Text = Faker.Lorem.Paragraph()
+                    });
+                }
+            }
+
+            context.AddRange(fakeReviews);
+
+            context.SaveChanges();
         }
 
         private void ServiceSeed()
@@ -184,56 +224,78 @@ namespace eFrizer
         {
             if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "User A" && x.Role.Name == "Administrator"))
             {
-                context.ApplicationUserRoles.Add(new ApplicationUserRole()
+                var row = new ApplicationUserRole()
                 {
                     ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User A").First().ApplicationUserId,
                     RoleId = context.Roles.Where(x => x.Name == "Administrator").First().RoleId
-                });
+                };
+
+                context.ApplicationUserRoles.Add(row);
             }
+
+            context.SaveChanges();
 
             if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "User A2" && x.Role.Name == "Administrator"))
             {
-                context.ApplicationUserRoles.Add(new ApplicationUserRole()
+                var row = new ApplicationUserRole()
                 {
                     ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User A2").First().ApplicationUserId,
                     RoleId = context.Roles.Where(x => x.Name == "Administrator").First().RoleId
-                });
+                };
+
+                context.ApplicationUserRoles.Add(row);
             }
+
+            context.SaveChanges();
 
             if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "User M" && x.Role.Name == "Manager"))
             {
-                context.ApplicationUserRoles.Add(new ApplicationUserRole()
+                var row = new ApplicationUserRole()
                 {
                     ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User M").First().ApplicationUserId,
                     RoleId = context.Roles.Where(x => x.Name == "Manager").First().RoleId
-                });
+                };
+
+                context.ApplicationUserRoles.Add(row);
             }
+
+            context.SaveChanges();
 
             if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "User M2" && x.Role.Name == "Manager"))
             {
-                context.ApplicationUserRoles.Add(new ApplicationUserRole()
+                var row = new ApplicationUserRole()
                 {
                     ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User M2").First().ApplicationUserId,
                     RoleId = context.Roles.Where(x => x.Name == "Manager").First().RoleId
-                });
+                };
+
+                context.ApplicationUserRoles.Add(row);
             }
 
+            context.SaveChanges();
+            
             if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "Hair Dresser 1" && x.Role.Name == "HairDresser"))
             {
-                context.ApplicationUserRoles.Add(new ApplicationUserRole()
+                var row = new ApplicationUserRole()
                 {
                     ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "Hair Dresser 1").First().ApplicationUserId,
                     RoleId = context.Roles.Where(x => x.Name == "HairDresser").First().RoleId
-                });
+                };
+
+                context.ApplicationUserRoles.Add(row);
             }
 
-            if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "User C" && x.Role.Name == "Client"))
+
+
+            if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "Client A" && x.Role.Name == "Client"))
             {
-                context.ApplicationUserRoles.Add(new ApplicationUserRole()
+                var row = new ApplicationUserRole()
                 {
-                    ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User C").First().ApplicationUserId,
+                    ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "Client A").First().ApplicationUserId,
                     RoleId = context.Roles.Where(x => x.Name == "Client").First().RoleId
-                });
+                };
+
+                context.ApplicationUserRoles.Add(row);
             }
 
             context.SaveChanges();
