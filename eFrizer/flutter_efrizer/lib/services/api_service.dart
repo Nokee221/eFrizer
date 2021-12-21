@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/config.dart';
 import 'package:flutter_login/models/application_user.dart';
 import 'package:flutter_login/models/application_user_update_request.dart';
+import 'package:flutter_login/models/reservation/reservation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import '../config.dart';
@@ -117,4 +118,30 @@ class APIService {
 
     return null;
   }
+
+  static Future<dynamic?> post(
+      String route, dynamic request) async {
+    final String baseUrl = apiUrl + route;
+
+    final String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+  
+    final response = await http.post(Uri.parse(baseUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          HttpHeaders.authorizationHeader: basicAuth
+        },
+        body: jsonEncode(request));
+
+    print(Uri.parse(baseUrl));
+
+    if (response.statusCode == 201) {
+      var data = JsonDecoder().convert(response.body);
+
+      return data;
+    }
+
+    return null;
+  }
+
 }

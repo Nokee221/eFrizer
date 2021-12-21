@@ -5,7 +5,7 @@ import 'home_page_2.dart';
 import 'search_page.dart';
 import 'favorite_page.dart';
 import 'profile_page.dart';
-import 'setting_page.dart';
+
 
 class HomePage extends StatefulWidget {
   final ApplicationUser user;
@@ -25,7 +25,6 @@ class _HomePageState extends State<HomePage> {
       HomePage2(),
       SearchPage(),
       FavoritePage(),
-      SettingPage(),
       ProfilePage(this.user),
     ];
   }
@@ -38,7 +37,6 @@ class _HomePageState extends State<HomePage> {
       Icon(Icons.home, size: 30),
       Icon(Icons.search, size: 30),
       Icon(Icons.favorite, size: 30),
-      Icon(Icons.settings, size: 30),
       Icon(Icons.person, size: 30),
     ];
 

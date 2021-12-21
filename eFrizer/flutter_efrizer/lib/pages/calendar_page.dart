@@ -85,7 +85,7 @@ class _CalendarPageState extends State<CalendarPage> {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) => NewReservation(_dateTime)),
+                              builder: (context) => NewReservation(_dateTime, hairdresserId, _dateTime)),
                         );
                       },
                       child: const Center(

@@ -10,7 +10,7 @@ import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_login/widget/custom_list_title.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'calendar_page.dart';
 
 class Details extends StatefulWidget {
@@ -32,7 +32,6 @@ class _DetailsState extends State<Details> {
   @override
   void initState() {
     super.initState();
-
     request = HairSalonHairDresserSearchRequest(hairsalonId: hairsalon.HairSalonId);
   }
 
@@ -100,12 +99,23 @@ class _DetailsState extends State<Details> {
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.bookmark,
+                  RatingBar.builder(
+                    itemSize: 17,
+                    initialRating: 0,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: false,
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => Icon(
+                      Icons.star,
+                      color: Colors.amber,
                     ),
-                    onPressed: () {},
+                    onRatingUpdate: (rating){
+                      print(rating);
+                    },
                   )
+                  
                 ],
               ),
               Row(
@@ -211,6 +221,7 @@ class _DetailsState extends State<Details> {
 
     var hairdresser = await APIService.get('HairSalonHairDresser', queryParams);
     return hairdresser!.map((i) => HairSalonHairDresser.fromJson(i)).toList();
+
   }
 
   Widget hairDresserWidget(hairdresser) => Container(
@@ -222,7 +233,7 @@ class _DetailsState extends State<Details> {
             InkWell(
                 onTap: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => CalendarPage(hairdresser.applicationUserId)),
+                    MaterialPageRoute(builder: (context) => CalendarPage(hairdresser.hairdresserId)),
                   );
                 },
                 child: Column(
@@ -238,7 +249,7 @@ class _DetailsState extends State<Details> {
                     ),
                     SizedBox(height: 7),
                     Text(
-                      hairdresser.name,
+                      hairdresser.hairdresserName,
                       style:
                           TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                     ),

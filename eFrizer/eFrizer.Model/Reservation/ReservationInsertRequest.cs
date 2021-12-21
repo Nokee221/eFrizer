@@ -8,8 +8,9 @@ namespace eFrizer.Model
     {
         public int HairDresserId { get; set; }
         public int ClientId { get; set; }
-
         public int ServiceId { get; set; }
-        public DateTime To { get; set; }
+        public string To { get; set; }
+
+        public string From { get; set; }
     }
 }
