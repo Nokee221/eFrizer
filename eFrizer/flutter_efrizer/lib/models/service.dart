@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 
@@ -7,14 +6,14 @@ class Service{
   int? ServiceId;
   String? Name;
   String? Description;
-  Float? Price;
+  int Price;
   int? TimeMin;
 
   Service({
     this.ServiceId,
     this.Name,
     this.Description,
-    this.Price,
+    required this.Price,
     this.TimeMin,
   });
 
@@ -23,7 +22,7 @@ class Service{
       ServiceId: int.parse(json['serviceId'].toString()),
       Name: json['name'],
       Description: json['description'],
-      Price: json['price'],
+      Price: int.parse(json['price'].toString()),
       TimeMin: int.parse(json['timeMin'].toString()),
     );
   }

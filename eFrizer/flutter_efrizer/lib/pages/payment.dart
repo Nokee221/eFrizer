@@ -1,21 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_login/models/reservation/reservation_insert_request.dart';
 import 'package:flutter_login/pages/setting_page.dart';
 import 'package:flutter_login/pages/success.dart';
+import 'package:flutter_login/services/api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'credit_card_page.dart';
 
 class Payment extends StatefulWidget {
-  const Payment({ Key? key }) : super(key: key);
+  final ReservationInsertRequest request;
+  const Payment(this.request , { Key? key }) : super(key: key);
 
   @override
-  _PaymentState createState() => _PaymentState();
+  _PaymentState createState() => _PaymentState(request);
 }
 
 class _PaymentState extends State<Payment> {
+  final ReservationInsertRequest request;
   final icon = CupertinoIcons.moon_stars;
   Object? value = 0;
+
+  _PaymentState(this.request);
 
   final paymentLabels = [
   'Credit card / Debit card',
@@ -28,6 +33,11 @@ class _PaymentState extends State<Payment> {
   Icons.payment,
   Icons.account_balance_wallet,
   ];
+
+  var result = null;
+  Future<void> getData() async{
+    result = await APIService.post("Reservation", request);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +100,7 @@ class _PaymentState extends State<Payment> {
           color: Colors.blue,
           textColor: Color(0xFFFFFFFF),
           highlightColor: Colors.transparent,
-          onPressed: (){
+          onPressed: () async{
             if(value == 0)
             {
               Navigator.of(context).push(
@@ -100,10 +110,32 @@ class _PaymentState extends State<Payment> {
 
             }
             else{
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => Success(),
-                ),);
+              await getData();
+              if(result != null)
+              {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => Success(),
+                  ),);
+              }
+              else{
+                Widget okButton = TextButton(
+                      child: Text("OK"),
+                      onPressed: () {},
+                    );
+                    AlertDialog alert = AlertDialog(
+                      title: Text("Error"),
+                      content: Text("Bezuspjesna rezervacija"),
+                      actions: [
+                        okButton,
+                      ],
+                    );
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return alert;
+                        });
+              }
             }
           },
           child: Text("Pay".toUpperCase()),

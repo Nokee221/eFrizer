@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using eFrizer.Database;
 using eFrizer.Model;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,28 @@ namespace eFrizer.Services
             }
         }
 
-        
+        public async override Task<Model.Reservation> Insert([FromBody] ReservationInsertRequest request)
+        {
+
+            Database.Reservation reservation = new Database.Reservation()
+            {
+                HairDresserId = request.HairDresserId,
+                ClientId = request.ClientId,
+                ServiceId = request.ServiceId,
+                To = Convert.ToDateTime(request.To),
+                From = Convert.ToDateTime(request.From),
+            };
+
+            Context.Reservations.Add(reservation);
+            await Context.SaveChangesAsync();
+
+
+            return _mapper.Map<Model.Reservation>(reservation);
+
+            
+
+        }
+
+
     }
 };
