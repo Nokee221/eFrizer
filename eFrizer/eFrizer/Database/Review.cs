@@ -5,9 +5,8 @@ using System.Collections.Generic;
 
 namespace eFrizer.Database
 {
-    public partial class Review
+    public class Review
     {
-        public int ReviewId { get; set; }
         public int HairSalonId { get; set; }
         public int ClientId { get; set; }
 
