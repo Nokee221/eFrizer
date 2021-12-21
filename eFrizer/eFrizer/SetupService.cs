@@ -3,6 +3,7 @@ using eFrizer.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -24,188 +25,47 @@ namespace eFrizer
         {
             context.Database.Migrate();
 
-            //TODO: Separate each data type seed into a function
-            if (!context.Cities.Any(x => x.Name == "City 1"))
-            {
-                context.Cities.Add(new City() { Name = "City 1" });
-            }
-
-            if (!context.Cities.Any(x => x.Name == "City 2"))
-            {
-                context.Cities.Add(new City() { Name = "City 2" });
-            }
-
-            if (!context.Cities.Any(x => x.Name == "City 3"))
-            {
-                context.Cities.Add(new City() { Name = "City 3" });
-            }
-
-            context.SaveChanges();
-
-            if (!context.HairSalons.Any(x => x.Name == "Hair Salon 1" && x.City.Name == "City 1"))
-            {
-                context.HairSalons.Add(new HairSalon()
-                {
-                    Name = "Hair Salon 1" ,
-                    Address = "Mejdandžik 8",
-                    Description = "Pravo dobar frizerski.",
-                    CityId = context.Cities.Where(x => x.Name == "City 1").FirstOrDefault().CityId
-                });
-            }
-
-            if (!context.HairSalons.Any(x => x.Name == "Hair Salon 2" && x.City.Name == "City 2"))
-            {
-                context.HairSalons.Add(new HairSalon() 
-                { 
-                    Name = "Hair Salon 2",
-                    Address = "Maršala Tita 21",
-                    Description = "Pravo dobar frizerski salon za muškarce i žene.",
-                    CityId = context.Cities.Where(x => x.Name == "City 2").FirstOrDefault().CityId
-                });
-            }
-
-            if (!context.HairSalonTypes.Any(x => x.Name == "Ženski"))
-            {
-                context.HairSalonTypes.Add(new HairSalonType() { Name = "Ženski" });
-            }
-
-            if (!context.HairSalonTypes.Any(x => x.Name == "Muški"))
-            {
-                context.HairSalonTypes.Add(new HairSalonType() { Name = "Muški" });
-            }
-
-            if(!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaA")))
-            {
-                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaA") });
-            }
-
-            if (!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaB")))
-            {
-                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaB") });
-            }
-
-            if (!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaC")))
-            {
-                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaC") });
-            }
-
-            context.SaveChanges();
-
-            if (!context.HairDressers.Any(x => x.Name == "Hair Dresser 1"))
-            {
-
-                var password = "1234";
-                var salt = AuthHelper.GenerateSalt();
-                var hash = AuthHelper.GenerateHash(salt, password);
-
-                context.HairDressers.Add(new HairDresser()
-                {
-                    Name = "Hair Dresser 1",
-                    Surname = "The First",
-                    Description = "The best in town!",
-                    PasswordSalt = salt,
-                    PasswordHash = hash
-                });
-            }
-
-            if (!context.HairDressers.Any(x => x.Name == "Hair Dresser 2"))
-            {
-                var password = "1234";
-                var salt = AuthHelper.GenerateSalt();
-                var hash = AuthHelper.GenerateHash(salt, password);
-
-                context.HairDressers.Add(new HairDresser()
-                {
-                    Name = "Hair Dresser 2",
-                    Surname = "The Second",
-                    Description = "The second best in town!",
-                    PasswordSalt = salt,
-                    PasswordHash = hash
-                });
-            }
-
-
-            
-            context.SaveChanges();
-
-            if (!context.HairSalonHairDressers.Any(x => x.HairDresser.Name == "Hair Dresser 1" && x.HairSalon.Name == "Hair Salon 1"))
-            {
-                context.HairSalonHairDressers.Add(new HairSalonHairDresser()
-                {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").FirstOrDefault().HairSalonId,
-                    HairDresserId = context.HairDressers.Where(x => x.Name == "Hair Dresser 1").FirstOrDefault().ApplicationUserId
-                });
-            }
-
-            if (!context.HairSalonHairDressers.Any(x => x.HairDresser.Name == "Hair Dresser 2" && x.HairSalon.Name == "Hair Salon 2"))
-            {
-                context.HairSalonHairDressers.Add(new HairSalonHairDresser()
-                {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").FirstOrDefault().HairSalonId,
-                    HairDresserId = context.HairDressers.Where(x => x.Name == "Hair Dresser 2").FirstOrDefault().ApplicationUserId
-                });
-            }
-
-            if (!context.HairSalonHairDressers.Any(x => x.HairDresser.Name == "Hair Dresser 1" && x.HairSalon.Name == "Hair Salon 2"))
-            {
-                context.HairSalonHairDressers.Add(new HairSalonHairDresser()
-                {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").FirstOrDefault().HairSalonId,
-                    HairDresserId = context.HairDressers.Where(x => x.Name == "Hair Dresser 1").FirstOrDefault().ApplicationUserId
-                });
-            }
-
-            if (!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.HairSalonType.Name == "Ženski"))
-            {
-                context.Add(new HairSalonHairSalonType()
-                {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
-                    HairSalonTypeId = context.HairSalonTypes.Where(x => x.Name == "Ženski").First().HairSalonTypeId
-                });
-            }
-
-            if (!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.HairSalonType.Name == "Muški"))
-            {
-                context.Add(new HairSalonHairSalonType()
-                {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
-                    HairSalonTypeId = context.HairSalonTypes.Where(x => x.Name == "Muški").First().HairSalonTypeId
-                });
-            }
-
-            if (!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.HairSalonType.Name == "Ženski"))
-            {
-                context.Add(new HairSalonHairSalonType()
-                {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
-                    HairSalonTypeId = context.HairSalonTypes.Where(x => x.Name == "Ženski").First().HairSalonTypeId
-                });
-            }
-
-            if (!context.Roles.Any(x => x.Name == "Administrator"))
-            {
-                context.Roles.Add(new Role() { Name = "Administrator" });
-            }
-
-            if (!context.Roles.Any(x => x.Name == "Manager"))
-            {
-                context.Roles.Add(new Role() { Name = "Manager" });
-            }
-
-            if (!context.Roles.Any(x => x.Name == "Client"))
-            {
-                context.Roles.Add(new Role() { Name = "Client" });
-            }
-
-            if (!context.Roles.Any(x => x.Name == "HairDresser"))
-            {
-                context.Roles.Add(new Role() { Name = "HairDresser" });
-            }
-
             var password = "1234";
             var salt = AuthHelper.GenerateSalt();
             var hash = AuthHelper.GenerateHash(salt, password);
 
+            //TODO: Separate each data type seed into a function
+            AdminSeed(salt, hash);
+            CitySeed();
+            HairSalonSeed();
+            HairSalonTypeSeed();
+            PictureSeed();
+            RoleSeed();
+            HairSalonHairDresserSeed();
+            HairSalonHairTypeSeed();
+            ManagerSeed(salt, hash);
+            HairDresserSeed(salt, hash);
+            ClientSeed(salt, hash);
+            
+
+            HairSalonManagerSeed();
+            ApplicationUserRoleSeed();
+            HairSalonPictureSeed();
+            ServiceSeed();
+            ReviewSeed();
+            HairSalonServiceSeed();
+
+            //if (!context.Reservations.Any(x => x.ApplicationUser.Name == "User A" && x.HairDresser.Name == "Kenan" && x.From == new DateTime(2021 , 4, 26 , 12 , 30, 0) && x.To == new DateTime(2021,4,26,13,0,0)))
+            //{
+            //    context.Reservations.Add(new Reservation()
+            //    {
+            //        ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User A").First().ApplicationUserId,
+            //        HairDresserId = context.HairDressers.Where(x => x.Name == "Kenan").First().HairDresserId,
+            //        From = new DateTime(2021, 4, 26, 12, 30, 0),
+            //        To = new DateTime(2021, 4, 26, 13, 0, 0)
+            //    });
+            //}
+
+
+        }
+
+        private void AdminSeed(string salt, string hash)
+        {
             if (!context.ApplicationUsers.Any(x => x.Name == "User A"))
             {
                 var user = new ApplicationUser()
@@ -220,147 +80,106 @@ namespace eFrizer
                 context.ApplicationUsers.Add(user);
             }
 
-            if (!context.ApplicationUsers.Any(x => x.Name == "User A2"))
+            context.SaveChanges();
+        }
+
+        private void HairSalonServiceSeed()
+        {
+            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.Service.Name == "Šišanje"))
             {
-                var user = new ApplicationUser()
+                context.HairSalonServices.Add(new HairSalonService()
                 {
-                    Name = "User A2",
-                    Surname = "A2 User",
-                    Username = "a2user",
-                    PasswordSalt = salt,
-                    PasswordHash = hash
-                };
+                    ServiceId = context.Services.Where(x => x.Name == "Šišanje").First().ServiceId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
 
-                context.ApplicationUsers.Add(user);
-            }
 
-            if (!context.Managers.Any(x => x.Name == "User M"))
-            {
-                var user = new Manager()
-                {
-                    Name = "User M",
-                    Surname = "M User",
-                    Username = "muser",
-                    PasswordSalt = salt,
-                    PasswordHash = hash,
-                    Description = "First manager"
-                };
-
-                context.Managers.Add(user);
-            }
-
-            if (!context.Managers.Any(x => x.Name == "User M2"))
-            {
-                var user = new Manager()
-                {
-                    Name = "User M2",
-                    Surname = "M2 User",
-                    Username = "m2user",
-                    PasswordSalt = salt,
-                    PasswordHash = hash,
-                    Description = "Second manager"
-                };
-
-                context.Managers.Add(user);
-            }
-
-            var fakeClient = new Client
-            {
-                Name = Faker.Name.First(),
-                Surname = Faker.Name.Last(),
-                Username = Faker.Internet.UserName(),
-                PasswordSalt = salt,
-                PasswordHash = hash,
-                Description = Faker.Lorem.Paragraph()
-                
-            };
-
-            if (!context.Clients.Any(x => x.Name == "Client A"))
-            {
-                var user = new Client()
-                {
-                    Name = "Client A",
-                    Surname = "A Client",
-                    Username = "aclient",
-                    PasswordSalt = salt,
-                    PasswordHash = hash,
-                    Description = "test client"
-                };
-
-                context.Clients.Add(user);
-            }
-
-            if (!context.ApplicationUsers.Any(x => x.Name == "User C"))
-            {
-                context.ApplicationUsers.Add(new Client() 
-                { 
-                    Name = "User C",
-                    Surname = "C User",
-                    Username = "cuser" ,
-                    PasswordSalt = salt,
-                    PasswordHash = hash,
-                    Description = "The best client in the world!"
                 });
             }
 
-            if (!context.ApplicationUsers.Any(x => x.Name == "User C2"))
+            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Service.Name == "Farbanje"))
             {
-                context.ApplicationUsers.Add(new Client()
+                context.HairSalonServices.Add(new HairSalonService()
                 {
-                    Name = "User C2",
-                    Surname = "C2 User",
-                    Username = "c2user",
-                    PasswordSalt = salt,
-                    PasswordHash = hash,
-                    Description = "The second best client in the world!"
-                });
-            }
+                    ServiceId = context.Services.Where(x => x.Name == "Farbanje").First().ServiceId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
 
-            if(!context.Managers.Any(x => x.Name == "Manager Employee 1"))
-            {
-                context.Managers.Add(new ManagerEmployee()
-                {
-                    Name = "Manager Employee 1",
-                    Surname = "Manager Employee 1",
-                    Username = "me1user",
-                    PasswordSalt = salt,
-                    PasswordHash = hash,
-                    Description = "The best manager employee there is!"
+
                 });
             }
 
             context.SaveChanges();
+        }
 
-
-            if (!context.HairSalonManagers.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Manager.Name == "User M"))
+        private void ReviewSeed()
+        {
+            if (!context.Reviews.Any(x => x.Client.Name == "User A" && x.HairSalon.Name == "Hair Salon 1" && x.Text == "Najbolji salon u gradu!!"))
             {
-                context.Add(new HairSalonManager()
+                context.Reviews.Add(new Review()
                 {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
-                    ManagerId = context.Managers.Where(x => x.Name == "User M").First().ApplicationUserId
+                    ClientId = context.ApplicationUsers.Where(x => x.Name == "User A").First().ApplicationUserId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
+                    Text = "Najbolji salon u gradu!!"
+
                 });
             }
 
-            if (!context.HairSalonManagers.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.Manager.Name == "User M2"))
+            context.SaveChanges();
+        }
+
+        private void ServiceSeed()
+        {
+            if (!context.Services.Any(x => x.Name == "Šišanje"))
             {
-                context.Add(new HairSalonManager()
+                context.Services.Add(new Service() { Name = "Šišanje", Description = "Muško šišanje" });
+            }
+
+            if (!context.Services.Any(x => x.Name == "Farbanje"))
+            {
+                context.Services.Add(new Service() { Name = "Farbanje", Description = "Muško farbanje" });
+            }
+
+            if (!context.Services.Any(x => x.Name == "Brijanje"))
+            {
+                context.Services.Add(new Service() { Name = "Brijanje", Description = "Muško brijanje" });
+            }
+
+            context.SaveChanges();
+        }
+
+        private void HairSalonPictureSeed()
+        {
+            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaA"))
+            {
+                context.HairSalonPictures.Add(new HairSalonPicture()
                 {
                     HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
-                    ManagerId = context.Managers.Where(x => x.Name == "User M2").First().ApplicationUserId
+                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaA")).First().PictureId,
                 });
             }
 
-            if(!context.HairSalonManagers.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Manager.Name == "Manager Employee 1"))
+            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaB"))
             {
-                context.Add(new HairSalonManager()
+                context.HairSalonPictures.Add(new HairSalonPicture()
                 {
                     HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
-                    ManagerId = context.Managers.Where(x => x.Name == "Manager Employee 1").First().ApplicationUserId
+                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaB")).First().PictureId,
                 });
             }
 
+            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaC"))
+            {
+                context.HairSalonPictures.Add(new HairSalonPicture()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
+                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaC")).First().PictureId,
+                });
+            }
 
+            context.SaveChanges();
+        }
 
+        private void ApplicationUserRoleSeed()
+        {
             if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "User A" && x.Role.Name == "Administrator"))
             {
                 context.ApplicationUserRoles.Add(new ApplicationUserRole()
@@ -415,108 +234,323 @@ namespace eFrizer
                 });
             }
 
-            
+            context.SaveChanges();
+        }
 
-
-            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaA"))
+        private void HairSalonManagerSeed()
+        {
+            if (!context.HairSalonManagers.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Manager.Name == "User M"))
             {
-                context.HairSalonPictures.Add(new HairSalonPicture()
-                {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
-                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaA")).First().PictureId,
-                });
-            }
-
-            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaB"))
-            {
-                context.HairSalonPictures.Add(new HairSalonPicture()
+                context.Add(new HairSalonManager()
                 {
                     HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
-                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaB")).First().PictureId,
+                    ManagerId = context.Managers.Where(x => x.Name == "User M").First().ApplicationUserId
                 });
             }
 
-            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaC"))
+            if (!context.HairSalonManagers.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.Manager.Name == "User M2"))
             {
-                context.HairSalonPictures.Add(new HairSalonPicture()
+                context.Add(new HairSalonManager()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
+                    ManagerId = context.Managers.Where(x => x.Name == "User M2").First().ApplicationUserId
+                });
+            }
+
+            if (!context.HairSalonManagers.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Manager.Name == "Manager Employee 1"))
+            {
+                context.Add(new HairSalonManager()
                 {
                     HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
-                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaC")).First().PictureId,
+                    ManagerId = context.Managers.Where(x => x.Name == "Manager Employee 1").First().ApplicationUserId
                 });
             }
 
-
-
             context.SaveChanges();
+        }
 
-            if (!context.Services.Any(x => x.Name == "Šišanje"))
+        private void ClientSeed(string salt, string hash)
+        {
+            if (!context.Clients.Any(x => x.Name == "Client A"))
             {
-                context.Services.Add(new Service() { Name = "Šišanje", Description = "Muško šišanje" });
-            }
-
-            if (!context.Services.Any(x => x.Name == "Farbanje"))
-            {
-                context.Services.Add(new Service() { Name = "Farbanje", Description = "Muško farbanje" });
-            }
-
-            if (!context.Services.Any(x => x.Name == "Brijanje"))
-            {
-                context.Services.Add(new Service() { Name = "Brijanje", Description = "Muško brijanje" });
-            }
-
-            context.SaveChanges();
-
-            if (!context.Reviews.Any(x => x.Client.Name == "User A" && x.HairSalon.Name == "Hair Salon 1" && x.Text == "Najbolji salon u gradu!!"))
-            {
-                context.Reviews.Add(new Review()
+                var user = new Client()
                 {
-                    ClientId = context.ApplicationUsers.Where(x => x.Name == "User A").First().ApplicationUserId,
+                    Name = "Client A",
+                    Surname = "A Client",
+                    Username = "aclient",
+                    PasswordSalt = salt,
+                    PasswordHash = hash,
+                    Description = "test client"
+                };
+
+                context.Clients.Add(user);
+            }
+
+            var clients = new List<Client>();
+            for (int i = 0; i < 9; i++)
+            {
+                clients.Add(new Client
+                {
+                    Name = Faker.Name.First(),
+                    Surname = Faker.Name.Last(),
+                    Username = Faker.Internet.UserName(),
+                    PasswordSalt = salt,
+                    PasswordHash = hash,
+                    Description = Faker.Lorem.Paragraph()
+                });
+            }
+
+            context.Clients.AddRange(clients);
+
+            context.SaveChanges();
+        }
+
+        private void ManagerSeed(string salt, string hash)
+        {
+            if (!context.Managers.Any(x => x.Name == "User M"))
+            {
+                var user = new Manager()
+                {
+                    Name = "User M",
+                    Surname = "M User",
+                    Username = "muser",
+                    PasswordSalt = salt,
+                    PasswordHash = hash,
+                    Description = "First manager"
+                };
+
+                context.Managers.Add(user);
+            }
+
+            if (!context.Managers.Any(x => x.Name == "User M2"))
+            {
+                var user = new Manager()
+                {
+                    Name = "User M2",
+                    Surname = "M2 User",
+                    Username = "m2user",
+                    PasswordSalt = salt,
+                    PasswordHash = hash,
+                    Description = "Second manager"
+                };
+
+                context.Managers.Add(user);
+            }
+
+            if (!context.Managers.Any(x => x.Name == "Manager Employee 1"))
+            {
+                context.Managers.Add(new ManagerEmployee()
+                {
+                    Name = "Manager Employee 1",
+                    Surname = "Manager Employee 1",
+                    Username = "me1user",
+                    PasswordSalt = salt,
+                    PasswordHash = hash,
+                    Description = "The best manager employee there is!"
+                });
+            }
+
+            context.SaveChanges();
+        }
+
+        private void RoleSeed()
+        {
+            if (!context.Roles.Any(x => x.Name == "Administrator"))
+            {
+                context.Roles.Add(new Role() { Name = "Administrator" });
+            }
+
+            if (!context.Roles.Any(x => x.Name == "Manager"))
+            {
+                context.Roles.Add(new Role() { Name = "Manager" });
+            }
+
+            if (!context.Roles.Any(x => x.Name == "Client"))
+            {
+                context.Roles.Add(new Role() { Name = "Client" });
+            }
+
+            if (!context.Roles.Any(x => x.Name == "HairDresser"))
+            {
+                context.Roles.Add(new Role() { Name = "HairDresser" });
+            }
+
+            context.SaveChanges();
+        }
+
+        private void HairSalonHairTypeSeed()
+        {
+            if (!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.HairSalonType.Name == "Ženski"))
+            {
+                context.Add(new HairSalonHairSalonType()
+                {
                     HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
-                    Text = "Najbolji salon u gradu!!"
-
+                    HairSalonTypeId = context.HairSalonTypes.Where(x => x.Name == "Ženski").First().HairSalonTypeId
                 });
             }
 
-            context.SaveChanges();
-
-            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.Service.Name == "Šišanje"))
+            if (!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.HairSalonType.Name == "Muški"))
             {
-                context.HairSalonServices.Add(new HairSalonService()
+                context.Add(new HairSalonHairSalonType()
                 {
-                    ServiceId = context.Services.Where(x => x.Name == "Šišanje").First().ServiceId,
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
-                    
-
-                });
-            }
-
-
-            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Service.Name == "Farbanje"))
-            {
-                context.HairSalonServices.Add(new HairSalonService()
-                {
-                    ServiceId = context.Services.Where(x => x.Name == "Farbanje").First().ServiceId,
                     HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
-
-
+                    HairSalonTypeId = context.HairSalonTypes.Where(x => x.Name == "Muški").First().HairSalonTypeId
                 });
             }
 
-             context.SaveChanges();
-
-            //if (!context.Reservations.Any(x => x.ApplicationUser.Name == "User A" && x.HairDresser.Name == "Kenan" && x.From == new DateTime(2021 , 4, 26 , 12 , 30, 0) && x.To == new DateTime(2021,4,26,13,0,0)))
-            //{
-            //    context.Reservations.Add(new Reservation()
-            //    {
-            //        ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User A").First().ApplicationUserId,
-            //        HairDresserId = context.HairDressers.Where(x => x.Name == "Kenan").First().HairDresserId,
-            //        From = new DateTime(2021, 4, 26, 12, 30, 0),
-            //        To = new DateTime(2021, 4, 26, 13, 0, 0)
-            //    });
-            //}
+            if (!context.HairSalonHairSalonTypes.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.HairSalonType.Name == "Ženski"))
+            {
+                context.Add(new HairSalonHairSalonType()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
+                    HairSalonTypeId = context.HairSalonTypes.Where(x => x.Name == "Ženski").First().HairSalonTypeId
+                });
+            }
 
             context.SaveChanges();
+        }
 
+        private void HairSalonHairDresserSeed()
+        {
+            if (!context.HairSalonHairDressers.Any(x => x.HairDresser.Name == "Hair Dresser 1" && x.HairSalon.Name == "Hair Salon 1"))
+            {
+                context.HairSalonHairDressers.Add(new HairSalonHairDresser()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").FirstOrDefault().HairSalonId,
+                    HairDresserId = context.HairDressers.Where(x => x.Name == "Hair Dresser 1").FirstOrDefault().ApplicationUserId
+                });
+            }
+
+            if (!context.HairSalonHairDressers.Any(x => x.HairDresser.Name == "Hair Dresser 2" && x.HairSalon.Name == "Hair Salon 2"))
+            {
+                context.HairSalonHairDressers.Add(new HairSalonHairDresser()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").FirstOrDefault().HairSalonId,
+                    HairDresserId = context.HairDressers.Where(x => x.Name == "Hair Dresser 2").FirstOrDefault().ApplicationUserId
+                });
+            }
+
+            if (!context.HairSalonHairDressers.Any(x => x.HairDresser.Name == "Hair Dresser 1" && x.HairSalon.Name == "Hair Salon 2"))
+            {
+                context.HairSalonHairDressers.Add(new HairSalonHairDresser()
+                {
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").FirstOrDefault().HairSalonId,
+                    HairDresserId = context.HairDressers.Where(x => x.Name == "Hair Dresser 1").FirstOrDefault().ApplicationUserId
+                });
+            }
+
+            context.SaveChanges();
+        }
+
+        private void HairDresserSeed(string salt, string hash)
+        {
+            if (!context.HairDressers.Any(x => x.Name == "Hair Dresser 1"))
+            {
+                context.HairDressers.Add(new HairDresser()
+                {
+                    Name = "Hair Dresser 1",
+                    Surname = "The First",
+                    Description = "The best in town!",
+                    PasswordSalt = salt,
+                    PasswordHash = hash
+                });
+            }
+
+            if (!context.HairDressers.Any(x => x.Name == "Hair Dresser 2"))
+            {
+                context.HairDressers.Add(new HairDresser()
+                {
+                    Name = "Hair Dresser 2",
+                    Surname = "The Second",
+                    Description = "The second best in town!",
+                    PasswordSalt = salt,
+                    PasswordHash = hash
+                });
+            }
+
+            context.SaveChanges();
+        }
+
+        private void PictureSeed()
+        {
+            if (!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaA")))
+            {
+                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaA") });
+            }
+
+            if (!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaB")))
+            {
+                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaB") });
+            }
+
+            if (!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaC")))
+            {
+                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaC") });
+            }
+
+            context.SaveChanges();
+        }
+
+        private void HairSalonTypeSeed()
+        {
+            if (!context.HairSalonTypes.Any(x => x.Name == "Ženski"))
+            {
+                context.HairSalonTypes.Add(new HairSalonType() { Name = "Ženski" });
+            }
+
+            if (!context.HairSalonTypes.Any(x => x.Name == "Muški"))
+            {
+                context.HairSalonTypes.Add(new HairSalonType() { Name = "Muški" });
+            }
+
+            context.SaveChanges();
+        }
+
+        private void HairSalonSeed()
+        {
+            if (!context.HairSalons.Any(x => x.Name == "Hair Salon 1" && x.City.Name == "City 1"))
+            {
+                context.HairSalons.Add(new HairSalon()
+                {
+                    Name = "Hair Salon 1",
+                    Address = "Mejdandžik 8",
+                    Description = "Pravo dobar frizerski.",
+                    CityId = context.Cities.Where(x => x.Name == "City 1").FirstOrDefault().CityId
+                });
+            }
+
+            if (!context.HairSalons.Any(x => x.Name == "Hair Salon 2" && x.City.Name == "City 2"))
+            {
+                context.HairSalons.Add(new HairSalon()
+                {
+                    Name = "Hair Salon 2",
+                    Address = "Maršala Tita 21",
+                    Description = "Pravo dobar frizerski salon za muškarce i žene.",
+                    CityId = context.Cities.Where(x => x.Name == "City 2").FirstOrDefault().CityId
+                });
+            }
+
+            context.SaveChanges();
+        }
+
+        private void CitySeed()
+        {
+            if (!context.Cities.Any(x => x.Name == "City 1"))
+            {
+                context.Cities.Add(new City() { Name = "City 1" });
+            }
+
+            if (!context.Cities.Any(x => x.Name == "City 2"))
+            {
+                context.Cities.Add(new City() { Name = "City 2" });
+            }
+
+            if (!context.Cities.Any(x => x.Name == "City 3"))
+            {
+                context.Cities.Add(new City() { Name = "City 3" });
+            }
+
+            context.SaveChanges();
         }
     }
 }
