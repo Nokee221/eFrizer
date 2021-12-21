@@ -202,12 +202,12 @@ namespace eFrizer
                 context.Roles.Add(new Role() { Name = "HairDresser" });
             }
 
-            if(!context.ApplicationUsers.Any(x => x.Name == "User A"))
-            {
-                var password = "1234";
-                var salt = AuthHelper.GenerateSalt();
-                var hash = AuthHelper.GenerateHash(salt, password);
+            var password = "1234";
+            var salt = AuthHelper.GenerateSalt();
+            var hash = AuthHelper.GenerateHash(salt, password);
 
+            if (!context.ApplicationUsers.Any(x => x.Name == "User A"))
+            {
                 var user = new ApplicationUser()
                 {
                     Name = "User A",
@@ -222,10 +222,6 @@ namespace eFrizer
 
             if (!context.ApplicationUsers.Any(x => x.Name == "User A2"))
             {
-                var password = "1234";
-                var salt = AuthHelper.GenerateSalt();
-                var hash = AuthHelper.GenerateHash(salt, password);
-
                 var user = new ApplicationUser()
                 {
                     Name = "User A2",
@@ -240,10 +236,6 @@ namespace eFrizer
 
             if (!context.Managers.Any(x => x.Name == "User M"))
             {
-                var password = "1234";
-                var salt = AuthHelper.GenerateSalt();
-                var hash = AuthHelper.GenerateHash(salt, password);
-
                 var user = new Manager()
                 {
                     Name = "User M",
@@ -259,10 +251,6 @@ namespace eFrizer
 
             if (!context.Managers.Any(x => x.Name == "User M2"))
             {
-                var password = "1234";
-                var salt = AuthHelper.GenerateSalt();
-                var hash = AuthHelper.GenerateHash(salt, password);
-
                 var user = new Manager()
                 {
                     Name = "User M2",
@@ -276,12 +264,19 @@ namespace eFrizer
                 context.Managers.Add(user);
             }
 
+            var fakeClient = new Client
+            {
+                Name = Faker.Name.First(),
+                Surname = Faker.Name.Last(),
+                Username = Faker.Internet.UserName(),
+                PasswordSalt = salt,
+                PasswordHash = hash,
+                Description = Faker.Lorem.Paragraph()
+                
+            };
+
             if (!context.Clients.Any(x => x.Name == "Client A"))
             {
-                var password = "1234";
-                var salt = AuthHelper.GenerateSalt();
-                var hash = AuthHelper.GenerateHash(salt, password);
-
                 var user = new Client()
                 {
                     Name = "Client A",
@@ -297,10 +292,6 @@ namespace eFrizer
 
             if (!context.ApplicationUsers.Any(x => x.Name == "User C"))
             {
-                var password = "1234";
-                var salt = AuthHelper.GenerateSalt();
-                var hash = AuthHelper.GenerateHash(salt, password);
-
                 context.ApplicationUsers.Add(new Client() 
                 { 
                     Name = "User C",
@@ -314,10 +305,6 @@ namespace eFrizer
 
             if (!context.ApplicationUsers.Any(x => x.Name == "User C2"))
             {
-                var password = "1234";
-                var salt = AuthHelper.GenerateSalt();
-                var hash = AuthHelper.GenerateHash(salt, password);
-
                 context.ApplicationUsers.Add(new Client()
                 {
                     Name = "User C2",
@@ -331,10 +318,6 @@ namespace eFrizer
 
             if(!context.Managers.Any(x => x.Name == "Manager Employee 1"))
             {
-                var password = "1234";
-                var salt = AuthHelper.GenerateSalt();
-                var hash = AuthHelper.GenerateHash(salt, password);
-
                 context.Managers.Add(new ManagerEmployee()
                 {
                     Name = "Manager Employee 1",
