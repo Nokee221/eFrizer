@@ -82,7 +82,7 @@ class _FavoritePageState extends State<FavoritePage> {
                 ),
               ),
               SizedBox(height: 25.0),
-              CustomListTitle(title: "Best salons",),
+              CustomListTitle(title: "Our recommendation"),
               Container(
                 width: double.infinity,
                 height: double.maxFinite,
