@@ -8,6 +8,6 @@ namespace eFrizer.Services
 {
     public interface IReviewService : ICRUDService<Model.Review, ReviewSearchRequest, ReviewInsertRequest, ReviewUpdateRequest>
     {
-
+        Task<double> Average(int hairSalonId);
     }
 }

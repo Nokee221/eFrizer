@@ -32,5 +32,32 @@ namespace eFrizer.Services
                 return _mapper.Map<List<Model.Review>>(list);
             }
         }
+
+        public async Task<double> Average(int hairSalonId)
+        {
+            var entity = Context.Reviews.ToList();
+            var temp = 0.0;
+            var finalProsjek = 0.0;
+            int brojac = 0;
+
+            foreach (var item in entity)
+            {
+                if (item.HairSalonId == hairSalonId && item.StarRating != null)
+                {
+                    temp += item.StarRating;
+                    brojac++;
+                }
+            }
+
+            finalProsjek = temp / brojac;
+            if (finalProsjek != null)
+            {
+                return finalProsjek;
+            }
+            else
+            {
+                return 0.0;
+            }
+        }
     }
 }
