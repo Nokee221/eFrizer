@@ -23,6 +23,7 @@ namespace eFrizer
 
         public void Init()
         {
+            context.Database.EnsureDeleted();
             context.Database.Migrate();
 
             var password = "1234";
@@ -145,9 +146,9 @@ namespace eFrizer
 
             var fakeReviews = new List<Review>();
             var clientsQuery = context.Clients.AsEnumerable();
-            var clients = clientsQuery.OrderBy(x => x.ApplicationUserId).TakeLast(10).ToList();
+            var clients = clientsQuery.OrderBy(x => x.ApplicationUserId).TakeLast(19).ToList();
             var hairSalonsQuery = context.HairSalons.AsEnumerable();
-            var hairSalons = hairSalonsQuery.OrderBy(x => x.HairSalonId).TakeLast(5).ToList();
+            var hairSalons = hairSalonsQuery.ToList();
 
             foreach (var client in clients)
             {
@@ -351,7 +352,7 @@ namespace eFrizer
             }
 
             var userRoles = new List<ApplicationUserRole>();
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 20; i++)
             {
                 var newClient = new Client
                 {
@@ -612,7 +613,7 @@ namespace eFrizer
             context.SaveChanges();
 
             var fakeSalons = new List<HairSalon>();
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 25; i++)
             {
                 fakeSalons.Add(new HairSalon
                 {

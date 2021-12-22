@@ -24,10 +24,10 @@ namespace eFrizer.Services
 
         class HairSalonRating
         {
-            [KeyType(count: 10)]
+            [KeyType(count: 300)]
             public uint ClientId { get; set; }
-            [KeyType(count: 10)]
-            public uint HairSalonId { get; set; }
+            [KeyType(count: 300)]
+            public uint HairSalonId { get; set; }    
             
             public float StarRating { get; set; }
         }
@@ -43,7 +43,7 @@ namespace eFrizer.Services
 
         public async Task<List<Model.HairSalon>> Recommend(int clientId)
         {
-            if(mlContext == null)
+            if(true)
             {
                 mlContext = new MLContext();
                 
@@ -68,11 +68,7 @@ namespace eFrizer.Services
                     MatrixRowIndexColumnName = "HairSalonId",
                     LabelColumnName = "StarRating",
                     NumberOfIterations = 20,
-                    ApproximationRank = 100,
-                    LossFunction = MatrixFactorizationTrainer.LossFunctionType.SquareLossOneClass,
-                    Alpha = 0.01,
-                    Lambda = 0.025,
-                    C = 0.000001
+                    ApproximationRank = 100
                 };
 
                 var est = mlContext.Recommendation().Trainers.MatrixFactorization(options);
