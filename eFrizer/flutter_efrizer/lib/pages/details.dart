@@ -33,14 +33,11 @@ class _DetailsState extends State<Details> {
   var request = null;
   var reviewRequest = null;
 
-  double projesnaOcjena = 0;
-
   @override
   void initState() {
     super.initState();
     request = HairSalonHairDresserSearchRequest(hairsalonId: hairsalon.HairSalonId);
     reviewRequest = ReviewSearchRequest(hairsalonId: hairsalon.HairSalonId);
-
   }
 
   @override
@@ -131,28 +128,8 @@ class _DetailsState extends State<Details> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: RatingBar.builder(
-                      itemSize: 17,
-                      initialRating: projesnaOcjena,
-                      minRating: 1,
-                      direction: Axis.horizontal,
-                      allowHalfRating: false,
-                      itemCount: 5,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                      onRatingUpdate: (rating){
-                        print(rating);
-                      },
-                    ),
-                  ),
-                  
-                  
-                ],
+                  starWidget(),
+               ],
               ),      
               SizedBox(height: 40),
               Container(
@@ -197,6 +174,41 @@ class _DetailsState extends State<Details> {
         ],
       ),
     );
+  }
+
+  Widget starWidget() {
+    return FutureBuilder<dynamic>(
+        future: getReview(reviewRequest),
+        builder:
+            (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Text('Loading...'),
+            );
+          } else {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('${snapshot.error}'),
+              );
+            } else {
+              return Container(
+                alignment: Alignment.centerLeft,
+                child: _getReview(snapshot.data),
+              );
+            }
+          }
+        });
+  }
+
+  Future<dynamic> getReview(req) async {
+
+    Map<String, String>? queryParams = null;
+    if (req != null && queryParams != "")
+      queryParams = {'hairSalonId': req.hairsalonId.toString()};
+
+    var review = await APIService.getAverage('Average', queryParams);
+    var avg = double.parse(review);
+    return avg;
   }
 
    Widget listHairDresser() {
@@ -341,5 +353,22 @@ class _DetailsState extends State<Details> {
           ],
         ),
       );
+
+  Widget _getReview(result) => RatingBar.builder(
+    itemSize: 17,
+    initialRating: result == null ? 0.0 : result,
+    minRating: 1,
+    direction: Axis.horizontal,
+    allowHalfRating: true,
+    itemCount: 5,
+    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+    itemBuilder: (context, _) => Icon(
+       Icons.star,
+      color: Colors.amber,
+       ),
+    onRatingUpdate: (rating){
+       print(rating);
+     },
+  );
 }
 
