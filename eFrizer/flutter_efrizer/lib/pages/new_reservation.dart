@@ -86,8 +86,6 @@ class _NewReservationState extends State<NewReservation> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        dropDownWidget(),
-                        SizedBox(height: 10),
                         DateTimePicker(
                           type: DateTimePickerType.dateTime,
                           dateMask: 'dd.MM.yyyy - hh:mm a',
@@ -113,6 +111,8 @@ class _NewReservationState extends State<NewReservation> {
                             
                           }),
                         ),
+                        SizedBox(height: 15),
+                        dropDownWidget(),
                       ],
                     ),
                   )
@@ -198,7 +198,7 @@ class _NewReservationState extends State<NewReservation> {
                   var enddateFormatted = DateFormat("yyyy-MM-dd HH:mm:ss").format(endDate);
                   
 
-                  request = ReservationInsertRequest(hairDresserId: hairdresserId, serviceId: _service!.ServiceId, clientId: 4, to: dateFormatted , from: enddateFormatted);
+                  request = ReservationInsertRequest(hairDresserId: hairdresserId, serviceId: _service!.ServiceId, clientId: 7, to: dateFormatted , from: enddateFormatted);
                   
                   Navigator.of(context).push(
                           MaterialPageRoute(

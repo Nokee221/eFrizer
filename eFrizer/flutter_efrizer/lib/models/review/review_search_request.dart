@@ -10,7 +10,7 @@ class ReviewSearchRequest{
 
   factory ReviewSearchRequest.fromJson(Map<String, dynamic> json) {
     return ReviewSearchRequest(
-      hairsalonId: int.parse(json["hairSalonId"].toString()),
+      hairsalonId: int.parse(json['hairSalonId'].toString()),
     );
   }
 }
