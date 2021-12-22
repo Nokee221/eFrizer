@@ -146,4 +146,19 @@ class APIService {
     return null;
   }
 
+  static Future<List<dynamic>?> recommenderGet(String route, String id) async {
+    final String baseUrl = apiUrl + route + "?clientId=" + id;
+    final String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    final response = await http.get(
+      Uri.parse(baseUrl),
+      headers: {HttpHeaders.authorizationHeader: basicAuth},
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body) as List;
+    } 
+    return null;
+  }
+
 }

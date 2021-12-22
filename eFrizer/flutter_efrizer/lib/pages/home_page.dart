@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     screens = [
       HomePage2(),
       SearchPage(),
-      FavoritePage(),
+      FavoritePage(this.user),
       ProfilePage(this.user),
     ];
   }
