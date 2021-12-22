@@ -97,5 +97,11 @@ namespace eFrizer.Win
             var forma = new frmLoyalty();
             forma.ShowDialog();
         }
+
+        private void btnReports_Click(object sender, EventArgs e)
+        {
+            var forma = new ReservationReport();
+            forma.ShowDialog();
+        }
     }
 }

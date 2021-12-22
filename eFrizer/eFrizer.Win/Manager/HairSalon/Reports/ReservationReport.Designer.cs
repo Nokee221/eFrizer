@@ -29,12 +29,34 @@ namespace eFrizer.Win
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.btnReport = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // btnReport
+            // 
+            this.btnReport.Location = new System.Drawing.Point(43, 31);
+            this.btnReport.Name = "btnReport";
+            this.btnReport.Size = new System.Drawing.Size(218, 23);
+            this.btnReport.TabIndex = 0;
+            this.btnReport.Text = "Get financial report";
+            this.btnReport.UseVisualStyleBackColor = true;
+            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
+            // 
+            // ReservationReport
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnReport);
+            this.Name = "ReservationReport";
             this.Text = "ReservationReport";
+            this.Load += new System.EventHandler(this.ReservationReport_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button btnReport;
     }
 }

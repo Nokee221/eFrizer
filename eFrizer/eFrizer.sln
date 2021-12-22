@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eFrizer", "eFrizer\eFrizer.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eFrizer.Model", "eFrizer.Model\eFrizer.Model.csproj", "{ECB31B0F-AA97-45C5-AAB5-82CEE5570CDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFrizer.Win", "eFrizer.Win\eFrizer.Win.csproj", "{2C0211FF-B805-4FAE-86AC-94EA228507E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eFrizer.Win", "eFrizer.Win\eFrizer.Win.csproj", "{2C0211FF-B805-4FAE-86AC-94EA228507E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -37,7 +37,7 @@ namespace eFrizer.Services
             }
             else
             {
-                var list = await Context.Reservations.Include(x => x.HairDresser).Include(x => x.Service).Include(x => x.Client).ToListAsync();
+                var list = await Context.Reservations.Include(x => x.Service).ToListAsync();
                 return _mapper.Map<List<Model.Reservation>>(list);
 
             }

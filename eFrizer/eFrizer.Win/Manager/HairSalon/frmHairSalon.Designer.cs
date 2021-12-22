@@ -193,6 +193,7 @@ namespace eFrizer.Win
             this.btnReports.TabIndex = 7;
             this.btnReports.Text = "Reports";
             this.btnReports.UseVisualStyleBackColor = true;
+            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
             // 
             // btnLoyalty
             // 
