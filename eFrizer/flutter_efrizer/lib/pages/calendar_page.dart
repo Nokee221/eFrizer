@@ -237,11 +237,20 @@ class _CalendarPageState extends State<CalendarPage> {
                     fontSize: 18,
                   ),
                 ),
+                SizedBox(height: 2),
                 Text(
                   "To: " + reservation.To.toString(),
                   style: const TextStyle(
                     color: Colors.grey,
-                    fontSize: 18,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+                Text(
+                  "From: " + reservation.From.toString(),
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold
                   ),
                 ),

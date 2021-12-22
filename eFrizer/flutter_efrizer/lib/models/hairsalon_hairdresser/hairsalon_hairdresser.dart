@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class HairSalonHairDresser{
   final int hairdresserId;
-
   final String hairdresserName;
 
 

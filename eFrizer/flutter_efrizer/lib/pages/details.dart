@@ -32,24 +32,15 @@ class _DetailsState extends State<Details> {
 
   var request = null;
   var reviewRequest = null;
-  var result = null;
+
+  double projesnaOcjena = 0;
 
   @override
   void initState() {
     super.initState();
     request = HairSalonHairDresserSearchRequest(hairsalonId: hairsalon.HairSalonId);
-
     reviewRequest = ReviewSearchRequest(hairsalonId: hairsalon.HairSalonId);
 
-    
-    Map<String, dynamic>? queryParams = null;
-    if (reviewRequest != null && queryParams != "")
-     queryParams = {'HairSalonId': reviewRequest.hairsalonId.toString()};
-
-    result = APIService.get("Review", reviewRequest);
-    result!.map((i) => Review.fromJson(i)).toList();
-
-    print(result);
   }
 
   @override
@@ -59,7 +50,7 @@ class _DetailsState extends State<Details> {
          leading: BackButton(color: Colors.blue),
          centerTitle: true,
         title: Text("Details", style: GoogleFonts.pacifico(color: Colors.black),),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white ,
         elevation: 0,
         actions: [
           IconButton(
@@ -144,7 +135,7 @@ class _DetailsState extends State<Details> {
                     alignment: Alignment.centerLeft,
                     child: RatingBar.builder(
                       itemSize: 17,
-                      initialRating: 0,
+                      initialRating: projesnaOcjena,
                       minRating: 1,
                       direction: Axis.horizontal,
                       allowHalfRating: false,
@@ -233,7 +224,6 @@ class _DetailsState extends State<Details> {
           }
         });
   }
-
 
   Future<List<HairSalonHairDresser>> getHairDressers(req) async {
 
@@ -352,3 +342,4 @@ class _DetailsState extends State<Details> {
         ),
       );
 }
+

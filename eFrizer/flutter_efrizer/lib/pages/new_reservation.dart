@@ -198,7 +198,7 @@ class _NewReservationState extends State<NewReservation> {
                   var enddateFormatted = DateFormat("yyyy-MM-dd HH:mm:ss").format(endDate);
                   
 
-                  request = ReservationInsertRequest(hairDresserId: hairdresserId, serviceId: _service!.ServiceId, clientId: 4, to: dateFormatted , from: enddateFormatted);
+                  request = ReservationInsertRequest(hairDresserId: hairdresserId, serviceId: _service!.ServiceId, clientId: 7, to: dateFormatted , from: enddateFormatted);
                   
                   Navigator.of(context).push(
                           MaterialPageRoute(
