@@ -86,8 +86,6 @@ class _NewReservationState extends State<NewReservation> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        dropDownWidget(),
-                        SizedBox(height: 10),
                         DateTimePicker(
                           type: DateTimePickerType.dateTime,
                           dateMask: 'dd.MM.yyyy - hh:mm a',
@@ -113,6 +111,8 @@ class _NewReservationState extends State<NewReservation> {
                             
                           }),
                         ),
+                        SizedBox(height: 15),
+                        dropDownWidget(),
                       ],
                     ),
                   )
