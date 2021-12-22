@@ -24,12 +24,12 @@ namespace eFrizer.Services
 
         class HairSalonRating
         {
-            [KeyType]
-            public float ClientId { get; set; }
-            [KeyType]
-            public float HairSalonId { get; set; }
+            [KeyType(count: 10)]
+            public uint ClientId { get; set; }
+            [KeyType(count: 10)]
+            public uint HairSalonId { get; set; }
             
-            public float Label { get; set; }
+            public float StarRating { get; set; }
         }
 
         class HairSalonRatingPrediction
@@ -41,22 +41,22 @@ namespace eFrizer.Services
         private static MLContext mlContext = null;
         private static ITransformer model = null;
 
-        public List<Model.HairSalon> Recommend(int clientId)
+        public async Task<List<Model.HairSalon>> Recommend(int clientId)
         {
             if(mlContext == null)
             {
                 mlContext = new MLContext();
-
-                var tmpData = Context.Reviews.ToList();
+                
+                var tmpData = await Context.Reviews.ToListAsync();
                 var data = new List<HairSalonRating>();
 
                 foreach (var review in tmpData)
                 {
                     data.Add(new HairSalonRating
                     {
-                        ClientId = review.ClientId,
-                        HairSalonId = review.HairSalonId,
-                        Label = review.StarRating
+                        ClientId = (uint)review.ClientId,
+                        HairSalonId = (uint)review.HairSalonId,
+                        StarRating = review.StarRating
                     });
                 }
 
@@ -80,8 +80,26 @@ namespace eFrizer.Services
                 model = est.Fit(trainingData);
             }
 
+            var hairSalons = await Context.HairSalons.ToListAsync();
+            var predictionResult = new List<Tuple<Database.HairSalon, float>>();
 
-            return null;
+            foreach (var salon in hairSalons)
+            {
+                var predictionEngine = mlContext.Model.CreatePredictionEngine<HairSalonRating, HairSalonRatingPrediction>(model);
+
+                var prediction = predictionEngine.Predict(new HairSalonRating
+                {
+                    HairSalonId = (uint)salon.HairSalonId,
+                    ClientId = (uint)clientId
+                });
+
+                predictionResult.Add(new Tuple<Database.HairSalon, float>(salon, prediction.Score));
+            }
+
+            var finalResult = predictionResult.OrderByDescending(x => x.Item2)
+                .Select(x => x.Item1).Take(3).ToList();
+
+            return _mapper.Map<List<Model.HairSalon>>(finalResult);
         }
 
 
