@@ -7,6 +7,7 @@ import 'package:flutter_login/models/loyalty_bonus.dart';
 import 'package:flutter_login/models/review/review.dart';
 import 'package:flutter_login/models/review/review_insert_request.dart';
 import 'package:flutter_login/models/review/review_search_request.dart';
+import 'package:flutter_login/pages/loyalty.dart';
 import 'package:flutter_login/pages/loyalty_bonus_page.dart';
 import 'package:flutter_login/models/hairsalon_hairdresser/hairsalon_hairdresser.dart';
 import 'package:flutter_login/models/hairsalon_hairdresser/hairsalon_hairdresser_search.dart';
@@ -18,11 +19,10 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'calendar_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-
 class Details extends StatefulWidget {
   final HairSalon hairSalon;
   final ApplicationUser user;
-  const Details(this.hairSalon, this.user , {Key? key}) : super(key: key);
+  const Details(this.hairSalon, this.user, {Key? key}) : super(key: key);
 
   @override
   _DetailsState createState() => _DetailsState(hairSalon, user);
@@ -42,27 +42,32 @@ class _DetailsState extends State<Details> {
   @override
   void initState() {
     super.initState();
-    request = HairSalonHairDresserSearchRequest(hairsalonId: hairsalon.HairSalonId);
+    request =
+        HairSalonHairDresserSearchRequest(hairsalonId: hairsalon.HairSalonId);
     reviewRequest = ReviewSearchRequest(hairsalonId: hairsalon.HairSalonId);
   }
 
   var ratingRasult = null;
   var ratingRequest = null;
-  Future<void> _setRating(rating) async{
-
-    ratingRequest = ReviewInsertRequest(hairSalonId: hairsalon.HairSalonId, clientId: user.applicationUserId , starrating: rating.toInt());
+  Future<void> _setRating(rating) async {
+    ratingRequest = ReviewInsertRequest(
+        hairSalonId: hairsalon.HairSalonId,
+        clientId: user.applicationUserId,
+        starrating: rating.toInt());
     ratingRasult = await APIService.post("Review", ratingRequest);
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         leading: BackButton(color: Colors.blue),
-         centerTitle: true,
-        title: Text("Details", style: GoogleFonts.pacifico(color: Colors.black),),
-        backgroundColor: Colors.white ,
+        leading: BackButton(color: Colors.blue),
+        centerTitle: true,
+        title: Text(
+          "Details",
+          style: GoogleFonts.pacifico(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
         elevation: 0,
         actions: [
           IconButton(
@@ -144,8 +149,8 @@ class _DetailsState extends State<Details> {
                   ),
                   SizedBox(height: 20),
                   starWidget(),
-               ],
-              ),      
+                ],
+              ),
               SizedBox(height: 40),
               Container(
                 alignment: Alignment.centerLeft,
@@ -183,7 +188,9 @@ class _DetailsState extends State<Details> {
               CustomListTitle(title: "Loyalty services"),
               SizedBox(height: 15.0),
               Container(
-                  width: double.infinity, height: 190, child: listLoyaltyBonus())
+                  width: double.infinity,
+                  height: 190,
+                  child: listLoyaltyBonus())
             ],
           )
         ],
@@ -194,8 +201,7 @@ class _DetailsState extends State<Details> {
   Widget starWidget() {
     return FutureBuilder<dynamic>(
         future: getReview(reviewRequest),
-        builder:
-            (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: Text('Loading...'),
@@ -216,7 +222,6 @@ class _DetailsState extends State<Details> {
   }
 
   Future<dynamic> getReview(req) async {
-
     Map<String, String>? queryParams = null;
     if (req != null && queryParams != "")
       queryParams = {'hairSalonId': req.hairsalonId.toString()};
@@ -226,11 +231,11 @@ class _DetailsState extends State<Details> {
     return avg;
   }
 
-   Widget listHairDresser() {
+  Widget listHairDresser() {
     return FutureBuilder<List<HairSalonHairDresser>>(
         future: getHairDressers(request),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<HairSalonHairDresser>> snapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<List<HairSalonHairDresser>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: Text('Loading...'),
@@ -253,14 +258,12 @@ class _DetailsState extends State<Details> {
   }
 
   Future<List<HairSalonHairDresser>> getHairDressers(req) async {
-
-      Map<String, String>? queryParams = null;
+    Map<String, String>? queryParams = null;
     if (req != null && queryParams != "")
       queryParams = {'HairSalonId': req.hairsalonId.toString()};
 
     var hairdresser = await APIService.get('HairSalonHairDresser', queryParams);
     return hairdresser!.map((i) => HairSalonHairDresser.fromJson(i)).toList();
-
   }
 
   Widget hairDresserWidget(hairdresser) => Container(
@@ -272,7 +275,9 @@ class _DetailsState extends State<Details> {
             InkWell(
                 onTap: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => CalendarPage(hairdresser.hairdresserId)),
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            CalendarPage(hairdresser.hairdresserId)),
                   );
                 },
                 child: Column(
@@ -309,8 +314,7 @@ class _DetailsState extends State<Details> {
             );
           } else {
             if (snapshot.hasError) {
-              return Center(
-                child: Text('${snapshot.error}'));
+              return Center(child: Text('${snapshot.error}'));
             } else {
               return ListView(
                 scrollDirection: Axis.horizontal,
@@ -333,84 +337,89 @@ class _DetailsState extends State<Details> {
     }
   }
 
-  Widget loyaltyBonusWidget(loyaltyBonus) => Container(
-    margin: EdgeInsets.symmetric(vertical: 10.0),
-    padding: EdgeInsets.all(15.0),
-    height: 150,
-    decoration: BoxDecoration(
-      color: Colors.blue,
-      borderRadius: BorderRadius.circular(30),
-    ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: CircularPercentIndicator(
-            animation: true,
-            radius: 75.0,
-            percent: 0.5,
-            lineWidth: 5.0,
-            circularStrokeCap: CircularStrokeCap.round,
-            backgroundColor: Colors.white10,
-            progressColor: Colors.white,
-            center: Text(
-              "50%",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+  Widget loyaltyBonusWidget(loyaltyBonus) => InkWell(
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 10.0),
+          padding: EdgeInsets.all(15.0),
+          height: 150,
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: CircularPercentIndicator(
+                  animation: true,
+                  radius: 75.0,
+                  percent: 0.5,
+                  lineWidth: 5.0,
+                  circularStrokeCap: CircularStrokeCap.round,
+                  backgroundColor: Colors.white10,
+                  progressColor: Colors.white,
+                  center: Text(
+                    "50%",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
               ),
-            ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    loyaltyBonus.serviceName,
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Text(
+                    "Bonus: " + loyaltyBonus.discount.toString() + "%",
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      color: Colors.white54,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
+              )
+            ],
           ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              loyaltyBonus.serviceName,
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            Text(
-              "Bonus: " + loyaltyBonus.discount.toString() + "%",
-              style: TextStyle(
-                fontSize: 12.0,
-                color: Colors.white54,
-                fontWeight: FontWeight.bold,
-              ),
-            )
-          ],
-        )
-      ],
-    ),
-  );
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (context) => LoyaltyPage()),
+          );
+        },
+      );
 
   Widget _getReview(result) => RatingBar.builder(
-    itemSize: 17,
-    initialRating: result == null ? 0.0 : result,
-    minRating: 1,
-    direction: Axis.horizontal,
-    allowHalfRating: true,
-    itemCount: 5,
-    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-    itemBuilder: (context, _) => Icon(
-       Icons.star,
-      color: Colors.amber,
-       ),
-    onRatingUpdate: (rating){
-      var respone = null;
+        itemSize: 17,
+        initialRating: result == null ? 0.0 : result,
+        minRating: 1,
+        direction: Axis.horizontal,
+        allowHalfRating: true,
+        itemCount: 5,
+        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+        itemBuilder: (context, _) => Icon(
+          Icons.star,
+          color: Colors.amber,
+        ),
+        onRatingUpdate: (rating) {
+          var respone = null;
 
-      respone = _setRating(rating);
-      if(respone != null)
-      {
-        print("Upsjesno!!");
-      }
-
-     },
-  );
+          respone = _setRating(rating);
+          if (respone != null) {
+            print("Upsjesno!!");
+          }
+        },
+      );
 }
-

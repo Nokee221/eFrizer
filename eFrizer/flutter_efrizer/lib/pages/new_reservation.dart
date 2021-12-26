@@ -262,7 +262,7 @@ class _NewReservationState extends State<NewReservation> {
                             txtPrice.text = _service!.Price.toString();
 
                             DateTime endTimeee = reservationDate;
-                            endDate = endTimeee.add(Duration(minutes: _service!.Price));
+                            endDate = endTimeee.add(Duration(minutes: _service!.TimeMin));
                             
                             endtime.text = endDate.hour.toString() + ":" + endDate.minute.toString();
                             print(endDate);
