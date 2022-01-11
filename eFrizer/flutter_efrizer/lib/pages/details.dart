@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/models/HairSalon.dart';
 import 'package:flutter_login/models/application_user.dart';
 import 'package:flutter_login/models/hairdress.dart';
-import 'package:flutter_login/models/loyalty_bonus.dart';
+import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus.dart';
+import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus_search_request.dart';
 import 'package:flutter_login/models/review/review.dart';
 import 'package:flutter_login/models/review/review_insert_request.dart';
 import 'package:flutter_login/models/review/review_search_request.dart';
@@ -38,6 +39,7 @@ class _DetailsState extends State<Details> {
 
   var request = null;
   var reviewRequest = null;
+  var loyaltyRequest = null;
 
   @override
   void initState() {
@@ -45,6 +47,7 @@ class _DetailsState extends State<Details> {
     request =
         HairSalonHairDresserSearchRequest(hairsalonId: hairsalon.HairSalonId);
     reviewRequest = ReviewSearchRequest(hairsalonId: hairsalon.HairSalonId);
+    loyaltyRequest = LoyaltyBonusSearchRequest(hairSalonId: hairsalon.HairSalonId);
   }
 
   var ratingRasult = null;
@@ -305,7 +308,7 @@ class _DetailsState extends State<Details> {
 
   Widget listLoyaltyBonus() {
     return FutureBuilder<List<LoyaltyBonus>>(
-        future: getLoyaltyBonuses(),
+        future: getLoyaltyBonuses(loyaltyRequest),
         builder:
             (BuildContext context, AsyncSnapshot<List<LoyaltyBonus>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -327,14 +330,14 @@ class _DetailsState extends State<Details> {
         });
   }
 
-  Future<List<LoyaltyBonus>> getLoyaltyBonuses() async {
-    var loyaltyBonus =
-        await APIService.get('HairSalonServiceLoyaltyBonus', null);
-    if (loyaltyBonus != null) {
-      return loyaltyBonus.map((i) => LoyaltyBonus.fromJson(i)).toList();
-    } else {
-      return List.empty();
-    }
+  Future<List<LoyaltyBonus>> getLoyaltyBonuses(req) async {
+    Map<String, String>? queryParams = null;
+    if (req != null && queryParams != "")
+      queryParams = {'HairSalonId': req.hairSalonId.toString()};
+
+    var loyalty = await APIService.get('HairSalonServiceLoyaltyBonus', queryParams);
+    return loyalty!.map((i) => LoyaltyBonus.fromJson(i)).toList();
+
   }
 
   Widget loyaltyBonusWidget(loyaltyBonus) => InkWell(
@@ -355,13 +358,13 @@ class _DetailsState extends State<Details> {
                 child: CircularPercentIndicator(
                   animation: true,
                   radius: 75.0,
-                  percent: 0.5,
+                  percent: 0.0,
                   lineWidth: 5.0,
                   circularStrokeCap: CircularStrokeCap.round,
                   backgroundColor: Colors.white10,
                   progressColor: Colors.white,
                   center: Text(
-                    "50%",
+                    "0%",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -395,7 +398,7 @@ class _DetailsState extends State<Details> {
         ),
         onTap: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => LoyaltyPage()),
+            MaterialPageRoute(builder: (context) => LoyaltyPage(loyaltyBonus)),
           );
         },
       );

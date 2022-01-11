@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class LoyaltyPage extends StatefulWidget {
-  const LoyaltyPage({Key? key}) : super(key: key);
+  final LoyaltyBonus loyalty;
+
+  const LoyaltyPage(this.loyalty , {Key? key}) : super(key: key);
 
   @override
-  _LoyaltyPageState createState() => _LoyaltyPageState();
+  _LoyaltyPageState createState() => _LoyaltyPageState(loyalty);
 }
 
 class _LoyaltyPageState extends State<LoyaltyPage> {
+  final LoyaltyBonus loyalty;
   double opacityLevel = 0.0;
+
+  _LoyaltyPageState(this.loyalty);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +62,7 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
           Padding(
             padding: EdgeInsets.only(left: 18),
             child: Text(
-                "This is your progress of your loyaty bonus for this hairsalon on service , after you collect 5 reservation you will unlock your code with 15% of discount!"),
+                "This is your progress of your loyalty bonus for this hairsalon on " + loyalty.serviceName + ", after you collect " + loyalty.activatesOn.toString() + " reservation you will unlock your code with " + loyalty.discount.toString() + "% of discount!"),
           ),
           SizedBox(height: 50),
           Padding(

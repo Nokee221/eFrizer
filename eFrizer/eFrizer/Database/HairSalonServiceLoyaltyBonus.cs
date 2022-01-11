@@ -13,5 +13,7 @@ namespace eFrizer.Database
         public int ActivatesOn { get; set; }
         public int ExpiresIn { get; set; }
         public virtual HairSalonService Service { get; set; }
+
+        public virtual ICollection<LoyaltyBonusUser> LoyaltyBonusUser { get; set; }
     }
 }

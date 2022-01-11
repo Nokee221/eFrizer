@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/models/HairSalon.dart';
-import 'package:flutter_login/models/loyalty_bonus.dart';
+import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus.dart';
 
 class LoyaltyBonusPage extends StatefulWidget {
   final LoyaltyBonus loyaltyBonus;

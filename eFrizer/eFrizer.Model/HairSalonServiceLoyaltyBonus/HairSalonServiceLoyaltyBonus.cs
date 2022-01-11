@@ -12,5 +12,7 @@ namespace eFrizer.Model
         public virtual HairSalonService Service { get; set; }
 
         public string ServiceName => Service?.ServiceName;
+
+        //public int HairSalonId => Service.HairSalonId;
     }
 }
