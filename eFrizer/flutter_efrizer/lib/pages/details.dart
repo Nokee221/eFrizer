@@ -277,7 +277,7 @@ class _DetailsState extends State<Details> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                         builder: (context) =>
-                            CalendarPage(hairdresser.hairdresserId)),
+                            CalendarPage(hairdresser.hairdresserId, user.applicationUserId)),
                   );
                 },
                 child: Column(
@@ -395,8 +395,7 @@ class _DetailsState extends State<Details> {
         ),
         onTap: () {
           Navigator.of(context).push(
-            MaterialPageRoute(
-                builder: (context) => LoyaltyPage()),
+            MaterialPageRoute(builder: (context) => LoyaltyPage()),
           );
         },
       );
@@ -418,7 +417,24 @@ class _DetailsState extends State<Details> {
 
           respone = _setRating(rating);
           if (respone != null) {
-            print("Upsjesno!!");
+            Widget okButton = TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            );
+            AlertDialog alert = AlertDialog(
+              title: Text("Success"),
+              content: Text("You have successfully rated a salon with a rating " + rating.toString()),
+              actions: [
+                okButton,
+              ],
+            );
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return alert;
+                });
           }
         },
       );

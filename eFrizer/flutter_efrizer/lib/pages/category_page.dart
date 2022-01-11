@@ -147,7 +147,7 @@ class _CategoryPageState extends State<CategoryPage> {
       ),
       onTap: (){
         Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => Details(hairsalon, user)),
+              MaterialPageRoute(builder: (context) => Details(hairsalon.hairSalon, user)),
             );
       },
     ),

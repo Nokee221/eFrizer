@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
+import 'package:json_annotation/json_annotation.dart';
+
+part 'HairSalon.g.dart';
+
+@JsonSerializable()
 class HairSalon{
   final int HairSalonId;
   final String Name; 
@@ -16,7 +21,7 @@ class HairSalon{
     required this.CityId
   });
 
-  factory HairSalon.fromJson(Map<String,dynamic> json)
+  /*factory HairSalon.fromJson(Map<String,dynamic> json)
   {
     return HairSalon(
       HairSalonId: int.parse(json["hairSalonId"].toString()),
@@ -34,5 +39,9 @@ class HairSalon{
     "description": Description,
     "address": Address,
     "cityId": CityId,
-  };
+  };*/
+
+  factory HairSalon.fromJson(Map<String,dynamic> data) => _$HairSalonFromJson(data);
+
+  Map<String,dynamic> toJson() => _$HairSalonToJson(this);
 } 

@@ -7,6 +7,7 @@ namespace eFrizer.Database
 {
     public partial class Reservation
     {
+        public int ReservationId { get; set; }
         public int HairDresserId{ get; set; }
         public int ClientId { get; set; }
 

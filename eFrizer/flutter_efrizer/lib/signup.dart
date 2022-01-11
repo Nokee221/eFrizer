@@ -49,7 +49,8 @@ class SignUpPage extends StatelessWidget {
               Column(
                 children: <Widget>[
                   inputFile(label: "Username"),
-                  inputFile(label: "Email"),
+                  inputFile(label: "Name"),
+                  inputFile(label: "Surname"),
                   inputFile(label: "Password", obscureText: true),
                   inputFile(label: "Confirm Password ", obscureText: true),
                 ],

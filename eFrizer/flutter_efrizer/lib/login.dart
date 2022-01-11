@@ -147,7 +147,9 @@ class _LoginPageState extends State<LoginPage> {
                           } else {
                             Widget okButton = TextButton(
                               child: Text("OK"),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
                             );
                             AlertDialog alert = AlertDialog(
                               title: Text("Error"),
