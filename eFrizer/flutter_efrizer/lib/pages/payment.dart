@@ -35,7 +35,7 @@ class _PaymentState extends State<Payment> {
   ];
 
   var result = null;
-  Future<void> getData() async{
+  Future<void> putData() async{
     result = await APIService.post("Reservation", request);
   }
 
@@ -110,13 +110,13 @@ class _PaymentState extends State<Payment> {
 
             }
             else{
-              await getData();
+              await putData();
               if(result != null)
               {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => Success(),
-                  ),);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Success(),
+                    ),);
               }
               else{
                 Widget okButton = TextButton(

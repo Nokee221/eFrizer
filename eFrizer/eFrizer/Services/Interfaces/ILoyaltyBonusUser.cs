@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Services
 {
-    public interface ILoyaltyBonusUser : ICRUDService<Model.LoyaltyBonusUser, object, Model.LoyaltyBonusUserInsertRequest, object>
+    public interface ILoyaltyBonusUser : ICRUDService<Model.LoyaltyBonusUser, Model.LoyaltyBonusUserSearchRequest, Model.LoyaltyBonusUserInsertRequest, object>
     {
     }
 }

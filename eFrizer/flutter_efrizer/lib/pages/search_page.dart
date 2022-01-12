@@ -188,8 +188,6 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Future<List<HairSalonType>> GetHairSalonType() async {
-    
-    
 
     var hairsalontype = await APIService.get('HairSalonType', null);
     if(hairsalontype != null){

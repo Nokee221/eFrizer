@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Services
 {
-    public class LoyaltyBonusUserService : BaseCRUDService<Model.LoyaltyBonusUser, Database.LoyaltyBonusUser, object, Model.LoyaltyBonusUser, object>, ILoyaltyBonusUser
+    public class LoyaltyBonusUserService : BaseCRUDService<Model.LoyaltyBonusUser, Database.LoyaltyBonusUser, Model.LoyaltyBonusUserSearchRequest, Model.LoyaltyBonusUserInsertRequest, object>, ILoyaltyBonusUser
     {
         public LoyaltyBonusUserService(eFrizerContext context, IMapper mapper)
             : base(context, mapper)
@@ -18,11 +18,22 @@ namespace eFrizer.Services
 
         }
 
-        public async override Task<List<Model.LoyaltyBonusUser>> Get([FromBody] object search = null)
+        public async Task<List<Model.LoyaltyBonusUser>> Get([FromBody] LoyaltyBonusUserSearchRequest search = null)
         {
-            var bonuses = await Context.LoyaltyBonusUsers.ToListAsync();
 
-            return _mapper.Map<List<Model.LoyaltyBonusUser>>(bonuses);
+            if(search.ClientId != 0 && search.LoyatlyBonusId != 0)
+            {
+                var bonuses = await Context.LoyaltyBonusUsers.Where(x => x.ClientId == search.ClientId).Where(x => x.LoyaltyBonusId == search.LoyatlyBonusId).ToListAsync();
+                return _mapper.Map<List<Model.LoyaltyBonusUser>>(bonuses);
+
+            }
+            else
+            {
+
+                var bonuses = await Context.LoyaltyBonusUsers.ToListAsync();
+
+                return _mapper.Map<List<Model.LoyaltyBonusUser>>(bonuses);
+            }
         }
 
         public async Task<Model.LoyaltyBonusUser> Insert(LoyaltyBonusUserInsertRequest request)
@@ -31,7 +42,7 @@ namespace eFrizer.Services
 
             entity.ClientId = request.ClientId;
             entity.LoyaltyBonusId = request.LoyaltyBonusId;
-            entity.Counter = 0;
+            entity.Counter = 1;
 
             Context.LoyaltyBonusUsers.Add(entity);
             await Context.SaveChangesAsync();

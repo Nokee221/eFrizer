@@ -398,7 +398,7 @@ class _DetailsState extends State<Details> {
         ),
         onTap: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => LoyaltyPage(loyaltyBonus)),
+            MaterialPageRoute(builder: (context) => LoyaltyPage(loyaltyBonus, user)),
           );
         },
       );
