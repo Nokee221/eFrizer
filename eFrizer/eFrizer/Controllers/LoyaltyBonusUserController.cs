@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Controllers
 {
-    public class LoyaltyBonusUserController : BaseCRUDController<Model.LoyaltyBonusUser, object, Model.LoyaltyBonusUserInsertRequest, object>
+    public class LoyaltyBonusUserController : BaseCRUDController<Model.LoyaltyBonusUser, Model.LoyaltyBonusUserSearchRequest, Model.LoyaltyBonusUserInsertRequest, object>
     {
         public LoyaltyBonusUserController(ILoyaltyBonusUser service) : base(service)
         {
