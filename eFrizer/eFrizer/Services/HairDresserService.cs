@@ -25,6 +25,10 @@ namespace eFrizer.Services
             {
                 entity = entity.Where(x => x.Name.Contains(search.Name));
             }
+            else if(search.HairSalonId != 0)
+            {
+                entity = entity.Where(x => x.HairSalonId == search.HairSalonId);
+            }
 
             var list = await entity.ToListAsync();
 

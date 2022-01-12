@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'application_user.dart';
+import '../application_user.dart';
 
 class HairDresser extends ApplicationUser {
   HairDresser({

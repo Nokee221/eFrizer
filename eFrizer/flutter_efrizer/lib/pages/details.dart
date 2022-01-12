@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/models/HairSalon.dart';
 import 'package:flutter_login/models/application_user.dart';
-import 'package:flutter_login/models/hairdress.dart';
+import 'package:flutter_login/models/hairdresser/hairdress.dart';
+import 'package:flutter_login/models/hairdresser/hairdresser_search_request.dart';
 import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus.dart';
 import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus_search_request.dart';
 import 'package:flutter_login/models/review/review.dart';
@@ -45,7 +46,7 @@ class _DetailsState extends State<Details> {
   void initState() {
     super.initState();
     request =
-        HairSalonHairDresserSearchRequest(hairsalonId: hairsalon.HairSalonId);
+        HairDresserSearchRequest(hairSalonId: hairsalon.HairSalonId);
     reviewRequest = ReviewSearchRequest(hairsalonId: hairsalon.HairSalonId);
     loyaltyRequest = LoyaltyBonusSearchRequest(hairSalonId: hairsalon.HairSalonId);
   }
@@ -187,7 +188,7 @@ class _DetailsState extends State<Details> {
                 height: 90,
                 child: listHairDresser(),
               ),
-              SizedBox(height: 30.0),
+              SizedBox(height: 5.0),
               CustomListTitle(title: "Loyalty services"),
               SizedBox(height: 15.0),
               Container(
@@ -235,10 +236,10 @@ class _DetailsState extends State<Details> {
   }
 
   Widget listHairDresser() {
-    return FutureBuilder<List<HairSalonHairDresser>>(
+    return FutureBuilder<List<HairDresser>>(
         future: getHairDressers(request),
         builder: (BuildContext context,
-            AsyncSnapshot<List<HairSalonHairDresser>> snapshot) {
+            AsyncSnapshot<List<HairDresser>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: Text('Loading...'),
@@ -260,13 +261,13 @@ class _DetailsState extends State<Details> {
         });
   }
 
-  Future<List<HairSalonHairDresser>> getHairDressers(req) async {
+  Future<List<HairDresser>> getHairDressers(req) async {
     Map<String, String>? queryParams = null;
     if (req != null && queryParams != "")
-      queryParams = {'HairSalonId': req.hairsalonId.toString()};
+      queryParams = {'HairSalonId': req.hairSalonId.toString()};
 
-    var hairdresser = await APIService.get('HairSalonHairDresser', queryParams);
-    return hairdresser!.map((i) => HairSalonHairDresser.fromJson(i)).toList();
+    var hairdresser = await APIService.get('HairDresser', queryParams);
+    return hairdresser!.map((i) => HairDresser.fromJson(i)).toList();
   }
 
   Widget hairDresserWidget(hairdresser) => Container(
@@ -280,7 +281,7 @@ class _DetailsState extends State<Details> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                         builder: (context) =>
-                            CalendarPage(hairdresser.hairdresserId, user.applicationUserId)),
+                            CalendarPage(hairdresser.applicationUserId, user.applicationUserId)),
                   );
                 },
                 child: Column(
@@ -296,7 +297,7 @@ class _DetailsState extends State<Details> {
                     ),
                     SizedBox(height: 7),
                     Text(
-                      hairdresser.hairdresserName,
+                      hairdresser.name,
                       style:
                           TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                     ),
