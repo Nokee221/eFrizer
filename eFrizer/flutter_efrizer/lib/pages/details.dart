@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/models/HairSalon.dart';
+import 'package:flutter_login/models/application_user.dart';
 import 'package:flutter_login/models/hairdress.dart';
-import 'package:flutter_login/models/loyalty_bonus.dart';
+import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus.dart';
+import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus_search_request.dart';
 import 'package:flutter_login/models/review/review.dart';
+import 'package:flutter_login/models/review/review_insert_request.dart';
 import 'package:flutter_login/models/review/review_search_request.dart';
+import 'package:flutter_login/pages/loyalty.dart';
 import 'package:flutter_login/pages/loyalty_bonus_page.dart';
 import 'package:flutter_login/models/hairsalon_hairdresser/hairsalon_hairdresser.dart';
 import 'package:flutter_login/models/hairsalon_hairdresser/hairsalon_hairdresser_search.dart';
@@ -14,43 +18,59 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'calendar_page.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class Details extends StatefulWidget {
   final HairSalon hairSalon;
-  const Details(this.hairSalon, {Key? key}) : super(key: key);
+  final ApplicationUser user;
+  const Details(this.hairSalon, this.user, {Key? key}) : super(key: key);
 
   @override
-  _DetailsState createState() => _DetailsState(hairSalon);
+  _DetailsState createState() => _DetailsState(hairSalon, user);
 }
 
 class _DetailsState extends State<Details> {
   final HairSalon hairsalon;
+  final ApplicationUser user;
   final icon = CupertinoIcons.moon_stars;
   final String assetName = 'assets/hairdresser.svg';
 
-  _DetailsState(this.hairsalon);
+  _DetailsState(this.hairsalon, this.user);
 
   var request = null;
   var reviewRequest = null;
-
-  double projesnaOcjena = 0;
+  var loyaltyRequest = null;
 
   @override
   void initState() {
     super.initState();
-    request = HairSalonHairDresserSearchRequest(hairsalonId: hairsalon.HairSalonId);
+    request =
+        HairSalonHairDresserSearchRequest(hairsalonId: hairsalon.HairSalonId);
     reviewRequest = ReviewSearchRequest(hairsalonId: hairsalon.HairSalonId);
+    loyaltyRequest = LoyaltyBonusSearchRequest(hairSalonId: hairsalon.HairSalonId);
+  }
 
+  var ratingRasult = null;
+  var ratingRequest = null;
+  Future<void> _setRating(rating) async {
+    ratingRequest = ReviewInsertRequest(
+        hairSalonId: hairsalon.HairSalonId,
+        clientId: user.applicationUserId,
+        starrating: rating.toInt());
+    ratingRasult = await APIService.post("Review", ratingRequest);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         leading: BackButton(color: Colors.blue),
-         centerTitle: true,
-        title: Text("Details", style: GoogleFonts.pacifico(color: Colors.black),),
-        backgroundColor: Colors.white ,
+        leading: BackButton(color: Colors.blue),
+        centerTitle: true,
+        title: Text(
+          "Details",
+          style: GoogleFonts.pacifico(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
         elevation: 0,
         actions: [
           IconButton(
@@ -131,29 +151,9 @@ class _DetailsState extends State<Details> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: RatingBar.builder(
-                      itemSize: 17,
-                      initialRating: projesnaOcjena,
-                      minRating: 1,
-                      direction: Axis.horizontal,
-                      allowHalfRating: false,
-                      itemCount: 5,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                      onRatingUpdate: (rating){
-                        print(rating);
-                      },
-                    ),
-                  ),
-                  
-                  
+                  starWidget(),
                 ],
-              ),      
+              ),
               SizedBox(height: 40),
               Container(
                 alignment: Alignment.centerLeft,
@@ -191,7 +191,9 @@ class _DetailsState extends State<Details> {
               CustomListTitle(title: "Loyalty services"),
               SizedBox(height: 15.0),
               Container(
-                  width: double.infinity, height: 90, child: listLoyaltyBonus())
+                  width: double.infinity,
+                  height: 190,
+                  child: listLoyaltyBonus())
             ],
           )
         ],
@@ -199,11 +201,44 @@ class _DetailsState extends State<Details> {
     );
   }
 
-   Widget listHairDresser() {
+  Widget starWidget() {
+    return FutureBuilder<dynamic>(
+        future: getReview(reviewRequest),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Text('Loading...'),
+            );
+          } else {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('${snapshot.error}'),
+              );
+            } else {
+              return Container(
+                alignment: Alignment.centerLeft,
+                child: _getReview(snapshot.data),
+              );
+            }
+          }
+        });
+  }
+
+  Future<dynamic> getReview(req) async {
+    Map<String, String>? queryParams = null;
+    if (req != null && queryParams != "")
+      queryParams = {'hairSalonId': req.hairsalonId.toString()};
+
+    var review = await APIService.getAverage('Average', queryParams);
+    var avg = double.parse(review);
+    return avg;
+  }
+
+  Widget listHairDresser() {
     return FutureBuilder<List<HairSalonHairDresser>>(
         future: getHairDressers(request),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<HairSalonHairDresser>> snapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<List<HairSalonHairDresser>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: Text('Loading...'),
@@ -226,14 +261,12 @@ class _DetailsState extends State<Details> {
   }
 
   Future<List<HairSalonHairDresser>> getHairDressers(req) async {
-
-      Map<String, String>? queryParams = null;
+    Map<String, String>? queryParams = null;
     if (req != null && queryParams != "")
       queryParams = {'HairSalonId': req.hairsalonId.toString()};
 
     var hairdresser = await APIService.get('HairSalonHairDresser', queryParams);
     return hairdresser!.map((i) => HairSalonHairDresser.fromJson(i)).toList();
-
   }
 
   Widget hairDresserWidget(hairdresser) => Container(
@@ -245,7 +278,9 @@ class _DetailsState extends State<Details> {
             InkWell(
                 onTap: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => CalendarPage(hairdresser.hairdresserId)),
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            CalendarPage(hairdresser.hairdresserId, user.applicationUserId)),
                   );
                 },
                 child: Column(
@@ -273,7 +308,7 @@ class _DetailsState extends State<Details> {
 
   Widget listLoyaltyBonus() {
     return FutureBuilder<List<LoyaltyBonus>>(
-        future: getLoyaltyBonuses(),
+        future: getLoyaltyBonuses(loyaltyRequest),
         builder:
             (BuildContext context, AsyncSnapshot<List<LoyaltyBonus>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -282,8 +317,7 @@ class _DetailsState extends State<Details> {
             );
           } else {
             if (snapshot.hasError) {
-              return Center(
-                child: Text('${snapshot.error}'));
+              return Center(child: Text('${snapshot.error}'));
             } else {
               return ListView(
                 scrollDirection: Axis.horizontal,
@@ -296,50 +330,115 @@ class _DetailsState extends State<Details> {
         });
   }
 
-  Future<List<LoyaltyBonus>> getLoyaltyBonuses() async {
-    var loyaltyBonus =
-        await APIService.get('HairSalonServiceLoyaltyBonus', null);
-    if (loyaltyBonus != null) {
-      return loyaltyBonus.map((i) => LoyaltyBonus.fromJson(i)).toList();
-    } else {
-      return List.empty();
-    }
+  Future<List<LoyaltyBonus>> getLoyaltyBonuses(req) async {
+    Map<String, String>? queryParams = null;
+    if (req != null && queryParams != "")
+      queryParams = {'HairSalonId': req.hairSalonId.toString()};
+
+    var loyalty = await APIService.get('HairSalonServiceLoyaltyBonus', queryParams);
+    return loyalty!.map((i) => LoyaltyBonus.fromJson(i)).toList();
+
   }
 
-  Widget loyaltyBonusWidget(loyaltyBonus) => Container(
-        width: 70.0,
-        margin: EdgeInsets.only(left: 10.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => LoyaltyBonusPage(loyaltyBonus)),
-                  );
-                },
-                child: Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 25.0,
-                      backgroundColor: Colors.blue,
-                      child: SvgPicture.asset(
-                        assetName,
-                        color: Colors.white,
-                        width: 30.0,
-                      ),
+  Widget loyaltyBonusWidget(loyaltyBonus) => InkWell(
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 10.0),
+          padding: EdgeInsets.all(15.0),
+          height: 150,
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: CircularPercentIndicator(
+                  animation: true,
+                  radius: 75.0,
+                  percent: 0.0,
+                  lineWidth: 5.0,
+                  circularStrokeCap: CircularStrokeCap.round,
+                  backgroundColor: Colors.white10,
+                  progressColor: Colors.white,
+                  center: Text(
+                    "0%",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
-                    SizedBox(height: 7),
-                    Text(
-                      loyaltyBonus.serviceName,
-                      style:
-                          TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    loyaltyBonus.serviceName,
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
                     ),
-                  ],
-                ))
-          ],
+                  ),
+                  Text(
+                    "Bonus: " + loyaltyBonus.discount.toString() + "%",
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      color: Colors.white54,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => LoyaltyPage(loyaltyBonus)),
+          );
+        },
+      );
+
+  Widget _getReview(result) => RatingBar.builder(
+        itemSize: 17,
+        initialRating: result == null ? 0.0 : result,
+        minRating: 1,
+        direction: Axis.horizontal,
+        allowHalfRating: true,
+        itemCount: 5,
+        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+        itemBuilder: (context, _) => Icon(
+          Icons.star,
+          color: Colors.amber,
+        ),
+        onRatingUpdate: (rating) {
+          var respone = null;
+
+          respone = _setRating(rating);
+          if (respone != null) {
+            Widget okButton = TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            );
+            AlertDialog alert = AlertDialog(
+              title: Text("Success"),
+              content: Text("You have successfully rated a salon with a rating " + rating.toString()),
+              actions: [
+                okButton,
+              ],
+            );
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return alert;
+                });
+          }
+        },
       );
 }
-

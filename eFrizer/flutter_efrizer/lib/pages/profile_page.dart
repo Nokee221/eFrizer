@@ -109,7 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
         const SizedBox(height: 16),
         Text(
           //"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-          user.description,
+          user.description == null ? " " : user.description,
           style: TextStyle(fontSize: 16, height: 1.4),
         )
       ],

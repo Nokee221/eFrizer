@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/models/HairSalon.dart';
+import 'package:flutter_login/models/application_user.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vertical_card_pager/vertical_card_pager.dart';
@@ -7,13 +8,17 @@ import 'package:vertical_card_pager/vertical_card_pager.dart';
 import 'details.dart';
 
 class HomePage2 extends StatefulWidget {
-  const HomePage2({Key? key}) : super(key: key);
+  final ApplicationUser user;
+  const HomePage2(this.user , {Key? key}) : super(key: key);
 
   @override
-  _HomePage2State createState() => _HomePage2State();
+  _HomePage2State createState() => _HomePage2State(user);
 }
 
 class _HomePage2State extends State<HomePage2> {
+  final ApplicationUser user;
+
+  _HomePage2State(this.user);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,7 +127,7 @@ class _HomePage2State extends State<HomePage2> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return Details(hairsalon);
+                  return Details(hairsalon, user);
                 },
               ),
             );

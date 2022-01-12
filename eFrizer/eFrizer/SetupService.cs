@@ -173,17 +173,17 @@ namespace eFrizer
         {
             if (!context.Services.Any(x => x.Name == "Šišanje"))
             {
-                context.Services.Add(new Service() { Name = "Šišanje", Description = "Muško šišanje" });
+                context.Services.Add(new Service() { Name = "Šišanje", Description = "Muško šišanje" , Price = 10 , TimeMin = 30 });
             }
 
             if (!context.Services.Any(x => x.Name == "Farbanje"))
             {
-                context.Services.Add(new Service() { Name = "Farbanje", Description = "Muško farbanje" });
+                context.Services.Add(new Service() { Name = "Farbanje", Description = "Muško farbanje", Price= 40 , TimeMin = 60 });
             }
 
             if (!context.Services.Any(x => x.Name == "Brijanje"))
             {
-                context.Services.Add(new Service() { Name = "Brijanje", Description = "Muško brijanje" });
+                context.Services.Add(new Service() { Name = "Brijanje", Description = "Muško brijanje", Price = 7 , TimeMin = 30 });
             }
 
             context.SaveChanges();

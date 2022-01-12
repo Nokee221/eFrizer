@@ -12,22 +12,24 @@ import 'details.dart';
 
 
 class CategoryPage extends StatefulWidget {
+  final ApplicationUser user;
   final HairSalonType hairSalonType;
 
 
-  const CategoryPage(this.hairSalonType , { Key? key }) : super(key: key);
+  const CategoryPage(this.hairSalonType , this.user , { Key? key }) : super(key: key);
 
   @override
-  _CategoryPageState createState() => _CategoryPageState(hairSalonType);
+  _CategoryPageState createState() => _CategoryPageState(hairSalonType , user);
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+  ApplicationUser user;
   HairSalonType hairSalonType;
   final icon = CupertinoIcons.moon_stars;
 
 
 
-  _CategoryPageState(this.hairSalonType);
+  _CategoryPageState(this.hairSalonType, this.user);
 
   var request = null;
   @override
@@ -145,7 +147,7 @@ class _CategoryPageState extends State<CategoryPage> {
       ),
       onTap: (){
         Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => Details(hairsalon)),
+              MaterialPageRoute(builder: (context) => Details(hairsalon.hairSalon, user)),
             );
       },
     ),

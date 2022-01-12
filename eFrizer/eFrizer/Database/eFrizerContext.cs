@@ -37,6 +37,8 @@ namespace eFrizer.Database
         public virtual DbSet<HairSalonManager> HairSalonManagers { get; set; }
         public virtual DbSet<HairSalonServiceLoyaltyBonus> HairSalonServiceLoyaltyBonuses { get; set; }
 
+        public virtual DbSet<LoyaltyBonusUser> LoyaltyBonusUsers { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             

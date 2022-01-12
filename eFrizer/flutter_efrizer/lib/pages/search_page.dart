@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_login/models/HairSalon.dart';
+import 'package:flutter_login/models/application_user.dart';
 import 'package:flutter_login/models/hairsalon_search_request.dart';
 import 'package:flutter_login/models/hairsalon_type.dart';
 import 'package:flutter_login/pages/category_page.dart';
@@ -14,15 +15,19 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({ Key? key }) : super(key: key);
+  final ApplicationUser user;
+  const SearchPage(this.user , { Key? key }) : super(key: key);
 
   @override
-  _SearchPageState createState() => _SearchPageState();
+  _SearchPageState createState() => _SearchPageState(user);
 }
 
 class _SearchPageState extends State<SearchPage> {
+  final ApplicationUser user;
   final icon = CupertinoIcons.moon_stars;
   final String assetName = 'assets/saloon.svg';
+
+  _SearchPageState(this.user);
   
   TextEditingController searchController = new TextEditingController();
   HairSalonSearchRequest? req = null;
@@ -218,7 +223,7 @@ class _SearchPageState extends State<SearchPage> {
           InkWell(
             onTap: (){
               Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => CategoryPage(hairsalontype)),
+              MaterialPageRoute(builder: (context) => CategoryPage(hairsalontype, user)),
             );
             },
             child: Column(
@@ -294,7 +299,7 @@ class _SearchPageState extends State<SearchPage> {
       ),
       onTap: (){
         Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => Details(hairsalon)),
+              MaterialPageRoute(builder: (context) => Details(hairsalon, user)),
             );
       },
     ),

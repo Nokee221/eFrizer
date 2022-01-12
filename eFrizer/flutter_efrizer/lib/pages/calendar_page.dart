@@ -12,14 +12,16 @@ import 'package:intl/intl.dart';
 import 'new_reservation.dart';
 
 class CalendarPage extends StatefulWidget {
+  final int applicationUserId;
   final int hairdresserId;
-  CalendarPage(this.hairdresserId, {Key? key}) : super(key: key);
+  CalendarPage(this.hairdresserId, this.applicationUserId, {Key? key}) : super(key: key);
 
   @override
-  _CalendarPageState createState() => _CalendarPageState(hairdresserId);
+  _CalendarPageState createState() => _CalendarPageState(hairdresserId, applicationUserId);
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+  final int applicationUserId;
   final int hairdresserId;
   final icon = CupertinoIcons.moon_stars;
 
@@ -37,7 +39,7 @@ class _CalendarPageState extends State<CalendarPage> {
   //CalendarController controller = new CalendarController();
   CalendarFormat format = CalendarFormat.week;
 
-  _CalendarPageState(this.hairdresserId);
+  _CalendarPageState(this.hairdresserId , this.applicationUserId);
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +87,7 @@ class _CalendarPageState extends State<CalendarPage> {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) => NewReservation(_dateTime, hairdresserId, _dateTime)),
+                              builder: (context) => NewReservation(_dateTime, hairdresserId, _dateTime, applicationUserId)),
                         );
                       },
                       child: const Center(

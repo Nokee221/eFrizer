@@ -89,6 +89,7 @@ namespace eFrizer
             services.AddScoped<ICRUDService<Model.HairSalonService, HairSalonServiceSearchRequest, HairSalonServiceInsertRequest, object>, Services.HairSalonServiceService>();
             services.AddScoped<ICRUDService<Model.HairSalonManager, HairSalonManagerSearchRequest, HairSalonManagerInsertRequest, object>, Services.HairSalonManagerService>();
             services.AddScoped<IHairSalonServiceLoyaltyBonusService, Services.HairSalonServiceLoyaltyBonusService>();
+            services.AddScoped<ILoyaltyBonusUser, Services.LoyaltyBonusUserService>();
             services.AddScoped<ICRUDService<Model.Picture, object, PictureInsertRequest, PictureUpdateRequest>, Services.PictureService>();
             services.AddScoped<IHairSalonPictureService, Services.HairSalonPictureService>();
 

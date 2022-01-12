@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eFrizer.Database;
 
 namespace eFrizer.Migrations
 {
     [DbContext(typeof(eFrizerContext))]
-    partial class eFrizerContextModelSnapshot : ModelSnapshot
+    [Migration("20220111133233_addedIdtoReservation")]
+    partial class addedIdtoReservation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,39 +248,6 @@ namespace eFrizer.Migrations
                     b.HasKey("HairSalonTypeId");
 
                     b.ToTable("HairSalonTypes");
-                });
-
-            modelBuilder.Entity("eFrizer.Database.LoyaltyBonusUser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ApplicationUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Counter")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LoyaltyBonusId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("hairSalonServiceLoyaltyBonusId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("hairSalonServiceLoyaltyBonusId");
-
-                    b.ToTable("LoyaltyBonusUsers");
                 });
 
             modelBuilder.Entity("eFrizer.Database.Picture", b =>
@@ -559,27 +528,6 @@ namespace eFrizer.Migrations
                     b.Navigation("Service");
                 });
 
-            modelBuilder.Entity("eFrizer.Database.LoyaltyBonusUser", b =>
-                {
-                    b.HasOne("eFrizer.Database.ApplicationUser", null)
-                        .WithMany("LoyaltyBonusUser")
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("eFrizer.Database.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("eFrizer.Database.HairSalonServiceLoyaltyBonus", "hairSalonServiceLoyaltyBonus")
-                        .WithMany("LoyaltyBonusUser")
-                        .HasForeignKey("hairSalonServiceLoyaltyBonusId");
-
-                    b.Navigation("Client");
-
-                    b.Navigation("hairSalonServiceLoyaltyBonus");
-                });
-
             modelBuilder.Entity("eFrizer.Database.Reservation", b =>
                 {
                     b.HasOne("eFrizer.Database.ApplicationUser", null)
@@ -645,8 +593,6 @@ namespace eFrizer.Migrations
                 {
                     b.Navigation("ApplicationUserRoles");
 
-                    b.Navigation("LoyaltyBonusUser");
-
                     b.Navigation("Reservations");
 
                     b.Navigation("Reviews");
@@ -663,11 +609,6 @@ namespace eFrizer.Migrations
                     b.Navigation("HairSalonServices");
 
                     b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("eFrizer.Database.HairSalonServiceLoyaltyBonus", b =>
-                {
-                    b.Navigation("LoyaltyBonusUser");
                 });
 
             modelBuilder.Entity("eFrizer.Database.HairSalonType", b =>

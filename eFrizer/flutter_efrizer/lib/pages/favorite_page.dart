@@ -18,7 +18,7 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
-  final ApplicationUser _user;
+  ApplicationUser _user;
   final icon = CupertinoIcons.moon_stars;
 
   _FavoritePageState(this._user);
@@ -69,10 +69,10 @@ class _FavoritePageState extends State<FavoritePage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 18.0),
                         child: Text(
-                          "Hairsalon just for you",
+                          "We find hairsalon just for you",
                           style: GoogleFonts.nunito(
                             color: Colors.white,
-                            fontSize: 29.0,
+                            fontSize: 25.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -82,7 +82,7 @@ class _FavoritePageState extends State<FavoritePage> {
                 ),
               ),
               SizedBox(height: 25.0),
-              CustomListTitle(title: "Best salons",),
+              CustomListTitle(title: "Our recommendation"),
               Container(
                 width: double.infinity,
                 height: double.maxFinite,
@@ -181,8 +181,9 @@ class _FavoritePageState extends State<FavoritePage> {
         ),
       ),
       onTap: (){
+        
         Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => Details(hairsalon)),
+              MaterialPageRoute(builder: (context) => Details(hairsalon, _user)),
             );
       },
     ),

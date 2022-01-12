@@ -44,6 +44,27 @@ class APIService {
     return null;
   }
 
+  static Future<dynamic> getAverage(String route, dynamic object) async {
+    String queryString = Uri(queryParameters: object).query;
+
+    String baseUrl = apiUrl + route;
+    if (object != null) {
+      baseUrl = baseUrl + '?' + queryString;
+    }
+    final String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    final response = await http.get(
+      Uri.parse(baseUrl),
+      headers: {HttpHeaders.authorizationHeader: basicAuth},
+    );
+
+    if (response.statusCode == 200) {
+      return response.body; 
+    } 
+
+    return 0.0;
+  }
+
   static Future<dynamic> getById(String route, String id) async {
     String baseUrl = apiUrl + route + "/" + id;
     final String basicAuth =

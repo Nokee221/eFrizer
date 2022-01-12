@@ -15,16 +15,18 @@ import 'package:intl/intl.dart';
 
 
 class NewReservation extends StatefulWidget {
+  final int applicationUserId;
   final DateTime reservationDate;
   final DateTime endDate;
   final int hairdressedid;
-  const NewReservation(this.reservationDate, this.hairdressedid , this.endDate , {Key? key}) : super(key: key);
+  const NewReservation(this.reservationDate, this.hairdressedid , this.endDate , this.applicationUserId, {Key? key}) : super(key: key);
 
   @override
-  _NewReservationState createState() => _NewReservationState(reservationDate, hairdressedid);
+  _NewReservationState createState() => _NewReservationState(reservationDate, hairdressedid, applicationUserId);
 }
 
 class _NewReservationState extends State<NewReservation> {
+  final int applicationUserId;
   late DateTime reservationDate;
   late DateTime endDate;
   final int hairdresserId;
@@ -32,7 +34,7 @@ class _NewReservationState extends State<NewReservation> {
   Service? _service = null;
   List<DropdownMenuItem<Service>> items = [];
 
-  _NewReservationState(this.reservationDate, this.hairdresserId);
+  _NewReservationState(this.reservationDate, this.hairdresserId, this.applicationUserId);
 
   TextEditingController dateinput = TextEditingController();
   TextEditingController totime = TextEditingController();
@@ -198,7 +200,7 @@ class _NewReservationState extends State<NewReservation> {
                   var enddateFormatted = DateFormat("yyyy-MM-dd HH:mm:ss").format(endDate);
                   
 
-                  request = ReservationInsertRequest(hairDresserId: hairdresserId, serviceId: _service!.ServiceId, clientId: 7, to: dateFormatted , from: enddateFormatted);
+                  request = ReservationInsertRequest(hairDresserId: hairdresserId, serviceId: _service!.ServiceId, clientId: applicationUserId, to: dateFormatted , from: enddateFormatted);
                   
                   Navigator.of(context).push(
                           MaterialPageRoute(
@@ -262,7 +264,7 @@ class _NewReservationState extends State<NewReservation> {
                             txtPrice.text = _service!.Price.toString();
 
                             DateTime endTimeee = reservationDate;
-                            endDate = endTimeee.add(Duration(minutes: _service!.Price));
+                            endDate = endTimeee.add(Duration(minutes: _service!.TimeMin));
                             
                             endtime.text = endDate.hour.toString() + ":" + endDate.minute.toString();
                             print(endDate);

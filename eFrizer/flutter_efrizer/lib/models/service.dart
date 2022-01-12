@@ -7,14 +7,14 @@ class Service{
   String? Name;
   String? Description;
   int Price;
-  int? TimeMin;
+  int TimeMin;
 
   Service({
     this.ServiceId,
     this.Name,
     this.Description,
     required this.Price,
-    this.TimeMin,
+    required this.TimeMin,
   });
 
   factory Service.fromJson(Map<String, dynamic> json) {
