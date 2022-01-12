@@ -48,10 +48,6 @@ namespace eFrizer.Win.Service
 
             var request = new ServiceUpdateRequest();
             request.Name = txtName.Text;
-            request.Description = txtDesc.Text;
-            request.Price = int.Parse(txtPrice.Text);
-            request.TimeMin = int.Parse(txtTime.Text);
-
 
             var service = await _services.Update<Model.Service>(int.Parse(txtServiceId.Text), request);
             await LoadData();
@@ -84,9 +80,9 @@ namespace eFrizer.Win.Service
 
             txtServiceId.Text = item.ServiceId.ToString();
             txtName.Text = item.ServiceName;
-            txtDesc.Text = item.ServiceDescription;
-            txtPrice.Text = item.ServicePrice.ToString();
-            txtTime.Text = item.ServiceTime.ToString();
+            txtDesc.Text = item.Description;
+            txtPrice.Text = item.Price.ToString();
+            txtTime.Text = item.TimeMin.ToString();
         }
 
         private async void txtView_Click(object sender, EventArgs e)

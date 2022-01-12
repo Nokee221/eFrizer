@@ -101,33 +101,7 @@ namespace eFrizer
             context.SaveChanges();
         }
 
-        private void HairSalonServiceSeed()
-        {
-            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.Service.Name == "Šišanje"))
-            {
-                context.HairSalonServices.Add(new HairSalonService()
-                {
-                    ServiceId = context.Services.Where(x => x.Name == "Šišanje").First().ServiceId,
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
-
-
-                });
-            }
-
-            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Service.Name == "Farbanje"))
-            {
-                context.HairSalonServices.Add(new HairSalonService()
-                {
-                    ServiceId = context.Services.Where(x => x.Name == "Farbanje").First().ServiceId,
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
-
-
-                });
-            }
-
-            context.SaveChanges();
-        }
-
+        
         private void ReviewSeed()
         {
             if (!context.Reviews.Any(x => x.Client.Name == "Client A" && x.HairSalon.Name == "Hair Salon 1" && x.Text == "Najbolji salon u gradu!!"))
@@ -168,21 +142,66 @@ namespace eFrizer
             context.SaveChanges();
         }
 
+        private void HairSalonServiceSeed()
+        {
+            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.Service.Name == "Šišanje"))
+            {
+                context.HairSalonServices.Add(new HairSalonService()
+                {
+                    ServiceId = context.Services.Where(x => x.Name == "Šišanje").First().ServiceId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
+                    Description = "Muško šišanje",
+                    Price = 10,
+                    TimeMin = 30
+
+                });
+            }
+
+            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Service.Name == "Farbanje"))
+            {
+                context.HairSalonServices.Add(new HairSalonService()
+                {
+                    ServiceId = context.Services.Where(x => x.Name == "Farbanje").First().ServiceId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
+                    Description = "Muško farbanje",
+                    Price = 40,
+                    TimeMin = 60
+
+                });
+            }
+
+            if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Service.Name == "Brijanje"))
+            {
+                context.HairSalonServices.Add(new HairSalonService()
+                {
+                    ServiceId = context.Services.Where(x => x.Name == "Brijanje").First().ServiceId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
+                    Description = "Muško brijanje",
+                    Price = 7,
+                    TimeMin = 30
+
+                });
+            }
+
+            
+            context.SaveChanges();
+        }
+
         private void ServiceSeed()
         {
             if (!context.Services.Any(x => x.Name == "Šišanje"))
             {
-                context.Services.Add(new Service() { Name = "Šišanje", Description = "Muško šišanje" , Price = 10 , TimeMin = 30 });
+                context.Services.Add(new Service() { Name = "Šišanje", });
             }
 
             if (!context.Services.Any(x => x.Name == "Farbanje"))
             {
-                context.Services.Add(new Service() { Name = "Farbanje", Description = "Muško farbanje", Price= 40 , TimeMin = 60 });
+                context.Services.Add(new Service() { Name = "Farbanje",  });
             }
 
             if (!context.Services.Any(x => x.Name == "Brijanje"))
             {
-                context.Services.Add(new Service() { Name = "Brijanje", Description = "Muško brijanje", Price = 7 , TimeMin = 30 });
+                context.Services.Add(new Service() { Name = "Brijanje", });
             }
 
             context.SaveChanges();

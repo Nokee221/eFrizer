@@ -8,5 +8,8 @@ namespace eFrizer.Model
     {
         public int ServicesId { get; set; }
         public int HairSalonId { get; set; }
+        public string Description { get; set; }
+        public float Price { get; set; }
+        public int TimeMin { get; set; }
     }
 }

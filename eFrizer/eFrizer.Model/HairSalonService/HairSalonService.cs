@@ -8,19 +8,15 @@ namespace eFrizer.Model
     {
         public int Id { get; set; }
 
+        public string Description { get; set; }
+        public float Price { get; set; }
+        public int TimeMin { get; set; }
+
         public int ServiceId { get; set; }
-        public int HairSalonId { get; set; }
-
-        public virtual HairSalon HairSalon { get; set; }
-        
         public virtual Service Service { get; set; }
-
-
         public string ServiceName => Service?.Name;
 
-        public string ServiceDescription => Service?.Description;
-        
-        public float ?ServicePrice => Service?.Price;
-        public float ?ServiceTime => Service?.TimeMin;
+        public int HairSalonId { get; set; }
+        public virtual HairSalon HairSalon { get; set; }
     }
 }

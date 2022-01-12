@@ -30,10 +30,6 @@ namespace eFrizer.Win.Service
         private void InitializeComponent()
         {
             this.dgvServices = new System.Windows.Forms.DataGridView();
-            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtTime = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -49,6 +45,10 @@ namespace eFrizer.Win.Service
             this.label4 = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.txtView = new System.Windows.Forms.Button();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServices)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -69,31 +69,6 @@ namespace eFrizer.Win.Service
             this.dgvServices.Size = new System.Drawing.Size(457, 256);
             this.dgvServices.TabIndex = 0;
             this.dgvServices.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvServices_CellDoubleClick);
-            // 
-            // Name
-            // 
-            this.Name.DataPropertyName = "ServiceName";
-            this.Name.HeaderText = "Name";
-            this.Name.Name = "Name";
-            // 
-            // Time
-            // 
-            this.Time.DataPropertyName = "ServiceTime";
-            this.Time.HeaderText = "Time";
-            this.Time.Name = "Time";
-            // 
-            // Price
-            // 
-            this.Price.DataPropertyName = "ServicePrice";
-            this.Price.HeaderText = "Price";
-            this.Price.Name = "Price";
-            // 
-            // Description
-            // 
-            this.Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Description.DataPropertyName = "ServiceDescription";
-            this.Description.HeaderText = "Description";
-            this.Description.Name = "Description";
             // 
             // groupBox1
             // 
@@ -253,6 +228,31 @@ namespace eFrizer.Win.Service
             this.txtView.UseVisualStyleBackColor = false;
             this.txtView.Click += new System.EventHandler(this.txtView_Click);
             // 
+            // Name
+            // 
+            this.Name.DataPropertyName = "ServiceName";
+            this.Name.HeaderText = "Name";
+            this.Name.Name = "Name";
+            // 
+            // Time
+            // 
+            this.Time.DataPropertyName = "TimeMin";
+            this.Time.HeaderText = "Time";
+            this.Time.Name = "Time";
+            // 
+            // Price
+            // 
+            this.Price.DataPropertyName = "Price";
+            this.Price.HeaderText = "Price";
+            this.Price.Name = "Price";
+            // 
+            // Description
+            // 
+            this.Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Description.DataPropertyName = "Description";
+            this.Description.HeaderText = "Description";
+            this.Description.Name = "Description";
+            // 
             // frmService
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -263,7 +263,7 @@ namespace eFrizer.Win.Service
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dgvServices);
-           
+            this.Name = "frmService";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmService";
             this.Load += new System.EventHandler(this.frmService_Load);
