@@ -1,7 +1,12 @@
 version: '3'
+
 services:
   efrizer-sql:
     image: mcr.microsoft.com/mssql/server:2019-latest
+    deploy:  
+      resources:
+        limits:
+          memory: 2g
     restart: unless-stopped
     environment: 
       - ACCEPT_EULA=Y
@@ -24,7 +29,7 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=1234
       - ASPNETCORE_Kestrel__Certificates__Default__Path=efrizer_cert.pfx
     volumes:
-      - ~/.aspnet/https:/https:ro
+      - amarstorage:/aspnet/https
     ports:
       - 5000:5000
       - 5010:5010
@@ -39,4 +44,10 @@ networks:
   efrizernet:
     driver: bridge    
 
+volumes:
+  amarstorage:
+    driver: azure_file
+    driver_opts:
+      share_name: amaracishare
+      storage_account_name: amarseminarskistorage
     
