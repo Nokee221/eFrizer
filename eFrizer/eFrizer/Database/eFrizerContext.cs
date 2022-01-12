@@ -22,7 +22,6 @@ namespace eFrizer.Database
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<HairDresser> HairDressers { get; set; }
         public virtual DbSet<HairSalon> HairSalons { get; set; }
-        public virtual DbSet<HairSalonHairDresser> HairSalonHairDressers { get; set; }
         public virtual DbSet<HairSalonHairSalonType> HairSalonHairSalonTypes { get; set; }
         public virtual DbSet<HairSalonPicture> HairSalonPictures { get; set; }
         public virtual DbSet<HairSalonService> HairSalonServices { get; set; }
@@ -62,18 +61,6 @@ namespace eFrizer.Database
             {
                 entity.HasKey(k => new { k.HairSalonId, k.PictureId })
                     .HasName("PK_hairsalon_picture");
-            });
-
-            modelBuilder.Entity<HairSalonHairDresser>(entity =>
-            {
-                entity.HasKey(k => new { k.HairSalonId, k.HairDresserId })
-                    .HasName("PK_hairsalon_hairdresser");
-            });
-
-            modelBuilder.Entity<Reservation>(entity =>
-            {
-                entity.HasKey(k => new { k.HairDresserId, k.ClientId })
-                    .HasName("PK_reservation");
             });
 
             modelBuilder.Entity<HairSalonManager>(entity =>

@@ -14,9 +14,9 @@ namespace eFrizer.Win
         //Or maybe should I make a controller that returns the Employees with a given Hair Salon Id?
         private Manager _managerOwner;
         private HairSalon _hairSalon;
-        private APIService _hairDressers = new APIService("HairSalonHairDresser");
+        private APIService _hairDressers = new APIService("HairDresser");
         private APIService _managers = new APIService("HairSalonManager");
-        private List<HairSalonHairDresser> _hairSalonHairDressers;
+        private List<HairDresser> _hairSalonHairDressers;
         private List<HairSalonManager> _hairSalonManagers;
 
         public frmEmployeeManager(HairSalon hairSalon, Manager user)
@@ -56,10 +56,10 @@ namespace eFrizer.Win
 
         private async Task LoadEmployeeList()
         {
-            var reqHD = new HairSalonHairDresserSearchRequest() { HairSalonId = _hairSalon.HairSalonId};
+            var reqHD = new HairDresserSearchRequest() { HairSalonId = _hairSalon.HairSalonId};
             var reqM = new HairSalonManagerSearchRequest() { HairSalonId = _hairSalon.HairSalonId};
 
-            _hairSalonHairDressers = await _hairDressers.Get<List<HairSalonHairDresser>>(reqHD);
+            _hairSalonHairDressers = await _hairDressers.Get<List<HairDresser>>(reqHD);
             //TODO: Will excluding the user on the db side improve query performance?
             _hairSalonManagers = await _managers.Get<List<HairSalonManager>>(reqM);
 
@@ -67,7 +67,7 @@ namespace eFrizer.Win
             populate_dgvEmployees(_hairSalonHairDressers, _hairSalonManagers);
         }
 
-        private void populate_dgvEmployees(List<HairSalonHairDresser> hairDressers = null, List<HairSalonManager> managers = null)
+        private void populate_dgvEmployees(List<HairDresser> hairDressers = null, List<HairSalonManager> managers = null)
         {
             var dataTable = new DataTable();
             dataTable.Columns.AddRange(new DataColumn[]
@@ -85,11 +85,11 @@ namespace eFrizer.Win
                 foreach (var item in hairDressers)
                 {
                     var row = dataTable.NewRow();
-                    row["ApplicationUserId"] = item.HairDresserId;
-                    row["Name"] = item.HairDresser.Name;
-                    row["Surname"] = item.HairDresser.Surname;
-                    row["Description"] = item.HairDresser.Description;
-                    row["Type"] = item.HairDresser.Type;
+                    row["ApplicationUserId"] = item.ApplicationUserId;
+                    row["Name"] = item.Name;
+                    row["Surname"] = item.Surname;
+                    row["Description"] = item.Description;
+                    row["Type"] = item.Type;
                     //row["Status"] = item.Status,
                     dataTable.Rows.Add(row);
                 } 
@@ -120,12 +120,12 @@ namespace eFrizer.Win
 
         private async void dgvEmployees_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            var dresser = _hairSalonHairDressers.Where(x => x.HairDresserId == Convert.ToInt32(dgvEmployees.SelectedRows[0].Cells[0].Value)).FirstOrDefault();
+            var dresser = _hairSalonHairDressers.Where(x => x.ApplicationUserId == Convert.ToInt32(dgvEmployees.SelectedRows[0].Cells[0].Value)).FirstOrDefault();
             var manager = _hairSalonManagers.Where(x => x.ManagerId == Convert.ToInt32(dgvEmployees.SelectedRows[0].Cells[0].Value)).FirstOrDefault();
 
             if (manager == null)
             {
-                var form = new frmHairDresserManager(_hairSalon, dresser.HairDresser).ShowDialog();
+                var form = new frmHairDresserManager(_hairSalon, dresser).ShowDialog();
             }
             else if (dresser == null)
             {
@@ -151,7 +151,7 @@ namespace eFrizer.Win
         {
             if(txtName.Text != "")
             {
-                var hairSalonHairDressers = _hairSalonHairDressers.Where(x => x.HairDresser.Name.Contains(txtName.Text) || x.HairDresser.Surname.Contains(txtName.Text)).ToList();
+                var hairSalonHairDressers = _hairSalonHairDressers.Where(x => x.Name.Contains(txtName.Text) || x.Surname.Contains(txtName.Text)).ToList();
                 var hairSalonManagers = _hairSalonManagers.Where(x => x.Manager.Name.Contains(txtName.Text) || x.Manager.Surname.Contains(txtName.Text)).ToList();
                 populate_dgvEmployees(hairSalonHairDressers, hairSalonManagers);
             }
@@ -182,13 +182,13 @@ namespace eFrizer.Win
             if ((string)cbStatus.SelectedValue == "Active")
             {
                 var managers = _hairSalonManagers.Where(x => x.Manager.Status == true).ToList();
-                var hairDressers = _hairSalonHairDressers.Where(x => x.HairDresser.Status == true).ToList();
+                var hairDressers = _hairSalonHairDressers.Where(x => x.Status == true).ToList();
                 populate_dgvEmployees(hairDressers, managers);
             }
             else if ((string)cbStatus.SelectedValue == "Inactive")
             {
                 var managers = _hairSalonManagers.Where(x => x.Manager.Status == false).ToList();
-                var hairDressers = _hairSalonHairDressers.Where(x => x.HairDresser.Status == false).ToList();
+                var hairDressers = _hairSalonHairDressers.Where(x => x.Status == false).ToList();
                 populate_dgvEmployees(hairDressers, managers);
             }
             else

@@ -115,28 +115,6 @@ namespace eFrizer.Migrations
                     b.ToTable("HairSalons");
                 });
 
-            modelBuilder.Entity("eFrizer.Database.HairSalonHairDresser", b =>
-                {
-                    b.Property<int>("HairSalonId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HairDresserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("WorkingFrom")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("WorkingTo")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("HairSalonId", "HairDresserId")
-                        .HasName("PK_hairsalon_hairdresser");
-
-                    b.HasIndex("HairDresserId");
-
-                    b.ToTable("HairSalonHairDressers");
-                });
-
             modelBuilder.Entity("eFrizer.Database.HairSalonHairSalonType", b =>
                 {
                     b.Property<int>("HairSalonId")
@@ -298,19 +276,21 @@ namespace eFrizer.Migrations
 
             modelBuilder.Entity("eFrizer.Database.Reservation", b =>
                 {
-                    b.Property<int>("HairDresserId")
+                    b.Property<int>("ReservationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ApplicationUserId")
                         .HasColumnType("int");
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ApplicationUserId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("From")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ReservationId")
+                    b.Property<int>("HairDresserId")
                         .HasColumnType("int");
 
                     b.Property<int>("ServiceId")
@@ -319,12 +299,13 @@ namespace eFrizer.Migrations
                     b.Property<DateTime>("To")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("HairDresserId", "ClientId")
-                        .HasName("PK_reservation");
+                    b.HasKey("ReservationId");
 
                     b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("HairDresserId");
 
                     b.HasIndex("ServiceId");
 
@@ -408,7 +389,7 @@ namespace eFrizer.Migrations
                 {
                     b.HasBaseType("eFrizer.Database.ApplicationUser");
 
-                    b.Property<int?>("HairSalonId")
+                    b.Property<int>("HairSalonId")
                         .HasColumnType("int");
 
                     b.HasIndex("HairSalonId");
@@ -451,25 +432,6 @@ namespace eFrizer.Migrations
                         .IsRequired();
 
                     b.Navigation("City");
-                });
-
-            modelBuilder.Entity("eFrizer.Database.HairSalonHairDresser", b =>
-                {
-                    b.HasOne("eFrizer.Database.HairDresser", "HairDresser")
-                        .WithMany()
-                        .HasForeignKey("HairDresserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("eFrizer.Database.HairSalon", "HairSalon")
-                        .WithMany()
-                        .HasForeignKey("HairSalonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("HairDresser");
-
-                    b.Navigation("HairSalon");
                 });
 
             modelBuilder.Entity("eFrizer.Database.HairSalonHairSalonType", b =>
@@ -636,9 +598,13 @@ namespace eFrizer.Migrations
 
             modelBuilder.Entity("eFrizer.Database.HairDresser", b =>
                 {
-                    b.HasOne("eFrizer.Database.HairSalon", null)
+                    b.HasOne("eFrizer.Database.HairSalon", "HairSalon")
                         .WithMany("HairDressers")
-                        .HasForeignKey("HairSalonId");
+                        .HasForeignKey("HairSalonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HairSalon");
                 });
 
             modelBuilder.Entity("eFrizer.Database.ApplicationUser", b =>

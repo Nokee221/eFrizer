@@ -46,7 +46,6 @@ namespace eFrizer
             
             //many-to-many
             ApplicationUserRoleSeed();
-            HairSalonHairDresserSeed();
             HairSalonManagerSeed();
             HairSalonHairTypeSeed();
             HairSalonServiceSeed();
@@ -490,38 +489,6 @@ namespace eFrizer
             context.SaveChanges();
         }
 
-        private void HairSalonHairDresserSeed()
-        {
-            if (!context.HairSalonHairDressers.Any(x => x.HairDresser.Name == "Hair Dresser 1" && x.HairSalon.Name == "Hair Salon 1"))
-            {
-                context.HairSalonHairDressers.Add(new HairSalonHairDresser()
-                {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").FirstOrDefault().HairSalonId,
-                    HairDresserId = context.HairDressers.Where(x => x.Name == "Hair Dresser 1").FirstOrDefault().ApplicationUserId
-                });
-            }
-
-            if (!context.HairSalonHairDressers.Any(x => x.HairDresser.Name == "Hair Dresser 2" && x.HairSalon.Name == "Hair Salon 2"))
-            {
-                context.HairSalonHairDressers.Add(new HairSalonHairDresser()
-                {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").FirstOrDefault().HairSalonId,
-                    HairDresserId = context.HairDressers.Where(x => x.Name == "Hair Dresser 2").FirstOrDefault().ApplicationUserId
-                });
-            }
-
-            if (!context.HairSalonHairDressers.Any(x => x.HairDresser.Name == "Hair Dresser 1" && x.HairSalon.Name == "Hair Salon 2"))
-            {
-                context.HairSalonHairDressers.Add(new HairSalonHairDresser()
-                {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").FirstOrDefault().HairSalonId,
-                    HairDresserId = context.HairDressers.Where(x => x.Name == "Hair Dresser 1").FirstOrDefault().ApplicationUserId
-                });
-            }
-
-            context.SaveChanges();
-        }
-
         private void HairDresserSeed(string salt, string hash)
         {
             if (!context.HairDressers.Any(x => x.Name == "Hair Dresser 1"))
@@ -532,7 +499,8 @@ namespace eFrizer
                     Surname = "The First",
                     Description = "The best in town!",
                     PasswordSalt = salt,
-                    PasswordHash = hash
+                    PasswordHash = hash,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId
                 });
             }
 
@@ -544,7 +512,8 @@ namespace eFrizer
                     Surname = "The Second",
                     Description = "The second best in town!",
                     PasswordSalt = salt,
-                    PasswordHash = hash
+                    PasswordHash = hash,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId
                 });
             }
 

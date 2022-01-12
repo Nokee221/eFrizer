@@ -62,9 +62,9 @@ namespace eFrizer.Win
                 };
 
                 _hairDresser = await _hairDresserService.Insert<HairDresser>(req);
-                await _hairSalonHairDresserService.Insert<HairSalonHairDresser>(new HairSalonHairDresser()
+                await _hairSalonHairDresserService.Insert<HairDresser>(new HairDresser()
                 {
-                    HairDresserId = _hairDresser.ApplicationUserId,
+                    ApplicationUserId = _hairDresser.ApplicationUserId,
                     HairSalonId = _hairSalon.HairSalonId
                 });
                 MessageBox.Show("Successfully added new hair dresser!");

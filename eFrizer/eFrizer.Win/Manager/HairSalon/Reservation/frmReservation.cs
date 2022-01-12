@@ -45,14 +45,14 @@ namespace eFrizer.Win.Reservation
 
         private async Task LoadHairDresser()
         {
-            var request = new HairSalonHairDresserSearchRequest();
+            var request = new HairDresserSearchRequest();
             request.HairSalonId = _hairSalon.HairSalonId;
 
-            var result = await _hairsalonhairdresser.Get<List<HairSalonHairDresser>>(request);
+            var result = await _hairsalonhairdresser.Get<List<HairDresser>>(request);
             var hairDressers = new List<HairDresser>();
             foreach (var item in result)
             {
-                hairDressers.Add(item.HairDresser);
+                hairDressers.Add(item);
             }
             cbHDName.DataSource = hairDressers;
             cbHDName.DisplayMember = "Name";

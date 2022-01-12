@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eFrizer.Migrations
 {
-    public partial class ReinitFromReviewTableEdit : Migration
+    public partial class RemoveHairSalonHairDresserAndAddHairSalonIdToHairDresser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -121,7 +121,7 @@ namespace eFrizer.Migrations
                         column: x => x.HairSalonId,
                         principalTable: "HairSalons",
                         principalColumn: "HairSalonId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -223,32 +223,6 @@ namespace eFrizer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HairSalonHairDressers",
-                columns: table => new
-                {
-                    HairSalonId = table.Column<int>(type: "int", nullable: false),
-                    HairDresserId = table.Column<int>(type: "int", nullable: false),
-                    WorkingFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    WorkingTo = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_hairsalon_hairdresser", x => new { x.HairSalonId, x.HairDresserId });
-                    table.ForeignKey(
-                        name: "FK_HairSalonHairDressers_ApplicationUsers_HairDresserId",
-                        column: x => x.HairDresserId,
-                        principalTable: "ApplicationUsers",
-                        principalColumn: "ApplicationUserId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_HairSalonHairDressers_HairSalons_HairSalonId",
-                        column: x => x.HairSalonId,
-                        principalTable: "HairSalons",
-                        principalColumn: "HairSalonId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "HairSalonManagers",
                 columns: table => new
                 {
@@ -269,13 +243,15 @@ namespace eFrizer.Migrations
                         column: x => x.HairSalonId,
                         principalTable: "HairSalons",
                         principalColumn: "HairSalonId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Reservations",
                 columns: table => new
                 {
+                    ReservationId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     HairDresserId = table.Column<int>(type: "int", nullable: false),
                     ClientId = table.Column<int>(type: "int", nullable: false),
                     ServiceId = table.Column<int>(type: "int", nullable: false),
@@ -285,7 +261,7 @@ namespace eFrizer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_reservation", x => new { x.HairDresserId, x.ClientId });
+                    table.PrimaryKey("PK_Reservations", x => x.ReservationId);
                     table.ForeignKey(
                         name: "FK_Reservations_ApplicationUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
@@ -342,7 +318,7 @@ namespace eFrizer.Migrations
                         column: x => x.HairSalonId,
                         principalTable: "HairSalons",
                         principalColumn: "HairSalonId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -367,6 +343,41 @@ namespace eFrizer.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "LoyaltyBonusUsers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LoyaltyBonusId = table.Column<int>(type: "int", nullable: false),
+                    ClientId = table.Column<int>(type: "int", nullable: false),
+                    hairSalonServiceLoyaltyBonusId = table.Column<int>(type: "int", nullable: true),
+                    Counter = table.Column<int>(type: "int", nullable: false),
+                    ApplicationUserId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LoyaltyBonusUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LoyaltyBonusUsers_ApplicationUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "ApplicationUsers",
+                        principalColumn: "ApplicationUserId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_LoyaltyBonusUsers_ApplicationUsers_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "ApplicationUsers",
+                        principalColumn: "ApplicationUserId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LoyaltyBonusUsers_HairSalonServiceLoyaltyBonuses_hairSalonServiceLoyaltyBonusId",
+                        column: x => x.hairSalonServiceLoyaltyBonusId,
+                        principalTable: "HairSalonServiceLoyaltyBonuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ApplicationUserRoles_RoleId",
                 table: "ApplicationUserRoles",
@@ -376,11 +387,6 @@ namespace eFrizer.Migrations
                 name: "IX_ApplicationUsers_HairSalonId",
                 table: "ApplicationUsers",
                 column: "HairSalonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_HairSalonHairDressers_HairDresserId",
-                table: "HairSalonHairDressers",
-                column: "HairDresserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HairSalonHairSalonTypes_HairSalonTypeId",
@@ -418,6 +424,21 @@ namespace eFrizer.Migrations
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LoyaltyBonusUsers_ApplicationUserId",
+                table: "LoyaltyBonusUsers",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoyaltyBonusUsers_ClientId",
+                table: "LoyaltyBonusUsers",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoyaltyBonusUsers_hairSalonServiceLoyaltyBonusId",
+                table: "LoyaltyBonusUsers",
+                column: "hairSalonServiceLoyaltyBonusId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reservations_ApplicationUserId",
                 table: "Reservations",
                 column: "ApplicationUserId");
@@ -426,6 +447,11 @@ namespace eFrizer.Migrations
                 name: "IX_Reservations_ClientId",
                 table: "Reservations",
                 column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservations_HairDresserId",
+                table: "Reservations",
+                column: "HairDresserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservations_ServiceId",
@@ -449,9 +475,6 @@ namespace eFrizer.Migrations
                 name: "ApplicationUserRoles");
 
             migrationBuilder.DropTable(
-                name: "HairSalonHairDressers");
-
-            migrationBuilder.DropTable(
                 name: "HairSalonHairSalonTypes");
 
             migrationBuilder.DropTable(
@@ -461,7 +484,7 @@ namespace eFrizer.Migrations
                 name: "HairSalonPictures");
 
             migrationBuilder.DropTable(
-                name: "HairSalonServiceLoyaltyBonuses");
+                name: "LoyaltyBonusUsers");
 
             migrationBuilder.DropTable(
                 name: "Reservations");
@@ -479,16 +502,19 @@ namespace eFrizer.Migrations
                 name: "Pictures");
 
             migrationBuilder.DropTable(
-                name: "HairSalonServices");
+                name: "HairSalonServiceLoyaltyBonuses");
 
             migrationBuilder.DropTable(
                 name: "ApplicationUsers");
 
             migrationBuilder.DropTable(
-                name: "Services");
+                name: "HairSalonServices");
 
             migrationBuilder.DropTable(
                 name: "HairSalons");
+
+            migrationBuilder.DropTable(
+                name: "Services");
 
             migrationBuilder.DropTable(
                 name: "Cities");
