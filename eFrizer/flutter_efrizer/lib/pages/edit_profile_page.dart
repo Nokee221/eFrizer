@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login/models/application_user.dart';
-import 'package:flutter_login/models/application_user_update_request.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
+import 'package:flutter_login/models/application_user/application_user_update_request.dart';
 import 'package:flutter_login/pages/profile_page.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_login/widget/button_widget.dart';

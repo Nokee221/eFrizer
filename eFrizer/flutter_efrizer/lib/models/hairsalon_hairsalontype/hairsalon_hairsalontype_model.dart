@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_login/models/HairSalon.dart';
+import 'package:flutter_login/models/hairsalon/HairSalon.dart';
 import 'package:flutter_login/models/hairsalon_type.dart';
 import 'package:json_annotation/json_annotation.dart';
 

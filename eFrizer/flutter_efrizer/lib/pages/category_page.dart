@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login/models/HairSalon.dart';
-import 'package:flutter_login/models/application_user.dart';
+import 'package:flutter_login/models/hairsalon/HairSalon.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/hairsalon_hairsalontype/hairsalon_hairsalontype_model.dart';
 import 'package:flutter_login/models/hairsalon_hairsalontype/hairsalon_hairsalontype_search_request.dart';
 import 'package:flutter_login/models/hairsalon_type.dart';

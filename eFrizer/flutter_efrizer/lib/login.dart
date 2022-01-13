@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login/provider/dark_theme_provider.dart';
+import 'package:provider/provider.dart';
 import 'pages/home_page.dart';
 import 'services/api_service.dart';
 
@@ -19,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -52,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                       Text(
                         "Login",
                         style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold),
+                            fontSize: 30, fontWeight: FontWeight.bold , color: Colors.black),
                       ),
                       SizedBox(
                         height: 20,
@@ -78,6 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: 5,
                         ),
                         TextField(
+                          style: TextStyle(color: Colors.black),
                           controller: usernameController,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(
@@ -103,6 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: 5,
                         ),
                         TextField(
+                          style: TextStyle(color: Colors.black),
                           controller: passwordController,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(

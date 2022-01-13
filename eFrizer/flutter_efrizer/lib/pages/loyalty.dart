@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login/models/application_user.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus.dart';
 import 'package:flutter_login/models/loyalty_user/loyalty_user.dart';
 import 'package:flutter_login/models/loyalty_user/loyalty_user_search_request.dart';

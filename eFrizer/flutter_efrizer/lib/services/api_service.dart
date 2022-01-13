@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/config.dart';
-import 'package:flutter_login/models/application_user.dart';
-import 'package:flutter_login/models/application_user_update_request.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
+import 'package:flutter_login/models/application_user/application_user_update_request.dart';
 import 'package:flutter_login/models/reservation/reservation.dart';
 import 'package:flutter_login/models/review/review.dart';
 import 'package:http/http.dart' as http;

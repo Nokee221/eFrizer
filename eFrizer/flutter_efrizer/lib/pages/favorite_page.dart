@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:flutter_login/models/HairSalon.dart';
-import 'package:flutter_login/models/application_user.dart';
+import 'package:flutter_login/models/hairsalon/HairSalon.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_login/widget/custom_list_title.dart';
 import 'package:google_fonts/google_fonts.dart';

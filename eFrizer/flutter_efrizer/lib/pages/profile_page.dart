@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login/models/application_user.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/pages/edit_profile_page.dart';
 import 'package:flutter_login/pages/user_history.dart';
+import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/widget/button_widget.dart';
 import 'package:flutter_login/widget/numbers_widget.dart';
 import 'package:flutter_login/widget/profile_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:list_tile_switch/list_tile_switch.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   final ApplicationUser user;
@@ -24,26 +27,31 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(color: Colors.blue),
         centerTitle: true,
-        title: Text("Profile", style: GoogleFonts.pacifico(color: Colors.black),),
+        title: Text(
+          "Profile",
+          style: GoogleFonts.pacifico(color: themeChange.darkTheme ? Colors.white : Colors.black),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
-      IconButton(
-        icon: Icon(icon),
-        color: Colors.blue,
-        onPressed: () {},
-      ),
-      ],
+          IconButton(
+            icon: Icon(icon),
+            color: Colors.blue,
+            onPressed: () {},
+          ),
+        ],
       ),
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [
           ProfileWidget(
-            imagePath: 'https://media.istockphoto.com/photos/millennial-male-team-leader-organize-virtual-workshop-with-employees-picture-id1300972574?b=1&k=20&m=1300972574&s=170667a&w=0&h=2nBGC7tr0kWIU8zRQ3dMg-C5JLo9H2sNUuDjQ5mlYfo=',
+            imagePath:
+                'https://media.istockphoto.com/photos/millennial-male-team-leader-organize-virtual-workshop-with-employees-picture-id1300972574?b=1&k=20&m=1300972574&s=170667a&w=0&h=2nBGC7tr0kWIU8zRQ3dMg-C5JLo9H2sNUuDjQ5mlYfo=',
             onClicked: () {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => EditeProfilePage(user)),
@@ -58,63 +66,94 @@ class _ProfilePageState extends State<ProfilePage> {
           NumbersWidget(),
           const SizedBox(height: 48),
           buildAbout(user),
+          const SizedBox(height: 8),
+          Divider(
+            thickness: 1,
+            color: Colors.grey,
+          ),
+          ListTileSwitch(
+            value: themeChange.darkTheme,
+            leading: Icon(Icons.mood_rounded),
+            onChanged: (value) {
+              setState(() {
+                themeChange.darkTheme = value;
+              });
+            },
+            visualDensity: VisualDensity.comfortable,
+            switchType: SwitchType.cupertino,
+            switchActiveColor: Colors.indigo,
+            title: Text('Dark theme'),
+          ),
+          userListTile('Logout', ' ', 4, context),
         ],
       ),
     );
   }
 
-  Widget buildName(user) => Column(
-    children: [
-      Text(
-        user.username,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 24
-        ),
-      ),
-      const SizedBox(height: 4),
-      Text(
-        user.name,
-        style: TextStyle(
-          color: Colors.grey,
-        ),
-      ),
-      Text(
-        user.surname,
-        style: TextStyle(
-          color: Colors.grey,
-        ),
-      )
-    ],
-  );
-
-  Widget buildUpgradeButtton() => ButtonWidget(text: 'VIEW HISTORY ', onClicked: (){
-    Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => History(user)),
-              );
-  });
-
-  Widget buildAbout(user) => Container(
-    padding: EdgeInsets.symmetric(horizontal: 48),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "About",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold
+  Widget userListTile(
+      String title, String subTitles, int index, BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        splashColor: Theme.of(context).splashColor,
+        child: ListTile(
+          onTap: () {},
+          title: Text(title),
+          subtitle: Text(subTitles),
+          leading: Icon(
+            Icons.exit_to_app_rounded,
           ),
         ),
-        const SizedBox(height: 16),
-        Text(
-          //"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-          user.description == null ? " " : user.description,
-          style: TextStyle(fontSize: 16, height: 1.4),
-        )
-      ],
-    ),
-  );
+      ),
+    );
+  }
 
+  Widget buildName(user) => Column(
+        children: [
+          Text(
+            user.username,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            user.name,
+            style: TextStyle(
+              color: Colors.grey,
+            ),
+          ),
+          Text(
+            user.surname,
+            style: TextStyle(
+              color: Colors.grey,
+            ),
+          )
+        ],
+      );
+
+  Widget buildUpgradeButtton() => ButtonWidget(
+      text: 'VIEW HISTORY ',
+      onClicked: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => History(user)),
+        );
+      });
+
+  Widget buildAbout(user) => Container(
+        padding: EdgeInsets.symmetric(horizontal: 48),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "About",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              //"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+              user.description == null ? " " : user.description,
+              style: TextStyle(fontSize: 16, height: 1.4),
+            )
+          ],
+        ),
+      );
 }
-
