@@ -101,7 +101,7 @@ namespace eFrizer
                         DateTime fakeDateTimeFrom, fakeDateTimeTo;
                         do
                         {
-                            fakeDateTimeFrom = new Bogus.Faker().Date.Soon();
+                            fakeDateTimeFrom = new Bogus.Faker().Date.Soon(10);
                             fakeDateTimeTo = fakeDateTimeFrom.AddMinutes(service.TimeMin);
                         }
                         while (uniqueDates.Contains(new Tuple<DateTime, DateTime>(fakeDateTimeFrom, fakeDateTimeTo)));
@@ -119,9 +119,42 @@ namespace eFrizer
                         });
                     }
                 }
-
-                context.SaveChanges();
             }
+
+            context.SaveChanges();
+
+            foreach (var client in clients)
+            {
+                foreach (var hairDresser in hairDressers)
+                {
+                    var services = hairSalonServices.Where(x => x.HairSalonId == hairDresser.HairSalonId).ToList();
+                    foreach (var service in services)
+                    {
+                        DateTime fakeDateTimeFrom, fakeDateTimeTo;
+                        do
+                        {
+                            fakeDateTimeFrom = new Bogus.Faker().Date.Recent(10);
+                            fakeDateTimeTo = fakeDateTimeFrom.AddMinutes(service.TimeMin);
+                        }
+                        while (uniqueDates.Contains(new Tuple<DateTime, DateTime>(fakeDateTimeFrom, fakeDateTimeTo)));
+
+                        uniqueDates.Add(new Tuple<DateTime, DateTime>(fakeDateTimeFrom, fakeDateTimeTo));
+
+                        context.Reservations.Add(new Reservation
+                        {
+
+                            ClientId = client.ApplicationUserId,
+                            HairDresserId = hairDresser.ApplicationUserId,
+                            HairSalonServiceId = service.ServiceId,
+                            From = fakeDateTimeFrom,
+                            To = fakeDateTimeTo
+                        });
+                    }
+                }
+
+            }
+
+            context.SaveChanges();
         }
 
         private void AdminSeed(string salt, string hash)

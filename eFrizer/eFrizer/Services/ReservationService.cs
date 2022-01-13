@@ -37,7 +37,7 @@ namespace eFrizer.Services
             }
             else if (search.From != null && search.To != null)
             {
-                var list = await Context.Reservations.Where(x => x.From >= search.From && x.To <= search.To)
+                var list = await Context.Reservations.Where(x => x.From >= search.From && x.To <= search.To && x.HairDresser.HairSalonId == search.HairSalonId)
                     .Include(x => x.Client)
                     .Include(x => x.HairSalonService).ThenInclude(x => x.Service)
                     .Include(x => x.HairDresser)

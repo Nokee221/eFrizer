@@ -100,7 +100,7 @@ namespace eFrizer.Win
 
         private void btnReports_Click(object sender, EventArgs e)
         {
-            var forma = new ReservationReport();
+            var forma = new ReservationReport(_hairSalon);
             forma.ShowDialog();
         }
     }
