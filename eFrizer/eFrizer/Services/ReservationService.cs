@@ -22,22 +22,32 @@ namespace eFrizer.Services
         {
             if(search.HairDresserId != null && search.Day != 0 && search.Month != 0)
             {
-                var list = await Context.Reservations.Where(x => x.HairDresserId == search.HairDresserId && x.To.Day == search.Day && x.To.Month == search.Month).Include(x => x.HairDresser).Include(x => x.Service).Include(x => x.Client).ToListAsync();
+                var list = await Context.Reservations.Where(x => x.HairDresserId == search.HairDresserId && x.To.Day == search.Day && x.To.Month == search.Month).Include(x => x.HairDresser).Include(x => x.HairSalonService).Include(x => x.Client).ToListAsync();
                 return _mapper.Map<List<Model.Reservation>>(list);
             }
             else if(search.HairDresserId != null)
             {
-                var list = await Context.Reservations.Where(x => x.HairDresserId == search.HairDresserId).Include(x => x.HairDresser).Include(x => x.Service).Include(x => x.Client).ToListAsync();
+                var list = await Context.Reservations.Where(x => x.HairDresserId == search.HairDresserId).Include(x => x.HairDresser).Include(x => x.HairSalonService).Include(x => x.Client).ToListAsync();
                 return _mapper.Map<List<Model.Reservation>>(list);
             }
             else if (search.ApplicationUserId != null)
             {
-                var list = await Context.Reservations.Where(x => x.ClientId == search.ApplicationUserId).Include(x => x.HairDresser).Include(x => x.Service).Include(x => x.Client).ToListAsync();
+                var list = await Context.Reservations.Where(x => x.ClientId == search.ApplicationUserId).Include(x => x.HairDresser).Include(x => x.HairSalonService).Include(x => x.Client).ToListAsync();
+                return _mapper.Map<List<Model.Reservation>>(list);
+            }
+            else if (search.From != null && search.To != null)
+            {
+                var list = await Context.Reservations.Where(x => x.From >= search.From && x.To <= search.To)
+                    .Include(x => x.Client)
+                    .Include(x => x.HairSalonService).ThenInclude(x => x.Service)
+                    .Include(x => x.HairDresser)
+                    .ToListAsync();
+
                 return _mapper.Map<List<Model.Reservation>>(list);
             }
             else
             {
-                var list = await Context.Reservations.Include(x => x.Service)
+                var list = await Context.Reservations.Include(x => x.HairSalonService)
                     .Include(x => x.HairDresser)
                     .Include(x => x.Client)
                     .ToListAsync();
@@ -53,7 +63,7 @@ namespace eFrizer.Services
             {
                 HairDresserId = request.HairDresserId,
                 ClientId = request.ClientId,
-                ServiceId = request.ServiceId,
+                HairSalonServiceId = request.ServiceId,
                 To = Convert.ToDateTime(request.To),
                 From = Convert.ToDateTime(request.From),
             };

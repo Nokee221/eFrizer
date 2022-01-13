@@ -51,21 +51,36 @@ namespace eFrizer
             HairSalonServiceSeed();
             HairSalonPictureSeed();
             ReviewSeed();
+            ReservationSeed();
+
+
+
+
+
+
+
+        }
+
+        private void ReservationSeed()
+        {
+            if (!context.Reservations.Any(x => x.Client.Username == "aclient" &&
+                                          x.HairDresser.Name == "Hair Dresser 2" &&
+                                          x.HairSalonService.Service.Name == "Šišanje"))
+            {
+                var res = new Reservation()
+                {
+                    ClientId = context.Clients.Where(x => x.Username == "aclient").First().ApplicationUserId,
+                    HairDresserId = context.HairDressers.Where(x => x.Name == "Hair Dresser 2").First().ApplicationUserId,
+                    HairSalonServiceId = context.HairSalonServices.Where(x => x.Service.Name == "Šišanje").First().ServiceId,
+                    From = DateTime.Parse("12/01/2022 15:00"),
+                    To = DateTime.Parse("12/01/2022 15:30")
+                };
+
+                context.Reservations.Add(res);
+                context.SaveChanges();
+            }
+
             
-
-
-            //if (!context.Reservations.Any(x => x.ApplicationUser.Name == "User A" && x.HairDresser.Name == "Kenan" && x.From == new DateTime(2021 , 4, 26 , 12 , 30, 0) && x.To == new DateTime(2021,4,26,13,0,0)))
-            //{
-            //    context.Reservations.Add(new Reservation()
-            //    {
-            //        ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "User A").First().ApplicationUserId,
-            //        HairDresserId = context.HairDressers.Where(x => x.Name == "Kenan").First().HairDresserId,
-            //        From = new DateTime(2021, 4, 26, 12, 30, 0),
-            //        To = new DateTime(2021, 4, 26, 13, 0, 0)
-            //    });
-            //}
-
-
         }
 
         private void AdminSeed(string salt, string hash)

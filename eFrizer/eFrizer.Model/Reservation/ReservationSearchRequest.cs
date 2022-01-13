@@ -8,8 +8,8 @@ namespace eFrizer.Model
     {
         public int? HairDresserId { get; set; }
         public int? ApplicationUserId { get; set; }
-        public DateTime To { get; set; }
-        public DateTime From { get; set; }
+        public DateTime? To { get; set; }
+        public DateTime? From { get; set; }
 
         public int Day { get; set; }
 
