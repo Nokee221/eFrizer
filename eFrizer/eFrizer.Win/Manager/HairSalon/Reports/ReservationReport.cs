@@ -58,7 +58,7 @@ namespace eFrizer.Win
                 Service = x.ServiceName,
                 Price = x.HairSalonService.Price
             });
-
+            
             float sum = 0.0f;
             foreach (var item in data)
             {

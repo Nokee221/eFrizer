@@ -61,6 +61,8 @@ namespace eFrizer
 
         }
 
+  
+
         private void ReservationSeed()
         {
             if (!context.Reservations.Any(x => x.Client.Username == "aclient" &&
@@ -81,6 +83,45 @@ namespace eFrizer
             }
 
             
+
+            var fakeReservations = new List<Reservation>();
+            var clients = context.Clients.OrderBy(x => x.ApplicationUserId).ToList();
+            var hairDressers = context.HairDressers.ToList();
+            var hairSalonServices = context.HairSalonServices.ToList();
+
+            var uniqueDates = new List<Tuple<DateTime, DateTime>>();
+
+            foreach (var client in clients)
+            {
+                foreach (var hairDresser in hairDressers)
+                {
+                    var services = hairSalonServices.Where(x => x.HairSalonId == hairDresser.HairSalonId).ToList();
+                    foreach (var service in services)
+                    {
+                        DateTime fakeDateTimeFrom, fakeDateTimeTo;
+                        do
+                        {
+                            fakeDateTimeFrom = new Bogus.Faker().Date.Soon();
+                            fakeDateTimeTo = fakeDateTimeFrom.AddMinutes(service.TimeMin);
+                        }
+                        while (uniqueDates.Contains(new Tuple<DateTime, DateTime>(fakeDateTimeFrom, fakeDateTimeTo)));
+
+                        uniqueDates.Add(new Tuple<DateTime, DateTime>(fakeDateTimeFrom, fakeDateTimeTo));
+
+                        context.Reservations.Add(new Reservation
+                        {
+                            
+                            ClientId = client.ApplicationUserId,
+                            HairDresserId = hairDresser.ApplicationUserId,
+                            HairSalonServiceId = service.ServiceId,
+                            From = fakeDateTimeFrom,
+                            To = fakeDateTimeTo
+                        });
+                    }
+                }
+
+                context.SaveChanges();
+            }
         }
 
         private void AdminSeed(string salt, string hash)
