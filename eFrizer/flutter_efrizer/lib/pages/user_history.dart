@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:flutter_login/models/application_user.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/reservation/reservation.dart';
 import 'package:flutter_login/models/reservation/reservation_search_request.dart';
+import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
 
 
 class History extends StatefulWidget {
@@ -33,10 +35,11 @@ class _HistoryState extends State<History> {
 
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("History", style: GoogleFonts.pacifico(color: Colors.black),),
+        title: Text("History", style: GoogleFonts.pacifico(color: themeChange.darkTheme ? Colors.white : Colors.black),),
         leading: BackButton(color: Colors.blue),
         backgroundColor: Colors.transparent,
         elevation: 0,

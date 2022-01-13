@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login/models/HairSalon.dart';
-import 'package:flutter_login/models/application_user.dart';
+import 'package:flutter_login/models/hairsalon/HairSalon.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
+import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:vertical_card_pager/vertical_card_pager.dart';
 
 import 'details.dart';
@@ -21,11 +23,12 @@ class _HomePage2State extends State<HomePage2> {
   _HomePage2State(this.user);
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Pick your hairsalon" , style: GoogleFonts.pacifico(color: Colors.black, fontSize: 25),),
+        title: Text("Pick your hairsalon" , style: GoogleFonts.pacifico(color: themeChange.darkTheme ? Colors.white : Colors.black, fontSize: 25),),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),

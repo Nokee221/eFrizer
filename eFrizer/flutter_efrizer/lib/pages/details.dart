@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login/models/HairSalon.dart';
-import 'package:flutter_login/models/application_user.dart';
+import 'package:flutter_login/models/hairsalon/HairSalon.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/hairdresser/hairdress.dart';
 import 'package:flutter_login/models/hairdresser/hairdresser_search_request.dart';
 import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus.dart';
@@ -13,11 +13,13 @@ import 'package:flutter_login/pages/loyalty.dart';
 import 'package:flutter_login/pages/loyalty_bonus_page.dart';
 import 'package:flutter_login/models/hairsalon_hairdresser/hairsalon_hairdresser.dart';
 import 'package:flutter_login/models/hairsalon_hairdresser/hairsalon_hairdresser_search.dart';
+import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_login/widget/custom_list_title.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 import 'calendar_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -63,15 +65,16 @@ class _DetailsState extends State<Details> {
 
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(color: Colors.blue),
         centerTitle: true,
         title: Text(
           "Details",
-          style: GoogleFonts.pacifico(color: Colors.black),
+          style: GoogleFonts.pacifico(color: themeChange.darkTheme ? Colors.white : Colors.black),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
           IconButton(

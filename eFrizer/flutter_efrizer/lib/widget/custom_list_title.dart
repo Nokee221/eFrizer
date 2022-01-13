@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login/provider/dark_theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class CustomListTitle extends StatelessWidget {
   final String? title;
@@ -7,6 +9,7 @@ class CustomListTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 18.0),
       child: Row(
@@ -15,7 +18,7 @@ class CustomListTitle extends StatelessWidget {
           Text(
             title!,
             style: TextStyle(
-              color: Color(0xFF4C4C4C),
+              color: themeChange.darkTheme ? Colors.white : Colors.black,
               fontSize: 15.0,
               fontWeight: FontWeight.bold,
             ), 

@@ -2,16 +2,18 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:flutter_login/models/HairSalon.dart';
-import 'package:flutter_login/models/application_user.dart';
-import 'package:flutter_login/models/hairsalon_search_request.dart';
+import 'package:flutter_login/models/hairsalon/HairSalon.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
+import 'package:flutter_login/models/hairsalon/hairsalon_search_request.dart';
 import 'package:flutter_login/models/hairsalon_type.dart';
 import 'package:flutter_login/pages/category_page.dart';
 import 'package:flutter_login/pages/details.dart';
+import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_login/widget/custom_list_title.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 
 class SearchPage extends StatefulWidget {
@@ -40,6 +42,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       body: Container(
         child: SingleChildScrollView(
@@ -123,7 +126,7 @@ class _SearchPageState extends State<SearchPage> {
              Container(
                width: double.infinity,
                height: 90.0,
-               child: listWidget()
+               child: listWidget(themeChange)
              ),
              Container(
                width: double.infinity,
@@ -137,7 +140,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget listWidget() {
+  Widget listWidget(themeChange) {
     return FutureBuilder<List<HairSalonType>>(
         future: GetHairSalonType(),
         builder:
@@ -155,7 +158,7 @@ class _SearchPageState extends State<SearchPage> {
               return ListView(
                 scrollDirection: Axis.horizontal,
                 physics: ScrollPhysics(),
-                children: snapshot.data!.map((e) => HairSalonTypeWidget(e)).toList(),
+                children: snapshot.data!.map((e) => HairSalonTypeWidget(e , themeChange)).toList(),
               );
             }
           }
@@ -212,7 +215,7 @@ class _SearchPageState extends State<SearchPage> {
     
   }
 
-  Widget HairSalonTypeWidget(hairsalontype) => Container(
+  Widget HairSalonTypeWidget(hairsalontype, themeChange) => Container(
     width: 70.0,
       margin: EdgeInsets.only(left: 10.0),
       child: Column(
@@ -237,7 +240,7 @@ class _SearchPageState extends State<SearchPage> {
                 
               ),
               ),
-              Text(hairsalontype.name, style: GoogleFonts.pacifico(color: Colors.black)),
+              Text(hairsalontype.name, style: GoogleFonts.pacifico(color: themeChange.darkTheme ? Colors.white : Colors.black)),
           
               ],
             )

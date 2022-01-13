@@ -1,6 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login/models/application_user.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
 import 'home_page_2.dart';
 import 'search_page.dart';
 import 'favorite_page.dart';

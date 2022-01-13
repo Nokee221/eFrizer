@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login/models/HairSalon.dart';
+import 'package:flutter_login/models/hairsalon/HairSalon.dart';
 
 class HairSalonType{
   int hairsalontypeId;

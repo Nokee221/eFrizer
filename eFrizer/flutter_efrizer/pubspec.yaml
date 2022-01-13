@@ -41,6 +41,9 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   percent_indicator: ^3.4.0
   json_annotation: ^4.4.0
+  provider: ^6.0.1
+  shared_preferences: ^2.0.11
+  list_tile_switch: ^1.0.0
 
  
 
@@ -93,11 +96,11 @@ flutter:
     - assets/haircut.svg
     - assets/hairdresser.svg
     - assets/check.png
-    - assets/correct.png
     - assets/accept.png
     - assets/strih.png
     - assets/success.gif
     - assets/pngwing.com.png
+    - assets/pngwing2.com.png
     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
