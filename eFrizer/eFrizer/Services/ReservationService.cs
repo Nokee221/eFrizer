@@ -27,6 +27,7 @@ namespace eFrizer.Services
                     .Include(x => x.HairDresser)
                     .Include(x => x.HairSalonService).ThenInclude(x => x.Service)
                     .Include(x => x.Client)
+                    .OrderBy(x => x.From)
                     .ToListAsync();
                 return _mapper.Map<List<Model.Reservation>>(list);
             }
@@ -37,6 +38,7 @@ namespace eFrizer.Services
                     .Include(x => x.HairDresser)
                     .Include(x => x.HairSalonService).ThenInclude(x => x.Service)
                     .Include(x => x.Client)
+                    .OrderBy(x => x.From)
                     .ToListAsync();
                 return _mapper.Map<List<Model.Reservation>>(list);
             }
@@ -46,7 +48,9 @@ namespace eFrizer.Services
                     .Where(x => x.ClientId == search.ApplicationUserId)
                     .Include(x => x.HairDresser)
                     .Include(x => x.HairSalonService).ThenInclude(x => x.Service)
-                    .Include(x => x.Client).ToListAsync();
+                    .Include(x => x.Client)
+                    .OrderBy(x => x.From)
+                    .ToListAsync();
                 return _mapper.Map<List<Model.Reservation>>(list);
             }
             else if (search.From != null && search.To != null)
@@ -55,6 +59,8 @@ namespace eFrizer.Services
                     .Include(x => x.Client)
                     .Include(x => x.HairSalonService).ThenInclude(x => x.Service)
                     .Include(x => x.HairDresser)
+                    .OrderBy(x => x.From)
+                    .OrderBy(x => x.From)
                     .ToListAsync();
 
                 return _mapper.Map<List<Model.Reservation>>(list);
@@ -65,6 +71,7 @@ namespace eFrizer.Services
                     .Include(x => x.Client)
                     .Include(x => x.HairSalonService).ThenInclude(x => x.Service)
                     .Include(x => x.HairDresser)
+                    .OrderBy(x => x.From)
                     .ToListAsync();
 
                 return _mapper.Map<List<Model.Reservation>>(list);
@@ -75,6 +82,7 @@ namespace eFrizer.Services
                     .Include(x => x.HairDresser)
                     .Include(x => x.HairSalonService).ThenInclude(x => x.Service)
                     .Include(x => x.Client)
+                    .OrderBy(x => x.From)
                     .ToListAsync();
                 return _mapper.Map<List<Model.Reservation>>(list);
 

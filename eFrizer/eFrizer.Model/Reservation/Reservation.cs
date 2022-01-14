@@ -17,8 +17,8 @@ namespace eFrizer.Model
         public int HairSalonServiceId { get; set; }
         public virtual HairSalonService HairSalonService { get; set; }
         
-        public DateTime To { get; set; }
         public DateTime From { get; set; }
+        public DateTime To { get; set; }
         
         public string HairDresserName => HairDresser?.Name;
         public string ClientUsername => Client?.Username;
