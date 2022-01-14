@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
+import 'package:flutter_login/models/client/client.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
+import 'models/hairdresser/hair_dresser.dart';
 import 'pages/home_page.dart';
 import 'services/api_service.dart';
 
@@ -13,8 +18,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
-  var result = null;
-  Future<void> GetData() async {
+  dynamic result;
+  Future<void> getData() async {
     result = await APIService.login(
         'Login', usernameController.text, passwordController.text);
   }
@@ -55,7 +60,9 @@ class _LoginPageState extends State<LoginPage> {
                       Text(
                         "Login",
                         style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold , color: Colors.black),
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
                       ),
                       SizedBox(
                         height: 20,
@@ -143,15 +150,34 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () async {
                           APIService.username = usernameController.text;
                           APIService.password = passwordController.text;
-                          await GetData();
-                          if (result != null) {
+                          await getData();
+                          if (result is Client) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => HomePage(result)));
+                          } else if (result is HairDresser) {
+                            Widget okButton = TextButton(
+                              child: Text("Try again"),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            );
+                            AlertDialog alert = AlertDialog(
+                              title: Text("Hair Dresser Logged In!"),
+                              content: Text("Success!"),
+                              actions: [
+                                okButton,
+                              ],
+                            );
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return alert;
+                                });
                           } else {
                             Widget okButton = TextButton(
-                              child: Text("OK"),
+                              child: Text("Try again"),
                               onPressed: () {
                                 Navigator.pop(context);
                               },

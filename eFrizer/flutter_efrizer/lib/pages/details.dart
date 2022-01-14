@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/models/hairsalon/HairSalon.dart';
 import 'package:flutter_login/models/application_user/application_user.dart';
-import 'package:flutter_login/models/hairdresser/hairdress.dart';
+import 'package:flutter_login/models/hairdresser/hair_dresser.dart';
 import 'package:flutter_login/models/hairdresser/hairdresser_search_request.dart';
 import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus.dart';
 import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus_search_request.dart';
@@ -125,7 +125,8 @@ class _DetailsState extends State<Details> {
             margin: EdgeInsets.only(top: size.height * 0.45),
             width: double.infinity,
             decoration: BoxDecoration(
-                color: themeChange.darkTheme ? Colors.black : Colors.white, borderRadius: BorderRadius.circular(50)),
+                color: themeChange.darkTheme ? Colors.black : Colors.white,
+                borderRadius: BorderRadius.circular(50)),
             child: Padding(
               padding: const EdgeInsets.all(30),
               child: Column(
@@ -195,9 +196,16 @@ class _DetailsState extends State<Details> {
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  Divider(thickness: 2, color: Colors.grey,),
-                  SizedBox(height: 20,),
-                  CustomListTitle(title: "Pick your hairdresser",),
+                  Divider(
+                    thickness: 2,
+                    color: Colors.grey,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  CustomListTitle(
+                    title: "Pick your hairdresser",
+                  ),
                   SizedBox(height: 13),
                   Container(
                     width: double.infinity,
@@ -207,7 +215,9 @@ class _DetailsState extends State<Details> {
                   SizedBox(
                     height: 20,
                   ),
-                  CustomListTitle(title: "Loyalty Bonus",),
+                  CustomListTitle(
+                    title: "Loyalty Bonus",
+                  ),
                   Container(
                     width: double.infinity,
                     height: 190,
@@ -309,7 +319,8 @@ class _DetailsState extends State<Details> {
                   children: [
                     CircleAvatar(
                       radius: 25.0,
-                      backgroundColor: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+                      backgroundColor: Colors
+                          .primaries[Random().nextInt(Colors.primaries.length)],
                       child: SvgPicture.asset(
                         assetName,
                         color: Colors.white,
@@ -363,14 +374,15 @@ class _DetailsState extends State<Details> {
   }
 
   Widget loyaltyBonusWidget(loyaltyBonus) => Padding(
-    padding: const EdgeInsets.only(left: 7),
-    child: InkWell(
+        padding: const EdgeInsets.only(left: 7),
+        child: InkWell(
           child: Container(
             margin: EdgeInsets.symmetric(vertical: 10.0),
             padding: EdgeInsets.all(15.0),
             height: 150,
             decoration: BoxDecoration(
-              color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+              color:
+                  Colors.primaries[Random().nextInt(Colors.primaries.length)],
               borderRadius: BorderRadius.circular(30),
             ),
             child: Column(
@@ -386,7 +398,8 @@ class _DetailsState extends State<Details> {
                     lineWidth: 5.0,
                     circularStrokeCap: CircularStrokeCap.round,
                     backgroundColor: Colors.white10,
-                    progressColor: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+                    progressColor: Colors
+                        .primaries[Random().nextInt(Colors.primaries.length)],
                     center: Text(
                       "",
                       style: TextStyle(
@@ -427,7 +440,7 @@ class _DetailsState extends State<Details> {
             );
           },
         ),
-  );
+      );
 
   Widget _getReview(result) => RatingBar.builder(
         itemSize: 15,
