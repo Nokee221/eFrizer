@@ -421,6 +421,19 @@ namespace eFrizer
             }
 
             context.SaveChanges();
+
+            if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "Manager Employee 1" && x.Role.Name == "Manager"))
+            {
+                var row = new ApplicationUserRole()
+                {
+                    ApplicationUserId = context.ApplicationUsers.Where(x => x.Name == "Manager Employee 1").First().ApplicationUserId,
+                    RoleId = context.Roles.Where(x => x.Name == "Manager").First().RoleId
+                };
+
+                context.ApplicationUserRoles.Add(row);
+            }
+
+            context.SaveChanges();
             
             if (!context.ApplicationUserRoles.Any(x => x.ApplicationUser.Name == "Hair Dresser 1" && x.Role.Name == "HairDresser"))
             {
@@ -497,6 +510,8 @@ namespace eFrizer
 
                 context.Clients.Add(user);
             }
+
+            context.SaveChanges();
 
             var userRoles = new List<ApplicationUserRole>();
             for (int i = 0; i < 20; i++)
@@ -645,6 +660,7 @@ namespace eFrizer
                 {
                     Name = "Hair Dresser 1",
                     Surname = "The First",
+                    Username = "hairdresser1",
                     Description = "The best in town!",
                     PasswordSalt = salt,
                     PasswordHash = hash,
@@ -658,6 +674,7 @@ namespace eFrizer
                 {
                     Name = "Hair Dresser 2",
                     Surname = "The Second",
+                    Username = "hairdresser2",
                     Description = "The second best in town!",
                     PasswordSalt = salt,
                     PasswordHash = hash,

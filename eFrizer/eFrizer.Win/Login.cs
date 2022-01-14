@@ -28,7 +28,7 @@ namespace eFrizer.Win
             try
             {
                 var result = await _user.Login<Manager>(txtUsername.Text , txtPassword.Text);
-                if(result.ApplicationUserRoles.Any(x => x.Role.Name == "Manager"))
+                if(result.ApplicationUserRoles.Any(x => x.Role.Name == "Manager" || x.Role.Name == "Manager Employee"))
                 {
                     ManagerHome frmmanagerHome = new ManagerHome(result);
                     frmmanagerHome.ShowDialog();
