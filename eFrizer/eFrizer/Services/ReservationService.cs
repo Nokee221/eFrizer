@@ -45,6 +45,16 @@ namespace eFrizer.Services
 
                 return _mapper.Map<List<Model.Reservation>>(list);
             }
+            else if (search.HairSalonId != null)
+            {
+                var list = await Context.Reservations.Where(x => x.HairDresser.HairSalonId == search.HairSalonId)
+                    .Include(x => x.Client)
+                    .Include(x => x.HairSalonService).ThenInclude(x => x.Service)
+                    .Include(x => x.HairDresser)
+                    .ToListAsync();
+
+                return _mapper.Map<List<Model.Reservation>>(list);
+            }
             else
             {
                 var list = await Context.Reservations.Include(x => x.HairSalonService)
