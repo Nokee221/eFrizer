@@ -14,19 +14,16 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import 'new_reservation.dart';
 
-class CalendarPage extends StatefulWidget {
-  final int applicationUserId;
+class HairDresserCalendarPage extends StatefulWidget {
   final int hairdresserId;
-  CalendarPage(this.hairdresserId, this.applicationUserId, {Key? key})
-      : super(key: key);
+  HairDresserCalendarPage(this.hairdresserId, {Key? key}) : super(key: key);
 
   @override
-  _CalendarPageState createState() =>
-      _CalendarPageState(hairdresserId, applicationUserId);
+  _HairDresserCalendarPageState createState() =>
+      _HairDresserCalendarPageState(hairdresserId);
 }
 
-class _CalendarPageState extends State<CalendarPage> {
-  final int applicationUserId;
+class _HairDresserCalendarPageState extends State<HairDresserCalendarPage> {
   final int hairdresserId;
   final icon = CupertinoIcons.moon_stars;
 
@@ -47,7 +44,7 @@ class _CalendarPageState extends State<CalendarPage> {
   //CalendarController controller = new CalendarController();
   CalendarFormat format = CalendarFormat.week;
 
-  _CalendarPageState(this.hairdresserId, this.applicationUserId);
+  _HairDresserCalendarPageState(this.hairdresserId);
 
   @override
   Widget build(BuildContext context) {
@@ -56,13 +53,6 @@ class _CalendarPageState extends State<CalendarPage> {
         leading: BackButton(color: Colors.blue),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: [
-          IconButton(
-            icon: Icon(icon),
-            color: Colors.blue,
-            onPressed: () {},
-          ),
-        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -82,33 +72,6 @@ class _CalendarPageState extends State<CalendarPage> {
                     style: const TextStyle(
                       fontSize: 30.0,
                       fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Container(
-                    height: 40.0,
-                    width: 160.0,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) => NewReservation(_dateTime,
-                                  hairdresserId, _dateTime, applicationUserId)),
-                        );
-                      },
-                      child: const Center(
-                        child: Text(
-                          "Add Reservation",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
                     ),
                   ),
                 ],

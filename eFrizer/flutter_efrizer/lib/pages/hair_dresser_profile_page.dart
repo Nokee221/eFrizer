@@ -5,25 +5,25 @@ import 'package:flutter_login/pages/edit_profile_page.dart';
 import 'package:flutter_login/pages/user_history.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/widget/button_widget.dart';
-import 'package:flutter_login/widget/numbers_widget.dart';
 import 'package:flutter_login/widget/profile_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 import 'package:provider/provider.dart';
 
-class ProfilePage extends StatefulWidget {
+class HairDresserProfilePage extends StatefulWidget {
   final ApplicationUser user;
-  const ProfilePage(this.user, {Key? key}) : super(key: key);
+  const HairDresserProfilePage(this.user, {Key? key}) : super(key: key);
 
   @override
-  _ProfilePageState createState() => _ProfilePageState(user);
+  _HairDresserProfilePageState createState() =>
+      _HairDresserProfilePageState(user);
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _HairDresserProfilePageState extends State<HairDresserProfilePage> {
   final ApplicationUser user;
   final icon = CupertinoIcons.moon_stars;
 
-  _ProfilePageState(this.user);
+  _HairDresserProfilePageState(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -43,20 +43,9 @@ class _ProfilePageState extends State<ProfilePage> {
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [
-          ProfileWidget(
-            imagePath:
-                'https://media.istockphoto.com/photos/millennial-male-team-leader-organize-virtual-workshop-with-employees-picture-id1300972574?b=1&k=20&m=1300972574&s=170667a&w=0&h=2nBGC7tr0kWIU8zRQ3dMg-C5JLo9H2sNUuDjQ5mlYfo=',
-            onClicked: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => EditeProfilePage(user)),
-              );
-            },
-          ),
           const SizedBox(height: 24),
           buildName(user),
           const SizedBox(height: 24),
-          Center(child: buildUpgradeButtton()),
-          const SizedBox(height: 48),
           buildAbout(user),
           const SizedBox(height: 8),
           Divider(
@@ -121,14 +110,6 @@ class _ProfilePageState extends State<ProfilePage> {
           )
         ],
       );
-
-  Widget buildUpgradeButtton() => ButtonWidget(
-      text: 'VIEW HISTORY ',
-      onClicked: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => History(user)),
-        );
-      });
 
   Widget buildAbout(user) => Container(
         padding: EdgeInsets.symmetric(horizontal: 48),

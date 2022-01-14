@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/client/client.dart';
+import 'package:flutter_login/pages/hair_dresser_home_page.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 import 'models/hairdresser/hair_dresser.dart';
@@ -157,24 +158,11 @@ class _LoginPageState extends State<LoginPage> {
                                 MaterialPageRoute(
                                     builder: (context) => HomePage(result)));
                           } else if (result is HairDresser) {
-                            Widget okButton = TextButton(
-                              child: Text("Try again"),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            );
-                            AlertDialog alert = AlertDialog(
-                              title: Text("Hair Dresser Logged In!"),
-                              content: Text("Success!"),
-                              actions: [
-                                okButton,
-                              ],
-                            );
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return alert;
-                                });
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        HairDresserHomePage(result)));
                           } else {
                             Widget okButton = TextButton(
                               child: Text("Try again"),
