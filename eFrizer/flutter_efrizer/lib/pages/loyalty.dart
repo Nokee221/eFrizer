@@ -3,9 +3,11 @@ import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus.dart';
 import 'package:flutter_login/models/loyalty_user/loyalty_user.dart';
 import 'package:flutter_login/models/loyalty_user/loyalty_user_search_request.dart';
+import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/provider.dart';
 
 class LoyaltyPage extends StatefulWidget {
   final LoyaltyBonus loyalty;
@@ -35,16 +37,17 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: themeChange.darkTheme ? Colors.black : Colors.white,
       appBar: AppBar(
         leading: BackButton(color: Colors.blue),
         centerTitle: true,
         title: Text(
           "Loyalty bonus",
-          style: GoogleFonts.pacifico(color: Colors.black),
+          style: GoogleFonts.pacifico(color: themeChange.darkTheme ? Colors.white : Colors.black),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: themeChange.darkTheme ? Colors.black : Colors.white,
         elevation: 0,
       ),
       body: Column(
@@ -55,7 +58,7 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
             child: Text(
               "Loyalty bonus",
               style: TextStyle(
-                color: Colors.black,
+                color: themeChange.darkTheme ? Colors.white : Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -67,7 +70,7 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
             child: Text(
               "Description:",
               style: TextStyle(
-                color: Colors.black,
+                color: themeChange.darkTheme ? Colors.white : Colors.black,
                 fontSize: 17,
                 fontWeight: FontWeight.bold,
               ),
@@ -90,19 +93,19 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
             padding: EdgeInsets.only(left: 18),
             child: Text("Your progress:",
                 style: TextStyle(
-                    color: Colors.black,
+                    color: themeChange.darkTheme ? Colors.white : Colors.black,
                     fontSize: 18,
                     fontWeight: FontWeight.bold)),
           ),
           SizedBox(height: 20),
-          loyaltyProgress(),
+          loyaltyProgress(themeChange),
           
         ],
       ),
     );
   }
 
-  Widget loyaltyProgress() {
+  Widget loyaltyProgress(themeChange) {
     return FutureBuilder<List<LoyatlyUser>>(
         future: getLoyaltyBonusesProgress(request),
         builder:
@@ -116,7 +119,7 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
               return Center(child: Text('${snapshot.error}'));
             } else {
               return Column(
-                children: snapshot.data!.map((e) => loyaltyBonusProgressWidget(e)).toList(),
+                children: snapshot.data!.map((e) => loyaltyBonusProgressWidget(e, themeChange)).toList(),
               );
             }
           }
@@ -133,12 +136,15 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
     return loyalty!.map((i) => LoyatlyUser.fromJson(i)).toList();
   }
 
-  Widget loyaltyBonusProgressWidget(bonus) => Column(
+  Widget loyaltyBonusProgressWidget(bonus, themeChange) => Column(
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 6, top: 8),
             child: Text(
               "Number of reservation with this service: " + bonus.counter.toString(),
+              style: TextStyle(
+                color: themeChange.darkTheme ? Colors.white : Colors.black
+              ),
             ),
           ),
           Center(

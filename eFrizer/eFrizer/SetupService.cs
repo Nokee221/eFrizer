@@ -53,15 +53,7 @@ namespace eFrizer
             ReviewSeed();
             ReservationSeed();
 
-
-
-
-
-
-
         }
-
-  
 
         private void ReservationSeed()
         {

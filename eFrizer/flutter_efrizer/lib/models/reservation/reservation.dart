@@ -2,34 +2,42 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
-class Reservation {
+class Reservation{
+  final int reservationId;
   final int HairDresserId;
   final int? ClientId;
-  final int HairSalonServiceId;
+  final int? hairSalonServiceId;
   final DateTime From;
   final DateTime To;
 
   final String HairDresserName;
-  final String ServiceName;
+ 
 
-  Reservation(
-      {required this.ClientId,
-      required this.HairDresserId,
-      required this.HairSalonServiceId,
-      required this.From,
-      required this.To,
-      required this.HairDresserName,
-      required this.ServiceName});
+
+  Reservation({
+    required this.reservationId,
+    required this.ClientId,
+    required this.HairDresserId,
+    required this.hairSalonServiceId,
+    required this.From,
+    required this.To,
+    required this.HairDresserName,
+
+  });
+
+ 
 
   factory Reservation.fromJson(Map<String, dynamic> json) {
     return Reservation(
-        HairDresserId: int.parse(json['hairDresserId'].toString()),
-        ClientId: int.parse(json['clientId'].toString()),
-        HairSalonServiceId: int.parse(json['hairSalonServiceId'].toString()),
-        From: DateTime.parse(json['from']),
-        To: DateTime.parse(json['to']),
-        HairDresserName: json['hairDresserName'],
-        ServiceName: json['serviceName']);
+      reservationId: int.parse(json['reservationId'].toString()),
+      HairDresserId: int.parse(json['hairDresserId'].toString()),
+      ClientId: int.parse(json['clientId'].toString()),
+      hairSalonServiceId: int.parse(json['hairSalonServiceId'].toString()),
+      From: DateTime.parse(json['from']),
+      To: DateTime.parse(json['to']),
+      HairDresserName: json['hairDresserName'],
+
+    );
   }
 
   Map<String, dynamic> toJson() => {};

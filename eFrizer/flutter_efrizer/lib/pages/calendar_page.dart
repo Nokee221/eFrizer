@@ -6,18 +6,24 @@ import 'package:flutter_login/models/reservation/reservation.dart';
 import 'package:flutter_login/models/reservation/reservation_search_request.dart';
 import 'package:flutter_login/pages/payment.dart';
 import 'package:flutter_login/services/api_service.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+import 'dart:math';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+
 
 import 'new_reservation.dart';
 
 class CalendarPage extends StatefulWidget {
   final int applicationUserId;
   final int hairdresserId;
-  CalendarPage(this.hairdresserId, this.applicationUserId, {Key? key}) : super(key: key);
+  CalendarPage(this.hairdresserId, this.applicationUserId, {Key? key})
+      : super(key: key);
 
   @override
-  _CalendarPageState createState() => _CalendarPageState(hairdresserId, applicationUserId);
+  _CalendarPageState createState() =>
+      _CalendarPageState(hairdresserId, applicationUserId);
 }
 
 class _CalendarPageState extends State<CalendarPage> {
@@ -33,13 +39,16 @@ class _CalendarPageState extends State<CalendarPage> {
   void initState() {
     super.initState();
 
-    request = ReservationSearchRequest(hairdresserId: hairdresserId, day: _dateTime.day , month: _dateTime.month);
+    request = ReservationSearchRequest(
+        hairdresserId: hairdresserId,
+        day: _dateTime.day,
+        month: _dateTime.month);
   }
 
   //CalendarController controller = new CalendarController();
   CalendarFormat format = CalendarFormat.week;
 
-  _CalendarPageState(this.hairdresserId , this.applicationUserId);
+  _CalendarPageState(this.hairdresserId, this.applicationUserId);
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +96,8 @@ class _CalendarPageState extends State<CalendarPage> {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) => NewReservation(_dateTime, hairdresserId, _dateTime, applicationUserId)),
+                              builder: (context) => NewReservation(_dateTime,
+                                  hairdresserId, _dateTime, applicationUserId)),
                         );
                       },
                       child: const Center(
@@ -135,7 +145,10 @@ class _CalendarPageState extends State<CalendarPage> {
                   setState(() {
                     _dateTime = selectDay;
                     focusDay = focusDay;
-                    request = ReservationSearchRequest(hairdresserId: hairdresserId, day: selectDay.day , month: selectDay.month);
+                    request = ReservationSearchRequest(
+                        hairdresserId: hairdresserId,
+                        day: selectDay.day,
+                        month: selectDay.month);
                   });
                 },
                 selectedDayPredicate: (DateTime date) {
@@ -160,12 +173,16 @@ class _CalendarPageState extends State<CalendarPage> {
                   formatButtonShowsNext: false,
                 ),
               ),
-              const Text(
-                "-------------------------------------------------------------------------------------",
-                style: TextStyle(color: Colors.grey),
+              Divider(
+                thickness: 3,
+                color: Colors.grey,
               ),
               SizedBox(height: 5),
-              Expanded(child: widgetReservation())
+              Expanded(
+                child: AnimationLimiter(
+                  child: widgetReservation(),
+                ),
+              )
             ],
           ),
         ),
@@ -188,9 +205,10 @@ class _CalendarPageState extends State<CalendarPage> {
                 child: Text('${snapshot.error}'),
               );
             } else {
+              int index = 0;
+              index++;
               return ListView(
-                children:
-                    snapshot.data!.map((e) => ReservationWidget(e)).toList(),
+                children: snapshot.data!.map((e) => ReservationWidget(e, index)).toList()
               );
             }
           }
@@ -200,61 +218,91 @@ class _CalendarPageState extends State<CalendarPage> {
   Future<List<Reservation>> getReservaion(req) async {
     Map<String, String>? queryParams = null;
     if (req != null && queryParams != "")
-      queryParams = {'HairDresserId': req.hairdresserId.toString(), 'Day': req.day.toString(), 'Month': req.month.toString()};
+      queryParams = {
+        'HairDresserId': req.hairdresserId.toString(),
+        'Day': req.day.toString(),
+        'Month': req.month.toString()
+      };
 
     var hairdresser = await APIService.get('Reservation', queryParams);
     return hairdresser!.map((i) => Reservation.fromJson(i)).toList();
   }
 
-  Widget ReservationWidget(reservation) => Container(
-        height: 80,
-        width: 80,
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(color: Colors.blueGrey[100], boxShadow: [
-          BoxShadow(
-              color: Colors.black.withOpacity(0.03),
-              offset: Offset(0, 9),
-              blurRadius: 20,
-              spreadRadius: 1)
-        ]),
-        child: Row(
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              height: 25,
-              width: 25,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.red, width: 4)),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Reservated",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
+  Widget ReservationWidget(reservation, index) => AnimationConfiguration.staggeredList(
+    position: index,
+    duration: const Duration(milliseconds: 10000),
+    child: SlideAnimation(
+        verticalOffset: 50.0,
+        child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        width: MediaQuery.of(context).size.width,
+        margin: EdgeInsets.only(bottom: 12),
+        child: Container(
+          padding: EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: Colors.red,
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Reservated",
+                        style: GoogleFonts.lato(
+                            textStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.access_time_rounded,
+                            color: Colors.grey[200],
+                            size: 18,
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            reservation.To.hour.toString() +
+                                ":" +
+                                reservation.To.minute.toString() +
+                                " - " +
+                                reservation.From.hour.toString() +
+                                ":" +
+                                reservation.From.minute.toString(),
+                            style: GoogleFonts.lato(
+                              textStyle: TextStyle(
+                                fontSize: 15,
+                                color: Colors.grey[100],
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
                 ),
-                SizedBox(height: 2),
-                Text(
-                  "Time: " + reservation.To.hour.toString() + ":" + reservation.To.minute.toString() + " - " + reservation.From.hour.toString() + ":" + reservation.From.minute.toString(),
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: Container(),
-            ),
-            Container(height: 80, width: 5, color: Colors.red)
-          ],
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                height: 60,
+                width: 1,
+                color: Colors.grey[200]!.withOpacity(1.0),
+              ),
+            ],
+          ),
         ),
-      );
+      ),
+      ),
+    
+  );
 }
