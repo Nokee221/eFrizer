@@ -52,6 +52,7 @@ namespace eFrizer.Win
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
+            this.btnBack = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -322,11 +323,22 @@ namespace eFrizer.Win
             this.label5.TabIndex = 0;
             this.label5.Text = "HairSalon Management";
             // 
+            // btnBack
+            // 
+            this.btnBack.Location = new System.Drawing.Point(294, 625);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(193, 39);
+            this.btnBack.TabIndex = 9;
+            this.btnBack.Text = "Back to previous screen";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
             // frmHairSalon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1076, 676);
+            this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
@@ -371,5 +383,6 @@ namespace eFrizer.Win
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button btnBack;
     }
 }

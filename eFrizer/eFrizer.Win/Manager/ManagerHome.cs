@@ -118,8 +118,11 @@ namespace eFrizer.Win
             }
 
             var item = dgvManagerHome.SelectedRows[0].DataBoundItem as HairSalonManager;
-            
-            var form = new frmHairSalon(item.HairSalon, _user).ShowDialog();
+
+            this.Hide();
+            var form = new frmHairSalon(item.HairSalon, _user);
+            form.Closed += (s, args) => this.Close();
+            form.Show();
 
             await LoadData();
         }

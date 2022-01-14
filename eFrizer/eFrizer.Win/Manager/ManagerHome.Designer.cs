@@ -47,7 +47,6 @@ namespace eFrizer.Win
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cbCity = new System.Windows.Forms.ComboBox();
-            this.btnAddHairSalon = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtHairsalonDesc = new System.Windows.Forms.TextBox();
@@ -138,7 +137,7 @@ namespace eFrizer.Win
             this.groupBox2.Size = new System.Drawing.Size(369, 306);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Personal info";
+            this.groupBox2.Text = "Update personal info";
             // 
             // btnEdit
             // 
@@ -222,7 +221,6 @@ namespace eFrizer.Win
             // 
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.cbCity);
-            this.groupBox3.Controls.Add(this.btnAddHairSalon);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.txtHairsalonDesc);
@@ -234,7 +232,7 @@ namespace eFrizer.Win
             this.groupBox3.Size = new System.Drawing.Size(389, 306);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "New HairSalon";
+            this.groupBox3.Text = "Add new hair salon";
             // 
             // label7
             // 
@@ -314,6 +312,7 @@ namespace eFrizer.Win
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Name = "ManagerHome";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ManagerHome";
             this.Load += new System.EventHandler(this.ManagerHome_Load);
@@ -346,7 +345,6 @@ namespace eFrizer.Win
         private System.Windows.Forms.TextBox txtHairsalonDesc;
         private System.Windows.Forms.TextBox txtHairsalonAddress;
         private System.Windows.Forms.TextBox txtHairSalonName;
-        private System.Windows.Forms.Button btnAddHairSalon;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;

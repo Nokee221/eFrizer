@@ -64,30 +64,41 @@ namespace eFrizer.Win
 
         private void btnEmployees_Click(object sender, EventArgs e)
         {
-            new frmEmployeeManager(_hairSalon, _user).ShowDialog();
+            var forma = new frmEmployeeManager(_hairSalon, _user);
+            this.Hide();
+            forma.Closed += (s, args) => this.Show();
+            forma.ShowDialog();
         }
 
         private void btnServices_Click(object sender, EventArgs e)
         {
             var forma = new frmService(_hairSalon);
+            this.Hide();
+            forma.Closed += (s, args) => this.Show();
             forma.ShowDialog();
         }
 
         private void btnReviews_Click(object sender, EventArgs e)
         {
             var forma = new frmReview(_hairSalon);
+            this.Hide();
+            forma.Closed += (s, args) => this.Show();
             forma.ShowDialog();
         }
 
         private void btnCategories_Click(object sender, EventArgs e)
         {
             var forma = new frmCategories(_hairSalon);
+            this.Hide();
+            forma.Closed += (s, args) => this.Show();
             forma.ShowDialog();
         }
 
         private void btnReservations_Click(object sender, EventArgs e)
         {
             var forma = new frmReservation(_hairSalon);
+            this.Hide();
+            forma.Closed += (s, args) => this.Show();
             forma.ShowDialog();
         }
 
@@ -95,12 +106,24 @@ namespace eFrizer.Win
         {
             //ToDO: create helper function for all these buttons that open new forms
             var forma = new frmLoyalty();
+            this.Hide();
+            forma.Closed += (s, args) => this.Show();
             forma.ShowDialog();
         }
 
         private void btnReports_Click(object sender, EventArgs e)
         {
             var forma = new ReservationReport(_hairSalon);
+            this.Hide();
+            forma.Closed += (s, args) => this.Show();
+            forma.ShowDialog();
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            var forma = new ManagerHome(this._user);
+            this.Hide();
+            forma.Closed += (s, args) => this.Close();
             forma.ShowDialog();
         }
     }

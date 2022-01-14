@@ -30,12 +30,10 @@ namespace eFrizer.Win
                 var result = await _user.Login<Manager>(txtUsername.Text , txtPassword.Text);
                 if(result.ApplicationUserRoles.Any(x => x.Role.Name == "Manager" || x.Role.Name == "Manager Employee"))
                 {
+                    this.Hide();
                     ManagerHome frmmanagerHome = new ManagerHome(result);
-                    frmmanagerHome.ShowDialog();
-                }
-                else if(result.ApplicationUserRoles.Any(x => x.Role.Name == "Administrator"))
-                {
-
+                    frmmanagerHome.Closed += (s, args) => this.Close();
+                    frmmanagerHome.Show();
                 }
             }
             catch(Exception ex)
@@ -45,9 +43,6 @@ namespace eFrizer.Win
             }
         }
 
-        private void Login_Load(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }

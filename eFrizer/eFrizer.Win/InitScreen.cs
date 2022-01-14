@@ -19,14 +19,18 @@ namespace eFrizer.Win
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            this.Hide();
             Login login = new Login();
-            login.ShowDialog();
+            login.Closed += (s, args) => this.Close();
+            login.Show();
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
+            this.Hide();
             Register register = new Register();
-            register.ShowDialog();
+            register.Closed += (s, args) => this.Close();
+            register.Show();
         }
     }
 }
