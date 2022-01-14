@@ -91,6 +91,9 @@ namespace eFrizer
 
             var uniqueDates = new List<Tuple<DateTime, DateTime>>();
 
+            var openFrom = "08:00";
+            var openUntil = "19:00";
+
             foreach (var client in clients)
             {
                 foreach (var hairDresser in hairDressers)
@@ -98,25 +101,48 @@ namespace eFrizer
                     var services = hairSalonServices.Where(x => x.HairSalonId == hairDresser.HairSalonId).ToList();
                     foreach (var service in services)
                     {
-                        DateTime fakeDateTimeFrom, fakeDateTimeTo;
+                        bool isAvailable = true;
                         do
                         {
-                            fakeDateTimeFrom = new Bogus.Faker().Date.Soon(10);
-                            fakeDateTimeTo = fakeDateTimeFrom.AddMinutes(service.TimeMin);
-                        }
-                        while (uniqueDates.Contains(new Tuple<DateTime, DateTime>(fakeDateTimeFrom, fakeDateTimeTo)));
+                            DateTime fakeDateTimeFrom, fakeDateTimeTo;
+                            do
+                            {
+                                fakeDateTimeFrom = new Bogus.Faker().Date.Soon(10);
+                                fakeDateTimeTo = fakeDateTimeFrom.AddMinutes(service.TimeMin);
+                            }
+                            while (
+                                fakeDateTimeFrom.TimeOfDay < TimeSpan.Parse(openFrom) ||
+                                fakeDateTimeFrom.TimeOfDay > TimeSpan.Parse(openUntil) ||
+                                fakeDateTimeTo.TimeOfDay < TimeSpan.Parse(openFrom) ||
+                                fakeDateTimeTo.TimeOfDay > TimeSpan.Parse(openUntil)
+                            );
 
-                        uniqueDates.Add(new Tuple<DateTime, DateTime>(fakeDateTimeFrom, fakeDateTimeTo));
 
-                        context.Reservations.Add(new Reservation
-                        {
-                            
-                            ClientId = client.ApplicationUserId,
-                            HairDresserId = hairDresser.ApplicationUserId,
-                            HairSalonServiceId = service.ServiceId,
-                            From = fakeDateTimeFrom,
-                            To = fakeDateTimeTo
-                        });
+                            foreach (var item in uniqueDates)
+                            {
+                                isAvailable = true;
+                                if (fakeDateTimeFrom < item.Item2 && fakeDateTimeTo > item.Item1)
+                                {
+                                    isAvailable = false;
+                                    break;
+                                }
+                            }
+
+                            if (isAvailable)
+                            {
+                                uniqueDates.Add(new Tuple<DateTime, DateTime>(fakeDateTimeFrom, fakeDateTimeTo));
+                                context.Reservations.Add(new Reservation
+                                {
+
+                                    ClientId = client.ApplicationUserId,
+                                    HairDresserId = hairDresser.ApplicationUserId,
+                                    HairSalonServiceId = service.ServiceId,
+                                    From = fakeDateTimeFrom,
+                                    To = fakeDateTimeTo
+                                });
+                            } 
+                        } while (isAvailable == false);
+                        
                     }
                 }
             }
@@ -130,25 +156,47 @@ namespace eFrizer
                     var services = hairSalonServices.Where(x => x.HairSalonId == hairDresser.HairSalonId).ToList();
                     foreach (var service in services)
                     {
-                        DateTime fakeDateTimeFrom, fakeDateTimeTo;
+                        bool isAvailable = true;
                         do
                         {
-                            fakeDateTimeFrom = new Bogus.Faker().Date.Recent(10);
-                            fakeDateTimeTo = fakeDateTimeFrom.AddMinutes(service.TimeMin);
-                        }
-                        while (uniqueDates.Contains(new Tuple<DateTime, DateTime>(fakeDateTimeFrom, fakeDateTimeTo)));
+                            DateTime fakeDateTimeFrom, fakeDateTimeTo;
+                            do
+                            {
+                                fakeDateTimeFrom = new Bogus.Faker().Date.Recent(10);
+                                fakeDateTimeTo = fakeDateTimeFrom.AddMinutes(service.TimeMin);
+                            }
+                            while (
+                                fakeDateTimeFrom.TimeOfDay < TimeSpan.Parse(openFrom) ||
+                                fakeDateTimeFrom.TimeOfDay > TimeSpan.Parse(openUntil) ||
+                                fakeDateTimeTo.TimeOfDay < TimeSpan.Parse(openFrom) ||
+                                fakeDateTimeTo.TimeOfDay > TimeSpan.Parse(openUntil)
+                            );
 
-                        uniqueDates.Add(new Tuple<DateTime, DateTime>(fakeDateTimeFrom, fakeDateTimeTo));
 
-                        context.Reservations.Add(new Reservation
-                        {
+                            foreach (var item in uniqueDates)
+                            {
+                                isAvailable = true;
+                                if (fakeDateTimeFrom < item.Item2 && fakeDateTimeTo > item.Item1)
+                                {
+                                    isAvailable = false;
+                                    break;
+                                }
+                            }
 
-                            ClientId = client.ApplicationUserId,
-                            HairDresserId = hairDresser.ApplicationUserId,
-                            HairSalonServiceId = service.ServiceId,
-                            From = fakeDateTimeFrom,
-                            To = fakeDateTimeTo
-                        });
+                            if (isAvailable)
+                            {
+                                uniqueDates.Add(new Tuple<DateTime, DateTime>(fakeDateTimeFrom, fakeDateTimeTo));
+                                context.Reservations.Add(new Reservation
+                                {
+
+                                    ClientId = client.ApplicationUserId,
+                                    HairDresserId = hairDresser.ApplicationUserId,
+                                    HairSalonServiceId = service.ServiceId,
+                                    From = fakeDateTimeFrom,
+                                    To = fakeDateTimeTo
+                                });
+                            }
+                        } while (isAvailable == false);
                     }
                 }
 
