@@ -51,11 +51,11 @@ class _HistoryState extends State<History> {
       ),
       ],
       ),
-      body: historyWidget(),
+      body: historyWidget(themeChange),
     );
   }
 
-  Widget historyWidget() {
+  Widget historyWidget(themeChange) {
     return FutureBuilder<List<Reservation>>(
         future: GetReservation(request),
         builder:
@@ -71,7 +71,7 @@ class _HistoryState extends State<History> {
               );
             } else {
               return ListView(
-                children: snapshot.data!.map((e) => HistoryList(e)).toList(),
+                children: snapshot.data!.map((e) => HistoryList(e, themeChange)).toList(),
               );
             }
           }
@@ -88,7 +88,7 @@ class _HistoryState extends State<History> {
     
   }
 
-  Widget HistoryList(reservation) => Slidable(
+  Widget HistoryList(reservation, themeChange) => Slidable(
     child: ListTile(
       contentPadding: EdgeInsets.symmetric(
         horizontal: 20,
@@ -102,9 +102,9 @@ class _HistoryState extends State<History> {
             "assets/strih.png"
         ),
       ),
-      title: Text( reservation.ServiceName , style: GoogleFonts.nunito(color: Colors.black, fontWeight: FontWeight.bold),),
-      subtitle: Text( reservation.HairDresserName + " => " + reservation.To.toString()),
-      tileColor: Colors.blue[50],
+      title: Text( reservation.HairDresserName , style: GoogleFonts.nunito(color: themeChange.darkTheme ? Colors.white : Colors.black, fontWeight: FontWeight.bold),),
+      subtitle: Text(reservation.To.toString()),
+      tileColor: themeChange.darkTheme ? Colors.black87 : Colors.white,
     ),
 
     endActionPane: ActionPane(

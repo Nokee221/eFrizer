@@ -185,6 +185,29 @@ class APIService {
     return null;
   }
 
+  static Future<dynamic?> delete(String route, dynamic id) async {
+    String baseUrl = apiUrl + route + "/" + id;
 
+    final String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+
+    final response = await http.delete(
+      Uri.parse(baseUrl),
+      headers: {HttpHeaders.authorizationHeader: basicAuth},
+    );
+
+    if (response.statusCode == 200) {
+      var data = JsonDecoder().convert(response.body);
+
+      return data;
+    } 
+
+    return Exception('Failed to delete reservation');
+
+    
+    }
+  
+
+  
 
 }

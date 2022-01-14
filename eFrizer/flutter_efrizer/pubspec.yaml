@@ -44,6 +44,7 @@ dependencies:
   provider: ^6.0.1
   shared_preferences: ^2.0.11
   list_tile_switch: ^1.0.0
+  flutter_staggered_animations: ^1.0.0
 
  
 
@@ -101,6 +102,10 @@ flutter:
     - assets/success.gif
     - assets/pngwing.com.png
     - assets/pngwing2.com.png
+    - assets/back_icon.svg
+    - assets/search_icon.svg
+    - assets/heart_icon.svg
+    - assets/share_icon.svg
     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

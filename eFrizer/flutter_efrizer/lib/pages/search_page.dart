@@ -14,6 +14,7 @@ import 'package:flutter_login/widget/custom_list_title.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'dart:math';
 
 
 class SearchPage extends StatefulWidget {
@@ -232,7 +233,7 @@ class _SearchPageState extends State<SearchPage> {
 
               CircleAvatar(
               radius: 25.0,
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.primaries[Random().nextInt(Colors.primaries.length)],
               child: SvgPicture.asset(
                 assetName,
                 color: Colors.white,
