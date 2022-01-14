@@ -33,14 +33,14 @@ namespace eFrizer.Win.Reservation
             this.btnSearch = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvReservation = new System.Windows.Forms.DataGridView();
-            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Service = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FROM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label2 = new System.Windows.Forms.Label();
             this.dtpDate = new System.Windows.Forms.DateTimePicker();
             this.cbHDName = new System.Windows.Forms.ComboBox();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Service = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FROM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReservation)).BeginInit();
             this.SuspendLayout();
@@ -89,8 +89,8 @@ namespace eFrizer.Win.Reservation
             this.Name,
             this.Username,
             this.Service,
-            this.TO,
-            this.FROM});
+            this.FROM,
+            this.TO});
             this.dgvReservation.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvReservation.Location = new System.Drawing.Point(3, 19);
             this.dgvReservation.Name = "dgvReservation";
@@ -98,43 +98,6 @@ namespace eFrizer.Win.Reservation
             this.dgvReservation.RowTemplate.Height = 25;
             this.dgvReservation.Size = new System.Drawing.Size(664, 273);
             this.dgvReservation.TabIndex = 0;
-            // 
-            // Name
-            // 
-            this.Name.DataPropertyName = "HairDresserName";
-            this.Name.HeaderText = "HairDresser";
-            this.Name.Name = "Name";
-            this.Name.ReadOnly = true;
-            // 
-            // Username
-            // 
-            this.Username.DataPropertyName = "ClientUsername";
-            this.Username.HeaderText = "ClientName";
-            this.Username.Name = "Username";
-            this.Username.ReadOnly = true;
-            // 
-            // Service
-            // 
-            this.Service.DataPropertyName = "ServiceName";
-            this.Service.HeaderText = "Service";
-            this.Service.Name = "Service";
-            this.Service.ReadOnly = true;
-            // 
-            // TO
-            // 
-            this.TO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.TO.DataPropertyName = "To";
-            this.TO.HeaderText = "TO";
-            this.TO.Name = "TO";
-            this.TO.ReadOnly = true;
-            // 
-            // FROM
-            // 
-            this.FROM.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.FROM.DataPropertyName = "From";
-            this.FROM.HeaderText = "FROM";
-            this.FROM.Name = "FROM";
-            this.FROM.ReadOnly = true;
             // 
             // label2
             // 
@@ -163,6 +126,43 @@ namespace eFrizer.Win.Reservation
             this.cbHDName.Size = new System.Drawing.Size(230, 23);
             this.cbHDName.TabIndex = 6;
             // 
+            // Name
+            // 
+            this.Name.DataPropertyName = "HairDresserName";
+            this.Name.HeaderText = "HairDresser";
+            this.Name.Name = "Name";
+            this.Name.ReadOnly = true;
+            // 
+            // Username
+            // 
+            this.Username.DataPropertyName = "ClientUsername";
+            this.Username.HeaderText = "ClientName";
+            this.Username.Name = "Username";
+            this.Username.ReadOnly = true;
+            // 
+            // Service
+            // 
+            this.Service.DataPropertyName = "ServiceName";
+            this.Service.HeaderText = "Service";
+            this.Service.Name = "Service";
+            this.Service.ReadOnly = true;
+            // 
+            // FROM
+            // 
+            this.FROM.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.FROM.DataPropertyName = "From";
+            this.FROM.HeaderText = "FROM";
+            this.FROM.Name = "FROM";
+            this.FROM.ReadOnly = true;
+            // 
+            // TO
+            // 
+            this.TO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.TO.DataPropertyName = "To";
+            this.TO.HeaderText = "TO";
+            this.TO.Name = "TO";
+            this.TO.ReadOnly = true;
+            // 
             // frmReservation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -174,7 +174,6 @@ namespace eFrizer.Win.Reservation
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.label1);
-           
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmReservation";
             this.Load += new System.EventHandler(this.frmReservation_Load);
@@ -197,7 +196,7 @@ namespace eFrizer.Win.Reservation
         private System.Windows.Forms.DataGridViewTextBoxColumn Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn Username;
         private System.Windows.Forms.DataGridViewTextBoxColumn Service;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TO;
         private System.Windows.Forms.DataGridViewTextBoxColumn FROM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TO;
     }
 }

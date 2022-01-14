@@ -15,7 +15,7 @@ namespace eFrizer.Win.Reservation
     {
 
         private readonly HairSalon _hairSalon;
-        private APIService _hairsalonhairdresser = new APIService("HairSalonHairDresser");
+        private APIService _hairDresser = new APIService("HairDresser");
         private APIService _reservation = new APIService("Reservation");
         public frmReservation(HairSalon hairSalon)
         {
@@ -37,7 +37,12 @@ namespace eFrizer.Win.Reservation
 
         private async Task LoadReservation()
         {
-            var result = await _reservation.Get<List<Model.Reservation>>();
+            var reservationSearch = new ReservationSearchRequest
+            {
+                HairSalonId = _hairSalon.HairSalonId
+            };
+
+            var result = await _reservation.Get<List<Model.Reservation>>(reservationSearch);
             dgvReservation.DataSource = result;
         }
 
@@ -48,13 +53,9 @@ namespace eFrizer.Win.Reservation
             var request = new HairDresserSearchRequest();
             request.HairSalonId = _hairSalon.HairSalonId;
 
-            var result = await _hairsalonhairdresser.Get<List<HairDresser>>(request);
-            var hairDressers = new List<HairDresser>();
-            foreach (var item in result)
-            {
-                hairDressers.Add(item);
-            }
-            cbHDName.DataSource = hairDressers;
+            var result = await _hairDresser.Get<List<HairDresser>>(request);
+
+            cbHDName.DataSource = result;
             cbHDName.DisplayMember = "Name";
             cbHDName.ValueMember = "ApplicationUserId";
 
