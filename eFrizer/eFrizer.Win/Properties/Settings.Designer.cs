@@ -25,7 +25,7 @@ namespace eFrizer.Win.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:5000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://20.113.20.206:5000/")]
         public string ApiURL {
             get {
                 return ((string)(this["ApiURL"]));
