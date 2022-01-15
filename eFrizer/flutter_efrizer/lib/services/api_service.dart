@@ -1,20 +1,14 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:flutter_login/config.dart';
 import 'package:flutter_login/models/application_user/application_user.dart';
-import 'package:flutter_login/models/application_user/application_user_update_request.dart';
 import 'package:flutter_login/models/client/client.dart';
 import 'package:flutter_login/models/hairdresser/hair_dresser.dart';
-import 'package:flutter_login/models/reservation/reservation.dart';
-import 'package:flutter_login/models/review/review.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
-import '../config.dart';
 
 class APIService {
   static String? username;
   static String? password;
-  static String apiUrl = devIp;
+  static String apiUrl = "http://20.113.20.206:5000/";
 
   String? route;
 
