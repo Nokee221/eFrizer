@@ -33,6 +33,14 @@ class _HistoryState extends State<History> {
     request = ReservationSearchRequest(applicationuserId: user.applicationUserId);
   }
 
+  var result = null;
+  Future<void> deleteData(id) async {
+    
+
+    result =
+        await APIService.delete("Reservation", id.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
@@ -88,7 +96,19 @@ class _HistoryState extends State<History> {
     
   }
 
-  Widget HistoryList(reservation, themeChange) => Slidable(
+  Widget HistoryList(reservation, themeChange) => Dismissible(
+    key: Key(reservation.reservationId.toString()),
+    direction: DismissDirection.horizontal,
+    onDismissed: (direction){
+      setState(() {
+        deleteData(reservation.reservationId);
+        historyWidget(themeChange);
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Reservation deleted")));
+    },
+
+    background: Container(color: Colors.red),
     child: ListTile(
       contentPadding: EdgeInsets.symmetric(
         horizontal: 20,
@@ -106,22 +126,5 @@ class _HistoryState extends State<History> {
       subtitle: Text(reservation.To.toString()),
       tileColor: themeChange.darkTheme ? Colors.black87 : Colors.white,
     ),
-
-    endActionPane: ActionPane(
-      motion: StretchMotion(),
-      children: [
-        SlidableAction(
-        
-          onPressed: doNothing,
-          backgroundColor: Colors.red,
-          foregroundColor: Colors.white,
-          icon: Icons.delete,
-          label: 'Delete',
-        ),
-        
-      ],
-    ),
   );
-
-  void doNothing(BuildContext context) {}
 }
