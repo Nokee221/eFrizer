@@ -13,6 +13,6 @@ namespace eFrizer.Model
         public string PasswordConfirmation { get; set; }
         public string Description { get; set; }
         public bool Status { get; set; }
-        public List<int> Roles { get; set; } = new List<int>();
+        
     }
 }

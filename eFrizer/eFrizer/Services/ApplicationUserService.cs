@@ -61,16 +61,14 @@ namespace eFrizer.Services
 
             await Context.SaveChangesAsync();
 
-            foreach (var uloga in request.Roles)
-            {
-                Database.ApplicationUserRole appUserRole = new Database.ApplicationUserRole();
-                appUserRole.ApplicationUserId = entity.ApplicationUserId;
-                appUserRole.RoleId = uloga;
-                //TODO: add ChangeDate prop to model
-                //appUserRole.ChangeDate = DateTime.Now;
+           
+            Database.ApplicationUserRole appUserRole = new Database.ApplicationUserRole();
+            appUserRole.ApplicationUserId = entity.ApplicationUserId;
+            //TODO: add ChangeDate prop to model
+            //appUserRole.ChangeDate = DateTime.Now;
 
-                Context.ApplicationUserRoles.Add(appUserRole);
-            }
+            Context.ApplicationUserRoles.Add(appUserRole);
+            
 
             Context.SaveChanges();
 
@@ -98,17 +96,43 @@ namespace eFrizer.Services
             return _mapper.Map<Model.ApplicationUser>(entity);
         }
 
-        public async Task<Model.Role> GetRole(string roleName)
+        public Model.Client RegisterClient(ClientInsertRequest request)
         {
-            var role = await Context.Roles.Where(x => x.Name == roleName).FirstOrDefaultAsync();
+            int roleId = Context.Roles.Where(x => x.Name == "Client").First().RoleId;
 
-            return _mapper.Map<Model.Role>(role);
+            //TODO: Check if username already exists!
+            var entity = _mapper.Map<Database.Client>(request);
+            Context.Add(entity);
+
+            if (request.Password != request.PasswordConfirmation)
+            {
+                throw new UserException("Passwordi se ne podudaraju!");
+            }
+
+            entity.PasswordSalt = AuthHelper.GenerateSalt();
+            entity.PasswordHash = AuthHelper.GenerateHash(entity.PasswordSalt, request.Password);
+
+            Context.SaveChanges();
 
             
+            Database.ApplicationUserRole appUserRole = new Database.ApplicationUserRole();
+            appUserRole.ApplicationUserId = entity.ApplicationUserId;
+            appUserRole.RoleId = roleId;
+            //TODO: add ChangeDate prop to model
+            //appUserRole.ChangeDate = DateTime.Now;
+
+            Context.ApplicationUserRoles.Add(appUserRole);
+            
+
+            Context.SaveChanges();
+
+            return _mapper.Map<Model.Client>(entity);
         }
 
-        public async Task<Model.Manager> RegisterManager(ManagerInsertRequest request)
+        public Model.Manager RegisterManager(ManagerInsertRequest request)
         {
+            int roleId = Context.Roles.Where(x => x.Name == "Manager").First().RoleId;
+            
             //TODO: Check if username already exists!
             var entity = _mapper.Map<Database.Manager>(request);
             Context.Add(entity);
@@ -121,18 +145,17 @@ namespace eFrizer.Services
             entity.PasswordSalt = AuthHelper.GenerateSalt();
             entity.PasswordHash = AuthHelper.GenerateHash(entity.PasswordSalt, request.Password);
 
-            await Context.SaveChangesAsync();
+            Context.SaveChanges();
 
-            foreach (var uloga in request.Roles)
-            {
-                Database.ApplicationUserRole appUserRole = new Database.ApplicationUserRole();
-                appUserRole.ApplicationUserId = entity.ApplicationUserId;
-                appUserRole.RoleId = uloga;
-                //TODO: add ChangeDate prop to model
-                //appUserRole.ChangeDate = DateTime.Now;
+           
+            Database.ApplicationUserRole appUserRole = new Database.ApplicationUserRole();
+            appUserRole.ApplicationUserId = entity.ApplicationUserId;
+            appUserRole.RoleId = roleId;
+            //TODO: add ChangeDate prop to model
+            //appUserRole.ChangeDate = DateTime.Now;
 
-                Context.ApplicationUserRoles.Add(appUserRole);
-            }
+            Context.ApplicationUserRoles.Add(appUserRole);
+            
 
             Context.SaveChanges();
 

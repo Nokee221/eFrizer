@@ -37,7 +37,7 @@ namespace eFrizer
             });
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "eFrizer API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "eFrizer API", Version = "v2" });
 
                 c.AddSecurityDefinition("basicAuth", new OpenApiSecurityScheme
                 {

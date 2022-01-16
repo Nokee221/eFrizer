@@ -6,6 +6,6 @@ namespace eFrizer.Model
 {
     public class ClientInsertRequest : ApplicationUserInsertRequest
     {
-        public string Description { get; set; }
+        
     }
 }

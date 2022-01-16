@@ -33,15 +33,18 @@ namespace eFrizer.Controllers
             return await service.Login(request.Username, request.Password);
         }
 
+        [AllowAnonymous]
+        [HttpPost("/RegisterClient")]
+        public Client RegisterManager([FromBody] ClientInsertRequest request)
+        {
+            return service.RegisterClient(request);
+        }
 
         [AllowAnonymous]
-        [HttpPost("/Register")]
-        public async Task<Manager> Register([FromBody] ManagerInsertRequest request)
+        [HttpPost("/RegisterManager")]
+        public Manager RegisterManager([FromBody] ManagerInsertRequest request)
         {
-
-            request.Roles.Add(service.GetRole("Manager").Id);
-
-            return await service.RegisterManager(request);
+            return service.RegisterManager(request);
         }
 
 
