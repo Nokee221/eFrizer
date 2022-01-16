@@ -8,7 +8,9 @@ import 'dart:io';
 class APIService {
   static String? username;
   static String? password;
-  static String apiUrl = "http://20.113.20.206:5000/";
+  //deployed apI: "http://efrizer.germanywestcentral.azurecontainer.io:5000/"
+  static String apiUrl =
+      "http://efrizer.germanywestcentral.azurecontainer.io:5000/";
 
   String? route;
 
