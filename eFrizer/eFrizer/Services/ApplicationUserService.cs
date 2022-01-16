@@ -40,7 +40,7 @@ namespace eFrizer.Services
                 }
             }
 
-            var list = await entity.ToListAsync();
+            var list = await entity.Include(x => x.ApplicationUserRoles).ThenInclude(x => x.Role).ToListAsync();
 
             return _mapper.Map<List<Model.ApplicationUser>>(list);
         }
