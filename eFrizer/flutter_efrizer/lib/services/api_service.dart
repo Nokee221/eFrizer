@@ -88,11 +88,15 @@ class APIService {
     );
 
     if (response.statusCode == 200) {
+     
       var res = json.decode(response.body);
       var data;
-      if (res.length != 0) {
-        data = LoyaltyBonus.fromJson(res[0]);
-      } else {
+      if(res.length != 0)
+      {
+
+        data = LoyaltyUser.fromJson(res[0]);
+      }
+      else{
         data = null;
       }
 
