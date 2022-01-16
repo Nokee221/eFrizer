@@ -43,6 +43,10 @@ namespace eFrizer.Win
             }
         }
 
-        
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var forma = new Register();
+            forma.ShowDialog();
+        }
     }
 }
