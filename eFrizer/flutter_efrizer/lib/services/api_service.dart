@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/client/client.dart';
+import 'package:flutter_login/models/client/client_insert_request.dart';
 import 'package:flutter_login/models/hairdresser/hair_dresser.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
@@ -124,6 +125,21 @@ class APIService {
             roles: roles);
       }
     } on Exception catch (e) {
+      return null;
+    }
+  }
+
+  static Future<ApplicationUser?> register(
+      String route, ClientInsertRequest req) async {
+    final String baseUrl = apiUrl + route;
+    final response = await http.post(Uri.parse(baseUrl),
+        body: jsonEncode(req.toJson()),
+        headers: <String, String>{'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+      Client data = Client.fromJsonLimited(json.decode(response.body));
+      return data;
+    } else {
       return null;
     }
   }

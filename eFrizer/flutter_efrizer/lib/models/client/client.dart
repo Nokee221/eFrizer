@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import '../application_user/application_user.dart';
 
 class Client extends ApplicationUser {
@@ -7,8 +6,8 @@ class Client extends ApplicationUser {
       required dynamic username,
       required String surname,
       required String name,
-      required String description,
-      required List<dynamic> roles})
+      String description = "Something interesting",
+      List<dynamic> roles = const ["A random role"]})
       : super(
             applicationUserId: applicationUserId,
             username: username,
@@ -25,5 +24,13 @@ class Client extends ApplicationUser {
         description: json["description"],
         username: json["username"],
         roles: json["roles"] as List<dynamic>);
+  }
+
+  factory Client.fromJsonLimited(Map<String, dynamic> json) {
+    return Client(
+        applicationUserId: int.parse(json["applicationUserId"].toString()),
+        username: json["username"],
+        name: json["name"],
+        surname: json["surname"]);
   }
 }

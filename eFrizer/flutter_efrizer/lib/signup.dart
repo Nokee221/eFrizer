@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login/models/client/client.dart';
+import 'package:flutter_login/models/client/client_insert_request.dart';
+import 'package:flutter_login/pages/home_page.dart';
+import 'package:flutter_login/services/api_service.dart';
 
 class SignUpPage extends StatelessWidget {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController surnameController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordConfirmationController =
+      TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,11 +24,11 @@ class SignUpPage extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back_ios,
+          icon: Icon(
+            Icons.arrow_back_ios,
             size: 20,
-            color: Colors.black,),
-
-
+            color: Colors.black,
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -31,133 +41,147 @@ class SignUpPage extends StatelessWidget {
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  Text("Sign up",
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black
-
-                  ),),
-                  SizedBox(height: 20,),
-                  Text("Create an account, It's free ",
+                  Text(
+                    "Sign up",
                     style: TextStyle(
-                        fontSize: 15,
-                        color:Colors.grey[700]),)
-
-
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Create an account, It's free ",
+                    style: TextStyle(fontSize: 15, color: Colors.grey[700]),
+                  )
                 ],
               ),
               Column(
                 children: <Widget>[
-                  inputFile(label: "Username"),
-                  inputFile(label: "Name"),
-                  inputFile(label: "Surname"),
-                  inputFile(label: "Password", obscureText: true),
-                  inputFile(label: "Confirm Password ", obscureText: true),
+                  inputFile(
+                      label: "Username", controllerSend: usernameController),
+                  inputFile(label: "Name", controllerSend: nameController),
+                  inputFile(
+                      label: "Surname", controllerSend: surnameController),
+                  inputFile(
+                      label: "Password", controllerSend: passwordController),
+                  inputFile(
+                      label: "Confirm Password ",
+                      obscureText: true,
+                      controllerSend: passwordConfirmationController)
                 ],
               ),
               Container(
                 padding: EdgeInsets.only(top: 3, left: 3),
-                decoration:
-                BoxDecoration(
+                decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
                     border: Border(
                       bottom: BorderSide(color: Colors.black),
                       top: BorderSide(color: Colors.black),
                       left: BorderSide(color: Colors.black),
                       right: BorderSide(color: Colors.black),
-
-
-
-                    )
-
-                ),
+                    )),
                 child: MaterialButton(
                   minWidth: double.infinity,
                   height: 60,
-                  onPressed: () {},
+                  onPressed: () async {
+                    ClientInsertRequest req = ClientInsertRequest(
+                        name: nameController.text,
+                        surname: surnameController.text,
+                        username: usernameController.text,
+                        password: passwordController.text,
+                        passwordConfirmation:
+                            passwordConfirmationController.text);
+                    var result =
+                        await APIService.register("RegisterClient", req);
+                    if (result is Client) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomePage(result)));
+                    } else {
+                      Widget okButton = TextButton(
+                        child: Text("Close"),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      );
+                      AlertDialog alert = AlertDialog(
+                        title: Text("Error"),
+                        content: Text(
+                            "Not connected to API. Change URL in lib/services/api_service.dart"),
+                        actions: [
+                          okButton,
+                        ],
+                      );
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return alert;
+                          });
+                    }
+                  },
                   color: Color(0xff0095FF),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
-
                   ),
                   child: Text(
-                    "Sign up", style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18,
-                    color: Colors.white,
-
+                    "Sign up",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
                   ),
-                  ),
-
                 ),
-
-
-
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text("Already have an account?"),
-                  Text(" Login", style:TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18
-                  ),
+                  Text(
+                    " Login",
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                   )
                 ],
               )
-
-
-
             ],
-
           ),
-
-
         ),
-
       ),
-
     );
   }
 }
 
-Widget inputFile({label, obscureText = false})
-{
+Widget inputFile({label, obscureText = false, controllerSend}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
       Text(
         label,
         style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w400,
-            color:Colors.black87
-        ),
-
+            fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
       ),
       SizedBox(
         height: 5,
       ),
       TextField(
+        controller: controllerSend,
         style: TextStyle(color: Colors.black),
         obscureText: obscureText,
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 0,
-                horizontal: 10),
+            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: Colors.grey
-              ),
-
+              borderSide: BorderSide(color: Colors.grey),
             ),
-            border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey)
-            )
-        ),
+            border:
+                OutlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
       ),
-      SizedBox(height: 10,)
+      SizedBox(
+        height: 10,
+      )
     ],
   );
 }
