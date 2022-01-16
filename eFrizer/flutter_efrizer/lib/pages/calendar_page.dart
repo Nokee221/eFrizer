@@ -276,17 +276,6 @@ class _CalendarPageState extends State<CalendarPage> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(
-                                "Reserved",
-                                style: GoogleFonts.lato(
-                                    textStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold)),
-                              ),
-                              SizedBox(
-                                height: 12,
-                              ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -297,13 +286,13 @@ class _CalendarPageState extends State<CalendarPage> {
                                   ),
                                   SizedBox(width: 4),
                                   Text(
-                                    reservation.To.hour.toString() +
+                                    reservation.From.hour.toString() +
                                         ":" +
-                                        reservation.To.minute.toString() +
+                                        reservation.From.minute.toString() +
                                         " - " +
-                                        reservation.From.hour.toString() +
+                                        reservation.To.hour.toString() +
                                         ":" +
-                                        reservation.From.minute.toString(),
+                                        reservation.To.minute.toString(),
                                     style: GoogleFonts.lato(
                                       textStyle: TextStyle(
                                         fontSize: 15,

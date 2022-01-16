@@ -105,9 +105,19 @@ namespace eFrizer.Services
                     break;
 
                 }
+
+                
             }
 
-            if(isAvailable)
+            if (Convert.ToDateTime(request.From).TimeOfDay < TimeSpan.Parse(openFrom) ||
+                                Convert.ToDateTime(request.From).TimeOfDay > TimeSpan.Parse(openUntil) ||
+                                Convert.ToDateTime(request.To).TimeOfDay < TimeSpan.Parse(openFrom) ||
+                                Convert.ToDateTime(request.To).TimeOfDay > TimeSpan.Parse(openUntil))
+            {
+                isAvailable = false;
+            }
+
+            if (isAvailable)
             {
                 Database.Reservation reservation = new Database.Reservation()
                 {
