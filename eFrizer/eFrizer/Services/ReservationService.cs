@@ -83,22 +83,42 @@ namespace eFrizer.Services
 
         public async override Task<Model.Reservation> Insert([FromBody] ReservationInsertRequest request)
         {
+            var openFrom = "08:00";
+            var openUntil = "19:00";
+            bool isAvailable = true;
+            var enty = await Context.Reservations.Where(x => x.To.Date == Convert.ToDateTime(request.To).Date).ToListAsync();
 
-            Database.Reservation reservation = new Database.Reservation()
+            foreach (var item in enty)
             {
-                HairDresserId = request.HairDresserId,
-                ClientId = request.ClientId,
-                HairSalonServiceId = request.ServiceId,
-                To = Convert.ToDateTime(request.To),
-                From = Convert.ToDateTime(request.From),
-            };
+                isAvailable = true;
+                if(Convert.ToDateTime(request.From) < item.To && Convert.ToDateTime(request.To) > item.From )
+                {
+                    isAvailable = false;
+                    break;
 
-            Context.Reservations.Add(reservation);
-            await Context.SaveChangesAsync();
+                }
+            }
+
+            if(isAvailable)
+            {
+                Database.Reservation reservation = new Database.Reservation()
+                {
+                    HairDresserId = request.HairDresserId,
+                    ClientId = request.ClientId,
+                    HairSalonServiceId = request.ServiceId,
+                    To = Convert.ToDateTime(request.To),
+                    From = Convert.ToDateTime(request.From),
+                };
+
+                Context.Reservations.Add(reservation);
+                await Context.SaveChangesAsync();
 
 
-            return _mapper.Map<Model.Reservation>(reservation);
+                return _mapper.Map<Model.Reservation>(reservation);
+            }
 
+
+            return null;
             
 
         }

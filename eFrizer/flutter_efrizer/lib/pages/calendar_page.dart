@@ -18,17 +18,19 @@ import 'new_reservation.dart';
 class CalendarPage extends StatefulWidget {
   final int applicationUserId;
   final int hairdresserId;
-  CalendarPage(this.hairdresserId, this.applicationUserId, {Key? key})
+  final int hairsalonId;
+  CalendarPage(this.hairdresserId, this.applicationUserId, this.hairsalonId ,{Key? key})
       : super(key: key);
 
   @override
   _CalendarPageState createState() =>
-      _CalendarPageState(hairdresserId, applicationUserId);
+      _CalendarPageState(hairdresserId, applicationUserId, hairsalonId);
 }
 
 class _CalendarPageState extends State<CalendarPage> {
   final int applicationUserId;
   final int hairdresserId;
+  final int hairsalonId;
   final icon = CupertinoIcons.moon_stars;
 
   DateTime _dateTime = DateTime.now();
@@ -48,7 +50,7 @@ class _CalendarPageState extends State<CalendarPage> {
   //CalendarController controller = new CalendarController();
   CalendarFormat format = CalendarFormat.week;
 
-  _CalendarPageState(this.hairdresserId, this.applicationUserId);
+  _CalendarPageState(this.hairdresserId, this.applicationUserId, this.hairsalonId);
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +99,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                               builder: (context) => NewReservation(_dateTime,
-                                  hairdresserId, _dateTime, applicationUserId)),
+                                  hairdresserId, _dateTime, applicationUserId, hairsalonId)),
                         );
                       },
                       child: const Center(
@@ -241,7 +243,7 @@ class _CalendarPageState extends State<CalendarPage> {
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            color: Colors.red,
+            color: reservation.ClientId == applicationUserId ? Colors.green : Colors.red,
           ),
           child: Row(
             children: [
@@ -272,13 +274,13 @@ class _CalendarPageState extends State<CalendarPage> {
                           ),
                           SizedBox(width: 4),
                           Text(
-                            reservation.To.hour.toString() +
+                            reservation.From.hour.toString() +
                                 ":" +
-                                reservation.To.minute.toString() +
+                                reservation.From.minute.toString() +
                                 " - " +
-                                reservation.From.hour.toString() +
+                                reservation.To.hour.toString() +
                                 ":" +
-                                reservation.From.minute.toString(),
+                                reservation.To.minute.toString(),
                             style: GoogleFonts.lato(
                               textStyle: TextStyle(
                                 fontSize: 15,

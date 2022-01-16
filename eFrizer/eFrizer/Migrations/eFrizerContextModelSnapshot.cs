@@ -251,10 +251,7 @@ namespace eFrizer.Migrations
                     b.Property<int>("Counter")
                         .HasColumnType("int");
 
-                    b.Property<int>("LoyaltyBonusId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("hairSalonServiceLoyaltyBonusId")
+                    b.Property<int>("HairSalonServiceLoyaltyBonusId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -263,7 +260,7 @@ namespace eFrizer.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("hairSalonServiceLoyaltyBonusId");
+                    b.HasIndex("HairSalonServiceLoyaltyBonusId");
 
                     b.ToTable("LoyaltyBonusUsers");
                 });
@@ -540,7 +537,9 @@ namespace eFrizer.Migrations
 
                     b.HasOne("eFrizer.Database.HairSalonServiceLoyaltyBonus", "hairSalonServiceLoyaltyBonus")
                         .WithMany("LoyaltyBonusUser")
-                        .HasForeignKey("hairSalonServiceLoyaltyBonusId");
+                        .HasForeignKey("HairSalonServiceLoyaltyBonusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Client");
 

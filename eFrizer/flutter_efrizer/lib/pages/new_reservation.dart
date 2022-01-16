@@ -2,15 +2,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter_login/models/hairsalon_service/hairsalon_service.dart';
+import 'package:flutter_login/models/hairsalon_service/harisalon_service_search_request.dart';
 import 'package:flutter_login/models/reservation/reservation_insert_request.dart';
 import 'package:flutter_login/models/service.dart';
 import 'package:flutter_login/pages/payment.dart';
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_login/widget/back_button.dart';
 import 'package:flutter_login/widget/my_text_field.dart';
 import 'package:flutter_login/widget/top_container.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -19,10 +23,11 @@ class NewReservation extends StatefulWidget {
   final DateTime reservationDate;
   final DateTime endDate;
   final int hairdressedid;
-  const NewReservation(this.reservationDate, this.hairdressedid , this.endDate , this.applicationUserId, {Key? key}) : super(key: key);
+  final int hairsalonId;
+  const NewReservation(this.reservationDate, this.hairdressedid , this.endDate , this.applicationUserId, this.hairsalonId ,{Key? key}) : super(key: key);
 
   @override
-  _NewReservationState createState() => _NewReservationState(reservationDate, hairdressedid, applicationUserId);
+  _NewReservationState createState() => _NewReservationState(reservationDate, hairdressedid, applicationUserId, hairsalonId);
 }
 
 class _NewReservationState extends State<NewReservation> {
@@ -30,28 +35,32 @@ class _NewReservationState extends State<NewReservation> {
   late DateTime reservationDate;
   late DateTime endDate;
   final int hairdresserId;
+  final int hairsalonId;
   
-  Service? _service = null;
-  List<DropdownMenuItem<Service>> items = [];
+  HairSalonService? _service = null;
+  List<DropdownMenuItem<HairSalonService>> items = [];
 
-  _NewReservationState(this.reservationDate, this.hairdresserId, this.applicationUserId);
+  _NewReservationState(this.reservationDate, this.hairdresserId, this.applicationUserId, this.hairsalonId);
 
   TextEditingController dateinput = TextEditingController();
   TextEditingController totime = TextEditingController();
   TextEditingController endtime = TextEditingController();
   TextEditingController txtPrice = TextEditingController();
 
+  var request = null;
   @override
   void initState(){
     super.initState();
     dateinput.text = reservationDate.toString();
     totime.text = reservationDate.hour.toString() + ":" + reservationDate.minute.toString();
     txtPrice.text = "";
+
+    request = HairSalonServiceSearchRequest(hairsalonId: hairsalonId);
   }
   
   @override
   Widget build(BuildContext context) {
-    
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     final icon = CupertinoIcons.moon_stars;
     //supportedLocales: [Locale('en', 'US')];
@@ -159,16 +168,16 @@ class _NewReservationState extends State<NewReservation> {
                       width: 100,
                       child: TextField(
                       controller: txtPrice,
-                      style: TextStyle(color: Colors.black87),
+                      style: TextStyle(color: themeChange.darkTheme ? Colors.white : Colors.black),
                       minLines: 1,
                       maxLines: 1,
                       decoration: InputDecoration(
                         icon: Icon(Icons.price_check_sharp),
                         labelText: "Price",
                         labelStyle: TextStyle(
-                          color: Colors.black45,
+                          color: themeChange.darkTheme ? Colors.white : Colors.black,
                         ),
-                        focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black, width: 2.0)),
+                        focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: themeChange.darkTheme ? Colors.white : Colors.black, width: 2.0)),
                         border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey, width: 2.0)),
                       ),
                       ),
@@ -200,7 +209,7 @@ class _NewReservationState extends State<NewReservation> {
                   var enddateFormatted = DateFormat("yyyy-MM-dd HH:mm:ss").format(endDate);
                   
 
-                  request = ReservationInsertRequest(hairDresserId: hairdresserId, serviceId: _service!.ServiceId, clientId: applicationUserId, to: dateFormatted , from: enddateFormatted);
+                  request = ReservationInsertRequest(hairDresserId: hairdresserId, serviceId: _service!.id, clientId: applicationUserId, to: enddateFormatted , from: dateFormatted);
                   
                   Navigator.of(context).push(
                           MaterialPageRoute(
@@ -226,10 +235,10 @@ class _NewReservationState extends State<NewReservation> {
   }
 
   Widget dropDownWidget() {
-    return FutureBuilder<List<Service>>(
-        future: getServices(_service),
+    return FutureBuilder<List<HairSalonService>>(
+        future: getServices(_service, request),
         builder: (BuildContext context,
-            AsyncSnapshot<List<Service>> snapshot) {
+            AsyncSnapshot<List<HairSalonService>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: Text('Loading...'),
@@ -252,19 +261,19 @@ class _NewReservationState extends State<NewReservation> {
                     border: Border.all(),
                   ),
                   child: DropdownButtonHideUnderline(
-                    child: DropdownButton<Service>(
+                    child: DropdownButton<HairSalonService>(
                       hint: Text('Service'),
                       isExpanded: true,
                       dropdownColor: Colors.blue[300],
                       items: items,
                       onChanged: (newVal) {
                         setState(() {
-                            _service = newVal as Service;
+                            _service = newVal as HairSalonService;
 
-                            txtPrice.text = _service!.Price.toString();
+                            txtPrice.text = _service!.price.toString();
 
                             DateTime endTimeee = reservationDate;
-                            endDate = endTimeee.add(Duration(minutes: _service!.TimeMin));
+                            endDate = endTimeee.add(Duration(minutes: _service!.timeMin));
                             
                             endtime.text = endDate.hour.toString() + ":" + endDate.minute.toString();
                             print(endDate);
@@ -280,21 +289,25 @@ class _NewReservationState extends State<NewReservation> {
         });
   }
 
-  Future<List<Service>> getServices(Service? selectedItem) async {
-    var vrsteProizvoda = await APIService.get('Service', null);
-    var vrsteProizvodaList = vrsteProizvoda!.map((i) => Service.fromJson(i)).toList();
+  Future<List<HairSalonService>> getServices(HairSalonService? selectedItem, req) async {
+    Map<String, String>? queryParams = null;
+    if (req != null && queryParams != "")
+      queryParams = {'HairSalonId': req.hairsalonId.toString()};
+
+    var vrsteProizvoda = await APIService.get('HairSalonService', queryParams);
+    var vrsteProizvodaList = vrsteProizvoda!.map((i) => HairSalonService.fromJson(i)).toList();
 
     items = vrsteProizvodaList.map((item) {
-      return DropdownMenuItem<Service>(
-        child: Text(item.Name.toString(
+      return DropdownMenuItem<HairSalonService>(
+        child: Text(item.serviceName.toString(
           
         )),
         value: item,
       );
     }).toList();
 
-      if (selectedItem != null && selectedItem.ServiceId != 0)
-      _service = vrsteProizvodaList.where((element) => element.ServiceId == selectedItem.ServiceId).first;
+      if (selectedItem != null && selectedItem.id != 0)
+      _service = vrsteProizvodaList.where((element) => element.id == selectedItem.id).first;
         return vrsteProizvodaList;
    }
 

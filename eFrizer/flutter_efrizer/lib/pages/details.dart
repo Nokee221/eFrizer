@@ -302,7 +302,7 @@ class _DetailsState extends State<Details> {
                     MaterialPageRoute(
                         builder: (context) => CalendarPage(
                             hairdresser.applicationUserId,
-                            user.applicationUserId)),
+                            user.applicationUserId, hairsalon.HairSalonId)),
                   );
                 },
                 child: Column(
@@ -355,7 +355,8 @@ class _DetailsState extends State<Details> {
   Future<List<LoyaltyBonus>> getLoyaltyBonuses(req) async {
     Map<String, String>? queryParams = null;
     if (req != null && queryParams != "")
-      queryParams = {'HairSalonId': req.hairSalonId.toString()};
+      queryParams = {'hairSalonId': req.hairSalonId.toString()};
+
 
     var loyalty =
         await APIService.get('HairSalonServiceLoyaltyBonus', queryParams);

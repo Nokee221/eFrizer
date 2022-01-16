@@ -8,14 +8,17 @@ namespace eFrizer.Model
     {
         public int Id { get; set; }
 
-        public int LoyaltyBonusId { get; set; }
+        public int HairSalonServiceLoyaltyBonusId { get; set; }
 
         public int ClientId { get; set; }
 
-        public virtual HairSalonServiceLoyaltyBonus hairSalonServiceLoyaltyBonus { get; set; }
+        public virtual HairSalonServiceLoyaltyBonus HairSalonServiceLoyaltyBonus { get; set; }
 
         public virtual Client Client { get; set; }
 
         public int Counter { get; set; }
+
+        //public int hairsalonServiceId => HairSalonServiceLoyaltyBonus.HairSalonServiceId;
+
     }
 }

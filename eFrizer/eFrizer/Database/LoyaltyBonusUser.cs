@@ -9,7 +9,7 @@ namespace eFrizer.Database
     {
         public int Id { get; set; }
 
-        public int LoyaltyBonusId { get; set; }
+        public int HairSalonServiceLoyaltyBonusId { get; set; }
 
         public int ClientId { get; set; }
 
