@@ -36,7 +36,7 @@ namespace eFrizer.Services
                         continue;
                     }
 
-                    entity.Include(item);
+                    entity.Include(x => x.ApplicationUserRoles).ThenInclude(x => x.Role).Include(item);
                 }
             }
 
