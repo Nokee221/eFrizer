@@ -9,8 +9,7 @@ class APIService {
   static String? username;
   static String? password;
   //deployed apI: "http://efrizer.germanywestcentral.azurecontainer.io:5000/"
-  static String apiUrl =
-      "http://efrizer.germanywestcentral.azurecontainer.io:5000/";
+  static String apiUrl = "http://10.0.2.2:5000/";
 
   String? route;
 
@@ -100,24 +99,33 @@ class APIService {
         apiUrl + route + "?Username=" + username + "&Password=" + password;
     final String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
-    final response = await http.get(
-      Uri.parse(baseUrl),
-      headers: {HttpHeaders.authorizationHeader: basicAuth},
-    );
+    try {
+      final response = await http.get(
+        Uri.parse(baseUrl),
+        headers: {HttpHeaders.authorizationHeader: basicAuth},
+      );
 
-    if (response.statusCode == 200) {
-      var res = json.decode(response.body);
-      var initialData = ApplicationUser.fromJson(res);
-      dynamic data;
-      if (initialData.roles[0]["role"]["name"] == "Client") {
-        data = Client.fromJson(initialData.toJsonWithId());
-      } else if (initialData.roles[0]["role"]["name"] == "HairDresser") {
-        data = HairDresser.fromJson(initialData.toJsonWithId());
+      if (response.statusCode == 200) {
+        var res = json.decode(response.body);
+        var initialData = ApplicationUser.fromJson(res);
+        dynamic data;
+        if (initialData.roles[0]["role"]["name"] == "Client") {
+          data = Client.fromJson(initialData.toJsonWithId());
+        } else if (initialData.roles[0]["role"]["name"] == "HairDresser") {
+          data = HairDresser.fromJson(initialData.toJsonWithId());
+        }
+        return data;
+      } else if (response.statusCode == 400) {
+        List<dynamic> roles = [""];
+        return ApplicationUser(
+            applicationUserId: 0,
+            description: "description",
+            username: "username",
+            roles: roles);
       }
-      return data;
+    } on Exception catch (e) {
+      return null;
     }
-
-    return null;
   }
 
   static Future<ApplicationUser?> update(

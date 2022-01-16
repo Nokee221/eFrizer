@@ -163,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         HairDresserHomePage(result)));
-                          } else {
+                          } else if (result is ApplicationUser) {
                             Widget okButton = TextButton(
                               child: Text("Try again"),
                               onPressed: () {
@@ -173,6 +173,26 @@ class _LoginPageState extends State<LoginPage> {
                             AlertDialog alert = AlertDialog(
                               title: Text("Error"),
                               content: Text("Incorrect username or password"),
+                              actions: [
+                                okButton,
+                              ],
+                            );
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return alert;
+                                });
+                          } else {
+                            Widget okButton = TextButton(
+                              child: Text("Close"),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            );
+                            AlertDialog alert = AlertDialog(
+                              title: Text("Error"),
+                              content: Text(
+                                  "Not connected to API. Change URL in lib/services/api_service.dart"),
                               actions: [
                                 okButton,
                               ],
