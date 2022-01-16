@@ -59,24 +59,21 @@ class APIService {
     );
 
     if (response.statusCode == 200) {
-
       var res = json.decode(response.body);
       var data;
-      if(res.length != 0)
-      {
-
+      if (res.length != 0) {
         data = LoyaltyUser.fromJson(res[0]);
-      }
-      else{
+      } else {
         data = null;
       }
 
       return data;
-    } 
+    }
     return null;
   }
 
-  static Future<LoyaltyBonus?> getLoyaltyBonus(String route, dynamic object) async {
+  static Future<LoyaltyBonus?> getLoyaltyBonus(
+      String route, dynamic object) async {
     String queryString = Uri(queryParameters: object).query;
 
     String baseUrl = apiUrl + route;
@@ -91,12 +88,16 @@ class APIService {
     );
 
     if (response.statusCode == 200) {
-
       var res = json.decode(response.body);
-      var data = LoyaltyBonus.fromJson(res[0]);
+      var data;
+      if (res.length != 0) {
+        data = LoyaltyBonus.fromJson(res[0]);
+      } else {
+        data = null;
+      }
 
       return data;
-    } 
+    }
     return null;
   }
 
@@ -254,8 +255,7 @@ class APIService {
     return null;
   }
 
-  static Future<dynamic?> post(
-      String route, dynamic request) async {
+  static Future<dynamic?> post(String route, dynamic request) async {
     final String baseUrl = apiUrl + route;
 
     final String basicAuth =
