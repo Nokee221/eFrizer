@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 
-class LoyatlyUser{
-  final int loyaltybonusId;
+class LoyaltyUser{
+  final int id;
+  final int hairSalonServiceLoyaltyBonusId;
   final int clientId;
   final int counter;
 
 
-  LoyatlyUser({
+  LoyaltyUser({
+    required this.id,
     required this.counter,
     required this.clientId,
-    required this.loyaltybonusId
+    required this.hairSalonServiceLoyaltyBonusId
   });
 
-   factory LoyatlyUser.fromJson(Map<String, dynamic> json) {
-    return LoyatlyUser(
-      loyaltybonusId: int.parse(json['loyaltyBonusId'].toString()),
+   factory LoyaltyUser.fromJson(Map<String, dynamic> json) {
+    return LoyaltyUser(
+      id: int.parse(json['id'].toString()),
+      hairSalonServiceLoyaltyBonusId: int.parse(json['hairSalonServiceLoyaltyBonusId'].toString()),
       clientId: int.parse(json['clientId'].toString()),
       counter: int.parse(json['counter'].toString())
     );

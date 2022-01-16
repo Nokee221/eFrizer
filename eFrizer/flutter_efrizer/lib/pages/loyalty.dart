@@ -31,7 +31,7 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
   void initState() {
     // TODO: implement initState
     request = LoyaltyBonusUserSearchRequest(
-        clientId: user.applicationUserId, loyaltyBonusId: loyalty.id);
+        clientId: user.applicationUserId, hairSalonServiceLoyaltyBonusId: loyalty.id);
     super.initState();
   }
 
@@ -106,10 +106,10 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
   }
 
   Widget loyaltyProgress(themeChange) {
-    return FutureBuilder<List<LoyatlyUser>>(
+    return FutureBuilder<List<LoyaltyUser>>(
         future: getLoyaltyBonusesProgress(request),
         builder:
-            (BuildContext context, AsyncSnapshot<List<LoyatlyUser>> snapshot) {
+            (BuildContext context, AsyncSnapshot<List<LoyaltyUser>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: Text('Loading...'),
@@ -126,14 +126,14 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
         });
   }
 
-  Future<List<LoyatlyUser>> getLoyaltyBonusesProgress(req) async {
+  Future<List<LoyaltyUser>> getLoyaltyBonusesProgress(req) async {
     Map<String, String>? queryParams = null;
     if (req != null && queryParams != "")
-      queryParams = {'ClientId': req.clientId.toString(), 'LoyatlyBonusId': req.loyaltyBonusId.toString()};
+      queryParams = {'ClientId': req.clientId.toString(), 'HairSalonServiceLoyaltyBonusId': req.hairSalonServiceLoyaltyBonusId.toString()};
 
     var loyalty =
         await APIService.get('LoyaltyBonusUser', queryParams);
-    return loyalty!.map((i) => LoyatlyUser.fromJson(i)).toList();
+    return loyalty!.map((i) => LoyaltyUser.fromJson(i)).toList();
   }
 
   Widget loyaltyBonusProgressWidget(bonus, themeChange) => Column(
@@ -155,7 +155,7 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
                 animation: true,
                 lineHeight: 20.0,
                 animationDuration: 2500,
-                percent: 0.2,
+                percent: getProsjek(bonus.counter) > 1.0 ? 1.0 : getProsjek(bonus.counter),
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 progressColor: Colors.green,
               ),
@@ -179,14 +179,14 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        onPressed: () => setState(() {
-                          if(loyalty.activatesOn == bonus.counter)
+                        onPressed: () {
+                          if(loyalty.activatesOn == bonus.counter && bonus.counter > loyalty.activatesOn)
                           {
                             opacityLevel = 1.0;
                           }
                         }),
                       ),
-                    ),
+                    
                     SizedBox(height: 5),
                     AnimatedOpacity(
                       duration: Duration(seconds: 3),

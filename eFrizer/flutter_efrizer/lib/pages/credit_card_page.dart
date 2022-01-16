@@ -1,18 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:flutter_login/models/reservation/reservation_insert_request.dart';
 import 'package:flutter_login/pages/success.dart';
+import 'package:flutter_login/provider/dark_theme_provider.dart';
+import 'package:flutter_login/services/api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class CreditCardPage extends StatefulWidget {
-  const CreditCardPage({ Key? key }) : super(key: key);
+  final ReservationInsertRequest request;
+  const CreditCardPage(this.request ,{ Key? key }) : super(key: key);
 
   @override
-  _CreditCardPageState createState() => _CreditCardPageState();
+  _CreditCardPageState createState() => _CreditCardPageState(request);
 }
 
 class _CreditCardPageState extends State<CreditCardPage> {
+  final ReservationInsertRequest request;
   final icon = CupertinoIcons.moon_stars;
+
+  _CreditCardPageState(this.request);
 
   String cardNumber = '';
   String expiryDate = '';
@@ -22,14 +30,20 @@ class _CreditCardPageState extends State<CreditCardPage> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  var result = null;
+  Future<void> putData() async{
+    result = await APIService.post("Reservation", request);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
          leading: BackButton(color: Colors.blue),
          centerTitle: true,
-        title: Text("Credit Card", style: GoogleFonts.pacifico(color: Colors.black),),
+        title: Text("Credit Card", style: GoogleFonts.pacifico(color: themeChange.darkTheme ? Colors.white : Colors.black),),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
@@ -67,7 +81,9 @@ class _CreditCardPageState extends State<CreditCardPage> {
                       themeColor: Colors.blue,
                       formKey: formKey,
                       cardNumberDecoration: const InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white)
+                        ),
                         labelText: 'Number',
                         hintText: 'xxxx xxxx xxxx xxxx',
                       ),
@@ -105,12 +121,34 @@ class _CreditCardPageState extends State<CreditCardPage> {
                           ),
                         ),
                       ),
-                      onPressed: (){
-                        if(formKey.currentState!.validate()){
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => Success(),
-                            ),);
+                      onPressed: ()async{
+                        if(formKey.currentState!.validate()) {
+                           await putData();
+                           if(result != null)
+                           {
+                             Navigator.of(context).push(
+                                MaterialPageRoute(
+                                 builder: (context) => Success(),
+                                ),);
+                           }
+                           else{
+                             Widget okButton = TextButton(
+                                child: Text("OK"),
+                                onPressed: () {},
+                              );
+                              AlertDialog alert = AlertDialog(
+                                title: Text("Error"),
+                                content: Text("Bezuspjesna rezervacija"),
+                                actions: [
+                                  okButton,
+                                ],
+                              );
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return alert;
+                                  });
+                           }
                         }
                         else{
                           print('inValid');
@@ -137,3 +175,5 @@ class _CreditCardPageState extends State<CreditCardPage> {
     });
   }
 }
+
+

@@ -77,6 +77,7 @@ namespace eFrizer.Mapping
 
             CreateMap<Database.LoyaltyBonusUser, Model.LoyaltyBonusUser>().ReverseMap();
             CreateMap<Model.LoyaltyBonusUserInsertRequest, Database.LoyaltyBonusUser>();
+            CreateMap<Model.LoyaltyBonusUserUpdateRequest, Database.LoyaltyBonusUser>();
 
         }
     }

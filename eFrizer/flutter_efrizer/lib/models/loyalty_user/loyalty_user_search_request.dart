@@ -1,17 +1,21 @@
 
 class LoyaltyBonusUserSearchRequest{
   int clientId;
-  int loyaltyBonusId;
+  int? hairSalonServiceLoyaltyBonusId;
+  int? hairSalonServiceId;
 
   LoyaltyBonusUserSearchRequest({
     required this.clientId,
-    required this.loyaltyBonusId
+    this.hairSalonServiceLoyaltyBonusId,
+    this.hairSalonServiceId,
   });
 
   factory LoyaltyBonusUserSearchRequest.fromJson(Map<String, dynamic> json) {
     return LoyaltyBonusUserSearchRequest(
       clientId: int.parse(json['clientId'].toString()),
-      loyaltyBonusId: int.parse(json['loyaltyBonusId'].toString())
+      hairSalonServiceLoyaltyBonusId: int.parse(json['loyaltyBonusId'].toString()),
+      hairSalonServiceId: int.parse(json['hairSalonServiceId'].toString()),
+
     );
   }
 }

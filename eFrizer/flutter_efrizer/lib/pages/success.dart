@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/pages/setting_page.dart';
+import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/widget/emptySection.dart';
 import 'package:flutter_login/widget/subTitle.dart';
+import 'package:provider/provider.dart';
 
 class Success extends StatefulWidget {
   
@@ -22,6 +24,7 @@ class _SuccessState extends State<Success> {
 
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -41,10 +44,7 @@ class _SuccessState extends State<Success> {
           textColor: Color(0xFFFFFFFF),
           highlightColor: Colors.transparent,
           onPressed: (){
-             Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => SettingPage(),
-              ),);
+             Navigator.pop(context);
           },
           child: Text("Ok".toUpperCase()),
         ),),

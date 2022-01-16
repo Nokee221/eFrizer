@@ -17,17 +17,20 @@ import 'new_reservation.dart';
 class CalendarPage extends StatefulWidget {
   final int applicationUserId;
   final int hairdresserId;
-  CalendarPage(this.hairdresserId, this.applicationUserId, {Key? key})
+  final int hairsalonId;
+  CalendarPage(this.hairdresserId, this.applicationUserId, this.hairsalonId,
+      {Key? key})
       : super(key: key);
 
   @override
   _CalendarPageState createState() =>
-      _CalendarPageState(hairdresserId, applicationUserId);
+      _CalendarPageState(hairdresserId, applicationUserId, hairsalonId);
 }
 
 class _CalendarPageState extends State<CalendarPage> {
   final int applicationUserId;
   final int hairdresserId;
+  final int hairsalonId;
   final icon = CupertinoIcons.moon_stars;
 
   DateTime _dateTime = DateTime.now();
@@ -47,7 +50,8 @@ class _CalendarPageState extends State<CalendarPage> {
   //CalendarController controller = new CalendarController();
   CalendarFormat format = CalendarFormat.week;
 
-  _CalendarPageState(this.hairdresserId, this.applicationUserId);
+  _CalendarPageState(
+      this.hairdresserId, this.applicationUserId, this.hairsalonId);
 
   @override
   Widget build(BuildContext context) {
@@ -95,8 +99,12 @@ class _CalendarPageState extends State<CalendarPage> {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) => NewReservation(_dateTime,
-                                  hairdresserId, _dateTime, applicationUserId)),
+                              builder: (context) => NewReservation(
+                                  _dateTime,
+                                  hairdresserId,
+                                  _dateTime,
+                                  applicationUserId,
+                                  hairsalonId)),
                         );
                       },
                       child: const Center(
@@ -242,7 +250,9 @@ class _CalendarPageState extends State<CalendarPage> {
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color: Colors.red,
+                color: reservation.ClientId == applicationUserId
+                    ? Colors.green
+                    : Colors.red,
               ),
               child: Row(
                 children: [
@@ -253,7 +263,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Reserved",
+                            "Reservated",
                             style: GoogleFonts.lato(
                                 textStyle: TextStyle(
                                     color: Colors.white,
@@ -266,38 +276,48 @@ class _CalendarPageState extends State<CalendarPage> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.access_time_rounded,
-                                color: Colors.grey[200],
-                                size: 18,
-                              ),
-                              SizedBox(width: 4),
                               Text(
-                                reservation.To.hour.toString() +
-                                    ":" +
-                                    reservation.To.minute.toString() +
-                                    " - " +
-                                    reservation.From.hour.toString() +
-                                    ":" +
-                                    reservation.From.minute.toString(),
+                                "Reserved",
                                 style: GoogleFonts.lato(
-                                  textStyle: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.grey[100],
-                                  ),
-                                ),
+                                    textStyle: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
                               ),
+                              SizedBox(
+                                height: 12,
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.access_time_rounded,
+                                    color: Colors.grey[200],
+                                    size: 18,
+                                  ),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    reservation.To.hour.toString() +
+                                        ":" +
+                                        reservation.To.minute.toString() +
+                                        " - " +
+                                        reservation.From.hour.toString() +
+                                        ":" +
+                                        reservation.From.minute.toString(),
+                                    style: GoogleFonts.lato(
+                                      textStyle: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.grey[100],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    height: 60,
-                    width: 1,
-                    color: Colors.grey[200]!.withOpacity(1.0),
                   ),
                 ],
               ),

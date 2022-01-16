@@ -25,6 +25,11 @@ namespace eFrizer.Services
                 var bonuses = await Context.HairSalonServiceLoyaltyBonuses.Where(x => x.Service.HairSalonId == search.hairSalonId).Include(x => x.Service).ThenInclude(x => x.Service).ToListAsync();
                 return _mapper.Map<List<Model.HairSalonServiceLoyaltyBonus>>(bonuses);
             }
+            else if(search.hairSalonServiceId != 0)
+            {
+                var bonuses = await Context.HairSalonServiceLoyaltyBonuses.Where(x => x.HairSalonServiceId == search.hairSalonServiceId).Include(x => x.Service).ThenInclude(x => x.Service).ToListAsync();
+                return _mapper.Map<List<Model.HairSalonServiceLoyaltyBonus>>(bonuses);
+            }
             else
             {
                 var bonuses = await Context.HairSalonServiceLoyaltyBonuses

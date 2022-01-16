@@ -3,6 +3,8 @@ import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/client/client.dart';
 import 'package:flutter_login/models/client/client_insert_request.dart';
 import 'package:flutter_login/models/hairdresser/hair_dresser.dart';
+import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus.dart';
+import 'package:flutter_login/models/loyalty_user/loyalty_user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
@@ -39,6 +41,62 @@ class APIService {
       var result = JsonDecoder().convert(response.body) as List;
       return result;
     }
+    return null;
+  }
+
+  static Future<LoyaltyUser?> getLoyalty(String route, dynamic object) async {
+    String queryString = Uri(queryParameters: object).query;
+
+    String baseUrl = apiUrl + route;
+    if (object != null) {
+      baseUrl = baseUrl + '?' + queryString;
+    }
+    final String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    final response = await http.get(
+      Uri.parse(baseUrl),
+      headers: {HttpHeaders.authorizationHeader: basicAuth},
+    );
+
+    if (response.statusCode == 200) {
+
+      var res = json.decode(response.body);
+      var data;
+      if(res.length != 0)
+      {
+
+        data = LoyaltyUser.fromJson(res[0]);
+      }
+      else{
+        data = null;
+      }
+
+      return data;
+    } 
+    return null;
+  }
+
+  static Future<LoyaltyBonus?> getLoyaltyBonus(String route, dynamic object) async {
+    String queryString = Uri(queryParameters: object).query;
+
+    String baseUrl = apiUrl + route;
+    if (object != null) {
+      baseUrl = baseUrl + '?' + queryString;
+    }
+    final String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    final response = await http.get(
+      Uri.parse(baseUrl),
+      headers: {HttpHeaders.authorizationHeader: basicAuth},
+    );
+
+    if (response.statusCode == 200) {
+
+      var res = json.decode(response.body);
+      var data = LoyaltyBonus.fromJson(res[0]);
+
+      return data;
+    } 
     return null;
   }
 
@@ -170,7 +228,34 @@ class APIService {
     return null;
   }
 
-  static Future<dynamic?> post(String route, dynamic request) async {
+  static Future<LoyaltyUser?> updateLoyalty(
+      String route, String id, dynamic updateRequest) async {
+    final String baseUrl = apiUrl + route + "/" + id;
+
+    final String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    print(jsonEncode(updateRequest));
+    final response = await http.put(Uri.parse(baseUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          HttpHeaders.authorizationHeader: basicAuth
+        },
+        body: jsonEncode(updateRequest));
+
+    print(response.body);
+    print(Uri.parse(baseUrl));
+
+    if (response.statusCode == 200) {
+      var data = LoyaltyUser.fromJson(jsonDecode(response.body));
+
+      return data;
+    }
+
+    return null;
+  }
+
+  static Future<dynamic?> post(
+      String route, dynamic request) async {
     final String baseUrl = apiUrl + route;
 
     final String basicAuth =
