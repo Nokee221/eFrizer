@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using eFrizer.Database;
+using eFrizer.Filters;
 using eFrizer.Model;
+using eFrizer.Services.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Linq;
@@ -10,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Services
 {
-    public class PictureService : BaseCRUDService<Model.Picture, Database.Picture, object, PictureInsertRequest, PictureUpdateRequest>, ICRUDService<Model.Picture, object, PictureInsertRequest, PictureUpdateRequest>
+    public class PictureService : BaseCRUDService<Model.Picture, Database.Picture, object, PictureInsertRequest, PictureUpdateRequest>, IPictureService
     {
         private IWebHostEnvironment _hostEnvironment;
         private eFrizerContext _context;
@@ -20,6 +23,24 @@ namespace eFrizer.Services
         {
             _context = context;
             _hostEnvironment = hostEnvironment;
+        }
+
+        public async Task<Byte[]> Get(int imageId)
+        {
+            Byte[] imageBytes;
+            try
+            {
+                string imageName = Path.GetFileName(Context.Pictures.Find(imageId).Path);
+                string imagePath = "\\Images\\" + imageName;
+                var path = _hostEnvironment.ContentRootPath + imagePath;
+                imageBytes = await File.ReadAllBytesAsync(path);
+
+                return imageBytes;
+            }
+            catch (Exception ex)
+            {
+                throw new UserException("Greska kod prikazivanja slika" + ex.Message);
+            }
         }
 
         public async override Task<Model.Picture> Insert(PictureInsertRequest request)
