@@ -63,6 +63,7 @@ namespace eFrizer.Win
             this.btnPrevious.TabIndex = 2;
             this.btnPrevious.Text = "Previous";
             this.btnPrevious.UseVisualStyleBackColor = true;
+            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
             // 
             // pbHairSalon
             // 

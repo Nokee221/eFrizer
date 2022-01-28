@@ -6,7 +6,9 @@ using eFrizer.Services.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -45,9 +47,18 @@ namespace eFrizer.Services
 
         public async Task<Gallery> GetPictureIds(int hairSalonId)
         {
-            int[] pictureIdsDb = Context.HairSalonPictures.Where(x => x.HairSalonId == hairSalonId).Select(x => x.PictureId).ToArray();
-            var gal = new Gallery { pictureIds = pictureIdsDb };
-            return gal;
+            var gallery = new Gallery();
+
+            gallery.Rows = await Context.HairSalonPictures
+                .Where(x => x.HairSalonId == hairSalonId)
+                .Select(x => new Gallery.Row { pictureId = x.PictureId })
+                .ToListAsync();
+            gallery.pictureIds = new int[gallery.Rows.Count()];
+            for (int i = 0; i < gallery.Rows.Count(); i++)
+            {
+                gallery.pictureIds[i] = gallery.Rows.ElementAt(i).pictureId;
+            }
+            return gallery;
         }
         public async override Task<Model.Picture> Insert(PictureInsertRequest request)
         {

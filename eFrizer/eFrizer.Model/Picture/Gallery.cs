@@ -6,6 +6,11 @@ namespace eFrizer.Model
 {
     public class Gallery
     {
-        public int[] pictureIds{ get; set; }
+        public class Row
+        {
+            public int pictureId;
+        }
+        public List<Row> Rows{ get; set; }
+        public int[] pictureIds { get; set; }
     }
 }

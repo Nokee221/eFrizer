@@ -338,31 +338,28 @@ namespace eFrizer
 
         private void HairSalonPictureSeed()
         {
-            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaA.jpg"))
+            for (int i = 0; i < 5; i++)
             {
-                context.HairSalonPictures.Add(new HairSalonPicture()
+                if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "Slika" + (i + 1) + ".jpg"))
                 {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
-                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaA.jpg ")).First().PictureId,
-                });
+                    context.HairSalonPictures.Add(new HairSalonPicture()
+                    {
+                        HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
+                        PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "Slika" + (i + 1) + ".jpg")).First().PictureId,
+                    });
+                }
             }
 
-            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaB.jpg"))
+            for (int i = 5; i < 10; i++)
             {
-                context.HairSalonPictures.Add(new HairSalonPicture()
+                if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "Slika" + (i + 1) + ".jpg"))
                 {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
-                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaB.jpg")).First().PictureId,
-                });
-            }
-
-            if (!context.HairSalonPictures.Any(x => x.HairSalon.Name == "Hair Salon 2" && x.Picture.Path == _hostEnvironment.ContentRootPath + "Images/" + "SlikaC.jpg"))
-            {
-                context.HairSalonPictures.Add(new HairSalonPicture()
-                {
-                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
-                    PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaC.jpg")).First().PictureId,
-                });
+                    context.HairSalonPictures.Add(new HairSalonPicture()
+                    {
+                        HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId,
+                        PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "Slika" + (i + 1) + ".jpg")).First().PictureId,
+                    });
+                }
             }
 
             context.SaveChanges();
@@ -687,19 +684,12 @@ namespace eFrizer
 
         private void PictureSeed()
         {
-            if (!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaA.jpg")))
+            for (int i = 0; i < 10; i++)
             {
-                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaA.jpg") });
-            }
-
-            if (!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaB.jpg")))
-            {
-                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaB.jpg") });
-            }
-
-            if (!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaC.jpg")))
-            {
-                context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "SlikaC.jpg") });
+                if (!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "Slika" + (i + 1) + ".jpg")))
+                {
+                    context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "Slika" + (i + 1) + ".jpg") });
+                }
             }
 
             context.SaveChanges();

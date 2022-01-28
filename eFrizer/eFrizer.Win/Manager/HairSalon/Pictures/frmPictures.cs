@@ -35,16 +35,19 @@ namespace eFrizer.Win
         private async void initPictures()
         {
             pbHairSalon.SizeMode = PictureBoxSizeMode.StretchImage;
-            ExpandoObject obj = await _pictureIdsService.GetImageIds(1);
-            var dict = (IDictionary<string, object>)obj;
-            _pictureIds = dict["pictureIds"] as int[];
+            Gallery gallery = await _pictureIdsService.GetImageIds<Gallery>(1);
+            _pictureIds = new int[gallery.pictureIds.Count()];
+            for (int i = 0; i < gallery.pictureIds.Count(); i++)
+            {
+                _pictureIds[i] = gallery.pictureIds.ElementAt(i);
+            }
             _selectedIndex = _pictureIds.Count() - 1;
             renderPicture(_pictureIds[_selectedIndex]);
         }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if(_pictureIds[_selectedIndex] == _pictureIds.Last())
+            if (_pictureIds[_selectedIndex] == _pictureIds.Last())
             {
                 _selectedIndex = 0;
             }
@@ -52,16 +55,29 @@ namespace eFrizer.Win
             {
                 _selectedIndex++;
             }
-
             renderPicture(_pictureIds[_selectedIndex]);
         }
 
         private async void renderPicture(int selectedId)
         {
             ImageConverter converter = new ImageConverter();
-            var pictureSource = await _pictureStreamService.GetImageStream<byte[]>(1);
-
+            var pictureSource = await _pictureStreamService.GetImageStream<byte[]>(selectedId);
+            pbHairSalon.Image = null;
             pbHairSalon.Image = (Image)converter.ConvertFrom(pictureSource);
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            if(_selectedIndex == 0)
+            {
+                _selectedIndex = _pictureIds.Count() - 1;
+            }
+            else
+            {
+                _selectedIndex--;
+            }
+            
+            renderPicture(_pictureIds[_selectedIndex]);
         }
     }
 }

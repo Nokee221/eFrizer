@@ -85,10 +85,10 @@ namespace eFrizer.Win
             return File.ReadAllBytes(resultPath);
         }
 
-        public async Task<ExpandoObject> GetImageIds(int hairSalonId)
+        public async Task<T> GetImageIds<T>(int hairSalonId)
         {
             var url = ($"{Properties.Settings.Default.ApiURL}/{_route}?hairSalonId={hairSalonId}");
-            var imageIds = await url.WithBasicAuth(Username, Password).GetJsonAsync();
+            var imageIds = await url.WithBasicAuth(Username, Password).GetJsonAsync<T>();
             //dynamic dynamicInts = 
             //int[] imageIds = dynamicInts.cast<int>();
             return imageIds;
