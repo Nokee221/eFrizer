@@ -94,7 +94,7 @@ class APIService {
       if(res.length != 0)
       {
 
-        data = LoyaltyUser.fromJson(res[0]);
+        data = LoyaltyBonus.fromJson(res[0]);
       }
       else{
         data = null;
