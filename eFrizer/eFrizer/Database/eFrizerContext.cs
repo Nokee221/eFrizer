@@ -29,6 +29,7 @@ namespace eFrizer.Database
         public virtual DbSet<Picture> Pictures { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
+        public virtual DbSet<TextReview> TextReviews { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<Manager> Managers { get; set; }

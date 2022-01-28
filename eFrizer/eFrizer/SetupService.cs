@@ -233,13 +233,13 @@ namespace eFrizer
         
         private void ReviewSeed()
         {
-            if (!context.Reviews.Any(x => x.Client.Name == "Client A" && x.HairSalon.Name == "Hair Salon 1" && x.Text == "Najbolji salon u gradu!!"))
+            if (!context.Reviews.Any(x => x.Client.Name == "Client A" && x.HairSalon.Name == "Hair Salon 1" ))
             {
                 context.Reviews.Add(new Review()
                 {
                     ClientId = context.Clients.Where(x => x.Name == "Client A").First().ApplicationUserId,
                     HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
-                    Text = "Najbolji salon u gradu!!"
+                    
 
                 });
             }
@@ -261,7 +261,7 @@ namespace eFrizer
                         ClientId = client.ApplicationUserId,
                         HairSalonId = hairSalon.HairSalonId,
                         StarRating = Faker.RandomNumber.Next(1, 5),
-                        Text = Faker.Lorem.Paragraph()
+                        
                     });
                 }
             }
