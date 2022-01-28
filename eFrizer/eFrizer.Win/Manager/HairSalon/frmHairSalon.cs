@@ -126,5 +126,21 @@ namespace eFrizer.Win
             forma.Closed += (s, args) => this.Close();
             forma.ShowDialog();
         }
+
+        private void btnPictures_Click(object sender, EventArgs e)
+        {
+            //TODO: Refactor like this. Need to pass in the right parameter though every time.  Maybe just pass in the initialized object?
+            //FormInit();
+            var forma = new frmPictures();
+            FormInit(forma);
+
+        }
+
+        private void FormInit(Form form)
+        {
+            this.Hide();
+            form.Closed += (s, args) => this.Close();
+            form.ShowDialog();
+        }
     }
 }

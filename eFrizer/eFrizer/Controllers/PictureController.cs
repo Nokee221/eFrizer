@@ -17,10 +17,17 @@ namespace eFrizer.Controllers
         }
 
         [HttpGet("/PictureStream")]
-        public async Task<FileContentResult> Get([FromQuery] int imageId)
+        public async Task<FileContentResult> GetPictureStream([FromQuery] int imageId)
         {
-            var imageBytes = await _service.Get(imageId);
+            var imageBytes = await _service.GetPictureStream(imageId);
             return File(imageBytes, "image/jpeg");
+        }
+
+        [HttpGet("/PictureIds")]
+        public async Task<Gallery> GetHairSalonPictures([FromQuery] int hairSalonId)
+        {
+            var gallery = await _service.GetPictureIds(hairSalonId);
+            return gallery;
         }
 
 

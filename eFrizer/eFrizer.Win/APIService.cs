@@ -1,7 +1,11 @@
 ﻿using eFrizer.Model;
 using Flurl.Http;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.IO;
 using System.Threading.Tasks;
-
+using System.Web.Mvc;
+using System.Windows.Forms;
 
 namespace eFrizer.Win
 {
@@ -58,7 +62,7 @@ namespace eFrizer.Win
             return result;
         }
 
-        public async Task<T> Login<T>(string username , string pass)
+        public async Task<T> Login<T>(string username, string pass)
         {
             var url = $"{Properties.Settings.Default.ApiURL}/{_route}?Username={username}&Password={pass}";
             var result = await url.WithBasicAuth(username, pass).GetJsonAsync<T>();
@@ -68,9 +72,26 @@ namespace eFrizer.Win
         public async Task<T> Register<T>(object request)
         {
             var url = $"{Properties.Settings.Default.ApiURL}/{_route}";
-            var result = await url.WithHeader("Authorization" , "Basic")
+            var result = await url.WithHeader("Authorization", "Basic")
                 .PostJsonAsync(request).ReceiveJson<T>();
             return result;
+        }
+
+        public async Task<byte[]> GetImageStream<T>(int imageId)
+        {
+            var url = ($"{Properties.Settings.Default.ApiURL}/{_route}?imageId={imageId}");
+            var resultPath = await url.WithBasicAuth(Username, Password).DownloadFileAsync(Application.StartupPath, "index.jpg");
+
+            return File.ReadAllBytes(resultPath);
+        }
+
+        public async Task<ExpandoObject> GetImageIds(int hairSalonId)
+        {
+            var url = ($"{Properties.Settings.Default.ApiURL}/{_route}?hairSalonId={hairSalonId}");
+            var imageIds = await url.WithBasicAuth(Username, Password).GetJsonAsync();
+            //dynamic dynamicInts = 
+            //int[] imageIds = dynamicInts.cast<int>();
+            return imageIds;
         }
 
     }

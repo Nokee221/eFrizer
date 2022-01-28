@@ -236,6 +236,7 @@ namespace eFrizer.Win
             this.btnPictures.TabIndex = 3;
             this.btnPictures.Text = "Pictures";
             this.btnPictures.UseVisualStyleBackColor = true;
+            this.btnPictures.Click += new System.EventHandler(this.btnPictures_Click);
             // 
             // btnCategories
             // 

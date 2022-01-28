@@ -25,7 +25,7 @@ namespace eFrizer.Services
             _hostEnvironment = hostEnvironment;
         }
 
-        public async Task<Byte[]> Get(int imageId)
+        public async Task<Byte[]> GetPictureStream(int imageId)
         {
             Byte[] imageBytes;
             try
@@ -43,6 +43,12 @@ namespace eFrizer.Services
             }
         }
 
+        public async Task<Gallery> GetPictureIds(int hairSalonId)
+        {
+            int[] pictureIdsDb = Context.HairSalonPictures.Where(x => x.HairSalonId == hairSalonId).Select(x => x.PictureId).ToArray();
+            var gal = new Gallery { pictureIds = pictureIdsDb };
+            return gal;
+        }
         public async override Task<Model.Picture> Insert(PictureInsertRequest request)
         {
 
