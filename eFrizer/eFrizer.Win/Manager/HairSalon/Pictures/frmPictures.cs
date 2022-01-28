@@ -1,4 +1,7 @@
 ﻿using eFrizer.Model;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,6 +10,7 @@ using System.Drawing;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -18,11 +22,14 @@ namespace eFrizer.Win
     {
         private APIService _pictureStreamService= new APIService("PictureStream");
         private APIService _pictureIdsService = new APIService("PictureIds");
+        private APIService _pictureService = new APIService("Picture");
+        private HairSalon _hairSalon;
         private int[] _pictureIds;
         private int _selectedIndex;
 
-        public frmPictures()
+        public frmPictures(HairSalon hairSalon)
         {
+            _hairSalon = hairSalon;
             InitializeComponent();
         }
 
@@ -78,6 +85,40 @@ namespace eFrizer.Win
             }
             
             renderPicture(_pictureIds[_selectedIndex]);
+        }
+
+        private async void btnNew_Click(object sender, EventArgs e)
+        {
+            var result = ofdNewImage.ShowDialog();
+            if(result == DialogResult.OK)
+            {
+                var request = new PictureInsertRequest
+                {
+                    HairSalonId = _hairSalon.HairSalonId;
+                }
+                using (var fileStream = File.Open(ofdNewImage.FileName, FileMode.Open))
+                {
+                    using (var client = new HttpClient())
+                    {
+                        var multipartContent = new MultipartFormDataContent();
+                        using (MemoryStream memoryStream = new MemoryStream())
+                        {
+                            await fileStream.CopyToAsync(memoryStream);
+                            var byteContent = new ByteArrayContent(memoryStream.ToArray());
+                            multipartContent.Add(
+                                byteContent,
+                                Path.GetFileNameWithoutExtension(ofdNewImage.FileName) +
+                                DateTime.Now.ToString("yymmssfff") +
+                                Path.GetExtension(ofdNewImage.FileName),
+                                ofdNewImage.FileName);
+                            
+                            var response = await client.PostAsync($"{Properties.Settings.Default.ApiURL}/Picture", multipartContent);
+                        };
+                  
+                    }
+                }
+
+            }
         }
     }
 }

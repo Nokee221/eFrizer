@@ -34,6 +34,8 @@ namespace eFrizer.Controllers
         [HttpPost]
         public override async Task<Model.Picture> Insert([FromForm] PictureInsertRequest request)
         {
+            var form = Request.Form;
+            request.ImageFile = form.Files[0];
             return await _crudService.Insert(request);
         }
 

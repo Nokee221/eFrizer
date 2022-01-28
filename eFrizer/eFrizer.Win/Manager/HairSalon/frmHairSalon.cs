@@ -131,7 +131,7 @@ namespace eFrizer.Win
         {
             //TODO: Refactor like this. Need to pass in the right parameter though every time.  Maybe just pass in the initialized object?
             //FormInit();
-            var forma = new frmPictures();
+            var forma = new frmPictures(this._hairSalon);
             FormInit(forma);
 
         }

@@ -33,6 +33,7 @@ namespace eFrizer.Win
             this.btnNext = new System.Windows.Forms.Button();
             this.btnPrevious = new System.Windows.Forms.Button();
             this.pbHairSalon = new System.Windows.Forms.PictureBox();
+            this.ofdNewImage = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pbHairSalon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,6 +45,7 @@ namespace eFrizer.Win
             this.btnNew.TabIndex = 0;
             this.btnNew.Text = "Add new photo";
             this.btnNew.UseVisualStyleBackColor = true;
+            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
             // btnNext
             // 
@@ -96,5 +98,6 @@ namespace eFrizer.Win
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnPrevious;
         private System.Windows.Forms.PictureBox pbHairSalon;
+        private System.Windows.Forms.OpenFileDialog ofdNewImage;
     }
 }

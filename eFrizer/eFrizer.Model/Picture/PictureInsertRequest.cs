@@ -7,6 +7,7 @@ namespace eFrizer.Model
 {
     public class PictureInsertRequest
     {
+        public int HairSalonId { get; set; }
         public IFormFile ImageFile { get; set; }
     }
 }
