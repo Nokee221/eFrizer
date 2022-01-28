@@ -48,6 +48,9 @@ namespace eFrizer.Mapping
             CreateMap<Database.Review, Model.Review>().ReverseMap();
             CreateMap<Model.ReviewInsertRequest, Database.Review>().ReverseMap();
 
+            CreateMap<Database.TextReview, Model.TextReview>().ReverseMap();
+            CreateMap<Model.TextReviewInsertRequest, Database.TextReview>().ReverseMap();
+
             CreateMap<Database.Service, Model.Service>().ReverseMap();
             CreateMap<Model.ServiceInsertRequest, Database.Service>().ReverseMap();
             CreateMap<Model.ServiceUpdateRequest, Database.Service>().ReverseMap();
