@@ -28,6 +28,7 @@ namespace eFrizer.Database
         public virtual ICollection<HairSalonPicture> HairSalonPictures { get; set; }
         public virtual ICollection<HairSalonService> HairSalonServices { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<TextReview> TextReviews { get; set; }
     }
 }
 

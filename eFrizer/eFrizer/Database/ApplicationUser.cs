@@ -26,6 +26,7 @@ namespace eFrizer.Database
         public virtual ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; }
         public virtual ICollection<Reservation> Reservations { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<TextReview> TextReviews { get; set; }
 
         public virtual ICollection<LoyaltyBonusUser> LoyaltyBonusUser { get; set; }
     }

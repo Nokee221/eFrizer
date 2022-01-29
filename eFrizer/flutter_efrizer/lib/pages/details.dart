@@ -13,6 +13,7 @@ import 'package:flutter_login/pages/loyalty.dart';
 import 'package:flutter_login/pages/loyalty_bonus_page.dart';
 import 'package:flutter_login/models/hairsalon_hairdresser/hairsalon_hairdresser.dart';
 import 'package:flutter_login/models/hairsalon_hairdresser/hairsalon_hairdresser_search.dart';
+import 'package:flutter_login/pages/review.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_login/widget/custom_list_title.dart';
@@ -170,9 +171,32 @@ class _DetailsState extends State<Details> {
                     ],
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 6,
                   ),
-                  starWidget(),
+                  Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: Row(
+                      children: [
+                        starWidget(),
+                        Spacer(),
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => ReviewPage(hairsalon, user)
+                            ));
+                          },
+                          child: Text(
+                            "View all",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 13,
+                                color: Colors.grey),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                   SizedBox(height: 25),
                   Container(
                     alignment: Alignment.centerLeft,
@@ -312,7 +336,8 @@ class _DetailsState extends State<Details> {
                     MaterialPageRoute(
                         builder: (context) => CalendarPage(
                             hairdresser.applicationUserId,
-                            user.applicationUserId, hairsalon.HairSalonId)),
+                            user.applicationUserId,
+                            hairsalon.HairSalonId)),
                   );
                 },
                 child: Column(
@@ -367,7 +392,6 @@ class _DetailsState extends State<Details> {
     Map<String, String>? queryParams = null;
     if (req != null && queryParams != "")
       queryParams = {'hairSalonId': req.hairSalonId.toString()};
-
 
     var loyalty =
         await APIService.get('HairSalonServiceLoyaltyBonus', queryParams);
@@ -457,7 +481,7 @@ class _DetailsState extends State<Details> {
         ),
         onRatingUpdate: (rating) {
           var respone = null;
-
+          
           respone = _setRating(rating);
           if (respone != null) {
             Widget okButton = TextButton(
