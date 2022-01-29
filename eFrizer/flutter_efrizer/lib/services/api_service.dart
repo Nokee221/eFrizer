@@ -301,7 +301,7 @@ class APIService {
   }
 
   static Future<dynamic?> delete(String route, dynamic id) async {
-    String baseUrl = apiUrl + route + "/" + id;
+    String baseUrl = apiUrl + route + "?id=" + id;
 
     final String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));

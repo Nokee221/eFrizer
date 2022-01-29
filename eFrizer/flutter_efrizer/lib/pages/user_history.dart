@@ -102,7 +102,7 @@ class _HistoryState extends State<History> {
     onDismissed: (direction){
       setState(() {
         deleteData(reservation.reservationId);
-        historyWidget(themeChange);
+        History(user);
       });
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Reservation deleted")));
