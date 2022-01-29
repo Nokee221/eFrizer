@@ -42,7 +42,7 @@ namespace eFrizer.Win
         private async void initPictures()
         {
             pbHairSalon.SizeMode = PictureBoxSizeMode.StretchImage;
-            Gallery gallery = await _pictureIdsService.GetImageIds<Gallery>(1);
+            Gallery gallery = await _pictureIdsService.GetImageIds<Gallery>(_hairSalon.HairSalonId);
             _pictureIds = new int[gallery.pictureIds.Count()];
             for (int i = 0; i < gallery.pictureIds.Count(); i++)
             {
@@ -94,12 +94,14 @@ namespace eFrizer.Win
             {
                 var request = new PictureInsertRequest
                 {
-                    HairSalonId = _hairSalon.HairSalonId;
-                }
+                    HairSalonId = _hairSalon.HairSalonId
+                };
                 using (var fileStream = File.Open(ofdNewImage.FileName, FileMode.Open))
                 {
                     using (var client = new HttpClient())
                     {
+                        var serializedRequest = JsonConvert.SerializeObject(request);
+                        var stringContent = new StringContent(serializedRequest, Encoding.UTF8, "application/json");
                         var multipartContent = new MultipartFormDataContent();
                         using (MemoryStream memoryStream = new MemoryStream())
                         {
@@ -111,8 +113,10 @@ namespace eFrizer.Win
                                 DateTime.Now.ToString("yymmssfff") +
                                 Path.GetExtension(ofdNewImage.FileName),
                                 ofdNewImage.FileName);
-                            
+                            multipartContent.Add(new StringContent(request.HairSalonId.ToString()), "HairSalonId");
                             var response = await client.PostAsync($"{Properties.Settings.Default.ApiURL}/Picture", multipartContent);
+                            MessageBox.Show("Successfully added new image!");
+                            initPictures();
                         };
                   
                     }

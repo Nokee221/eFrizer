@@ -72,6 +72,15 @@ namespace eFrizer.Services
 
             _context.SaveChanges();
 
+            var pictureId = _context.Pictures.OrderByDescending(x => x.PictureId).First().PictureId;
+            var hairSalonPicture = _context.HairSalonPictures.Add(new Database.HairSalonPicture()
+            {
+                HairSalonId = request.HairSalonId,
+                PictureId = pictureId
+            });
+
+            _context.SaveChanges();
+
             return _mapper.Map<Model.Picture>(entry.Entity);
         }
 
