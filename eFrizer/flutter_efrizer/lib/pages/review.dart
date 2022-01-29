@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/hairsalon/HairSalon.dart';
+import 'package:flutter_login/models/text_review/text_review.dart';
+import 'package:flutter_login/models/text_review/text_review_search_request.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
+import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,18 +12,29 @@ import 'package:provider/provider.dart';
 
 class ReviewPage extends StatefulWidget {
   final HairSalon hairSalon;
-  const ReviewPage(this.hairSalon, {Key? key}) : super(key: key);
+  final ApplicationUser user;
+  const ReviewPage(this.hairSalon, this.user, {Key? key}) : super(key: key);
 
   @override
-  _ReviewPageState createState() => _ReviewPageState(hairSalon);
+  _ReviewPageState createState() => _ReviewPageState(hairSalon, user);
 }
 
 class _ReviewPageState extends State<ReviewPage> {
   final HairSalon hairSalon;
+  final ApplicationUser user;
 
-  _ReviewPageState(this.hairSalon);
+  _ReviewPageState(this.hairSalon, this.user);
 
   final String assetName = 'assets/hairdresser.svg';
+
+  var request = null;
+
+  @override
+  void initState() {
+    super.initState();
+    request = TextReviewSearchRequest(
+        clientId: user.applicationUserId, hairSalonId: hairSalon.HairSalonId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +53,51 @@ class _ReviewPageState extends State<ReviewPage> {
         elevation: 0,
       ),
       body: Container(
-        height: 120,
+        width: double.infinity,
+        height: double.infinity,
+        child: reviewWidget(),
+      ),
+      
+    );
+  }
+
+  Widget reviewWidget() {
+    return FutureBuilder<List<TextReview>>(
+        future: getReview(request),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<TextReview>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Text('Loading...'),
+            );
+          } else {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('${snapshot.error}'),
+              );
+            } else {
+              return ListView(
+                scrollDirection: Axis.vertical,
+                physics: ScrollPhysics(),
+                children:
+                    snapshot.data!.map((e) => reviewViewWidget(e)).toList(),
+              );
+            }
+          }
+        });
+  }
+
+  Future<List<TextReview>> getReview(req) async {
+    Map<String, String>? queryParams = null;
+    if (req != null && queryParams != "")
+      queryParams = {'HairSalonId': req.hairSalonId.toString()};
+
+    var review = await APIService.get('TextReview', queryParams);
+    return review!.map((i) => TextReview.fromJson(i)).toList();
+  }
+
+  Widget reviewViewWidget(review) => Container(
+        height: 110,
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
@@ -69,7 +128,7 @@ class _ReviewPageState extends State<ReviewPage> {
                     children: [
                       Flexible(
                         child: Text(
-                          "Client Name",
+                          review.clientName,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -96,12 +155,14 @@ class _ReviewPageState extends State<ReviewPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Text Review",
+                        review.text,
+                        style: GoogleFonts.nunito(
+                            color: Colors.black, fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 15,
                   ),
                   Row(
                     children: [
@@ -123,9 +184,7 @@ class _ReviewPageState extends State<ReviewPage> {
                             Icons.star,
                             color: Colors.amber,
                           ),
-                          onRatingUpdate: (rating){
-
-                          },
+                          onRatingUpdate: (rating) {},
                         ),
                       )
                     ],
@@ -135,7 +194,5 @@ class _ReviewPageState extends State<ReviewPage> {
             ),
           ],
         ),
-      ),
-    );
-  }
+      );
 }

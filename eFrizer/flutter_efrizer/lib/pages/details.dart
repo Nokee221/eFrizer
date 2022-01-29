@@ -183,7 +183,7 @@ class _DetailsState extends State<Details> {
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                  builder: (context) => ReviewPage(hairsalon)
+                                  builder: (context) => ReviewPage(hairsalon, user)
                             ));
                           },
                           child: Text(
@@ -481,7 +481,7 @@ class _DetailsState extends State<Details> {
         ),
         onRatingUpdate: (rating) {
           var respone = null;
-
+          
           respone = _setRating(rating);
           if (respone != null) {
             Widget okButton = TextButton(
