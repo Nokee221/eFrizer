@@ -28,5 +28,11 @@ namespace eFrizer.Controllers
         {
             return await _crudService.Update(id, request);
         }
+
+        [HttpDelete]
+        public async virtual Task<T> Delete(int id)
+        {
+            return await _crudService.Delete(id);
+        }
     }
 }

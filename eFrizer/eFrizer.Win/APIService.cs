@@ -62,6 +62,15 @@ namespace eFrizer.Win
             return result;
         }
 
+        public async Task<T> DeletePicture<T>(int id)
+        {
+            var url = $"{Properties.Settings.Default.ApiURL}/{_route}?id={id}";
+            var result = await url  
+                .WithBasicAuth(Username, Password)
+                .DeleteAsync().ReceiveJson<T>();
+            return result;
+        }
+
         public async Task<T> Login<T>(string username, string pass)
         {
             var url = $"{Properties.Settings.Default.ApiURL}/{_route}?Username={username}&Password={pass}";

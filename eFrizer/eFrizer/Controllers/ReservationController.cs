@@ -17,19 +17,5 @@ namespace eFrizer.Controllers
             _context = context;
         }
 
-
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var rezervation = await _context.Reservations.FindAsync(id);
-
-            _context.Reservations.Remove(rezervation);
-            await _context.SaveChangesAsync();
-            return NoContent();
-
-
-        }
-
     }
 }

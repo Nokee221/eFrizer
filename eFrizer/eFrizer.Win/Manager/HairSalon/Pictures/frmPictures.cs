@@ -41,15 +41,23 @@ namespace eFrizer.Win
 
         private async void initPictures()
         {
-            pbHairSalon.SizeMode = PictureBoxSizeMode.StretchImage;
             Gallery gallery = await _pictureIdsService.GetImageIds<Gallery>(_hairSalon.HairSalonId);
-            _pictureIds = new int[gallery.pictureIds.Count()];
-            for (int i = 0; i < gallery.pictureIds.Count(); i++)
+            if (gallery.pictureIds.Count() != 0)
             {
-                _pictureIds[i] = gallery.pictureIds.ElementAt(i);
+                pbHairSalon.SizeMode = PictureBoxSizeMode.StretchImage;
+                _pictureIds = new int[gallery.pictureIds.Count()];
+                for (int i = 0; i < gallery.pictureIds.Count(); i++)
+                {
+                    _pictureIds[i] = gallery.pictureIds.ElementAt(i);
+                }
+                _selectedIndex = _pictureIds.Count() - 1;
+                renderPicture(_pictureIds[_selectedIndex]); 
             }
-            _selectedIndex = _pictureIds.Count() - 1;
-            renderPicture(_pictureIds[_selectedIndex]);
+            else
+            {
+                pbHairSalon.Image = null;
+                MessageBox.Show("No images to display! You can add some with the 'Add new image' button.");
+            }
         }
 
         private void btnNext_Click(object sender, EventArgs e)
@@ -123,6 +131,14 @@ namespace eFrizer.Win
                 }
 
             }
+        }
+
+        private async void btnDelete_Click(object sender, EventArgs e)
+        {
+            int pictureId = _pictureIds[_selectedIndex];
+            var picture = await _pictureService.DeletePicture<Picture>(pictureId);
+            MessageBox.Show("Successfully deleted selected picture.");
+            initPictures();
         }
     }
 }

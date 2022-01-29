@@ -45,7 +45,6 @@ namespace eFrizer.Controllers
             return await _crudService.Update(id, request);
         }
 
-
         //TODO: the controller returns only the model on get requests, maybe it should return the bytes for the image?
     }
 }
