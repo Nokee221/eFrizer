@@ -139,7 +139,7 @@ namespace eFrizer.Win
         private void FormInit(Form form)
         {
             this.Hide();
-            form.Closed += (s, args) => this.Close();
+            form.Closed += (s, args) => this.Show();
             form.ShowDialog();
         }
     }
