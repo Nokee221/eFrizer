@@ -123,7 +123,9 @@ class _HistoryState extends State<History> {
         ),
       ),
       title: Text( reservation.HairDresserName , style: GoogleFonts.nunito(color: themeChange.darkTheme ? Colors.white : Colors.black, fontWeight: FontWeight.bold),),
-      subtitle: Text(reservation.To.toString()),
+      subtitle: Text(
+        reservation.From.day.toString() + "." + reservation.From.month.toString() + "." + reservation.From.year.toString(),
+      ),
       tileColor: themeChange.darkTheme ? Colors.black87 : Colors.white,
     ),
   );

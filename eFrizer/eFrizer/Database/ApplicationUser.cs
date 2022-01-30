@@ -29,5 +29,6 @@ namespace eFrizer.Database
         public virtual ICollection<TextReview> TextReviews { get; set; }
 
         public virtual ICollection<LoyaltyBonusUser> LoyaltyBonusUser { get; set; }
+        public virtual ICollection<CreditCard> CreditCards { get; set; }
     }
 }
