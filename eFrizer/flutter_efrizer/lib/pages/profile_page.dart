@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/login.dart';
 import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/pages/edit_profile_page.dart';
+import 'package:flutter_login/pages/payment_method.dart';
 import 'package:flutter_login/pages/user_history.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/widget/button_widget.dart';
@@ -77,6 +78,7 @@ class _ProfilePageState extends State<ProfilePage> {
             switchActiveColor: Colors.indigo,
             title: Text('Dark theme'),
           ),
+          userListTilePaymant('Paymant Method', '', 5, context),
           userListTile('Logout', ' ', 4, context),
         ],
       ),
@@ -102,6 +104,31 @@ class _ProfilePageState extends State<ProfilePage> {
           subtitle: Text(subTitles),
           leading: Icon(
             Icons.exit_to_app_rounded,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget userListTilePaymant(
+      String title, String subTitles, int index, BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        hoverColor: Colors.red,
+        splashColor: Theme.of(context).splashColor,
+        child: ListTile(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) => MyPaymentPage(),
+              ),
+            );
+          },
+          title: Text(title),
+          subtitle: Text(subTitles),
+          leading: Icon(
+            Icons.credit_card,
           ),
         ),
       ),
