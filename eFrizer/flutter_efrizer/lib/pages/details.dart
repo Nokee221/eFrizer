@@ -187,7 +187,7 @@ class _DetailsState extends State<Details> {
                             ));
                           },
                           child: Text(
-                            "View all",
+                            "View all reviews",
                             style: TextStyle(
                                 fontWeight: FontWeight.w800,
                                 fontSize: 13,

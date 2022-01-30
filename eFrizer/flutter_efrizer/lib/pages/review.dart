@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/hairsalon/HairSalon.dart';
 import 'package:flutter_login/models/text_review/text_review.dart';
+import 'package:flutter_login/models/text_review/text_review_insert_request.dart';
 import 'package:flutter_login/models/text_review/text_review_search_request.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/services/api_service.dart';
@@ -26,6 +27,7 @@ class _ReviewPageState extends State<ReviewPage> {
   _ReviewPageState(this.hairSalon, this.user);
 
   final String assetName = 'assets/hairdresser.svg';
+  TextEditingController txtReview = new TextEditingController();
 
   var request = null;
 
@@ -34,6 +36,20 @@ class _ReviewPageState extends State<ReviewPage> {
     super.initState();
     request = TextReviewSearchRequest(
         clientId: user.applicationUserId, hairSalonId: hairSalon.HairSalonId);
+  }
+
+  var result = null;
+  var insertRequest = null;
+  Future<void> putReview() async {
+    if(txtReview.text == "")
+    {
+      result = null;
+    }
+    else{
+
+      insertRequest = TextReviewInsertRequest(clientId: user.applicationUserId , hairsalonId: hairSalon.HairSalonId, text: txtReview.text);
+      result = APIService.post("TextReview", insertRequest);
+    }
   }
 
   @override
@@ -73,6 +89,7 @@ class _ReviewPageState extends State<ReviewPage> {
               child: Column(
                 children: [
                   TextFormField(
+                    controller: txtReview,
                     maxLines: 3,
                     decoration: InputDecoration(
                       hintText: "Add a review",
@@ -93,7 +110,46 @@ class _ReviewPageState extends State<ReviewPage> {
                         ),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () async{
+                      await putReview();
+                      if(result != null)
+                      {
+                        Widget okButton = TextButton(
+                          child: Text("OK"),
+                          onPressed: () {},
+                        );
+                        AlertDialog alert = AlertDialog(
+                          title: Text("Success"),
+                          content: Text("Successfully added review!"),
+                          actions: [
+                            okButton,
+                          ],
+                        );
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return alert;
+                            });
+                      }
+                      else{
+                        Widget okButton = TextButton(
+                          child: Text("OK"),
+                          onPressed: () {},
+                        );
+                        AlertDialog alert = AlertDialog(
+                          title: Text("Error"),
+                          content: Text("Text field is required!"),
+                          actions: [
+                            okButton,
+                          ],
+                        );
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return alert;
+                            });
+                      }
+                    },
                     color: Colors.blue,
                   ),
                 ],
