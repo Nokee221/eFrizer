@@ -2,18 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_form.dart';
 import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
+import 'package:flutter_login/models/credit_card/credit_card_insert_request.dart';
+import 'package:flutter_login/pages/home_page.dart';
+import 'package:flutter_login/pages/profile_page.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
+import 'package:flutter_login/services/api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class NewCreditCardPage extends StatefulWidget {
-  const NewCreditCardPage({ Key? key }) : super(key: key);
+  final ApplicationUser user;
+  const NewCreditCardPage(this.user, {Key? key}) : super(key: key);
 
   @override
-  _NewCreditCardPageState createState() => _NewCreditCardPageState();
+  _NewCreditCardPageState createState() => _NewCreditCardPageState(user);
 }
 
 class _NewCreditCardPageState extends State<NewCreditCardPage> {
+  final ApplicationUser user;
+  _NewCreditCardPageState(this.user);
+
   String cardNumber = '';
   String expiryDate = '';
   String cardHolderName = '';
@@ -22,7 +31,17 @@ class _NewCreditCardPageState extends State<NewCreditCardPage> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-
+  var result = null;
+  Future<void> putCreditCard(String cardNumber, String cardHolderName,
+      String expiryDate, String cvvCode) async {
+    var req = new CreditCardInsertRequest(
+        clientId: user.applicationUserId,
+        cardName: cardNumber,
+        cardHolderName: cardHolderName,
+        expiryDate: expiryDate,
+        cvvCode: cvvCode);
+    result = APIService.post("CreditCard", req);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +59,7 @@ class _NewCreditCardPageState extends State<NewCreditCardPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-       body: SafeArea(
+      body: SafeArea(
         child: Column(
           children: [
             CreditCardWidget(
@@ -95,7 +114,7 @@ class _NewCreditCardPageState extends State<NewCreditCardPage> {
                       child: Container(
                         margin: EdgeInsets.all(8.0),
                         child: const Text(
-                          'Validate',
+                          'Validate and Add',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'halter',
@@ -106,7 +125,32 @@ class _NewCreditCardPageState extends State<NewCreditCardPage> {
                       ),
                       onPressed: () async {
                         if (formKey.currentState!.validate()) {
-                          
+                          await putCreditCard(
+                              cardNumber, cardHolderName, expiryDate, cvvCode);
+                          if (result != null) {
+                            Widget okButton = TextButton(
+                              child: Text("OK"),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            HomePage(user)));
+                              },
+                            );
+                            AlertDialog alert = AlertDialog(
+                              title: Text("Success"),
+                              content: Text("Successfully added new credit card"),
+                              actions: [
+                                okButton,
+                              ],
+                            );
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return alert;
+                                });
+                          }
                         } else {
                           print('inValid');
                         }

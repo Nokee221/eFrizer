@@ -121,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (BuildContext context) => MyPaymentPage(),
+                builder: (BuildContext context) => MyPaymentPage(user),
               ),
             );
           },

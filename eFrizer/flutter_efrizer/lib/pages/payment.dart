@@ -7,6 +7,8 @@ import 'package:flutter_login/models/loyalty_user/loyalty_user_insert_request.da
 import 'package:flutter_login/models/loyalty_user/loyalty_user_search_request.dart';
 import 'package:flutter_login/models/loyalty_user/loyatly_user_update_request.dart';
 import 'package:flutter_login/models/reservation/reservation_insert_request.dart';
+import 'package:flutter_login/pages/mycard_paymant.dart';
+import 'package:flutter_login/pages/payment_method.dart';
 import 'package:flutter_login/pages/setting_page.dart';
 import 'package:flutter_login/pages/success.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
@@ -32,10 +34,12 @@ class _PaymentState extends State<Payment> {
 
   final paymentLabels = [
     'Credit card / Debit card',
+    'My Credit Cards',
     'Cash on delivery',
   ];
 
   final paymentIcons = [
+    Icons.credit_card,
     Icons.credit_card,
     Icons.money_off,
     Icons.payment,
@@ -55,7 +59,8 @@ class _PaymentState extends State<Payment> {
     lytrequest = LoyaltyBonusUserSearchRequest(
         clientId: request.clientId, hairSalonServiceId: request.serviceId);
 
-    lytbonusrequest = LoyaltyBonusSearchRequest(hairsalonServiceId: request.serviceId);
+    lytbonusrequest =
+        LoyaltyBonusSearchRequest(hairsalonServiceId: request.serviceId);
     super.initState();
   }
 
@@ -75,8 +80,8 @@ class _PaymentState extends State<Payment> {
   Future<void> updateLoyalty(id, tcounter) async {
     var updaterequest = LoyaltyBonusUserUpdateRequest(counter: tcounter);
 
-    updateresult =
-        await APIService.updateLoyalty("LoyaltyBonusUser", id.toString() ,  updaterequest);
+    updateresult = await APIService.updateLoyalty(
+        "LoyaltyBonusUser", id.toString(), updaterequest);
   }
 
   late LoyaltyBonus? lylbonusresult;
@@ -87,18 +92,18 @@ class _PaymentState extends State<Payment> {
         'hairSalonServiceId': lytbonusrequest.hairsalonServiceId.toString()
       };
 
-    lylbonusresult = await APIService.getLoyaltyBonus("HairSalonServiceLoyaltyBonus", queryParams);
+    lylbonusresult = await APIService.getLoyaltyBonus(
+        "HairSalonServiceLoyaltyBonus", queryParams);
   }
 
   var lyluserinsertrequest = null;
   var lyluserinsertresult = null;
   Future<void> putLoyalty(id) async {
-
-    lyluserinsertrequest = LoyatlyBonusUserInsertRequest(clientId: request.clientId , hairSalonServiceLoyaltyBonusId: id);
-    lyluserinsertresult = await APIService.post("LoyaltyBonusUser", lyluserinsertrequest);
+    lyluserinsertrequest = LoyatlyBonusUserInsertRequest(
+        clientId: request.clientId, hairSalonServiceLoyaltyBonusId: id);
+    lyluserinsertresult =
+        await APIService.post("LoyaltyBonusUser", lyluserinsertrequest);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -179,6 +184,12 @@ class _PaymentState extends State<Payment> {
                       builder: (context) => CreditCardPage(request),
                     ),
                   );
+                } else if (value == 1) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => MyCardPayReservationPage(request),
+                    ),
+                  );
                 } else {
                   await putData();
                   if (result != null) {
@@ -209,32 +220,28 @@ class _PaymentState extends State<Payment> {
                             });
                       }
                     } else {
-                      
                       await getLoyaltyBonus();
-                      if(lylbonusresult != null)
-                      {
+                      if (lylbonusresult != null) {
                         await putLoyalty(lylbonusresult!.id);
-                        if(lyluserinsertresult != null)
-                        {
+                        if (lyluserinsertresult != null) {
                           Widget okButton = TextButton(
-                          child: Text("OK"),
-                          onPressed: () {},
-                        );
-                        AlertDialog alert = AlertDialog(
-                          title: Text("Error"),
-                          content: Text("Uspjesno dodan loyalty bonus"),
-                          actions: [
-                            okButton,
-                          ],
-                        );
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return alert;
-                            });
+                            child: Text("OK"),
+                            onPressed: () {},
+                          );
+                          AlertDialog alert = AlertDialog(
+                            title: Text("Error"),
+                            content: Text("Uspjesno dodan loyalty bonus"),
+                            actions: [
+                              okButton,
+                            ],
+                          );
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return alert;
+                              });
                         }
                       }
-
                     }
 
                     Navigator.of(context).push(
@@ -242,8 +249,6 @@ class _PaymentState extends State<Payment> {
                         builder: (context) => Success(),
                       ),
                     );
-
-
                   } else {
                     Widget okButton = TextButton(
                       child: Text("OK"),
