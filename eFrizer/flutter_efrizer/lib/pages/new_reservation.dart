@@ -15,6 +15,8 @@ import 'package:flutter_login/widget/my_text_field.dart';
 import 'package:flutter_login/widget/top_container.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 
 
@@ -46,6 +48,7 @@ class _NewReservationState extends State<NewReservation> {
   TextEditingController totime = TextEditingController();
   TextEditingController endtime = TextEditingController();
   TextEditingController txtPrice = TextEditingController();
+  TextEditingController txtPriceWith$ = TextEditingController();
 
   var request = null;
   @override
@@ -56,6 +59,7 @@ class _NewReservationState extends State<NewReservation> {
     txtPrice.text = "";
 
     request = HairSalonServiceSearchRequest(hairsalonId: hairsalonId);
+    initializeDateFormatting('ECT');
   }
   
   @override
@@ -98,14 +102,15 @@ class _NewReservationState extends State<NewReservation> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         DateTimePicker(
+                          
                           type: DateTimePickerType.dateTime,
-                          dateMask: 'dd.MM.yyyy - hh:mm a',
+                          dateMask: 'dd.MM.yyyy',
                           controller: dateinput,
                           icon: Icon(Icons.calendar_today),
                           firstDate: DateTime(2020),
                           lastDate: DateTime(2100),
                           dateLabelText: 'Date',
-                          //use24HourFormat: false,
+                          use24HourFormat: false,
                           onChanged: (val) => setState(() {
                             reservationDate = DateTime.parse(val);
                             //dateinput.text = reservationDate.day.toString() + "." + reservationDate.month.toString() + "." + reservationDate.year.toString();
@@ -167,7 +172,7 @@ class _NewReservationState extends State<NewReservation> {
                       Container(
                       width: 100,
                       child: TextField(
-                      controller: txtPrice,
+                      controller: txtPriceWith$,
                       style: TextStyle(color: themeChange.darkTheme ? Colors.white : Colors.black),
                       minLines: 1,
                       maxLines: 1,
@@ -271,6 +276,8 @@ class _NewReservationState extends State<NewReservation> {
                             _service = newVal as HairSalonService;
 
                             txtPrice.text = _service!.price.toString();
+                            String pricee = _service!.price.toString();
+                            txtPriceWith$.text = _service!.price.toString() + "KM";
 
                             DateTime endTimeee = reservationDate;
                             endDate = endTimeee.add(Duration(minutes: _service!.timeMin));
