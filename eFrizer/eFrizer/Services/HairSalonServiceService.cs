@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Services
 {
-    public class HairSalonServiceService : BaseCRUDService<Model.HairSalonService, Database.HairSalonService, HairSalonServiceSearchRequest, HairSalonServiceInsertRequest, object>, ICRUDService<Model.HairSalonService, HairSalonServiceSearchRequest, HairSalonServiceInsertRequest, object>
+    public class HairSalonServiceService : BaseCRUDService<Model.HairSalonService, Database.HairSalonService, HairSalonServiceSearchRequest, HairSalonServiceInsertRequest, HairSalonServiceUpdateRequest>, IHairSalonServiceService
     {
         public HairSalonServiceService(eFrizerContext context, IMapper mapper)
            : base(context, mapper)
@@ -20,8 +20,6 @@ namespace eFrizer.Services
 
         public async override Task<List<Model.HairSalonService>> Get([FromBody] HairSalonServiceSearchRequest search = null)
         {
-            
-
             if (search.HairSalonId != 0)
             {
                 var list = await Context.HairSalonServices.Where(x => x.HairSalonId == search.HairSalonId).Include(x => x.Service).ToListAsync();
@@ -29,22 +27,16 @@ namespace eFrizer.Services
             }
             else
             {
-
-                
-
                 if (!string.IsNullOrEmpty(search?.Name))
                 {
                     var list2 = await Context.HairSalonServices.Where(x => x.Service.Name == search.Name).Include(x => x.Service).ToListAsync();
                     return _mapper.Map<List<Model.HairSalonService>>(list2);
-
                 }
                 else
                 {
-
                     var list = await Context.HairSalonServices.Include(x => x.Service).ToListAsync();
                     return _mapper.Map<List<Model.HairSalonService>>(list);
                 }
-
             }
         }
 

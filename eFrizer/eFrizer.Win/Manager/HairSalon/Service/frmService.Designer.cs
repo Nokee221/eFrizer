@@ -30,10 +30,14 @@ namespace eFrizer.Win.Service
         private void InitializeComponent()
         {
             this.dgvServices = new System.Windows.Forms.DataGridView();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.pbService = new System.Windows.Forms.PictureBox();
             this.txtTime = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtServiceId = new System.Windows.Forms.TextBox();
             this.btnSaveChanges = new System.Windows.Forms.Button();
             this.btnCreate = new System.Windows.Forms.Button();
             this.txtDesc = new System.Windows.Forms.RichTextBox();
@@ -45,12 +49,9 @@ namespace eFrizer.Win.Service
             this.label4 = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.txtView = new System.Windows.Forms.Button();
-            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServices)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbService)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvServices
@@ -70,11 +71,36 @@ namespace eFrizer.Win.Service
             this.dgvServices.TabIndex = 0;
             this.dgvServices.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvServices_CellDoubleClick);
             // 
+            // Name
+            // 
+            this.Name.DataPropertyName = "ServiceName";
+            this.Name.HeaderText = "Name";
+            this.Name.Name = "Name";
+            // 
+            // Time
+            // 
+            this.Time.DataPropertyName = "TimeMin";
+            this.Time.HeaderText = "Time";
+            this.Time.Name = "Time";
+            // 
+            // Price
+            // 
+            this.Price.DataPropertyName = "Price";
+            this.Price.HeaderText = "Price";
+            this.Price.Name = "Price";
+            // 
+            // Description
+            // 
+            this.Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Description.DataPropertyName = "Description";
+            this.Description.HeaderText = "Description";
+            this.Description.Name = "Description";
+            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.pbService);
             this.groupBox1.Controls.Add(this.txtTime);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.txtServiceId);
             this.groupBox1.Controls.Add(this.btnSaveChanges);
             this.groupBox1.Controls.Add(this.btnCreate);
             this.groupBox1.Controls.Add(this.txtDesc);
@@ -89,12 +115,20 @@ namespace eFrizer.Win.Service
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             // 
+            // pbService
+            // 
+            this.pbService.Location = new System.Drawing.Point(241, 29);
+            this.pbService.Name = "pbService";
+            this.pbService.Size = new System.Drawing.Size(199, 150);
+            this.pbService.TabIndex = 11;
+            this.pbService.TabStop = false;
+            // 
             // txtTime
             // 
             this.txtTime.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.txtTime.Location = new System.Drawing.Point(55, 129);
             this.txtTime.Name = "txtTime";
-            this.txtTime.Size = new System.Drawing.Size(71, 23);
+            this.txtTime.Size = new System.Drawing.Size(167, 23);
             this.txtTime.TabIndex = 10;
             // 
             // label5
@@ -106,15 +140,6 @@ namespace eFrizer.Win.Service
             this.label5.Size = new System.Drawing.Size(38, 15);
             this.label5.TabIndex = 9;
             this.label5.Text = "Time:";
-            // 
-            // txtServiceId
-            // 
-            this.txtServiceId.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.txtServiceId.Location = new System.Drawing.Point(441, 272);
-            this.txtServiceId.Name = "txtServiceId";
-            this.txtServiceId.ReadOnly = true;
-            this.txtServiceId.Size = new System.Drawing.Size(10, 23);
-            this.txtServiceId.TabIndex = 8;
             // 
             // btnSaveChanges
             // 
@@ -156,7 +181,7 @@ namespace eFrizer.Win.Service
             this.txtPrice.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.txtPrice.Location = new System.Drawing.Point(55, 83);
             this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(109, 23);
+            this.txtPrice.Size = new System.Drawing.Size(167, 23);
             this.txtPrice.TabIndex = 4;
             // 
             // txtName
@@ -164,7 +189,7 @@ namespace eFrizer.Win.Service
             this.txtName.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.txtName.Location = new System.Drawing.Point(55, 29);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(137, 23);
+            this.txtName.Size = new System.Drawing.Size(167, 23);
             this.txtName.TabIndex = 3;
             // 
             // label3
@@ -228,31 +253,6 @@ namespace eFrizer.Win.Service
             this.txtView.UseVisualStyleBackColor = false;
             this.txtView.Click += new System.EventHandler(this.txtView_Click);
             // 
-            // Name
-            // 
-            this.Name.DataPropertyName = "ServiceName";
-            this.Name.HeaderText = "Name";
-            this.Name.Name = "Name";
-            // 
-            // Time
-            // 
-            this.Time.DataPropertyName = "TimeMin";
-            this.Time.HeaderText = "Time";
-            this.Time.Name = "Time";
-            // 
-            // Price
-            // 
-            this.Price.DataPropertyName = "Price";
-            this.Price.HeaderText = "Price";
-            this.Price.Name = "Price";
-            // 
-            // Description
-            // 
-            this.Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Description.DataPropertyName = "Description";
-            this.Description.HeaderText = "Description";
-            this.Description.Name = "Description";
-            // 
             // frmService
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -269,6 +269,7 @@ namespace eFrizer.Win.Service
             ((System.ComponentModel.ISupportInitialize)(this.dgvServices)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbService)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -289,7 +290,6 @@ namespace eFrizer.Win.Service
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Button btnSaveC;
         private System.Windows.Forms.Button btnSaveChanges;
-        private System.Windows.Forms.TextBox txtServiceId;
         private System.Windows.Forms.Button txtView;
         private System.Windows.Forms.TextBox txtTime;
         private System.Windows.Forms.Label label5;
@@ -297,5 +297,6 @@ namespace eFrizer.Win.Service
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
         private System.Windows.Forms.DataGridViewTextBoxColumn Price;
         private System.Windows.Forms.DataGridViewTextBoxColumn Description;
+        private System.Windows.Forms.PictureBox pbService;
     }
 }

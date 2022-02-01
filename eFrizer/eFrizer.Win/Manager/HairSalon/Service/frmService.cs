@@ -14,13 +14,13 @@ namespace eFrizer.Win.Service
     public partial class frmService : Form
     {
         private HairSalon _hairSalon { get; set; }
+        private HairSalonService _selectedService { get; set; }
         private readonly APIService _hairsalonservices = new APIService("HairSalonService");
         private readonly APIService _services = new APIService("Service");
         public frmService(HairSalon hairSalon)
         {
             InitializeComponent();
             dgvServices.AutoGenerateColumns = false;
-            txtServiceId.Visible = false;
             _hairSalon = hairSalon;
         }
 
@@ -45,11 +45,13 @@ namespace eFrizer.Win.Service
         {
             if (txtName.Text == "" && txtDesc.Text == "" && txtPrice.Text == "")
                 return;
-
-            var request = new ServiceUpdateRequest();
+            //TODO: add validation
+            var request = new HairSalonServiceUpdateRequest();
             request.Name = txtName.Text;
+            request.Price = int.Parse(txtPrice.Text);
+            request.TimeMin = int.Parse(txtTime.Text);
 
-            var service = await _services.Update<Model.Service>(int.Parse(txtServiceId.Text), request);
+            var service = await _services.Update<Model.HairSalonService>(_selectedService.Id, request);
             await LoadData();
 
         }
@@ -78,11 +80,11 @@ namespace eFrizer.Win.Service
 
             var item = dgvServices.SelectedRows[0].DataBoundItem as HairSalonService;
 
-            txtServiceId.Text = item.ServiceId.ToString();
             txtName.Text = item.ServiceName;
             txtDesc.Text = item.Description;
             txtPrice.Text = item.Price.ToString();
             txtTime.Text = item.TimeMin.ToString();
+            _selectedService = item;
         }
 
         private async void txtView_Click(object sender, EventArgs e)
