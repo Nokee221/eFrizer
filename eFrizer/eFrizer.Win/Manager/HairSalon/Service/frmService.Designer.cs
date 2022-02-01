@@ -49,6 +49,7 @@ namespace eFrizer.Win.Service
             this.label4 = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.txtView = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServices)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbService)).BeginInit();
@@ -98,6 +99,7 @@ namespace eFrizer.Win.Service
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnDelete);
             this.groupBox1.Controls.Add(this.pbService);
             this.groupBox1.Controls.Add(this.txtTime);
             this.groupBox1.Controls.Add(this.label5);
@@ -146,11 +148,11 @@ namespace eFrizer.Win.Service
             this.btnSaveChanges.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btnSaveChanges.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnSaveChanges.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnSaveChanges.Location = new System.Drawing.Point(319, 301);
+            this.btnSaveChanges.Location = new System.Drawing.Point(155, 301);
             this.btnSaveChanges.Name = "btnSaveChanges";
             this.btnSaveChanges.Size = new System.Drawing.Size(132, 30);
             this.btnSaveChanges.TabIndex = 7;
-            this.btnSaveChanges.Text = "Save changes";
+            this.btnSaveChanges.Text = "Update";
             this.btnSaveChanges.UseVisualStyleBackColor = false;
             this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
             // 
@@ -161,7 +163,7 @@ namespace eFrizer.Win.Service
             this.btnCreate.ForeColor = System.Drawing.SystemColors.Control;
             this.btnCreate.Location = new System.Drawing.Point(7, 301);
             this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(112, 31);
+            this.btnCreate.Size = new System.Drawing.Size(142, 31);
             this.btnCreate.TabIndex = 6;
             this.btnCreate.Text = "Create";
             this.btnCreate.UseVisualStyleBackColor = false;
@@ -226,18 +228,18 @@ namespace eFrizer.Win.Service
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(12, 21);
+            this.label4.Location = new System.Drawing.Point(12, 12);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(59, 20);
+            this.label4.Size = new System.Drawing.Size(117, 20);
             this.label4.TabIndex = 2;
-            this.label4.Text = "Name: ";
+            this.label4.Text = "Filter by name: ";
             // 
             // txtSearch
             // 
             this.txtSearch.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.txtSearch.Location = new System.Drawing.Point(68, 21);
+            this.txtSearch.Location = new System.Drawing.Point(135, 13);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(215, 23);
+            this.txtSearch.Size = new System.Drawing.Size(191, 23);
             this.txtSearch.TabIndex = 3;
             // 
             // txtView
@@ -245,13 +247,26 @@ namespace eFrizer.Win.Service
             this.txtView.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.txtView.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.txtView.ForeColor = System.Drawing.SystemColors.Control;
-            this.txtView.Location = new System.Drawing.Point(335, 21);
+            this.txtView.Location = new System.Drawing.Point(332, 12);
             this.txtView.Name = "txtView";
-            this.txtView.Size = new System.Drawing.Size(135, 27);
+            this.txtView.Size = new System.Drawing.Size(135, 36);
             this.txtView.TabIndex = 4;
             this.txtView.Text = "Search";
             this.txtView.UseVisualStyleBackColor = false;
             this.txtView.Click += new System.EventHandler(this.txtView_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnDelete.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnDelete.Location = new System.Drawing.Point(293, 301);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(147, 31);
+            this.btnDelete.TabIndex = 12;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // frmService
             // 
@@ -263,6 +278,7 @@ namespace eFrizer.Win.Service
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dgvServices);
+            this.Name = "frmService";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmService";
             this.Load += new System.EventHandler(this.frmService_Load);
@@ -298,5 +314,6 @@ namespace eFrizer.Win.Service
         private System.Windows.Forms.DataGridViewTextBoxColumn Price;
         private System.Windows.Forms.DataGridViewTextBoxColumn Description;
         private System.Windows.Forms.PictureBox pbService;
+        private System.Windows.Forms.Button btnDelete;
     }
 }

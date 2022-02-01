@@ -116,5 +116,10 @@ namespace eFrizer.Win.Service
             dgvServices.DataSource = result;
 
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
