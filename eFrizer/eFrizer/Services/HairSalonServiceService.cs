@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Services
 {
-    public class HairSalonServiceService : BaseCRUDService<Model.HairSalonService, Database.HairSalonService, HairSalonServiceSearchRequest, HairSalonServiceInsertRequest, object>, ICRUDService<Model.HairSalonService, HairSalonServiceSearchRequest, HairSalonServiceInsertRequest, object>
+    public class HairSalonServiceService : BaseCRUDService<Model.HairSalonService, Database.HairSalonService, HairSalonServiceSearchRequest, HairSalonServiceInsertRequest, HairSalonServiceUpdateRequest>, IHairSalonServiceService
     {
         public HairSalonServiceService(eFrizerContext context, IMapper mapper)
            : base(context, mapper)
@@ -18,10 +18,21 @@ namespace eFrizer.Services
 
         }
 
+        public async override Task<Model.HairSalonService> Update(int id, [FromBody] HairSalonServiceUpdateRequest request)
+        {
+            var entity = Context.HairSalonServices.Include(x => x.Service).Where(x => x.Id == id).First();
+            
+            _mapper.Map(request, entity);
+
+            entity.Service.Name = request.Name;
+
+            await Context.SaveChangesAsync();
+
+            return _mapper.Map<Model.HairSalonService>(entity);
+        }
+
         public async override Task<List<Model.HairSalonService>> Get([FromBody] HairSalonServiceSearchRequest search = null)
         {
-            
-
             if (search.HairSalonId != 0)
             {
                 var list = await Context.HairSalonServices.Where(x => x.HairSalonId == search.HairSalonId).Include(x => x.Service).ToListAsync();
@@ -29,45 +40,45 @@ namespace eFrizer.Services
             }
             else
             {
-
-                
-
                 if (!string.IsNullOrEmpty(search?.Name))
                 {
                     var list2 = await Context.HairSalonServices.Where(x => x.Service.Name == search.Name).Include(x => x.Service).ToListAsync();
                     return _mapper.Map<List<Model.HairSalonService>>(list2);
-
                 }
                 else
                 {
-
                     var list = await Context.HairSalonServices.Include(x => x.Service).ToListAsync();
                     return _mapper.Map<List<Model.HairSalonService>>(list);
                 }
-
             }
         }
 
 
-        public async override Task<Model.HairSalonService> Insert([FromBody]HairSalonServiceInsertRequest request)
+        public async override Task<Model.HairSalonService> Insert([FromBody] HairSalonServiceInsertRequest request)
         {
-            var entitiy = _mapper.Map<Database.Service>(request);
-            Context.Services.Add(entitiy);
+            var serviceRequest = new ServiceInsertRequest
+            {
+                Name = request.Name
+            };
+
+            var newService = _mapper.Map<Database.Service>(serviceRequest);
+            Context.Services.Add(newService);
+
             await Context.SaveChangesAsync();
 
-
-            Database.HairSalonService hairSalonService = new Database.HairSalonService()
+            var hairSalonService = new Database.HairSalonService()
             {
                 HairSalonId = request.HairSalonId,
-                ServiceId = entitiy.ServiceId
+                ServiceId = newService.ServiceId,
+                Description = request.Description,
+                Price = request.Price,
+                TimeMin = request.TimeMin
             };
 
             Context.HairSalonServices.Add(hairSalonService);
             await Context.SaveChangesAsync();
 
-
             return _mapper.Map<Model.HairSalonService>(hairSalonService);
-
         }
     }
 }

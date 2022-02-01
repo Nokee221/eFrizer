@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Controllers
 {
-    public class HairSalonServiceController : BaseCRUDController<Model.HairSalonService , HairSalonServiceSearchRequest, HairSalonServiceInsertRequest, object>
+    public class HairSalonServiceController : BaseCRUDController<Model.HairSalonService , HairSalonServiceSearchRequest, HairSalonServiceInsertRequest, HairSalonServiceUpdateRequest>
     {
-        public HairSalonServiceController(ICRUDService<Model.HairSalonService, HairSalonServiceSearchRequest, HairSalonServiceInsertRequest, object> service)
+        public HairSalonServiceController(IHairSalonServiceService service)
             : base(service)
         {
 

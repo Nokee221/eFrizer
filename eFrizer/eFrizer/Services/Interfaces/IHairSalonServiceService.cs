@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using eFrizer.Model;
 
 namespace eFrizer.Services
 {
-    public interface IHairSalonServiceService
+    public interface IHairSalonServiceService : ICRUDService<Model.HairSalonService, HairSalonServiceSearchRequest, HairSalonServiceInsertRequest, HairSalonServiceUpdateRequest>
     {
     }
 }
