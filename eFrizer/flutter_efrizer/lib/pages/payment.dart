@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus.dart';
 import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus_search_request.dart';
 import 'package:flutter_login/models/loyalty_user/loyalty_user.dart';
@@ -18,19 +19,21 @@ import 'package:provider/provider.dart';
 import 'credit_card_page.dart';
 
 class Payment extends StatefulWidget {
+  final ApplicationUser user;
   final ReservationInsertRequest request;
-  const Payment(this.request, {Key? key}) : super(key: key);
+  const Payment(this.user , this.request, {Key? key}) : super(key: key);
 
   @override
-  _PaymentState createState() => _PaymentState(request);
+  _PaymentState createState() => _PaymentState(user ,request);
 }
 
 class _PaymentState extends State<Payment> {
+  final ApplicationUser user;
   final ReservationInsertRequest request;
   final icon = CupertinoIcons.moon_stars;
   Object? value = 0;
 
-  _PaymentState(this.request);
+  _PaymentState(this.user ,this.request);
 
   final paymentLabels = [
     'Credit card / Debit card',
@@ -181,13 +184,13 @@ class _PaymentState extends State<Payment> {
                 if (value == 0) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => CreditCardPage(request),
+                      builder: (context) => CreditCardPage(user ,request),
                     ),
                   );
                 } else if (value == 1) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => MyCardPayReservationPage(request),
+                      builder: (context) => MyCardPayReservationPage(user ,request),
                     ),
                   );
                 } else {
@@ -246,7 +249,7 @@ class _PaymentState extends State<Payment> {
 
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => Success(),
+                        builder: (context) => Success(user),
                       ),
                     );
                   } else {

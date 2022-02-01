@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/hairsalon_service/hairsalon_service.dart';
 import 'package:flutter_login/models/hairsalon_service/harisalon_service_search_request.dart';
 import 'package:flutter_login/models/reservation/reservation_insert_request.dart';
@@ -21,18 +22,21 @@ import 'package:intl/date_symbol_data_local.dart';
 
 
 class NewReservation extends StatefulWidget {
+  final ApplicationUser user;
   final int applicationUserId;
   final DateTime reservationDate;
   final DateTime endDate;
   final int hairdressedid;
   final int hairsalonId;
-  const NewReservation(this.reservationDate, this.hairdressedid , this.endDate , this.applicationUserId, this.hairsalonId ,{Key? key}) : super(key: key);
+  const NewReservation(this.user, this.reservationDate, this.hairdressedid , this.endDate , this.applicationUserId, this.hairsalonId ,{Key? key}) : super(key: key);
 
   @override
-  _NewReservationState createState() => _NewReservationState(reservationDate, hairdressedid, applicationUserId, hairsalonId);
+  _NewReservationState createState() => _NewReservationState(user, reservationDate, hairdressedid, applicationUserId, hairsalonId);
 }
 
 class _NewReservationState extends State<NewReservation> {
+  final ApplicationUser user;
+
   final int applicationUserId;
   late DateTime reservationDate;
   late DateTime endDate;
@@ -42,7 +46,7 @@ class _NewReservationState extends State<NewReservation> {
   HairSalonService? _service = null;
   List<DropdownMenuItem<HairSalonService>> items = [];
 
-  _NewReservationState(this.reservationDate, this.hairdresserId, this.applicationUserId, this.hairsalonId);
+  _NewReservationState(this.user ,this.reservationDate, this.hairdresserId, this.applicationUserId, this.hairsalonId);
 
   TextEditingController dateinput = TextEditingController();
   TextEditingController totime = TextEditingController();
@@ -110,7 +114,7 @@ class _NewReservationState extends State<NewReservation> {
                           firstDate: DateTime(2020),
                           lastDate: DateTime(2100),
                           dateLabelText: 'Date',
-                          use24HourFormat: false,
+                          //use24HourFormat: false,
                           onChanged: (val) => setState(() {
                             reservationDate = DateTime.parse(val);
                             //dateinput.text = reservationDate.day.toString() + "." + reservationDate.month.toString() + "." + reservationDate.year.toString();
@@ -218,7 +222,7 @@ class _NewReservationState extends State<NewReservation> {
                   
                   Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) => Payment(request)),
+                              builder: (context) => Payment(user , request)),
                         );
                 },
                 child: const Center(

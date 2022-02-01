@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus.dart';
 import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus_search_request.dart';
 import 'package:flutter_login/models/loyalty_user/loyalty_user.dart';
@@ -15,18 +16,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class CreditCardPage extends StatefulWidget {
+  final ApplicationUser user;
   final ReservationInsertRequest request;
-  const CreditCardPage(this.request, {Key? key}) : super(key: key);
+  const CreditCardPage(this.user ,this.request, {Key? key}) : super(key: key);
 
   @override
-  _CreditCardPageState createState() => _CreditCardPageState(request);
+  _CreditCardPageState createState() => _CreditCardPageState(user ,request);
 }
 
 class _CreditCardPageState extends State<CreditCardPage> {
+  final ApplicationUser user;
   final ReservationInsertRequest request;
   final icon = CupertinoIcons.moon_stars;
 
-  _CreditCardPageState(this.request);
+  _CreditCardPageState(this.user ,this.request);
 
   String cardNumber = '';
   String expiryDate = '';
@@ -241,7 +244,7 @@ class _CreditCardPageState extends State<CreditCardPage> {
 
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => Success(),
+                                builder: (context) => Success(user),
                               ),
                             );
                             

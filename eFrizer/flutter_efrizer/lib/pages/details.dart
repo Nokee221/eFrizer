@@ -18,7 +18,6 @@ import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_login/widget/custom_list_title.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'calendar_page.dart';
@@ -335,6 +334,7 @@ class _DetailsState extends State<Details> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                         builder: (context) => CalendarPage(
+                            user,
                             hairdresser.applicationUserId,
                             user.applicationUserId,
                             hairsalon.HairSalonId)),

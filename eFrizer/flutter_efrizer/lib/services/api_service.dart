@@ -126,7 +126,7 @@ class APIService {
     return 0.0;
   }
 
-  static Future<dynamic> getById(String route, String id) async {
+  static Future<dynamic?> getById(String route, String id) async {
     String baseUrl = apiUrl + route + "/" + id;
     final String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
@@ -138,8 +138,10 @@ class APIService {
     if (response.statusCode == 200) {
       return json.decode(response.body);
     }
+    
     return null;
   }
+
 
   static Future<List<dynamic>?> getHairSalon(String route) async {
     String baseUrl = apiUrl + route;
