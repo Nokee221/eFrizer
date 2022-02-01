@@ -201,7 +201,7 @@ class _ReviewPageState extends State<ReviewPage> {
   }
 
   Widget reviewViewWidget(review) => Container(
-        height: 110,
+        height: 190,
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
@@ -263,15 +263,20 @@ class _ReviewPageState extends State<ReviewPage> {
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        review.text,
-                        style: GoogleFonts.nunito(
-                            color: Colors.black, fontWeight: FontWeight.bold),
-                      )
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          review.text,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 4,
+                          style: GoogleFonts.nunito(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 15,

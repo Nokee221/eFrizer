@@ -180,10 +180,13 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
                           ),
                         ),
                         onPressed: () {
-                          if(loyalty.activatesOn == bonus.counter && bonus.counter > loyalty.activatesOn)
-                          {
-                            opacityLevel = 1.0;
-                          }
+                          setState(() {
+                            
+                            if(loyalty.activatesOn == bonus.counter || bonus.counter > loyalty.activatesOn)
+                            {
+                              opacityLevel = 1.0;
+                            }
+                          });
                         }),
                       ),
                     
