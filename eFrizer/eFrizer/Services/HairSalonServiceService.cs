@@ -18,6 +18,19 @@ namespace eFrizer.Services
 
         }
 
+        public async override Task<Model.HairSalonService> Update(int id, [FromBody] HairSalonServiceUpdateRequest request)
+        {
+            var entity = Context.HairSalonServices.Include(x => x.Service).Where(x => x.Id == id).First();
+            
+            _mapper.Map(request, entity);
+
+            entity.Service.Name = request.Name;
+
+            await Context.SaveChangesAsync();
+
+            return _mapper.Map<Model.HairSalonService>(entity);
+        }
+
         public async override Task<List<Model.HairSalonService>> Get([FromBody] HairSalonServiceSearchRequest search = null)
         {
             if (search.HairSalonId != 0)
@@ -41,25 +54,31 @@ namespace eFrizer.Services
         }
 
 
-        public async override Task<Model.HairSalonService> Insert([FromBody]HairSalonServiceInsertRequest request)
+        public async override Task<Model.HairSalonService> Insert([FromBody] HairSalonServiceInsertRequest request)
         {
-            var entitiy = _mapper.Map<Database.Service>(request);
-            Context.Services.Add(entitiy);
+            var serviceRequest = new ServiceInsertRequest
+            {
+                Name = request.Name
+            };
+
+            var newService = _mapper.Map<Database.Service>(serviceRequest);
+            Context.Services.Add(newService);
+
             await Context.SaveChangesAsync();
 
-
-            Database.HairSalonService hairSalonService = new Database.HairSalonService()
+            var hairSalonService = new Database.HairSalonService()
             {
                 HairSalonId = request.HairSalonId,
-                ServiceId = entitiy.ServiceId
+                ServiceId = newService.ServiceId,
+                Description = request.Description,
+                Price = request.Price,
+                TimeMin = request.TimeMin
             };
 
             Context.HairSalonServices.Add(hairSalonService);
             await Context.SaveChangesAsync();
 
-
             return _mapper.Map<Model.HairSalonService>(hairSalonService);
-
         }
     }
 }

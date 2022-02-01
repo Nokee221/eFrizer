@@ -15,8 +15,8 @@ namespace eFrizer.Win.Service
     {
         private HairSalon _hairSalon { get; set; }
         private HairSalonService _selectedService { get; set; }
-        private readonly APIService _hairsalonservices = new APIService("HairSalonService");
-        private readonly APIService _services = new APIService("Service");
+        private readonly APIService _hairSalonServiceService = new APIService("HairSalonService");
+        private readonly APIService _serviceService = new APIService("Service");
         public frmService(HairSalon hairSalon)
         {
             InitializeComponent();
@@ -36,7 +36,7 @@ namespace eFrizer.Win.Service
 
         private async Task LoadServices()
         {
-            var result = await _hairsalonservices.Get<List<HairSalonService>>(new HairSalonService() { HairSalonId = _hairSalon.HairSalonId });
+            var result = await _hairSalonServiceService.Get<List<HairSalonService>>(new HairSalonService() { HairSalonId = _hairSalon.HairSalonId });
 
             dgvServices.DataSource = result;
         }
@@ -50,14 +50,24 @@ namespace eFrizer.Win.Service
             request.Name = txtName.Text;
             request.Price = int.Parse(txtPrice.Text);
             request.TimeMin = int.Parse(txtTime.Text);
+            request.Description = txtDesc.Text;
 
-            var service = await _services.Update<Model.HairSalonService>(_selectedService.Id, request);
-            await LoadData();
+            var service = await _hairSalonServiceService.Update<Model.HairSalonService>(_selectedService.Id, request);
+            if(service != null)
+            {
+                MessageBox.Show("Update Successful");
+                await LoadData();
+            }
+            else
+            {
+                MessageBox.Show("Couldn't update the service.");
+            }
 
         }
 
         private async void btnCreate_Click(object sender, EventArgs e)
         {
+            //TODO: validate this
             var request = new HairSalonServiceInsertRequest()
             {
                 Name = txtName.Text,
@@ -67,8 +77,16 @@ namespace eFrizer.Win.Service
                 HairSalonId = _hairSalon.HairSalonId
             };
 
-            var hairsalonservice = await _hairsalonservices.Insert<HairSalonService>(request);
-            await LoadData();
+            var hairSalonService = await _hairSalonServiceService.Insert<HairSalonService>(request);
+            if(hairSalonService != null)
+            {
+                MessageBox.Show("Added new service.");
+                await LoadData();
+            }
+            else
+            {
+                MessageBox.Show("Couldn't add new service.");
+            }
         }
 
         private void dgvServices_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -94,7 +112,7 @@ namespace eFrizer.Win.Service
                 Name = txtSearch.Text
             };
 
-            var result = await _hairsalonservices.Get<List<HairSalonService>>(request);
+            var result = await _hairSalonServiceService.Get<List<HairSalonService>>(request);
             dgvServices.DataSource = result;
 
         }
