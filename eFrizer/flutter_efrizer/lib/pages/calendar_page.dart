@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/reservation/reservation.dart';
 import 'package:flutter_login/models/reservation/reservation_search_request.dart';
 import 'package:flutter_login/pages/payment.dart';
@@ -16,18 +17,20 @@ import 'new_reservation.dart';
 
 class CalendarPage extends StatefulWidget {
   final int applicationUserId;
+  final ApplicationUser user;
   final int hairdresserId;
   final int hairsalonId;
-  CalendarPage(this.hairdresserId, this.applicationUserId, this.hairsalonId,
+  CalendarPage(this.user ,this.hairdresserId, this.applicationUserId, this.hairsalonId,
       {Key? key})
       : super(key: key);
 
   @override
   _CalendarPageState createState() =>
-      _CalendarPageState(hairdresserId, applicationUserId, hairsalonId);
+      _CalendarPageState(user, hairdresserId, applicationUserId, hairsalonId);
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+  final ApplicationUser user;
   final int applicationUserId;
   final int hairdresserId;
   final int hairsalonId;
@@ -51,7 +54,7 @@ class _CalendarPageState extends State<CalendarPage> {
   CalendarFormat format = CalendarFormat.week;
 
   _CalendarPageState(
-      this.hairdresserId, this.applicationUserId, this.hairsalonId);
+      this.user ,this.hairdresserId, this.applicationUserId, this.hairsalonId);
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +103,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                               builder: (context) => NewReservation(
+                                  user,
                                   _dateTime,
                                   hairdresserId,
                                   _dateTime,

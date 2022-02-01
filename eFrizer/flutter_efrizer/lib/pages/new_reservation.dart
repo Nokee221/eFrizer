@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/hairsalon_service/hairsalon_service.dart';
 import 'package:flutter_login/models/hairsalon_service/harisalon_service_search_request.dart';
 import 'package:flutter_login/models/reservation/reservation_insert_request.dart';
@@ -15,22 +16,27 @@ import 'package:flutter_login/widget/my_text_field.dart';
 import 'package:flutter_login/widget/top_container.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 
 
 class NewReservation extends StatefulWidget {
+  final ApplicationUser user;
   final int applicationUserId;
   final DateTime reservationDate;
   final DateTime endDate;
   final int hairdressedid;
   final int hairsalonId;
-  const NewReservation(this.reservationDate, this.hairdressedid , this.endDate , this.applicationUserId, this.hairsalonId ,{Key? key}) : super(key: key);
+  const NewReservation(this.user, this.reservationDate, this.hairdressedid , this.endDate , this.applicationUserId, this.hairsalonId ,{Key? key}) : super(key: key);
 
   @override
-  _NewReservationState createState() => _NewReservationState(reservationDate, hairdressedid, applicationUserId, hairsalonId);
+  _NewReservationState createState() => _NewReservationState(user, reservationDate, hairdressedid, applicationUserId, hairsalonId);
 }
 
 class _NewReservationState extends State<NewReservation> {
+  final ApplicationUser user;
+
   final int applicationUserId;
   late DateTime reservationDate;
   late DateTime endDate;
@@ -40,12 +46,13 @@ class _NewReservationState extends State<NewReservation> {
   HairSalonService? _service = null;
   List<DropdownMenuItem<HairSalonService>> items = [];
 
-  _NewReservationState(this.reservationDate, this.hairdresserId, this.applicationUserId, this.hairsalonId);
+  _NewReservationState(this.user ,this.reservationDate, this.hairdresserId, this.applicationUserId, this.hairsalonId);
 
   TextEditingController dateinput = TextEditingController();
   TextEditingController totime = TextEditingController();
   TextEditingController endtime = TextEditingController();
   TextEditingController txtPrice = TextEditingController();
+  TextEditingController txtPriceWith$ = TextEditingController();
 
   var request = null;
   @override
@@ -56,6 +63,7 @@ class _NewReservationState extends State<NewReservation> {
     txtPrice.text = "";
 
     request = HairSalonServiceSearchRequest(hairsalonId: hairsalonId);
+    initializeDateFormatting('ECT');
   }
   
   @override
@@ -98,8 +106,9 @@ class _NewReservationState extends State<NewReservation> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         DateTimePicker(
+                          
                           type: DateTimePickerType.dateTime,
-                          dateMask: 'dd.MM.yyyy - hh:mm a',
+                          dateMask: 'dd.MM.yyyy',
                           controller: dateinput,
                           icon: Icon(Icons.calendar_today),
                           firstDate: DateTime(2020),
@@ -167,7 +176,7 @@ class _NewReservationState extends State<NewReservation> {
                       Container(
                       width: 100,
                       child: TextField(
-                      controller: txtPrice,
+                      controller: txtPriceWith$,
                       style: TextStyle(color: themeChange.darkTheme ? Colors.white : Colors.black),
                       minLines: 1,
                       maxLines: 1,
@@ -213,7 +222,7 @@ class _NewReservationState extends State<NewReservation> {
                   
                   Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) => Payment(request)),
+                              builder: (context) => Payment(user , request)),
                         );
                 },
                 child: const Center(
@@ -271,6 +280,8 @@ class _NewReservationState extends State<NewReservation> {
                             _service = newVal as HairSalonService;
 
                             txtPrice.text = _service!.price.toString();
+                            String pricee = _service!.price.toString();
+                            txtPriceWith$.text = _service!.price.toString() + "KM";
 
                             DateTime endTimeee = reservationDate;
                             endDate = endTimeee.add(Duration(minutes: _service!.timeMin));

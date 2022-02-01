@@ -38,6 +38,7 @@ namespace eFrizer.Database
         public virtual DbSet<HairSalonServiceLoyaltyBonus> HairSalonServiceLoyaltyBonuses { get; set; }
 
         public virtual DbSet<LoyaltyBonusUser> LoyaltyBonusUsers { get; set; }
+        public virtual DbSet<CreditCard> CreditCards { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

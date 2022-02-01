@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/hairsalon/HairSalon.dart';
 import 'package:flutter_login/models/text_review/text_review.dart';
+import 'package:flutter_login/models/text_review/text_review_insert_request.dart';
 import 'package:flutter_login/models/text_review/text_review_search_request.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/services/api_service.dart';
@@ -26,6 +27,7 @@ class _ReviewPageState extends State<ReviewPage> {
   _ReviewPageState(this.hairSalon, this.user);
 
   final String assetName = 'assets/hairdresser.svg';
+  TextEditingController txtReview = new TextEditingController();
 
   var request = null;
 
@@ -34,6 +36,20 @@ class _ReviewPageState extends State<ReviewPage> {
     super.initState();
     request = TextReviewSearchRequest(
         clientId: user.applicationUserId, hairSalonId: hairSalon.HairSalonId);
+  }
+
+  var result = null;
+  var insertRequest = null;
+  Future<void> putReview() async {
+    if(txtReview.text == "")
+    {
+      result = null;
+    }
+    else{
+
+      insertRequest = TextReviewInsertRequest(clientId: user.applicationUserId , hairsalonId: hairSalon.HairSalonId, text: txtReview.text);
+      result = APIService.post("TextReview", insertRequest);
+    }
   }
 
   @override
@@ -52,12 +68,100 @@ class _ReviewPageState extends State<ReviewPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: reviewWidget(),
+      body: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Container(
+              padding: EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 10.0,
+                    spreadRadius: 1.0,
+                    offset: Offset(4.0, 4.0),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: txtReview,
+                    maxLines: 3,
+                    decoration: InputDecoration(
+                      hintText: "Add a review",
+                    ),
+                  ),
+                  SizedBox(
+                    height: 28,
+                  ),
+                  RaisedButton(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 80),
+                      child: Text(
+                        "Add Review",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.0,
+                        ),
+                      ),
+                    ),
+                    onPressed: () async{
+                      await putReview();
+                      if(result != null)
+                      {
+                        Widget okButton = TextButton(
+                          child: Text("OK"),
+                          onPressed: () {},
+                        );
+                        AlertDialog alert = AlertDialog(
+                          title: Text("Success"),
+                          content: Text("Successfully added review!"),
+                          actions: [
+                            okButton,
+                          ],
+                        );
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return alert;
+                            });
+                      }
+                      else{
+                        Widget okButton = TextButton(
+                          child: Text("OK"),
+                          onPressed: () {},
+                        );
+                        AlertDialog alert = AlertDialog(
+                          title: Text("Error"),
+                          content: Text("Text field is required!"),
+                          actions: [
+                            okButton,
+                          ],
+                        );
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return alert;
+                            });
+                      }
+                    },
+                    color: Colors.blue,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          
+          Expanded(
+            child: reviewWidget(),
+          )
+        ],
       ),
-      
     );
   }
 
@@ -102,6 +206,14 @@ class _ReviewPageState extends State<ReviewPage> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           color: Colors.blue[200],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 10.0,
+              spreadRadius: 1.0,
+              offset: Offset(4.0, 4.0),
+            ),
+          ],
         ),
         child: Row(
           children: [

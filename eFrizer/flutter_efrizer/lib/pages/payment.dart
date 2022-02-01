@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus.dart';
 import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus_search_request.dart';
 import 'package:flutter_login/models/loyalty_user/loyalty_user.dart';
@@ -7,6 +8,8 @@ import 'package:flutter_login/models/loyalty_user/loyalty_user_insert_request.da
 import 'package:flutter_login/models/loyalty_user/loyalty_user_search_request.dart';
 import 'package:flutter_login/models/loyalty_user/loyatly_user_update_request.dart';
 import 'package:flutter_login/models/reservation/reservation_insert_request.dart';
+import 'package:flutter_login/pages/mycard_paymant.dart';
+import 'package:flutter_login/pages/payment_method.dart';
 import 'package:flutter_login/pages/setting_page.dart';
 import 'package:flutter_login/pages/success.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
@@ -16,26 +19,30 @@ import 'package:provider/provider.dart';
 import 'credit_card_page.dart';
 
 class Payment extends StatefulWidget {
+  final ApplicationUser user;
   final ReservationInsertRequest request;
-  const Payment(this.request, {Key? key}) : super(key: key);
+  const Payment(this.user , this.request, {Key? key}) : super(key: key);
 
   @override
-  _PaymentState createState() => _PaymentState(request);
+  _PaymentState createState() => _PaymentState(user ,request);
 }
 
 class _PaymentState extends State<Payment> {
+  final ApplicationUser user;
   final ReservationInsertRequest request;
   final icon = CupertinoIcons.moon_stars;
   Object? value = 0;
 
-  _PaymentState(this.request);
+  _PaymentState(this.user ,this.request);
 
   final paymentLabels = [
     'Credit card / Debit card',
+    'My Credit Cards',
     'Cash on delivery',
   ];
 
   final paymentIcons = [
+    Icons.credit_card,
     Icons.credit_card,
     Icons.money_off,
     Icons.payment,
@@ -55,7 +62,8 @@ class _PaymentState extends State<Payment> {
     lytrequest = LoyaltyBonusUserSearchRequest(
         clientId: request.clientId, hairSalonServiceId: request.serviceId);
 
-    lytbonusrequest = LoyaltyBonusSearchRequest(hairsalonServiceId: request.serviceId);
+    lytbonusrequest =
+        LoyaltyBonusSearchRequest(hairsalonServiceId: request.serviceId);
     super.initState();
   }
 
@@ -75,8 +83,8 @@ class _PaymentState extends State<Payment> {
   Future<void> updateLoyalty(id, tcounter) async {
     var updaterequest = LoyaltyBonusUserUpdateRequest(counter: tcounter);
 
-    updateresult =
-        await APIService.updateLoyalty("LoyaltyBonusUser", id.toString() ,  updaterequest);
+    updateresult = await APIService.updateLoyalty(
+        "LoyaltyBonusUser", id.toString(), updaterequest);
   }
 
   late LoyaltyBonus? lylbonusresult;
@@ -87,18 +95,18 @@ class _PaymentState extends State<Payment> {
         'hairSalonServiceId': lytbonusrequest.hairsalonServiceId.toString()
       };
 
-    lylbonusresult = await APIService.getLoyaltyBonus("HairSalonServiceLoyaltyBonus", queryParams);
+    lylbonusresult = await APIService.getLoyaltyBonus(
+        "HairSalonServiceLoyaltyBonus", queryParams);
   }
 
   var lyluserinsertrequest = null;
   var lyluserinsertresult = null;
   Future<void> putLoyalty(id) async {
-
-    lyluserinsertrequest = LoyatlyBonusUserInsertRequest(clientId: request.clientId , hairSalonServiceLoyaltyBonusId: id);
-    lyluserinsertresult = await APIService.post("LoyaltyBonusUser", lyluserinsertrequest);
+    lyluserinsertrequest = LoyatlyBonusUserInsertRequest(
+        clientId: request.clientId, hairSalonServiceLoyaltyBonusId: id);
+    lyluserinsertresult =
+        await APIService.post("LoyaltyBonusUser", lyluserinsertrequest);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +184,13 @@ class _PaymentState extends State<Payment> {
                 if (value == 0) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => CreditCardPage(request),
+                      builder: (context) => CreditCardPage(user ,request),
+                    ),
+                  );
+                } else if (value == 1) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => MyCardPayReservationPage(user ,request),
                     ),
                   );
                 } else {
@@ -209,41 +223,35 @@ class _PaymentState extends State<Payment> {
                             });
                       }
                     } else {
-                      
                       await getLoyaltyBonus();
-                      if(lylbonusresult != null)
-                      {
+                      if (lylbonusresult != null) {
                         await putLoyalty(lylbonusresult!.id);
-                        if(lyluserinsertresult != null)
-                        {
+                        if (lyluserinsertresult != null) {
                           Widget okButton = TextButton(
-                          child: Text("OK"),
-                          onPressed: () {},
-                        );
-                        AlertDialog alert = AlertDialog(
-                          title: Text("Error"),
-                          content: Text("Uspjesno dodan loyalty bonus"),
-                          actions: [
-                            okButton,
-                          ],
-                        );
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return alert;
-                            });
+                            child: Text("OK"),
+                            onPressed: () {},
+                          );
+                          AlertDialog alert = AlertDialog(
+                            title: Text("Error"),
+                            content: Text("Uspjesno dodan loyalty bonus"),
+                            actions: [
+                              okButton,
+                            ],
+                          );
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return alert;
+                              });
                         }
                       }
-
                     }
 
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => Success(),
+                        builder: (context) => Success(user),
                       ),
                     );
-
-
                   } else {
                     Widget okButton = TextButton(
                       child: Text("OK"),
