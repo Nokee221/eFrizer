@@ -52,8 +52,12 @@ namespace eFrizer
             HairSalonPictureSeed();
             ReviewSeed();
             ReservationSeed();
+            LoyaltyBonusSeed();
+            TextReviewSeed();
 
         }
+
+        
 
         private void ReservationSeed()
         {
@@ -271,6 +275,91 @@ namespace eFrizer
             context.SaveChanges();
         }
 
+        private void TextReviewSeed()
+        {
+            if (!context.TextReviews.Any(x => x.Client.Name == "Client A" && x.HairSalon.Name == "Hair Salon 1"))
+            {
+                context.TextReviews.Add(new TextReview()
+                {
+                    ClientId = context.Clients.Where(x => x.Name == "Client A").First().ApplicationUserId,
+                    HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 1").First().HairSalonId,
+                    Text = "Ekstra dobar salon sa dobrim cijenama",
+
+                });
+            }
+
+            context.SaveChanges();
+
+            var fakeReviews = new List<TextReview>();
+            var clientsQuery = context.Clients.AsEnumerable();
+            var clients = clientsQuery.OrderBy(x => x.ApplicationUserId).TakeLast(19).ToList();
+            var hairSalonsQuery = context.HairSalons.AsEnumerable();
+            var hairSalons = hairSalonsQuery.ToList();
+
+            foreach (var client in clients)
+            {
+                foreach (var hairSalon in hairSalons)
+                {
+                    fakeReviews.Add(new TextReview
+                    {
+                        ClientId = client.ApplicationUserId,
+                        HairSalonId = hairSalon.HairSalonId,
+                        Text = Faker.Lorem.Paragraph()
+
+                    });
+                }
+            }
+
+            context.AddRange(fakeReviews);
+
+            context.SaveChanges();
+        }
+
+        private void LoyaltyBonusSeed()
+        {
+            if (!context.HairSalonServiceLoyaltyBonuses.Any(x => x.Service.Service.Name == "Brijanje"))
+            {
+                context.HairSalonServiceLoyaltyBonuses.Add(new HairSalonServiceLoyaltyBonus()
+                {
+                    HairSalonServiceId = context.HairSalonServices.Where(x => x.Service.Name == "Brijanje").First().Id,
+                    Discount = 15,
+                    ActivatesOn = 5,
+                    ExpiresIn = 30
+
+                });
+
+                context.SaveChanges();
+            }
+
+            if (!context.HairSalonServiceLoyaltyBonuses.Any(x => x.Service.Service.Name == "Farbanje"))
+            {
+                context.HairSalonServiceLoyaltyBonuses.Add(new HairSalonServiceLoyaltyBonus()
+                {
+                    HairSalonServiceId = context.HairSalonServices.Where(x => x.Service.Name == "Farbanje").First().Id,
+                    Discount = 30,
+                    ActivatesOn = 10,
+                    ExpiresIn = 30
+
+                });
+
+                context.SaveChanges();
+            }
+
+            if (!context.HairSalonServiceLoyaltyBonuses.Any(x => x.Service.Service.Name == "Šišanje"))
+            {
+                context.HairSalonServiceLoyaltyBonuses.Add(new HairSalonServiceLoyaltyBonus()
+                {
+                    HairSalonServiceId = context.HairSalonServices.Where(x => x.Service.Name == "Šišanje").First().Id,
+                    Discount = 15,
+                    ActivatesOn = 5,
+                    ExpiresIn = 30
+
+                });
+
+                context.SaveChanges();
+            }
+        }
+
         private void HairSalonServiceSeed()
         {
             if (!context.HairSalonServices.Any(x => x.HairSalon.Name == "Hair Salon 1" && x.Service.Name == "Šišanje"))
@@ -315,6 +404,8 @@ namespace eFrizer
             
             context.SaveChanges();
         }
+
+
 
         private void ServiceSeed()
         {
