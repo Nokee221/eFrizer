@@ -17,6 +17,8 @@ namespace eFrizer.Win.Service
         private HairSalonService _selectedService { get; set; }
         private readonly APIService _hairSalonServiceService = new APIService("HairSalonService");
         private readonly APIService _serviceService = new APIService("Service");
+        private readonly APIService _pictureStreamService = new APIService("PictureStream");
+        private readonly APIService _hairSalonServicePictures = new APIService("HairSalonServicePicture");
         public frmService(HairSalon hairSalon)
         {
             InitializeComponent();
@@ -103,6 +105,16 @@ namespace eFrizer.Win.Service
             txtPrice.Text = item.Price.ToString();
             txtTime.Text = item.TimeMin.ToString();
             _selectedService = item;
+            renderPicture();
+        }
+
+        //TODO: refactor into helper method
+        private async void renderPicture(int selectedId)
+        {
+            ImageConverter converter = new ImageConverter();
+            var pictureSource = await _pictureStreamService.GetImageStream<byte[]>(selectedId);
+            pbService.Image = null;
+            pbService.Image = (Image)converter.ConvertFrom(pictureSource);
         }
 
         private async void txtView_Click(object sender, EventArgs e)

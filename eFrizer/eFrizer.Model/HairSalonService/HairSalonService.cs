@@ -18,5 +18,7 @@ namespace eFrizer.Model
 
         public int HairSalonId { get; set; }
         public virtual HairSalon HairSalon { get; set; }
+
+        public int ImageId { get; set; }
     }
 }

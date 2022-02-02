@@ -31,6 +31,15 @@ namespace eFrizer.Services
             return _mapper.Map<Model.HairSalonService>(entity);
         }
 
+        public async override Task<Model.HairSalonService> GetById(int id)
+        {
+            var set = Context.Set<HairSalonService>();
+            var entity = await set.FindAsync(id);
+            var model = _mapper.Map<Model.HairSalonService>(entity);
+            model.ImageId = Context.HairSalonServicePictures.Where(x => x.HairSalonServiceId == id).First().PictureId;
+            return model;
+        }
+
         public async override Task<List<Model.HairSalonService>> Get([FromBody] HairSalonServiceSearchRequest search = null)
         {
             if (search.HairSalonId != 0)
