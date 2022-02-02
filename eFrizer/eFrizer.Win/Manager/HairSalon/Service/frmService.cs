@@ -91,7 +91,7 @@ namespace eFrizer.Win.Service
             }
         }
 
-        private void dgvServices_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvServices_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
             {
@@ -104,8 +104,10 @@ namespace eFrizer.Win.Service
             txtDesc.Text = item.Description;
             txtPrice.Text = item.Price.ToString();
             txtTime.Text = item.TimeMin.ToString();
-            _selectedService = item;
-            renderPicture();
+            var data = await _hairSalonServicePictures.Get<List<HairSalonServicePicture>>();
+            _selectedService = data.First().HairSalonService;
+            renderPicture(data.First().PictureId);
+            //TODO: Refactor heavily, enable multiple images to be displayed too..
         }
 
         //TODO: refactor into helper method

@@ -94,6 +94,7 @@ namespace eFrizer
             services.AddScoped<ILoyaltyBonusUser, Services.LoyaltyBonusUserService>();
             services.AddScoped<IPictureService, Services.PictureService>();
             services.AddScoped<IHairSalonPictureService, Services.HairSalonPictureService>();
+            services.AddScoped<IHairSalonServicePictureService, Services.HairSalonServicePictureService>();
 
             
 

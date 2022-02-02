@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Services
 {
-    public interface IHairSalonPictureService : IReadService<Model.HairSalonPicture, object>
+    public interface IHairSalonPictureService : ICRUDService<Model.HairSalonPicture, object, HairSalonPictureInsertRequest, HairSalonPictureUpdateRequest>
     {
         Task<HairSalonPicture> Update(int id1, int id2, HairSalonPictureUpdateRequest request);
         Task<HairSalonPicture> Insert(HairSalonPictureInsertRequest request);
