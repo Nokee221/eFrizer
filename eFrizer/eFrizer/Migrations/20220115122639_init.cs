@@ -307,7 +307,7 @@ namespace eFrizer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     HairDresserId = table.Column<int>(type: "int", nullable: false),
                     ClientId = table.Column<int>(type: "int", nullable: false),
-                    HairSalonServiceId = table.Column<int>(type: "int", nullable: false),
+                    HairSalonServiceId = table.Column<int>(type: "int", nullable: true),
                     To = table.Column<DateTime>(type: "datetime2", nullable: false),
                     From = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ApplicationUserId = table.Column<int>(type: "int", nullable: true),
@@ -337,7 +337,8 @@ namespace eFrizer.Migrations
                         name: "FK_Reservations_HairSalonServices_HairSalonServiceId",
                         column: x => x.HairSalonServiceId,
                         principalTable: "HairSalonServices",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Reservations_Services_ServiceId",
                         column: x => x.ServiceId,

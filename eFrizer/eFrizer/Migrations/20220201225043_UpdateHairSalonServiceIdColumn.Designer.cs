@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eFrizer.Database;
 
 namespace eFrizer.Migrations
 {
     [DbContext(typeof(eFrizerContext))]
-    partial class eFrizerContextModelSnapshot : ModelSnapshot
+    [Migration("20220201225043_UpdateHairSalonServiceIdColumn")]
+    partial class UpdateHairSalonServiceIdColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -641,9 +643,9 @@ namespace eFrizer.Migrations
                         .IsRequired();
 
                     b.HasOne("eFrizer.Database.HairSalonService", "HairSalonService")
-                        .WithMany("Reservations")
+                        .WithMany()
                         .HasForeignKey("HairSalonServiceId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("eFrizer.Database.Service", null)
@@ -742,11 +744,6 @@ namespace eFrizer.Migrations
                     b.Navigation("Reviews");
 
                     b.Navigation("TextReviews");
-                });
-
-            modelBuilder.Entity("eFrizer.Database.HairSalonService", b =>
-                {
-                    b.Navigation("Reservations");
                 });
 
             modelBuilder.Entity("eFrizer.Database.HairSalonServiceLoyaltyBonus", b =>

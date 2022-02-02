@@ -20,7 +20,7 @@ namespace eFrizer.Services
 
         public async override Task<Model.HairSalonService> Update(int id, [FromBody] HairSalonServiceUpdateRequest request)
         {
-            var entity = Context.HairSalonServices.Include(x => x.Service).Where(x => x.Id == id).First();
+            var entity = Context.HairSalonServices.Include(x => x.Service).Where(x => x.HairSalonServiceId == id).First();
             
             _mapper.Map(request, entity);
 
