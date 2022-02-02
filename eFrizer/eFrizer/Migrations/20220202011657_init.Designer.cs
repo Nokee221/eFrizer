@@ -10,8 +10,8 @@ using eFrizer.Database;
 namespace eFrizer.Migrations
 {
     [DbContext(typeof(eFrizerContext))]
-    [Migration("20220201225043_UpdateHairSalonServiceIdColumn")]
-    partial class UpdateHairSalonServiceIdColumn
+    [Migration("20220202011657_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -254,6 +254,22 @@ namespace eFrizer.Migrations
                     b.HasIndex("HairSalonServiceId");
 
                     b.ToTable("HairSalonServiceLoyaltyBonuses");
+                });
+
+            modelBuilder.Entity("eFrizer.Database.HairSalonServicePicture", b =>
+                {
+                    b.Property<int>("HairSalonServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PictureId")
+                        .HasColumnType("int");
+
+                    b.HasKey("HairSalonServiceId", "PictureId")
+                        .HasName("PK_hairsalonservice_picture");
+
+                    b.HasIndex("PictureId");
+
+                    b.ToTable("HairSalonServicePictures");
                 });
 
             modelBuilder.Entity("eFrizer.Database.HairSalonType", b =>
@@ -599,6 +615,25 @@ namespace eFrizer.Migrations
                         .IsRequired();
 
                     b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("eFrizer.Database.HairSalonServicePicture", b =>
+                {
+                    b.HasOne("eFrizer.Database.HairSalonService", "HairSalon")
+                        .WithMany()
+                        .HasForeignKey("HairSalonServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eFrizer.Database.Picture", "Picture")
+                        .WithMany()
+                        .HasForeignKey("PictureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HairSalon");
+
+                    b.Navigation("Picture");
                 });
 
             modelBuilder.Entity("eFrizer.Database.LoyaltyBonusUser", b =>

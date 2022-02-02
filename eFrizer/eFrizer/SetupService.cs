@@ -321,7 +321,7 @@ namespace eFrizer
             {
                 context.HairSalonServiceLoyaltyBonuses.Add(new HairSalonServiceLoyaltyBonus()
                 {
-                    HairSalonServiceId = context.HairSalonServices.Where(x => x.Service.Name == "Brijanje").First().Id,
+                    HairSalonServiceId = context.HairSalonServices.Where(x => x.Service.Name == "Brijanje").First().HairSalonServiceId,
                     Discount = 15,
                     ActivatesOn = 5,
                     ExpiresIn = 30
@@ -335,7 +335,7 @@ namespace eFrizer
             {
                 context.HairSalonServiceLoyaltyBonuses.Add(new HairSalonServiceLoyaltyBonus()
                 {
-                    HairSalonServiceId = context.HairSalonServices.Where(x => x.Service.Name == "Farbanje").First().Id,
+                    HairSalonServiceId = context.HairSalonServices.Where(x => x.Service.Name == "Farbanje").First().HairSalonServiceId,
                     Discount = 30,
                     ActivatesOn = 10,
                     ExpiresIn = 30
@@ -349,7 +349,7 @@ namespace eFrizer
             {
                 context.HairSalonServiceLoyaltyBonuses.Add(new HairSalonServiceLoyaltyBonus()
                 {
-                    HairSalonServiceId = context.HairSalonServices.Where(x => x.Service.Name == "Šišanje").First().Id,
+                    HairSalonServiceId = context.HairSalonServices.Where(x => x.Service.Name == "Šišanje").First().HairSalonServiceId,
                     Discount = 15,
                     ActivatesOn = 5,
                     ExpiresIn = 30

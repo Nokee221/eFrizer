@@ -36,6 +36,7 @@ namespace eFrizer.Database
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<HairSalonManager> HairSalonManagers { get; set; }
         public virtual DbSet<HairSalonServiceLoyaltyBonus> HairSalonServiceLoyaltyBonuses { get; set; }
+        public virtual DbSet<HairSalonServicePicture> HairSalonServicePictures { get; set; }
 
         public virtual DbSet<LoyaltyBonusUser> LoyaltyBonusUsers { get; set; }
         public virtual DbSet<CreditCard> CreditCards { get; set; }
@@ -44,7 +45,7 @@ namespace eFrizer.Database
         {
             
         }
-
+        //TODO: add the stuff that needs to be manually changed in the migrations here.. cascade deletes and similar
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ApplicationUserRole>(entity =>
@@ -63,6 +64,12 @@ namespace eFrizer.Database
             {
                 entity.HasKey(k => new { k.HairSalonId, k.PictureId })
                     .HasName("PK_hairsalon_picture");
+            });
+
+            modelBuilder.Entity<HairSalonServicePicture>(entity =>
+            {
+                entity.HasKey(k => new { k.HairSalonServiceId, k.PictureId })
+                    .HasName("PK_hairsalonservice_picture");
             });
 
             modelBuilder.Entity<HairSalonManager>(entity =>
