@@ -22,17 +22,18 @@ import 'package:provider/provider.dart';
 class MyCardPayReservationPage extends StatefulWidget {
   final ApplicationUser user;
   final ReservationInsertRequest request;
-  const MyCardPayReservationPage(this.user ,this.request, {Key? key}) : super(key: key);
+  const MyCardPayReservationPage(this.user, this.request, {Key? key})
+      : super(key: key);
 
   @override
   _MyCardPayReservationPageState createState() =>
-      _MyCardPayReservationPageState(user ,request);
+      _MyCardPayReservationPageState(user, request);
 }
 
 class _MyCardPayReservationPageState extends State<MyCardPayReservationPage> {
   final ApplicationUser user;
   final ReservationInsertRequest request;
-  _MyCardPayReservationPageState(this.user , this.request);
+  _MyCardPayReservationPageState(this.user, this.request);
 
   var req = null;
   var lytrequest = null;
@@ -89,7 +90,6 @@ class _MyCardPayReservationPageState extends State<MyCardPayReservationPage> {
     lylbonusresult = await APIService.getLoyaltyBonus(
         "HairSalonServiceLoyaltyBonus", queryParams);
   }
-
 
   var lyluserinsertrequest = null;
   var lyluserinsertresult = null;
@@ -190,11 +190,17 @@ class _MyCardPayReservationPageState extends State<MyCardPayReservationPage> {
               if (updateresult != null) {
                 Widget okButton = TextButton(
                   child: Text("OK"),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Success(user),
+                      ),
+                    );
+                  },
                 );
                 AlertDialog alert = AlertDialog(
-                  title: Text("Error"),
-                  content: Text("Uspjesno updateovan loyalty bonus"),
+                  title: Text("Successfully"),
+                  content: Text("Successfully updatated loyalty bonus"),
                   actions: [
                     okButton,
                   ],
@@ -212,11 +218,17 @@ class _MyCardPayReservationPageState extends State<MyCardPayReservationPage> {
                 if (lyluserinsertresult != null) {
                   Widget okButton = TextButton(
                     child: Text("OK"),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => Success(user),
+                        ),
+                      );
+                    },
                   );
                   AlertDialog alert = AlertDialog(
-                    title: Text("Error"),
-                    content: Text("Uspjesno dodan loyalty bonus"),
+                    title: Text("Successfully"),
+                    content: Text("Successfully added loyalty bonus"),
                     actions: [
                       okButton,
                     ],
@@ -229,12 +241,6 @@ class _MyCardPayReservationPageState extends State<MyCardPayReservationPage> {
                 }
               }
             }
-
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => Success(user),
-              ),
-            );
           } else {
             Widget okButton = TextButton(
               child: Text("OK"),

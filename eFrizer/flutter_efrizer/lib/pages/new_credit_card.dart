@@ -5,6 +5,7 @@ import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/credit_card/credit_card_insert_request.dart';
 import 'package:flutter_login/pages/home_page.dart';
+import 'package:flutter_login/pages/home_page_2.dart';
 import 'package:flutter_login/pages/profile_page.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/services/api_service.dart';
@@ -136,7 +137,7 @@ class _NewCreditCardPageState extends State<NewCreditCardPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ProfilePage(user)));
+                                            HomePage2(user)));
                               },
                             );
                             AlertDialog alert = AlertDialog(
