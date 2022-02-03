@@ -31,7 +31,8 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
   void initState() {
     // TODO: implement initState
     request = LoyaltyBonusUserSearchRequest(
-        clientId: user.applicationUserId, hairSalonServiceLoyaltyBonusId: loyalty.id);
+        clientId: user.applicationUserId,
+        hairSalonServiceLoyaltyBonusId: loyalty.id);
     super.initState();
   }
 
@@ -45,7 +46,8 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
         centerTitle: true,
         title: Text(
           "Loyalty bonus",
-          style: GoogleFonts.pacifico(color: themeChange.darkTheme ? Colors.white : Colors.black),
+          style: GoogleFonts.pacifico(
+              color: themeChange.darkTheme ? Colors.white : Colors.black),
         ),
         backgroundColor: themeChange.darkTheme ? Colors.black : Colors.white,
         elevation: 0,
@@ -99,7 +101,6 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
           ),
           SizedBox(height: 20),
           loyaltyProgress(themeChange),
-          
         ],
       ),
     );
@@ -119,7 +120,9 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
               return Center(child: Text('${snapshot.error}'));
             } else {
               return Column(
-                children: snapshot.data!.map((e) => loyaltyBonusProgressWidget(e, themeChange)).toList(),
+                children: snapshot.data!
+                    .map((e) => loyaltyBonusProgressWidget(e, themeChange))
+                    .toList(),
               );
             }
           }
@@ -129,10 +132,13 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
   Future<List<LoyaltyUser>> getLoyaltyBonusesProgress(req) async {
     Map<String, String>? queryParams = null;
     if (req != null && queryParams != "")
-      queryParams = {'ClientId': req.clientId.toString(), 'HairSalonServiceLoyaltyBonusId': req.hairSalonServiceLoyaltyBonusId.toString()};
+      queryParams = {
+        'ClientId': req.clientId.toString(),
+        'HairSalonServiceLoyaltyBonusId':
+            req.hairSalonServiceLoyaltyBonusId.toString()
+      };
 
-    var loyalty =
-        await APIService.get('LoyaltyBonusUser', queryParams);
+    var loyalty = await APIService.get('LoyaltyBonusUser', queryParams);
     return loyalty!.map((i) => LoyaltyUser.fromJson(i)).toList();
   }
 
@@ -141,10 +147,10 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
           Padding(
             padding: const EdgeInsets.only(left: 6, top: 8),
             child: Text(
-              "Number of reservation with this service: " + bonus.counter.toString(),
+              "Number of reservation with this service: " +
+                  bonus.counter.toString(),
               style: TextStyle(
-                color: themeChange.darkTheme ? Colors.white : Colors.black
-              ),
+                  color: themeChange.darkTheme ? Colors.white : Colors.black),
             ),
           ),
           Center(
@@ -155,7 +161,9 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
                 animation: true,
                 lineHeight: 20.0,
                 animationDuration: 2500,
-                percent: getProsjek(bonus.counter) > 1.0 ? 1.0 : getProsjek(bonus.counter),
+                percent: getProsjek(bonus.counter) > 1.0
+                    ? 1.0
+                    : getProsjek(bonus.counter),
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 progressColor: Colors.green,
               ),
@@ -170,26 +178,63 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
                     Padding(
                       padding: EdgeInsets.only(left: 18, top: 25),
                       child: TextButton(
-                        style:
-                            TextButton.styleFrom(backgroundColor: Colors.blue),
-                        child: Text(
-                          "Generate a code!",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                          style: TextButton.styleFrom(
+                              backgroundColor: Colors.blue),
+                          child: Text(
+                            "Generate a code!",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            
-                            if(loyalty.activatesOn == bonus.counter || bonus.counter > loyalty.activatesOn)
-                            {
-                              opacityLevel = 1.0;
-                            }
-                          });
-                        }),
-                      ),
-                    
+                          onPressed: () {
+                            setState(() {
+                              if (loyalty.activatesOn == bonus.counter ||
+                                  bonus.counter > loyalty.activatesOn) {
+                                Widget okButton = TextButton(
+                                  child: Text("OK"),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                );
+                                AlertDialog alert = AlertDialog(
+                                  title: Text("Successfully"),
+                                  content:
+                                      Text("Your loyalty bonus code: CD2523FKP"),
+                                  actions: [
+                                    okButton,
+                                  ],
+                                );
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return alert;
+                                    });
+                              }
+                              else{
+                                Widget okButton = TextButton(
+                                  child: Text("OK"),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                );
+                                AlertDialog alert = AlertDialog(
+                                  title: Text("Error"),
+                                  content:
+                                      Text("You must collect " + loyalty.activatesOn.toString() + " reservation to unlock the code!"),
+                                  actions: [
+                                    okButton,
+                                  ],
+                                );
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return alert;
+                                    });
+                              }
+                            });
+                          }),
+                    ),
                     SizedBox(height: 5),
                     AnimatedOpacity(
                       duration: Duration(seconds: 3),
@@ -209,12 +254,10 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
       );
 
   double getProsjek(counter) {
-    var tempx = 100/loyalty.activatesOn;
+    var tempx = 100 / loyalty.activatesOn;
 
     var x = tempx * 0.01;
 
     return (x * counter);
   }
 }
-
-

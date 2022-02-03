@@ -8,6 +8,8 @@ import 'package:flutter_login/widget/emptySection.dart';
 import 'package:flutter_login/widget/subTitle.dart';
 import 'package:provider/provider.dart';
 
+import 'home_page_2.dart';
+
 class Success extends StatefulWidget {
   final ApplicationUser user;
   
@@ -56,7 +58,7 @@ class _SuccessState extends State<Success> {
             
              Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => HomePage(user),
+                builder: (context) => HomePage2(user),
               ),
             );
           },
