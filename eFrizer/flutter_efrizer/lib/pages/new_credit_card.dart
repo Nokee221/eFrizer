@@ -45,16 +45,17 @@ class _NewCreditCardPageState extends State<NewCreditCardPage> {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+   
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: BackButton(color: Colors.blue),
         centerTitle: true,
         title: Text(
           "Credit Card",
           style: GoogleFonts.pacifico(
-              color: themeChange.darkTheme ? Colors.white : Colors.black),
+              color: Colors.black),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -135,7 +136,7 @@ class _NewCreditCardPageState extends State<NewCreditCardPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            HomePage(user)));
+                                            ProfilePage(user)));
                               },
                             );
                             AlertDialog alert = AlertDialog(

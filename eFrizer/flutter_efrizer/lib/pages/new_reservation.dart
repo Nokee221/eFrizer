@@ -218,7 +218,7 @@ class _NewReservationState extends State<NewReservation> {
                   var enddateFormatted = DateFormat("yyyy-MM-dd HH:mm:ss").format(endDate);
                   
 
-                  request = ReservationInsertRequest(hairDresserId: hairdresserId, serviceId: _service!.id, clientId: applicationUserId, to: enddateFormatted , from: dateFormatted);
+                  request = ReservationInsertRequest(hairDresserId: hairdresserId, serviceId: _service!.hairSalonServiceId, clientId: applicationUserId, to: enddateFormatted , from: dateFormatted);
                   
                   Navigator.of(context).push(
                           MaterialPageRoute(
@@ -317,8 +317,8 @@ class _NewReservationState extends State<NewReservation> {
       );
     }).toList();
 
-      if (selectedItem != null && selectedItem.id != 0)
-      _service = vrsteProizvodaList.where((element) => element.id == selectedItem.id).first;
+      if (selectedItem != null && selectedItem.hairSalonServiceId != 0)
+      _service = vrsteProizvodaList.where((element) => element.hairSalonServiceId == selectedItem.hairSalonServiceId).first;
         return vrsteProizvodaList;
    }
 

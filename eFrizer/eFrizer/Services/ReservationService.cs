@@ -99,7 +99,7 @@ namespace eFrizer.Services
             foreach (var item in enty)
             {
                 isAvailable = true;
-                if(Convert.ToDateTime(request.From) < item.To && Convert.ToDateTime(request.To) > item.From )
+                if(Convert.ToDateTime(request.From) < item.To && Convert.ToDateTime(request.To) > item.From && request.HairDresserId == item.HairDresserId )
                 {
                     isAvailable = false;
                     break;

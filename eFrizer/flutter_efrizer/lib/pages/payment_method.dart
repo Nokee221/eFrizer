@@ -6,10 +6,13 @@ import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/credit_card/credit_card.dart';
 import 'package:flutter_login/models/credit_card/credit_card_search_request.dart';
 import 'package:flutter_login/pages/new_credit_card.dart';
+import 'package:flutter_login/pages/profile_page.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
+import 'home_page.dart';
 
 class MyPaymentPage extends StatefulWidget {
   final ApplicationUser user;
@@ -174,7 +177,11 @@ class _MyPaymentPageState extends State<MyPaymentPage> {
                               Widget okButton = TextButton(
                                 child: Text("OK"),
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ProfilePage(user)));
                                 },
                               );
                               AlertDialog alert = AlertDialog(
@@ -196,7 +203,7 @@ class _MyPaymentPageState extends State<MyPaymentPage> {
                               );
                               AlertDialog alert = AlertDialog(
                                 title: Text("Error"),
-                                content: Text("Uspjesno dodan loyalty bonus"),
+                                content: Text("Unsuccessful card deletion"),
                                 actions: [
                                   okButton,
                                 ],

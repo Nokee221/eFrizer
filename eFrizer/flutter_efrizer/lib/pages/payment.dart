@@ -21,10 +21,10 @@ import 'credit_card_page.dart';
 class Payment extends StatefulWidget {
   final ApplicationUser user;
   final ReservationInsertRequest request;
-  const Payment(this.user , this.request, {Key? key}) : super(key: key);
+  const Payment(this.user, this.request, {Key? key}) : super(key: key);
 
   @override
-  _PaymentState createState() => _PaymentState(user ,request);
+  _PaymentState createState() => _PaymentState(user, request);
 }
 
 class _PaymentState extends State<Payment> {
@@ -33,7 +33,7 @@ class _PaymentState extends State<Payment> {
   final icon = CupertinoIcons.moon_stars;
   Object? value = 0;
 
-  _PaymentState(this.user ,this.request);
+  _PaymentState(this.user, this.request);
 
   final paymentLabels = [
     'Credit card / Debit card',
@@ -184,13 +184,14 @@ class _PaymentState extends State<Payment> {
                 if (value == 0) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => CreditCardPage(user ,request),
+                      builder: (context) => CreditCardPage(user, request),
                     ),
                   );
                 } else if (value == 1) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => MyCardPayReservationPage(user ,request),
+                      builder: (context) =>
+                          MyCardPayReservationPage(user, request),
                     ),
                   );
                 } else {
@@ -207,11 +208,17 @@ class _PaymentState extends State<Payment> {
                       if (updateresult != null) {
                         Widget okButton = TextButton(
                           child: Text("OK"),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => Success(user),
+                              ),
+                            );
+                          },
                         );
                         AlertDialog alert = AlertDialog(
-                          title: Text("Error"),
-                          content: Text("Uspjesno updateovan loyalty bonus"),
+                          title: Text("Successfully"),
+                          content: Text("Successfully updatated loyalty bonus"),
                           actions: [
                             okButton,
                           ],
@@ -229,11 +236,17 @@ class _PaymentState extends State<Payment> {
                         if (lyluserinsertresult != null) {
                           Widget okButton = TextButton(
                             child: Text("OK"),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => Success(user),
+                                ),
+                              );
+                            },
                           );
                           AlertDialog alert = AlertDialog(
-                            title: Text("Error"),
-                            content: Text("Uspjesno dodan loyalty bonus"),
+                            title: Text("Successfully"),
+                            content: Text("Successfully added loyalty bonus"),
                             actions: [
                               okButton,
                             ],
@@ -246,20 +259,16 @@ class _PaymentState extends State<Payment> {
                         }
                       }
                     }
-
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => Success(user),
-                      ),
-                    );
                   } else {
                     Widget okButton = TextButton(
                       child: Text("OK"),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     );
                     AlertDialog alert = AlertDialog(
                       title: Text("Error"),
-                      content: Text("Bezuspjesna rezervacija"),
+                      content: Text("Unsuccessful reservation"),
                       actions: [
                         okButton,
                       ],

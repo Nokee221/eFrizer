@@ -1,5 +1,5 @@
 class HairSalonService{
-  final int id;
+  final int hairSalonServiceId;
   final String description;
   final int price;
   final int timeMin;
@@ -7,7 +7,7 @@ class HairSalonService{
   final String serviceName;
 
   HairSalonService({
-    required this.id,
+    required this.hairSalonServiceId,
     required this.description,
     required this.price,
     required this.serviceId,
@@ -18,7 +18,7 @@ class HairSalonService{
 
   factory HairSalonService.fromJson(Map<String, dynamic> json) {
     return HairSalonService(
-      id: int.parse(json['id'].toString()),
+      hairSalonServiceId: int.parse(json['hairSalonServiceId'].toString()),
       description: json['description'],
       price: int.parse(json['price'].toString()),
       timeMin: int.parse(json['timeMin'].toString()),

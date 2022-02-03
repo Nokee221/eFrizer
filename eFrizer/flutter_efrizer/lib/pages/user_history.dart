@@ -4,16 +4,18 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/reservation/reservation.dart';
 import 'package:flutter_login/models/reservation/reservation_search_request.dart';
+import 'package:flutter_login/pages/profile_page.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
+import 'home_page.dart';
 
 class History extends StatefulWidget {
   final ApplicationUser user;
-  const History(this.user, { Key? key }) : super(key: key);
+  const History(this.user, {Key? key}) : super(key: key);
 
   @override
   _HistoryState createState() => _HistoryState(user);
@@ -30,15 +32,13 @@ class _HistoryState extends State<History> {
   void initState() {
     super.initState();
 
-    request = ReservationSearchRequest(applicationuserId: user.applicationUserId);
+    request =
+        ReservationSearchRequest(applicationuserId: user.applicationUserId);
   }
 
   var result = null;
   Future<void> deleteData(id) async {
-    
-
-    result =
-        await APIService.delete("Reservation", id.toString());
+    result = await APIService.delete("Reservation", id.toString());
   }
 
   @override
@@ -47,17 +47,21 @@ class _HistoryState extends State<History> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("History", style: GoogleFonts.pacifico(color: themeChange.darkTheme ? Colors.white : Colors.black),),
+        title: Text(
+          "History",
+          style: GoogleFonts.pacifico(
+              color: themeChange.darkTheme ? Colors.white : Colors.black),
+        ),
         leading: BackButton(color: Colors.blue),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
-      IconButton(
-        icon: Icon(icon),
-        color: Colors.blue,
-        onPressed: () {},
-      ),
-      ],
+          IconButton(
+            icon: Icon(icon),
+            color: Colors.blue,
+            onPressed: () {},
+          ),
+        ],
       ),
       body: historyWidget(themeChange),
     );
@@ -79,7 +83,9 @@ class _HistoryState extends State<History> {
               );
             } else {
               return ListView(
-                children: snapshot.data!.map((e) => HistoryList(e, themeChange)).toList(),
+                children: snapshot.data!
+                    .map((e) => HistoryList(e, themeChange))
+                    .toList(),
               );
             }
           }
@@ -93,40 +99,46 @@ class _HistoryState extends State<History> {
 
     var hairsalon = await APIService.get('Reservation', queryParams);
     return hairsalon!.map((i) => Reservation.fromJson(i)).toList();
-    
   }
 
   Widget HistoryList(reservation, themeChange) => Dismissible(
-    key: Key(reservation.reservationId.toString()),
-    direction: DismissDirection.horizontal,
-    onDismissed: (direction){
-      setState(() {
-        deleteData(reservation.reservationId);
-        History(user);
-      });
+        key: Key(reservation.reservationId.toString()),
+        direction: DismissDirection.horizontal,
+        onDismissed: (direction) {
+          setState(() {
+            deleteData(reservation.reservationId);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ProfilePage(user)));
+          });
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Reservation deleted")));
-    },
-
-    background: Container(color: Colors.red),
-    child: ListTile(
-      contentPadding: EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 10,
-        
-      ),
-      leading: CircleAvatar(
-        radius: 20,
-        backgroundColor: Colors.transparent,
-        backgroundImage: AssetImage(
-            "assets/strih.png"
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text("Reservation deleted")));
+        },
+        background: Container(color: Colors.red),
+        child: ListTile(
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 10,
+          ),
+          leading: CircleAvatar(
+            radius: 20,
+            backgroundColor: Colors.transparent,
+            backgroundImage: AssetImage("assets/strih.png"),
+          ),
+          title: Text(
+            reservation.HairDresserName,
+            style: GoogleFonts.nunito(
+                color: themeChange.darkTheme ? Colors.white : Colors.black,
+                fontWeight: FontWeight.bold),
+          ),
+          subtitle: Text(
+            reservation.From.day.toString() +
+                "." +
+                reservation.From.month.toString() +
+                "." +
+                reservation.From.year.toString(),
+          ),
+          tileColor: themeChange.darkTheme ? Colors.black87 : Colors.white,
         ),
-      ),
-      title: Text( reservation.HairDresserName , style: GoogleFonts.nunito(color: themeChange.darkTheme ? Colors.white : Colors.black, fontWeight: FontWeight.bold),),
-      subtitle: Text(
-        reservation.From.day.toString() + "." + reservation.From.month.toString() + "." + reservation.From.year.toString(),
-      ),
-      tileColor: themeChange.darkTheme ? Colors.black87 : Colors.white,
-    ),
-  );
+      );
 }
