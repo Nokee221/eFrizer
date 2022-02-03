@@ -1,4 +1,5 @@
 ﻿using eFrizer.Model;
+using eFrizer.Win.Manager.HairSalon.TextReview;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -44,6 +45,14 @@ namespace eFrizer.Win.Review
 
             dgvReview.DataSource = result;
             await LoadData();
+        }
+
+        private void btnTextReview_Click(object sender, EventArgs e)
+        {
+            var form = new frmTextReview(_hairSalon);
+            this.Hide();
+            form.Closed += (s, args) => this.Show();
+            form.ShowDialog();
         }
     }
 }

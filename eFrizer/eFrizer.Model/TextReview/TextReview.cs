@@ -16,5 +16,6 @@ namespace eFrizer.Model
         public string Text { get; set; }
 
         public string ClientUsername => Client?.Username;
+        public string HairSalonName => HairSalon?.Name;
     }
 }

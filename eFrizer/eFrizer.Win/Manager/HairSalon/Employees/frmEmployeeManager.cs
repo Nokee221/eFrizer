@@ -12,14 +12,14 @@ namespace eFrizer.Win
     {
         //TODO: Should these services be actually querying an Employees table?
         //Or maybe should I make a controller that returns the Employees with a given Hair Salon Id?
-        private Manager _managerOwner;
+        private Model.Manager _managerOwner;
         private HairSalon _hairSalon;
         private APIService _hairDressers = new APIService("HairDresser");
         private APIService _managers = new APIService("HairSalonManager");
         private List<HairDresser> _hairSalonHairDressers;
         private List<HairSalonManager> _hairSalonManagers;
 
-        public frmEmployeeManager(HairSalon hairSalon, Manager user)
+        public frmEmployeeManager(HairSalon hairSalon, Model.Manager user)
         {
             _hairSalon = hairSalon;
             _managerOwner = user;
