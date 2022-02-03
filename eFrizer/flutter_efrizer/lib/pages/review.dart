@@ -4,6 +4,7 @@ import 'package:flutter_login/models/hairsalon/HairSalon.dart';
 import 'package:flutter_login/models/text_review/text_review.dart';
 import 'package:flutter_login/models/text_review/text_review_insert_request.dart';
 import 'package:flutter_login/models/text_review/text_review_search_request.dart';
+import 'package:flutter_login/pages/details.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -90,6 +91,7 @@ class _ReviewPageState extends State<ReviewPage> {
                 children: [
                   TextFormField(
                     controller: txtReview,
+                    style: TextStyle(color: themeChange.darkTheme ? Colors.black : Colors.white),
                     maxLines: 3,
                     decoration: InputDecoration(
                       hintText: "Add a review",
@@ -116,7 +118,13 @@ class _ReviewPageState extends State<ReviewPage> {
                       {
                         Widget okButton = TextButton(
                           child: Text("OK"),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Details(hairSalon , user)));
+                          },
                         );
                         AlertDialog alert = AlertDialog(
                           title: Text("Success"),
@@ -134,7 +142,9 @@ class _ReviewPageState extends State<ReviewPage> {
                       else{
                         Widget okButton = TextButton(
                           child: Text("OK"),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         );
                         AlertDialog alert = AlertDialog(
                           title: Text("Error"),

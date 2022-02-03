@@ -210,20 +210,24 @@ class _NewReservationState extends State<NewReservation> {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: FlatButton(
-                onPressed: (){
-                  
-                  
-                  var request = null;
-                  var dateFormatted = DateFormat("yyyy-MM-dd HH:mm:ss").format(reservationDate);
-                  var enddateFormatted = DateFormat("yyyy-MM-dd HH:mm:ss").format(endDate);
-                  
 
-                  request = ReservationInsertRequest(hairDresserId: hairdresserId, serviceId: _service!.hairSalonServiceId, clientId: applicationUserId, to: enddateFormatted , from: dateFormatted);
+
+                onPressed: (){
+
                   
-                  Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) => Payment(user , request)),
-                        );
+                    var request = null;
+                    var dateFormatted = DateFormat("yyyy-MM-dd HH:mm:ss").format(reservationDate);
+                    var enddateFormatted = DateFormat("yyyy-MM-dd HH:mm:ss").format(endDate);
+                    
+
+                    request = ReservationInsertRequest(hairDresserId: hairdresserId, serviceId: _service!.hairSalonServiceId, clientId: applicationUserId, to: enddateFormatted , from: dateFormatted);
+                    
+                    Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => Payment(user , request)),
+                          );
+
+                  
                 },
                 child: const Center(
                   child: Text(
