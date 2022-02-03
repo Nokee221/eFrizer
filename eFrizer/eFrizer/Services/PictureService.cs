@@ -45,7 +45,7 @@ namespace eFrizer.Services
             }
         }
 
-        public async Task<Gallery> GetPictureIds(int hairSalonId)
+        public async Task<Gallery> GetHairSalonPictureIds(int hairSalonId)
         {
             var gallery = new Gallery();
 
@@ -60,7 +60,50 @@ namespace eFrizer.Services
             }
             return gallery;
         }
-        public async override Task<Model.Picture> Insert(PictureInsertRequest request)
+
+        public async Task<Gallery> GetHairSalonServicePictureIds(int hairSalonServiceId)
+        {
+            var gallery = new Gallery();
+
+            gallery.Rows = await Context.HairSalonServicePictures
+                .Where(x => x.HairSalonServiceId == hairSalonServiceId)
+                .Select(x => new Gallery.Row { pictureId = x.PictureId })
+                .ToListAsync();
+            gallery.pictureIds = new int[gallery.Rows.Count()];
+            for (int i = 0; i < gallery.Rows.Count(); i++)
+            {
+                gallery.pictureIds[i] = gallery.Rows.ElementAt(i).pictureId;
+            }
+            return gallery;
+        }
+
+        public async Task<Model.Picture> InsertHairSalonServicePicture(PictureInsertRequest request)
+        {
+
+            var imagePath = await UploadFile(request.ImageFile);
+
+            var entry = _context.Pictures.Add(new Database.Picture()
+            {
+                Path = imagePath
+            });
+
+            _context.SaveChanges();
+
+            var pictureId = _context.Pictures.OrderByDescending(x => x.PictureId).First().PictureId;
+            
+            var hairSalonServicePicture = _context.HairSalonServicePictures.Add(new Database.HairSalonServicePicture()
+            {
+                HairSalonServiceId = (int)request.HairSalonServiceId,
+                PictureId = pictureId
+            }); 
+            
+
+            _context.SaveChanges();
+
+            return _mapper.Map<Model.Picture>(entry.Entity);
+        }
+
+        public async Task<Model.Picture> InsertHairSalonPicture(PictureInsertRequest request)
         {
             
             var imagePath = await UploadFile(request.ImageFile);
@@ -75,7 +118,7 @@ namespace eFrizer.Services
             var pictureId = _context.Pictures.OrderByDescending(x => x.PictureId).First().PictureId;
             var hairSalonPicture = _context.HairSalonPictures.Add(new Database.HairSalonPicture()
             {
-                HairSalonId = request.HairSalonId,
+                HairSalonId = (int)request.HairSalonId,
                 PictureId = pictureId
             });
 

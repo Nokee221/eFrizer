@@ -28,6 +28,8 @@ namespace eFrizer.Win.Service
 
         private async void frmService_Load(object sender, EventArgs e)
         {
+            pbService.SizeMode = PictureBoxSizeMode.StretchImage;
+            btnGallery.Visible = false;
             await LoadData();
         }
 
@@ -54,7 +56,7 @@ namespace eFrizer.Win.Service
             request.TimeMin = int.Parse(txtTime.Text);
             request.Description = txtDesc.Text;
 
-            var service = await _hairSalonServiceService.Update<Model.HairSalonService>(_selectedService.Id, request);
+            var service = await _hairSalonServiceService.Update<Model.HairSalonService>(_selectedService.HairSalonServiceId, request);
             if(service != null)
             {
                 MessageBox.Show("Update Successful");
@@ -98,16 +100,34 @@ namespace eFrizer.Win.Service
                 return;
             }
 
+            btnGallery.Visible = true;
+
             var item = dgvServices.SelectedRows[0].DataBoundItem as HairSalonService;
 
             txtName.Text = item.ServiceName;
             txtDesc.Text = item.Description;
             txtPrice.Text = item.Price.ToString();
             txtTime.Text = item.TimeMin.ToString();
-            var data = await _hairSalonServicePictures.Get<List<HairSalonServicePicture>>();
-            _selectedService = data.First().HairSalonService;
-            renderPicture(data.First().PictureId);
+            _selectedService = item;
+            var request = new HairSalonServicePictureSearchRequest
+            {
+                HairSalonServiceId = item.HairSalonServiceId
+            };
+            await LoadPictures(request);
             //TODO: Refactor heavily, enable multiple images to be displayed too..
+        }
+
+        private async Task LoadPictures(HairSalonServicePictureSearchRequest request)
+        {
+            var pictures = await _hairSalonServicePictures.Get<List<HairSalonServicePicture>>(request);
+            if (pictures.Count != 0)
+            {
+                renderPicture(pictures.Last().PictureId);
+            }
+            else
+            {
+                pbService.Image = null;
+            }
         }
 
         //TODO: refactor into helper method
@@ -134,6 +154,21 @@ namespace eFrizer.Win.Service
         private void btnDelete_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private async void btnGallery_Click(object sender, EventArgs e)
+        {
+            var form = new frmServiceGallery(_selectedService);
+            FormInit(form);
+            await LoadPictures(new HairSalonServicePictureSearchRequest { HairSalonServiceId = _selectedService.HairSalonServiceId });
+            
+        }
+
+        private void FormInit(Form form)
+        {
+            this.Hide();
+            form.Closed += (s, args) => this.Show();
+            form.ShowDialog();
         }
     }
 }

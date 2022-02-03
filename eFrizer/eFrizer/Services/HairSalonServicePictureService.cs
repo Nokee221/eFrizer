@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace eFrizer.Services
 {
-    public class HairSalonServicePictureService : BaseCRUDService<Model.HairSalonServicePicture, HairSalonServicePicture, object, Model.HairSalonServicePictureInsertRequest, Model.HairSalonServicePictureUpdateRequest>, IHairSalonServicePictureService
+    public class HairSalonServicePictureService : BaseCRUDService<Model.HairSalonServicePicture, HairSalonServicePicture, Model.HairSalonServicePictureSearchRequest, Model.HairSalonServicePictureInsertRequest, Model.HairSalonServicePictureUpdateRequest>, IHairSalonServicePictureService
     {
         public HairSalonServicePictureService(eFrizerContext context, IMapper mapper)
            : base(context, mapper)
@@ -18,11 +18,22 @@ namespace eFrizer.Services
 
         }
 
-        public async override Task<List<Model.HairSalonServicePicture>> Get([FromBody] object search = null)
+        public async override Task<List<Model.HairSalonServicePicture>> Get([FromBody] Model.HairSalonServicePictureSearchRequest search = null)
         {
             var entity = Context.Set<HairSalonServicePicture>();
+            List<HairSalonServicePicture> list;
+            if(search.HairSalonServiceId != null)
+            {
+                list = await entity
+                    .Include(x => x.HairSalonService)
+                    .Where(x => x.HairSalonServiceId == search.HairSalonServiceId)
+                    .ToListAsync();
+            }
+            else
+            {
+                list = await entity.Include(x => x.HairSalonService).ToListAsync();
+            }
 
-            var list = await entity.Include(x => x.HairSalonService).ToListAsync();
             return _mapper.Map<List<Model.HairSalonServicePicture>>(list);
         }
     }

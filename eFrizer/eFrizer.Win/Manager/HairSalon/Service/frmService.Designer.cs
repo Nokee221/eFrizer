@@ -35,6 +35,8 @@ namespace eFrizer.Win.Service
             this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnGallery = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.pbService = new System.Windows.Forms.PictureBox();
             this.txtTime = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -49,7 +51,6 @@ namespace eFrizer.Win.Service
             this.label4 = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.txtView = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServices)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbService)).BeginInit();
@@ -99,6 +100,7 @@ namespace eFrizer.Win.Service
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnGallery);
             this.groupBox1.Controls.Add(this.btnDelete);
             this.groupBox1.Controls.Add(this.pbService);
             this.groupBox1.Controls.Add(this.txtTime);
@@ -117,11 +119,34 @@ namespace eFrizer.Win.Service
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             // 
+            // btnGallery
+            // 
+            this.btnGallery.Location = new System.Drawing.Point(260, 170);
+            this.btnGallery.Name = "btnGallery";
+            this.btnGallery.Size = new System.Drawing.Size(147, 23);
+            this.btnGallery.TabIndex = 13;
+            this.btnGallery.Text = "Update gallery";
+            this.btnGallery.UseVisualStyleBackColor = true;
+            this.btnGallery.Click += new System.EventHandler(this.btnGallery_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnDelete.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnDelete.Location = new System.Drawing.Point(293, 301);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(147, 31);
+            this.btnDelete.TabIndex = 12;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // pbService
             // 
-            this.pbService.Location = new System.Drawing.Point(241, 29);
+            this.pbService.Location = new System.Drawing.Point(260, 29);
             this.pbService.Name = "pbService";
-            this.pbService.Size = new System.Drawing.Size(199, 150);
+            this.pbService.Size = new System.Drawing.Size(147, 123);
             this.pbService.TabIndex = 11;
             this.pbService.TabStop = false;
             // 
@@ -255,19 +280,6 @@ namespace eFrizer.Win.Service
             this.txtView.UseVisualStyleBackColor = false;
             this.txtView.Click += new System.EventHandler(this.txtView_Click);
             // 
-            // btnDelete
-            // 
-            this.btnDelete.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnDelete.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnDelete.Location = new System.Drawing.Point(293, 301);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(147, 31);
-            this.btnDelete.TabIndex = 12;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
             // frmService
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -314,5 +326,6 @@ namespace eFrizer.Win.Service
         private System.Windows.Forms.DataGridViewTextBoxColumn Description;
         private System.Windows.Forms.PictureBox pbService;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnGallery;
     }
 }

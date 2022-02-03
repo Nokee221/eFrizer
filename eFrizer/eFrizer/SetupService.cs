@@ -77,6 +77,23 @@ namespace eFrizer
                 } 
             }
 
+            for (int i = 0; i < 1; i++)
+            {
+                if (!context.HairSalonServicePictures
+                        .Any(x => x.HairSalonService.Service.Name == "Brijanje" &&
+                                  x.HairSalonService.HairSalon.Name == "Hair Salon 2" &&
+                                  x.Picture.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Image/Brijanje" + (i + 1) + ".jpg")))
+                {
+                    context.HairSalonServicePictures.Add(new HairSalonServicePicture()
+                    {
+                        HairSalonServiceId = context.HairSalonServices
+                            .Where(x => x.Service.Name == "Brijanje" && x.HairSalon.Name == "Hair Salon 2")
+                            .First().HairSalonServiceId,
+                        PictureId = context.Pictures.Where(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/" + "Brijanje" + (i + 1) + ".jpg")).First().PictureId,
+                    });
+                }
+            }
+
             context.SaveChanges();
         }
 
@@ -809,6 +826,14 @@ namespace eFrizer
                 if(!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/Sisanje" + (i+1) + ".jpg")))
                 {
                     context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath + "Images/Sisanje" + (i + 1) + ".jpg") });
+                }
+            }
+
+            for (int i = 0; i < 1; i++)
+            {
+                if (!context.Pictures.Any(x => x.Path == Path.Combine(_hostEnvironment.ContentRootPath + "Images/Brijanje" + (i + 1) + ".jpg")))
+                {
+                    context.Pictures.Add(new Picture() { Path = Path.Combine(_hostEnvironment.ContentRootPath + "Images/Brijanje" + (i + 1) + ".jpg") });
                 }
             }
 

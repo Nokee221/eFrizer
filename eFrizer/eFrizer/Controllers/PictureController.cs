@@ -23,20 +23,35 @@ namespace eFrizer.Controllers
             return File(imageBytes, "image/jpeg");
         }
 
-        [HttpGet("/PictureIds")]
+        [HttpGet("/HairSalonPictureIds")]
         public async Task<Gallery> GetHairSalonPictures([FromQuery] int hairSalonId)
         {
-            var gallery = await _service.GetPictureIds(hairSalonId);
+            var gallery = await _service.GetHairSalonPictureIds(hairSalonId);
+            return gallery;
+        }
+
+        [HttpGet("/HairSalonServicePictureIds")]
+        public async Task<Gallery> GetHairSalonServicePictures([FromQuery] int hairSalonServiceId)
+        {
+            var gallery = await _service.GetHairSalonServicePictureIds(hairSalonServiceId);
             return gallery;
         }
 
 
-        [HttpPost]
-        public override async Task<Model.Picture> Insert([FromForm] PictureInsertRequest request)
+        [HttpPost("/InsertHairSalonPicture")]
+        public async Task<Model.Picture> InsertHairSalonPicture([FromForm] PictureInsertRequest request)
         {
             var form = Request.Form;
             request.ImageFile = form.Files[0];
-            return await _crudService.Insert(request);
+            return await _service.InsertHairSalonPicture(request);
+        }
+
+        [HttpPost("/InsertHairSalonServicePicture")]
+        public async Task<Model.Picture> InsertHairSalonServicePicture([FromForm] PictureInsertRequest request)
+        {
+            var form = Request.Form;
+            request.ImageFile = form.Files[0];
+            return await _service.InsertHairSalonServicePicture(request);
         }
 
         [HttpPut("{id}")]

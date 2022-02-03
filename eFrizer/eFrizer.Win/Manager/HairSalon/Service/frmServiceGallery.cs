@@ -18,18 +18,18 @@ using System.Windows.Forms;
 
 namespace eFrizer.Win
 {
-    public partial class frmPictures : Form
+    public partial class frmServiceGallery : Form
     {
         private APIService _pictureStreamService= new APIService("PictureStream");
-        private APIService _pictureIdsService = new APIService("HairSalonPictureIds");
+        private APIService _pictureIdsService = new APIService("HairSalonServicePictureIds");
         private APIService _pictureService = new APIService("Picture");
-        private HairSalon _hairSalon;
+        private HairSalonService _hairSalonService;
         private int[] _pictureIds;
         private int _selectedIndex;
 
-        public frmPictures(HairSalon hairSalon)
+        public frmServiceGallery(HairSalonService hairSalonService)
         {
-            _hairSalon = hairSalon;
+            _hairSalonService = hairSalonService;
             InitializeComponent();
         }
 
@@ -41,10 +41,10 @@ namespace eFrizer.Win
 
         private async void initPictures()
         {
-            Gallery gallery = await _pictureIdsService.GetHairSalonImageIds<Gallery>(_hairSalon.HairSalonId);
+            Gallery gallery = await _pictureIdsService.GetHairSalonServiceImageIds<Gallery>(_hairSalonService.HairSalonServiceId);
             if (gallery.pictureIds.Count() != 0)
             {
-                pbHairSalon.SizeMode = PictureBoxSizeMode.StretchImage;
+                pbHairSalonService.SizeMode = PictureBoxSizeMode.StretchImage;
                 _pictureIds = new int[gallery.pictureIds.Count()];
                 for (int i = 0; i < gallery.pictureIds.Count(); i++)
                 {
@@ -55,7 +55,7 @@ namespace eFrizer.Win
             }
             else
             {
-                pbHairSalon.Image = null;
+                pbHairSalonService.Image = null;
                 MessageBox.Show("No images to display! You can add some with the 'Add new image' button.");
             }
         }
@@ -77,8 +77,8 @@ namespace eFrizer.Win
         {
             ImageConverter converter = new ImageConverter();
             var pictureSource = await _pictureStreamService.GetImageStream<byte[]>(selectedId);
-            pbHairSalon.Image = null;
-            pbHairSalon.Image = (Image)converter.ConvertFrom(pictureSource);
+            pbHairSalonService.Image = null;
+            pbHairSalonService.Image = (Image)converter.ConvertFrom(pictureSource);
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
@@ -102,7 +102,7 @@ namespace eFrizer.Win
             {
                 var request = new PictureInsertRequest
                 {
-                    HairSalonId = _hairSalon.HairSalonId
+                    HairSalonServiceId = _hairSalonService.HairSalonServiceId
                 };
                 using (var fileStream = File.Open(ofdNewImage.FileName, FileMode.Open))
                 {
@@ -121,9 +121,10 @@ namespace eFrizer.Win
                                 DateTime.Now.ToString("yymmssfff") +
                                 Path.GetExtension(ofdNewImage.FileName),
                                 ofdNewImage.FileName);
-                            multipartContent.Add(new StringContent(request.HairSalonId.ToString()), "HairSalonId");
+                            multipartContent.Add(new StringContent(request.HairSalonServiceId.ToString()), "HairSalonServiceId");
                             client.DefaultRequestHeaders.Add("Authorization", "Basic " + Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(APIService.Username + ":" + APIService.Password)));
-                            var response = await client.PostAsync($"{Properties.Settings.Default.ApiURL}/InsertHairSalonPicture", multipartContent);
+                            var response = await client
+                                .PostAsync($"{Properties.Settings.Default.ApiURL}/InsertHairSalonServicePicture", multipartContent);
                             MessageBox.Show("Successfully added new image!");
                             initPictures();
                         };

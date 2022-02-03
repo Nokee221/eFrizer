@@ -6,7 +6,7 @@ namespace eFrizer.Model
 {
     public class HairSalonService
     {
-        public int Id { get; set; }
+        public int HairSalonServiceId { get; set; }
 
         public string Description { get; set; }
         public float Price { get; set; }

@@ -94,14 +94,21 @@ namespace eFrizer.Win
             return File.ReadAllBytes(resultPath);
         }
 
-        public async Task<T> GetImageIds<T>(int hairSalonId)
+        public async Task<T> GetHairSalonImageIds<T>(int hairSalonId)
         {
             var url = ($"{Properties.Settings.Default.ApiURL}/{_route}?hairSalonId={hairSalonId}");
             var imageIds = await url.WithBasicAuth(Username, Password).GetJsonAsync<T>();
-            //dynamic dynamicInts = 
-            //int[] imageIds = dynamicInts.cast<int>();
             return imageIds;
         }
+
+        public async Task<T> GetHairSalonServiceImageIds<T>(int hairSalonServiceId)
+        {
+            var url = ($"{Properties.Settings.Default.ApiURL}/{_route}?hairSalonServiceId={hairSalonServiceId}");
+            var imageIds = await url.WithBasicAuth(Username, Password).GetJsonAsync<T>();
+            return imageIds;
+        }
+
+
 
     }
 }
