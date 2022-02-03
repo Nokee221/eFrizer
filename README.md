@@ -11,7 +11,8 @@
 - Manager
 
     ```
-    Korisnicko ime: muser                       
+    Korisnicko ime: muser 
+    Password: 1234
     ```  
 
 ### Mobilna aplikacija
@@ -46,7 +47,7 @@
     docker-compose up
     ```
     
-4. Otovriti flutter_frizer folder
+4. Otvoriti flutter_frizer folder
 
     ```
     cd flutter_frizer
