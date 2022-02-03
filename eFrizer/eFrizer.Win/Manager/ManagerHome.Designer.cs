@@ -45,6 +45,7 @@ namespace eFrizer.Win
             this.label1 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnAddHairSalon = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.cbCity = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -219,6 +220,7 @@ namespace eFrizer.Win
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btnAddHairSalon);
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.cbCity);
             this.groupBox3.Controls.Add(this.label6);
@@ -233,6 +235,19 @@ namespace eFrizer.Win
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Add new hair salon";
+            // 
+            // btnAddHairSalon
+            // 
+            this.btnAddHairSalon.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnAddHairSalon.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAddHairSalon.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnAddHairSalon.Location = new System.Drawing.Point(101, 251);
+            this.btnAddHairSalon.Name = "btnAddHairSalon";
+            this.btnAddHairSalon.Size = new System.Drawing.Size(189, 35);
+            this.btnAddHairSalon.TabIndex = 7;
+            this.btnAddHairSalon.Text = "Add new hair salon";
+            this.btnAddHairSalon.UseVisualStyleBackColor = false;
+            this.btnAddHairSalon.Click += new System.EventHandler(this.btnAddHairSalon_Click);
             // 
             // label7
             // 
@@ -351,5 +366,6 @@ namespace eFrizer.Win
         private System.Windows.Forms.DataGridViewTextBoxColumn Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn Address;
         private System.Windows.Forms.DataGridViewTextBoxColumn Description;
+        private System.Windows.Forms.Button btnAddHairSalon;
     }
 }

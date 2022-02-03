@@ -138,15 +138,5 @@ namespace eFrizer.Win
             await LoadData();
         }
 
-
-
-
-
-
-
-        //private Task LoadManager()
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }
