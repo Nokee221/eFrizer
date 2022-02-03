@@ -137,7 +137,7 @@ class _NewCreditCardPageState extends State<NewCreditCardPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            HomePage2(user)));
+                                            HomePage(user)));
                               },
                             );
                             AlertDialog alert = AlertDialog(
