@@ -108,15 +108,13 @@ namespace eFrizer
                     ClientId = context.Clients.Where(x => x.Username == "aclient").First().ApplicationUserId,
                     HairDresserId = context.HairDressers.Where(x => x.Name == "Hair Dresser 2").First().ApplicationUserId,
                     HairSalonServiceId = context.HairSalonServices.Where(x => x.Service.Name == "Šišanje").First().ServiceId,
-                    From = DateTime.Parse("12/01/2022 15:00"),
-                    To = DateTime.Parse("12/01/2022 15:30")
+                    From = DateTime.Parse(DateTime.Now.ToShortDateString() + " 14:00"),
+                    To = DateTime.Parse(DateTime.Now.ToShortDateString() +" 15:00")
                 };
 
                 context.Reservations.Add(res);
                 context.SaveChanges();
             }
-
-            
 
             var fakeReservations = new List<Reservation>();
             var clients = context.Clients.OrderBy(x => x.ApplicationUserId).ToList();
@@ -125,12 +123,11 @@ namespace eFrizer
 
             var uniqueDates = new List<Tuple<DateTime, DateTime>>();
 
-            var datesFrom = "01/01/2022";
-            var datesTo = "01/06/2022";
+            
             var openFrom = "08:00";
             var openUntil = "19:00";
-            var dateOneWeekAgo = DateTime.Now - TimeSpan.FromDays(15);
-            var dateOneWeekAfterToday = DateTime.Now + TimeSpan.FromDays(15);
+            var dateOneWeekAgo = DateTime.Now - TimeSpan.FromDays(365);
+            var dateOneWeekAfterToday = DateTime.Now + TimeSpan.FromDays(365);
 
             foreach (var client in clients)
             {
@@ -391,6 +388,7 @@ namespace eFrizer
 
             
             context.SaveChanges();
+
         }
 
 
@@ -413,6 +411,33 @@ namespace eFrizer
             }
 
             context.SaveChanges();
+
+            var hairSalons = context.HairSalons.ToList();
+
+            foreach (var item in hairSalons)
+            {
+                for (int i = 0; i < 1; i++)
+                {
+                    context.Services.Add(new Service
+                    {
+                        Name = Faker.Lorem.Words(1).First()
+                    });
+
+                    context.SaveChanges();
+
+                    context.HairSalonServices.Add(new HairSalonService
+                    {
+                        ServiceId = context.Services.OrderByDescending(x => x.ServiceId).First().ServiceId,
+                        Price = Faker.RandomNumber.Next(5, 20),
+                        TimeMin = Faker.RandomNumber.Next(15, 60),
+                        HairSalonId = item.HairSalonId,
+                        Description = Faker.Lorem.Paragraph()
+                    });
+                    
+                    context.SaveChanges();
+                }
+            }
+
         }
 
         private void HairSalonPictureSeed()
