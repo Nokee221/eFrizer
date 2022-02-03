@@ -11,8 +11,8 @@
 - Manager
 
     ```
-    Korisnicko ime: muser    
-    Password: 1234                   
+    Korisnicko ime: muser 
+    Password: 1234
     ```  
 
 ### Mobilna aplikacija
