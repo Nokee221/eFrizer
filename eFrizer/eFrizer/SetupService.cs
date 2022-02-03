@@ -125,8 +125,12 @@ namespace eFrizer
 
             var uniqueDates = new List<Tuple<DateTime, DateTime>>();
 
+            var datesFrom = "01/01/2022";
+            var datesTo = "01/06/2022";
             var openFrom = "08:00";
             var openUntil = "19:00";
+            var dateOneWeekAgo = DateTime.Now - TimeSpan.FromDays(15);
+            var dateOneWeekAfterToday = DateTime.Now + TimeSpan.FromDays(15);
 
             foreach (var client in clients)
             {
@@ -141,7 +145,7 @@ namespace eFrizer
                             DateTime fakeDateTimeFrom, fakeDateTimeTo;
                             do
                             {
-                                fakeDateTimeFrom = new Bogus.Faker().Date.Soon(10);
+                                fakeDateTimeFrom = new Bogus.Faker().Date.Between(dateOneWeekAgo, dateOneWeekAfterToday);
                                 fakeDateTimeTo = fakeDateTimeFrom.AddMinutes(service.TimeMin);
                             }
                             while (
@@ -183,60 +187,6 @@ namespace eFrizer
 
             context.SaveChanges();
 
-            foreach (var client in clients)
-            {
-                foreach (var hairDresser in hairDressers)
-                {
-                    var services = hairSalonServices.Where(x => x.HairSalonId == hairDresser.HairSalonId).ToList();
-                    foreach (var service in services)
-                    {
-                        bool isAvailable = true;
-                        do
-                        {
-                            DateTime fakeDateTimeFrom, fakeDateTimeTo;
-                            do
-                            {
-                                fakeDateTimeFrom = new Bogus.Faker().Date.Recent(10);
-                                fakeDateTimeTo = fakeDateTimeFrom.AddMinutes(service.TimeMin);
-                            }
-                            while (
-                                fakeDateTimeFrom.TimeOfDay < TimeSpan.Parse(openFrom) ||
-                                fakeDateTimeFrom.TimeOfDay > TimeSpan.Parse(openUntil) ||
-                                fakeDateTimeTo.TimeOfDay < TimeSpan.Parse(openFrom) ||
-                                fakeDateTimeTo.TimeOfDay > TimeSpan.Parse(openUntil)
-                            );
-
-
-                            foreach (var item in uniqueDates)
-                            {
-                                isAvailable = true;
-                                if (fakeDateTimeFrom < item.Item2 && fakeDateTimeTo > item.Item1)
-                                {
-                                    isAvailable = false;
-                                    break;
-                                }
-                            }
-
-                            if (isAvailable)
-                            {
-                                uniqueDates.Add(new Tuple<DateTime, DateTime>(fakeDateTimeFrom, fakeDateTimeTo));
-                                context.Reservations.Add(new Reservation
-                                {
-
-                                    ClientId = client.ApplicationUserId,
-                                    HairDresserId = hairDresser.ApplicationUserId,
-                                    HairSalonServiceId = service.ServiceId,
-                                    From = fakeDateTimeFrom,
-                                    To = fakeDateTimeTo
-                                });
-                            }
-                        } while (isAvailable == false);
-                    }
-                }
-
-            }
-
-            context.SaveChanges();
         }
 
         private void AdminSeed(string salt, string hash)
@@ -806,6 +756,25 @@ namespace eFrizer
                     PasswordHash = hash,
                     HairSalonId = context.HairSalons.Where(x => x.Name == "Hair Salon 2").First().HairSalonId
                 });
+            }
+
+            var hairSalons = context.HairSalons.ToList();
+
+            foreach (var hairSalon in hairSalons)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    context.HairDressers.Add(new HairDresser()
+                    {
+                        Name = Faker.Name.First(),
+                        Surname = Faker.Name.Last(),
+                        Username = Faker.Internet.UserName(),
+                        Description = Faker.Lorem.Paragraph(),
+                        PasswordHash = hash,
+                        PasswordSalt = salt,
+                        HairSalonId = hairSalon.HairSalonId
+                    });
+                }
             }
 
             context.SaveChanges();
