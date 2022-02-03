@@ -4,6 +4,7 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/reservation/reservation.dart';
 import 'package:flutter_login/models/reservation/reservation_search_request.dart';
+import 'package:flutter_login/pages/home_page_2.dart';
 import 'package:flutter_login/pages/profile_page.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
 import 'package:flutter_login/services/api_service.dart';
@@ -108,7 +109,7 @@ class _HistoryState extends State<History> {
           setState(() {
             deleteData(reservation.reservationId);
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ProfilePage(user)));
+                MaterialPageRoute(builder: (context) => HomePage(user)));
           });
 
           ScaffoldMessenger.of(context)
