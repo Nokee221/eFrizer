@@ -18,10 +18,10 @@ import 'package:provider/provider.dart';
 class CreditCardPage extends StatefulWidget {
   final ApplicationUser user;
   final ReservationInsertRequest request;
-  const CreditCardPage(this.user ,this.request, {Key? key}) : super(key: key);
+  const CreditCardPage(this.user, this.request, {Key? key}) : super(key: key);
 
   @override
-  _CreditCardPageState createState() => _CreditCardPageState(user ,request);
+  _CreditCardPageState createState() => _CreditCardPageState(user, request);
 }
 
 class _CreditCardPageState extends State<CreditCardPage> {
@@ -29,7 +29,7 @@ class _CreditCardPageState extends State<CreditCardPage> {
   final ReservationInsertRequest request;
   final icon = CupertinoIcons.moon_stars;
 
-  _CreditCardPageState(this.user ,this.request);
+  _CreditCardPageState(this.user, this.request);
 
   String cardNumber = '';
   String expiryDate = '';
@@ -200,12 +200,18 @@ class _CreditCardPageState extends State<CreditCardPage> {
                               if (updateresult != null) {
                                 Widget okButton = TextButton(
                                   child: Text("OK"),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => Success(user),
+                                      ),
+                                    );
+                                  },
                                 );
                                 AlertDialog alert = AlertDialog(
-                                  title: Text("Error"),
+                                  title: Text("Successfully"),
                                   content:
-                                      Text("Uspjesno updateovan loyalty bonus"),
+                                      Text("Successfully updatated loyalty bonus"),
                                   actions: [
                                     okButton,
                                   ],
@@ -223,12 +229,18 @@ class _CreditCardPageState extends State<CreditCardPage> {
                                 if (lyluserinsertresult != null) {
                                   Widget okButton = TextButton(
                                     child: Text("OK"),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => Success(user),
+                                        ),
+                                      );
+                                    },
                                   );
                                   AlertDialog alert = AlertDialog(
-                                    title: Text("Error"),
+                                    title: Text("Successfully"),
                                     content:
-                                        Text("Uspjesno dodan loyalty bonus"),
+                                        Text("Successfully added loyalty bonus"),
                                     actions: [
                                       okButton,
                                     ],
@@ -241,13 +253,6 @@ class _CreditCardPageState extends State<CreditCardPage> {
                                 }
                               }
                             }
-
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => Success(user),
-                              ),
-                            );
-                            
                           } else {
                             Widget okButton = TextButton(
                               child: Text("OK"),

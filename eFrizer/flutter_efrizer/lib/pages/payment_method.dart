@@ -5,6 +5,7 @@ import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/credit_card/credit_card.dart';
 import 'package:flutter_login/models/credit_card/credit_card_search_request.dart';
+import 'package:flutter_login/pages/home_page_2.dart';
 import 'package:flutter_login/pages/new_credit_card.dart';
 import 'package:flutter_login/pages/profile_page.dart';
 import 'package:flutter_login/provider/dark_theme_provider.dart';
@@ -16,7 +17,7 @@ import 'home_page.dart';
 
 class MyPaymentPage extends StatefulWidget {
   final ApplicationUser user;
-  const MyPaymentPage(this.user , {Key? key}) : super(key: key);
+  const MyPaymentPage(this.user, {Key? key}) : super(key: key);
 
   @override
   _MyPaymentPageState createState() => _MyPaymentPageState(user);
@@ -24,7 +25,7 @@ class MyPaymentPage extends StatefulWidget {
 
 class _MyPaymentPageState extends State<MyPaymentPage> {
   final ApplicationUser user;
-  _MyPaymentPageState(this.user); 
+  _MyPaymentPageState(this.user);
 
   var request = null;
   @override
@@ -74,7 +75,8 @@ class _MyPaymentPageState extends State<MyPaymentPage> {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (BuildContext context) => NewCreditCardPage(user),
+                      builder: (BuildContext context) =>
+                          NewCreditCardPage(user),
                     ),
                   );
                 },
@@ -130,7 +132,6 @@ class _MyPaymentPageState extends State<MyPaymentPage> {
 
     var card = await APIService.get('CreditCard', queryParams);
     return card!.map((i) => CreditCard.fromJson(i)).toList();
-    
   }
 
   Widget _MyCreditCardWidget(card) => Container(
@@ -181,12 +182,13 @@ class _MyPaymentPageState extends State<MyPaymentPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ProfilePage(user)));
+                                            HomePage(user)));
                                 },
                               );
                               AlertDialog alert = AlertDialog(
                                 title: Text("Success"),
-                                content: Text("Successfully deleted credit card!"),
+                                content:
+                                    Text("Successfully deleted credit card!"),
                                 actions: [
                                   okButton,
                                 ],
@@ -229,7 +231,8 @@ class _MyPaymentPageState extends State<MyPaymentPage> {
                     ],
                   ),
                   CreditCardWidget(
-                    cardBgColor: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+                    cardBgColor: Colors
+                        .primaries[Random().nextInt(Colors.primaries.length)],
                     cardNumber: card.cardName,
                     expiryDate: card.expiryDate,
                     cardHolderName: card.cardHolderName,
