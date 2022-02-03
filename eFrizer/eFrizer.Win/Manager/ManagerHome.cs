@@ -12,9 +12,9 @@ namespace eFrizer.Win
         private readonly APIService _managerService = new APIService("Manager");
         private APIService _cityService = new APIService("City");
         private APIService _hairSalonManagerService = new APIService("HairSalonManager");
-        private Manager _user;
+        private Model.Manager _user;
 
-        public ManagerHome(Manager user)
+        public ManagerHome(Model.Manager user)
         {
             InitializeComponent();
             dgvManagerHome.AutoGenerateColumns = false;
@@ -56,7 +56,7 @@ namespace eFrizer.Win
         private async void LoadInfo()
         {
             APIService _userEndpoint = new APIService("Login");
-            _user = await _userEndpoint.Login<Manager>(APIService.Username, APIService.Password);
+            _user = await _userEndpoint.Login<Model.Manager>(APIService.Username, APIService.Password);
             txtName.Text = _user.Name;
             txtSurname.Text = _user.Surname;
             txtUserName.Text = _user.Username;
@@ -79,7 +79,7 @@ namespace eFrizer.Win
             };
 
 
-            var manager = await _managerService.Update<Manager>(_user.ApplicationUserId, request);
+            var manager = await _managerService.Update<Model.Manager>(_user.ApplicationUserId, request);
             APIService.Username = request.Username;
 
             if (manager != null)

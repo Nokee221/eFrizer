@@ -40,7 +40,7 @@ namespace eFrizer.Win
                 
             };
 
-            var user = await korisniciServis.Register<Manager>(request);
+            var user = await korisniciServis.Register<Model.Manager>(request);
 
             APIService.Username = request.Username;
             APIService.Password = request.Password;

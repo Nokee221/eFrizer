@@ -13,12 +13,12 @@ namespace eFrizer.Win
 {
     public partial class frmManagerEmployeeManager : Form
     {
-        private Manager _managerEmployee;
+        private Model.Manager _managerEmployee;
         private readonly HairSalon _hairSalon;
         private APIService _managerService = new APIService("Manager");
         private APIService _hairSalonManagerService = new APIService("HairSalonManager");
 
-        public frmManagerEmployeeManager(HairSalon hairSalon, Manager manager = null)
+        public frmManagerEmployeeManager(HairSalon hairSalon, Model.Manager manager = null)
         {
             _hairSalon = hairSalon;
             _managerEmployee = manager;
@@ -61,7 +61,7 @@ namespace eFrizer.Win
 
                 };
 
-                _managerEmployee = await _managerService.Insert<Manager>(req);
+                _managerEmployee = await _managerService.Insert<Model.Manager>(req);
                 await _hairSalonManagerService.Insert<HairSalonManager>(new HairSalonManagerInsertRequest()
                 {
                     ManagerId = _managerEmployee.ApplicationUserId,
@@ -79,7 +79,7 @@ namespace eFrizer.Win
                     Description = txtDescription.Text,
                     Status = cbStatus.Checked
                 };
-                _managerEmployee = await _managerService.Update<Manager>(_managerEmployee.ApplicationUserId, req);
+                _managerEmployee = await _managerService.Update<Model.Manager>(_managerEmployee.ApplicationUserId, req);
                 MessageBox.Show("Successfully updated the manager employee!");
                 Close();
             }

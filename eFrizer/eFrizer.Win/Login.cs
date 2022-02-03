@@ -27,7 +27,7 @@ namespace eFrizer.Win
 
             try
             {
-                var result = await _user.Login<Manager>(txtUsername.Text , txtPassword.Text);
+                var result = await _user.Login<Model.Manager>(txtUsername.Text , txtPassword.Text);
                 if(result.ApplicationUserRoles.Any(x => x.Role.Name == "Manager" || x.Role.Name == "Manager Employee"))
                 {
                     this.Hide();
