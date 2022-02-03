@@ -12,7 +12,7 @@ namespace eFrizer.Win
         private readonly APIService _managerService = new APIService("Manager");
         private APIService _cityService = new APIService("City");
         private APIService _hairSalonManagerService = new APIService("HairSalonManager");
-        private readonly Manager _user;
+        private Manager _user;
 
         public ManagerHome(Manager user)
         {
@@ -50,16 +50,18 @@ namespace eFrizer.Win
         private async void ManagerHome_Load(object sender, EventArgs e)
         {
             await LoadData();
-
+         
         }
 
-        private void LoadInfo()
+        private async void LoadInfo()
         {
+            APIService _userEndpoint = new APIService("Login");
+            _user = await _userEndpoint.Login<Manager>(APIService.Username, APIService.Password);
             txtName.Text = _user.Name;
             txtSurname.Text = _user.Surname;
             txtUserName.Text = _user.Username;
         }
-
+        
         private void btnEdit_Click(object sender, EventArgs e)
         {
             txtName.Enabled = true;
@@ -67,7 +69,7 @@ namespace eFrizer.Win
             txtSurname.Enabled = true;
         }
 
-        private void btnSaveChanges_Click(object sender, EventArgs e)
+        private async void btnSaveChanges_Click(object sender, EventArgs e)
         {
             ManagerUpdateRequest request = new ManagerUpdateRequest()
             {
@@ -76,10 +78,19 @@ namespace eFrizer.Win
                 Username = txtUserName.Text
             };
 
-            var manager = _managerService.Update<Manager>(_user.ApplicationUserId, request);
 
-            MessageBox.Show("SUCCESSFULLY UPDATED", "UPDATE");
-            
+            var manager = await _managerService.Update<Manager>(_user.ApplicationUserId, request);
+            APIService.Username = request.Username;
+
+            if (manager != null)
+            {
+                MessageBox.Show("Successfully updated user details.", "Success"); 
+            }
+            else
+            {
+                MessageBox.Show("Couldn't update user details.", "Failure");
+            }
+
         }
 
         private async void btnAddHairSalon_Click(object sender, EventArgs e)
