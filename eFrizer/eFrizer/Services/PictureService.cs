@@ -33,7 +33,7 @@ namespace eFrizer.Services
             try
             {
                 string imageName = Path.GetFileName(Context.Pictures.Find(imageId).Path);
-                string imagePath = "\\Images\\" + imageName;
+                string imagePath = "/images/" + imageName;
                 var path = _hostEnvironment.ContentRootPath + imagePath;
                 imageBytes = await File.ReadAllBytesAsync(path);
 

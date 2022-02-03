@@ -1,6 +1,7 @@
 ﻿using eFrizer.Model;
 using eFrizer.Services;
 using eFrizer.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -16,6 +17,7 @@ namespace eFrizer.Controllers
             _service = service;
         }
 
+        [AllowAnonymous]
         [HttpGet("/PictureStream")]
         public async Task<FileContentResult> GetPictureStream([FromQuery] int imageId)
         {
@@ -23,6 +25,7 @@ namespace eFrizer.Controllers
             return File(imageBytes, "image/jpeg");
         }
 
+        [AllowAnonymous]
         [HttpGet("/HairSalonPictureIds")]
         public async Task<Gallery> GetHairSalonPictures([FromQuery] int hairSalonId)
         {

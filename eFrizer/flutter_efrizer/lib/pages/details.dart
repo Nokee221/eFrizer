@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_login/models/hair_salon_picture_ids.dart';
 import 'package:flutter_login/models/hairsalon/HairSalon.dart';
 import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/hairdresser/hair_dresser.dart';
@@ -38,6 +39,7 @@ class _DetailsState extends State<Details> {
   final ApplicationUser user;
   final icon = CupertinoIcons.moon_stars;
   final String assetName = 'assets/hairdresser.svg';
+  late HairSalonPictureIds pictureIds = HairSalonPictureIds(pictureIds: []);
 
   _DetailsState(this.hairsalon, this.user);
 
@@ -52,6 +54,19 @@ class _DetailsState extends State<Details> {
     reviewRequest = ReviewSearchRequest(hairsalonId: hairsalon.HairSalonId);
     loyaltyRequest =
         LoyaltyBonusSearchRequest(hairSalonId: hairsalon.HairSalonId);
+    funcThatMakesAsyncCall();
+  }
+
+  getPictureIds() async {
+    pictureIds = await APIService.getHairSalonPictureIds(hairsalon.HairSalonId);
+  }
+
+  Future funcThatMakesAsyncCall() async {
+    var result = await APIService.getHairSalonPictureIds(hairsalon.HairSalonId);
+    print(result);
+    setState(() {
+      pictureIds = result;
+    });
   }
 
   var ratingRasult = null;
@@ -83,8 +98,11 @@ class _DetailsState extends State<Details> {
             height: size.height * 0.5,
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: NetworkImage(
-                      'https://i.pinimg.com/originals/c5/5a/de/c55ade0f3c23b62ff5b7eb6af21ecdc6.jpg'),
+                  image: NetworkImage(APIService.apiUrl +
+                      "PictureStream?imageId=" +
+                      (pictureIds.pictureIds.isEmpty
+                          ? 10.toString()
+                          : pictureIds.pictureIds[0].toString())),
                   fit: BoxFit.cover),
             ),
             child: SafeArea(
@@ -180,10 +198,9 @@ class _DetailsState extends State<Details> {
                         Spacer(),
                         FlatButton(
                           onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => ReviewPage(hairsalon, user)
-                            ));
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    ReviewPage(hairsalon, user)));
                           },
                           child: Text(
                             "View all reviews",
@@ -320,6 +337,7 @@ class _DetailsState extends State<Details> {
       queryParams = {'HairSalonId': req.hairSalonId.toString()};
 
     var hairdresser = await APIService.get('HairDresser', queryParams);
+
     return hairdresser!.map((i) => HairDresser.fromJson(i)).toList();
   }
 
@@ -481,7 +499,7 @@ class _DetailsState extends State<Details> {
         ),
         onRatingUpdate: (rating) {
           var respone = null;
-          
+
           respone = _setRating(rating);
           if (respone != null) {
             Widget okButton = TextButton(

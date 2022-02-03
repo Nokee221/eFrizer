@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/models/client/client.dart';
 import 'package:flutter_login/models/client/client_insert_request.dart';
+import 'package:flutter_login/models/hair_salon_picture_ids.dart';
 import 'package:flutter_login/models/hairdresser/hair_dresser.dart';
 import 'package:flutter_login/models/loyalty_bonus/loyalty_bonus.dart';
 import 'package:flutter_login/models/loyalty_user/loyalty_user.dart';
@@ -21,6 +23,24 @@ class APIService {
   void SetParameter(String Username, String Password) {
     username = Username;
     password = Password;
+  }
+
+  static Future<HairSalonPictureIds> getHairSalonPictureIds(
+      int hairSalonId) async {
+    String baseUrl =
+        apiUrl + "HairSalonPictureIds?hairSalonId=" + hairSalonId.toString();
+    final String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    final response = await http.get(
+      Uri.parse(baseUrl),
+      headers: {HttpHeaders.authorizationHeader: basicAuth},
+    );
+
+    if (response.statusCode == 200) {
+      return HairSalonPictureIds.fromJson(json.decode(response.body));
+    }
+
+    return HairSalonPictureIds(pictureIds: []);
   }
 
   static Future<List<dynamic>?> get(String route, dynamic object) async {
@@ -134,10 +154,9 @@ class APIService {
     if (response.statusCode == 200) {
       return json.decode(response.body);
     }
-    
+
     return null;
   }
-
 
   static Future<List<dynamic>?> getHairSalon(String route) async {
     String baseUrl = apiUrl + route;
