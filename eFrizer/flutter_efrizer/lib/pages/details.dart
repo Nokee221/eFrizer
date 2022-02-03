@@ -20,6 +20,7 @@ import 'package:flutter_login/services/api_service.dart';
 import 'package:flutter_login/widget/custom_list_title.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'calendar_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -255,6 +256,20 @@ class _DetailsState extends State<Details> {
                   SizedBox(
                     height: 20,
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      "Gallery",
+                      style: GoogleFonts.pacifico(fontSize: 18),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  getGalleryPictures(),
+                  SizedBox(
+                    height: 25,
+                  ),
                   CustomListTitle(
                     title: "Loyalty Bonus",
                   ),
@@ -262,7 +277,8 @@ class _DetailsState extends State<Details> {
                     width: double.infinity,
                     height: 190,
                     child: listLoyaltyBonus(),
-                  )
+                  ),
+                  
                 ],
               ),
             ),
@@ -271,6 +287,69 @@ class _DetailsState extends State<Details> {
       ),
     );
   }
+ 
+
+  Widget getGalleryPictures() {
+    return FutureBuilder<dynamic>(
+        future: _getGallaryPictures(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Text('Loading...'),
+            );
+          } else {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('${snapshot.error}'),
+              );
+            } else {
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: galleryWidget(snapshot.data),
+              );
+
+              
+            }
+          }
+        });
+  }
+
+  Future<dynamic> _getGallaryPictures() async {
+  
+    var pictures = await APIService.getHairSalonPictureIds(hairsalon.HairSalonId);
+
+    return pictures;
+  }
+
+  Widget galleryWidget(pictureId) => 
+      Row(
+        children: [
+          for(int i = 0; i < pictureId.pictureIds.length; i++)
+            Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: Container(
+                    width: 150,
+                    height: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                          image: NetworkImage(APIService.apiUrl +
+                              "PictureStream?imageId=" +
+                              (pictureId.pictureIds.isEmpty
+                                  ? 10.toString()
+                                  : pictureId.pictureIds[i].toString())),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                ),
+        ],
+      );
+
+
+
+  
+
+
 
   Widget starWidget() {
     return FutureBuilder<dynamic>(
@@ -330,6 +409,7 @@ class _DetailsState extends State<Details> {
           }
         });
   }
+
 
   Future<List<HairDresser>> getHairDressers(req) async {
     Map<String, String>? queryParams = null;
@@ -526,3 +606,5 @@ class _DetailsState extends State<Details> {
         },
       );
 }
+
+
