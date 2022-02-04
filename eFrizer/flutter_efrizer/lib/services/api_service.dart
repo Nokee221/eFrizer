@@ -193,7 +193,7 @@ class APIService {
         if (initialData.roles[0]["role"]["name"] == "Client") {
           data = Client.fromJson(initialData.toJsonWithId());
         } else if (initialData.roles[0]["role"]["name"] == "HairDresser") {
-          data = HairDresser.fromJson(initialData.toJsonWithId());
+          data = HairDresser.fromJsonRoles(initialData.toJsonWithId());
         }
         return data;
       } else if (response.statusCode == 400) {

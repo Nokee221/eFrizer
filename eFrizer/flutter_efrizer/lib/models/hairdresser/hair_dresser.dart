@@ -26,6 +26,16 @@ class HairDresser extends ApplicationUser {
         surname: json["surname"],
         description: json["description"],
         username: json["username"],
+        roles: json["applicationUserRoles"] as List<dynamic>);
+  }
+
+  factory HairDresser.fromJsonRoles(Map<String, dynamic> json) {
+    return HairDresser(
+        applicationUserId: int.parse(json["applicationUserId"].toString()),
+        name: json["name"],
+        surname: json["surname"],
+        description: json["description"],
+        username: json["username"],
         roles: json["roles"] as List<dynamic>);
   }
 }

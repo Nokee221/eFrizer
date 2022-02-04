@@ -1,8 +1,8 @@
 # RS2 - Seminarski - eFrizer
 
-**eFrizer** je aplikacija koja služi za pregled zauzetih i slobodnih termina , te rezervaciju vlastitog termina sa željenim servisom .Aplikacija je podijeljena u dva dijela:
--	desktop aplikacija namijenjena administratorima za upravljanje sadržajem,
--	mobilna aplikacija namijenjena korisnicima za pregled i filtriranje sadržaja.
+**eFrizer** je aplikacija čija je osnovna svrha olakšavanje poslovnih procesa u poslu frizerskog salona. Rješenje je podijeljeno na dva dijela:
+-	desktop aplikacija namijenjena menadžerima frizerskih salona
+-	mobilna aplikacija namijenjena korisnicima i frizerima
 
 ## Kredencijali za prijavu   
 
@@ -19,7 +19,7 @@
 
 - Klijent
 
-    >**Napomena**: zbog recommendera postoji više klijentskih profila
+    >**Napomena**: Za sve ostale klijentske profile je šifra ista.
     ```
     Korisnicko ime: aclient                                              
     Lozinka: 1234     
@@ -28,7 +28,7 @@
 - HairDresser
 
     ```
-    Korisnicko ime: hairdresser2                                              
+    Korisnicko ime: hairdresser1                                             
     Lozinka: 1234     
     ```
 
@@ -44,6 +44,7 @@
 
 
     ```
+    cd eFrizer
     docker-compose build
     docker-compose up
     ```
@@ -68,6 +69,11 @@
     
 7. Pokretanje desktop aplikacije
 
+    cd eFrizer.Win
+
+    dotnet run
+
+    ILI
     ```
     1. Otvoriti solution u Visual Studiu
     2. Desni klik na solution
