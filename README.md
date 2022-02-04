@@ -48,15 +48,10 @@
     docker-compose build
     docker-compose up
     ```
-    >**Napomena**: Proces kreiranja i pokretanja kontejnera može potrajati nekoliko minuta. Proces je završen kada su posljednje poruke u logu ovakve: <code>efrizer-efrizer-api-1  | info: Microsoft.Hosting.Lifetime[0]
-efrizer-efrizer-api-1  |       Now listening on: https://[::]:5010
-efrizer-efrizer-api-1  | info: Microsoft.Hosting.Lifetime[0]
-efrizer-efrizer-api-1  |       Now listening on: http://[::]:5000
-efrizer-efrizer-api-1  | info: Microsoft.Hosting.Lifetime[0]
-efrizer-efrizer-api-1  |       Application started. Press Ctrl+C to shut down.
-efrizer-efrizer-api-1  | info: Microsoft.Hosting.Lifetime[0]
-efrizer-efrizer-api-1  |       Hosting environment: Development
-efrizer-efrizer-api-1  | info: Microsoft.Hosting.Lifetime[0]
+    >**Napomena**: Proces kreiranja i pokretanja kontejnera može potrajati nekoliko minuta. Proces je završen kada su posljednje poruke u logu ovakve: <code>
+efrizer-efrizer-api-1  | info: Microsoft.Hosting.Lifetime[0]<br>
+efrizer-efrizer-api-1  |       Hosting environment: Development<br>
+efrizer-efrizer-api-1  | info: Microsoft.Hosting.Lifetime[0]<br>
 efrizer-efrizer-api-1  |       Content root path: /app</code>
 4. Otvoriti flutter_frizer folder
 
