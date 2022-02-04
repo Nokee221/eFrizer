@@ -13,9 +13,11 @@ namespace eFrizer.Win
     {
         private APIService _bonuses = new APIService("HairSalonServiceLoyaltyBonus");
         private APIService _services = new APIService("HairSalonService");
+        private HairSalon _hairSalon; 
 
-        public frmLoyalty()
+        public frmLoyalty(HairSalon hairSalon)
         {
+            _hairSalon = hairSalon;
             InitializeComponent();
         }
 
@@ -41,7 +43,11 @@ namespace eFrizer.Win
 
         private async Task LoadBonuses()
         {
-            var bonuses = await _bonuses.Get<List<HairSalonServiceLoyaltyBonus>>();
+            var request = new HairSalonServiceLoyaltyBonusSearchRequest
+            {
+                hairSalonId = _hairSalon.HairSalonId
+            };
+            var bonuses = await _bonuses.Get<List<HairSalonServiceLoyaltyBonus>>(request);
             populate_dgvBonuses(bonuses);
         }
 
@@ -112,10 +118,14 @@ namespace eFrizer.Win
 
         private async Task LoadHairSalonServices()
         {
-            var services = await _services.Get<List<HairSalonService>>();
+            var request = new HairSalonServiceSearchRequest
+            {
+                HairSalonId = _hairSalon.HairSalonId
+            };
+            var services = await _services.Get<List<HairSalonService>>(request);
             cbService.DataSource = services;
             cbService.DisplayMember = "ServiceName";
-            cbService.ValueMember = "Id";
+            cbService.ValueMember = "HairSalonServiceId";
         }
 
         private async void btnSaveBonus_Click(object sender, EventArgs e)

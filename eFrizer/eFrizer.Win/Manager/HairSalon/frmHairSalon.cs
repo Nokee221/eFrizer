@@ -105,7 +105,7 @@ namespace eFrizer.Win
         private void btnLoyalty_Click(object sender, EventArgs e)
         {
             //ToDO: create helper function for all these buttons that open new forms
-            var forma = new frmLoyalty();
+            var forma = new frmLoyalty(_hairSalon);
             this.Hide();
             forma.Closed += (s, args) => this.Show();
             forma.ShowDialog();
