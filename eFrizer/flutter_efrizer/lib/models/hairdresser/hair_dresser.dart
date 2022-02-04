@@ -26,6 +26,6 @@ class HairDresser extends ApplicationUser {
         surname: json["surname"],
         description: json["description"],
         username: json["username"],
-        roles: json["applicationUserRoles"] as List<dynamic>);
+        roles: json["roles"] as List<dynamic>);
   }
 }
