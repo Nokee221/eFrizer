@@ -11,7 +11,7 @@ import 'details.dart';
 
 class HomePage2 extends StatefulWidget {
   final ApplicationUser user;
-  const HomePage2(this.user , {Key? key}) : super(key: key);
+  const HomePage2(this.user, {Key? key}) : super(key: key);
 
   @override
   _HomePage2State createState() => _HomePage2State(user);
@@ -28,7 +28,12 @@ class _HomePage2State extends State<HomePage2> {
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Pick your hairsalon" , style: GoogleFonts.pacifico(color: themeChange.darkTheme ? Colors.white : Colors.black, fontSize: 25),),
+        title: Text(
+          "Pick your hairsalon",
+          style: GoogleFonts.pacifico(
+              color: themeChange.darkTheme ? Colors.white : Colors.black,
+              fontSize: 25),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -83,9 +88,9 @@ class _HomePage2State extends State<HomePage2> {
                 Stack(
                   children: [
                     Ink.image(
-                      image: NetworkImage(
-                        'https://i.pinimg.com/originals/c5/5a/de/c55ade0f3c23b62ff5b7eb6af21ecdc6.jpg',
-                      ),
+                      image: NetworkImage(APIService.apiUrl +
+                          "PictureStream?imageId=" +
+                          hairsalon.FeaturedPictureId.toString()),
                       height: 180,
                       fit: BoxFit.cover,
                     ),
@@ -120,7 +125,10 @@ class _HomePage2State extends State<HomePage2> {
                   padding: EdgeInsets.all(16).copyWith(bottom: 25),
                   child: Text(
                     hairsalon.Description,
-                    style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ],

@@ -26,7 +26,14 @@ namespace eFrizer.Services
 
             var list = await entity.ToListAsync();
 
-            return _mapper.Map<List<Model.HairSalon>>(list);
+            var hairSalons = _mapper.Map<List<Model.HairSalon>>(list);
+
+            foreach (var hairSalon in hairSalons)
+            {
+                hairSalon.FeaturedPictureId = Context.HairSalonPictures.Where(x => x.HairSalonId == hairSalon.HairSalonId).First().PictureId;
+            }
+
+            return hairSalons;
         }
     }
 }

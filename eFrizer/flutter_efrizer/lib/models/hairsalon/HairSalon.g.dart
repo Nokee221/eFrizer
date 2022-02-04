@@ -7,12 +7,12 @@ part of 'HairSalon.dart';
 // **************************************************************************
 
 HairSalon _$HairSalonFromJson(Map<String, dynamic> json) => HairSalon(
-      HairSalonId: int.parse(json["hairSalonId"].toString()),
-      Name: json["name"],
-      Description: json["description"],
-      Address: json["address"],
-      CityId: int.parse(json["cityId"].toString())
-    );
+    HairSalonId: int.parse(json["hairSalonId"].toString()),
+    Name: json["name"],
+    Description: json["description"],
+    Address: json["address"],
+    CityId: int.parse(json["cityId"].toString()),
+    FeaturedPictureId: int.parse(json["featuredPictureId"].toString()));
 
 Map<String, dynamic> _$HairSalonToJson(HairSalon instance) => <String, dynamic>{
       'HairSalonId': instance.HairSalonId,

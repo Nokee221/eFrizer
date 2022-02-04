@@ -476,6 +476,29 @@ namespace eFrizer
             }
 
             context.SaveChanges();
+
+            var hairSalons = context.HairSalons.Where(x => x.Name != "Hair Salon 2" && x.Name != "Hair Salon 1").ToList();
+
+            foreach (var hairSalon in hairSalons)
+            {
+                var pictureIds = new List<int>();
+                for (int i = 0; i < 5; i++)
+                {
+                    int pictureId;
+                    do
+                    {
+                        pictureId = Faker.RandomNumber.Next(1, 10); 
+                    } while (pictureIds.Contains(pictureId));
+                    pictureIds.Add(pictureId);
+                    context.HairSalonPictures.Add(new HairSalonPicture()
+                    {
+                        HairSalonId = hairSalon.HairSalonId,
+                        PictureId = pictureId
+                    }); 
+                }
+            }
+
+            context.SaveChanges();
         }
 
         private void ApplicationUserRoleSeed()
