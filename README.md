@@ -48,11 +48,7 @@
     docker-compose build
     docker-compose up
     ```
-    >**Napomena**: Proces kreiranja i pokretanja kontejnera može potrajati nekoliko minuta. Proces je završen kada su posljednje poruke u logu ovakve: <code>
-efrizer-efrizer-api-1  | info: Microsoft.Hosting.Lifetime[0]<br>
-efrizer-efrizer-api-1  |       Hosting environment: Development<br>
-efrizer-efrizer-api-1  | info: Microsoft.Hosting.Lifetime[0]<br>
-efrizer-efrizer-api-1  |       Content root path: /app</code>
+    >**Napomena**: Proces kreiranja i pokretanja kontejnera može potrajati nekoliko minuta. Proces je završen kada zadnja poruka u logu bude ovakva: <code>efrizer-efrizer-api-1  |       Content root path: /app</code>
 4. Otvoriti flutter_frizer folder
 
     ```
