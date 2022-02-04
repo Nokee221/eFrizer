@@ -414,13 +414,22 @@ namespace eFrizer
 
             var hairSalons = context.HairSalons.ToList();
 
+            string[] serviceNames = {
+                "Mini val",
+                "Šišanje na nulu",
+                "Pranje kose",
+                "Skraćivanje vrhova",
+                "Jež"
+            };
+            
+
             foreach (var item in hairSalons)
             {
-                for (int i = 0; i < 1; i++)
+                for (int i = 0; i < 2; i++)
                 {
                     context.Services.Add(new Service
                     {
-                        Name = Faker.Lorem.Words(1).First()
+                        Name = serviceNames[Faker.RandomNumber.Next(0, 4)]
                     });
 
                     context.SaveChanges();
