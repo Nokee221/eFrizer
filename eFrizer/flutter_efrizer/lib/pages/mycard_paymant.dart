@@ -228,7 +228,7 @@ class _MyCardPayReservationPageState extends State<MyCardPayReservationPage> {
                   );
                   AlertDialog alert = AlertDialog(
                     title: Text("Successfully"),
-                    content: Text("Successfully added loyalty bonus"),
+                    content: Text("Successfully added reservation"),
                     actions: [
                       okButton,
                     ],

@@ -210,8 +210,8 @@ class _CreditCardPageState extends State<CreditCardPage> {
                                 );
                                 AlertDialog alert = AlertDialog(
                                   title: Text("Successfully"),
-                                  content:
-                                      Text("Successfully updatated loyalty bonus"),
+                                  content: Text(
+                                      "Successfully updatated loyalty bonus"),
                                   actions: [
                                     okButton,
                                   ],
@@ -240,7 +240,7 @@ class _CreditCardPageState extends State<CreditCardPage> {
                                   AlertDialog alert = AlertDialog(
                                     title: Text("Successfully"),
                                     content:
-                                        Text("Successfully added loyalty bonus"),
+                                        Text("Successfully added reservation"),
                                     actions: [
                                       okButton,
                                     ],
