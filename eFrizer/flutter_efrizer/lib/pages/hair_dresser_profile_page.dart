@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_login/login.dart';
 import 'package:flutter_login/models/application_user/application_user.dart';
 import 'package:flutter_login/pages/edit_profile_page.dart';
 import 'package:flutter_login/pages/user_history.dart';
@@ -78,7 +79,14 @@ class _HairDresserProfilePageState extends State<HairDresserProfilePage> {
       child: InkWell(
         splashColor: Theme.of(context).splashColor,
         child: ListTile(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (BuildContext context) => LoginPage(),
+              ),
+              (route) => false,
+            );
+          },
           title: Text(title),
           subtitle: Text(subTitles),
           leading: Icon(
