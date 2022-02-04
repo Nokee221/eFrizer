@@ -246,7 +246,7 @@ class _PaymentState extends State<Payment> {
                           );
                           AlertDialog alert = AlertDialog(
                             title: Text("Successfully"),
-                            content: Text("Successfully added loyalty bonus"),
+                            content: Text("Successfully added reservation"),
                             actions: [
                               okButton,
                             ],

@@ -200,7 +200,7 @@ class _MyCardPayReservationPageState extends State<MyCardPayReservationPage> {
                 );
                 AlertDialog alert = AlertDialog(
                   title: Text("Successfully"),
-                  content: Text("Successfully updatated loyalty bonus"),
+                  content: Text("Successfully added reservation"),
                   actions: [
                     okButton,
                   ],
@@ -228,7 +228,7 @@ class _MyCardPayReservationPageState extends State<MyCardPayReservationPage> {
                   );
                   AlertDialog alert = AlertDialog(
                     title: Text("Successfully"),
-                    content: Text("Successfully added loyalty bonus"),
+                    content: Text("Successfully added reservation"),
                     actions: [
                       okButton,
                     ],
@@ -247,8 +247,8 @@ class _MyCardPayReservationPageState extends State<MyCardPayReservationPage> {
               onPressed: () {},
             );
             AlertDialog alert = AlertDialog(
-              title: Text("Error"),
-              content: Text("Bezuspjesna rezervacija"),
+              title: Text("Success"),
+              content: Text("Successfully added reservation"),
               actions: [
                 okButton,
               ],
