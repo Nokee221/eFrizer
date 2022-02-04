@@ -252,15 +252,41 @@ class _CreditCardPageState extends State<CreditCardPage> {
                                       });
                                 }
                               }
+
+                              Widget okButton = TextButton(
+                                    child: Text("OK"),
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => Success(user),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                  AlertDialog alert = AlertDialog(
+                                    title: Text("Successfully"),
+                                    content:
+                                        Text("Successfully added reservation"),
+                                    actions: [
+                                      okButton,
+                                    ],
+                                  );
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return alert;
+                                      });
                             }
                           } else {
                             Widget okButton = TextButton(
                               child: Text("OK"),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
                             );
                             AlertDialog alert = AlertDialog(
                               title: Text("Error"),
-                              content: Text("Bezuspjesna rezervacija"),
+                              content: Text("Unsuccessful reservation"),
                               actions: [
                                 okButton,
                               ],

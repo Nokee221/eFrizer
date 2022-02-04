@@ -240,15 +240,40 @@ class _MyCardPayReservationPageState extends State<MyCardPayReservationPage> {
                       });
                 }
               }
+
+              Widget okButton = TextButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Success(user),
+                    ),
+                  );
+                },
+              );
+              AlertDialog alert = AlertDialog(
+                title: Text("Successfully"),
+                content: Text("Successfully added reservation"),
+                actions: [
+                  okButton,
+                ],
+              );
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return alert;
+                  });
             }
           } else {
             Widget okButton = TextButton(
               child: Text("OK"),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
             );
             AlertDialog alert = AlertDialog(
               title: Text("Success"),
-              content: Text("Successfully added reservation"),
+              content: Text("Unsuccessful reservation"),
               actions: [
                 okButton,
               ],

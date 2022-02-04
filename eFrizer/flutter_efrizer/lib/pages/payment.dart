@@ -258,6 +258,29 @@ class _PaymentState extends State<Payment> {
                               });
                         }
                       }
+
+                      Widget okButton = TextButton(
+                        child: Text("OK"),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => Success(user),
+                            ),
+                          );
+                        },
+                      );
+                      AlertDialog alert = AlertDialog(
+                        title: Text("Successfully"),
+                        content: Text("Successfully added reservation"),
+                        actions: [
+                          okButton,
+                        ],
+                      );
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return alert;
+                          });
                     }
                   } else {
                     Widget okButton = TextButton(
